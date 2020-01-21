@@ -1,0 +1,14 @@
+body {
+    font-family: 'Helvetica Neue', sans-serif;
+    src: url('./assets/fonts/HelveticaNeueThin.eot');
+    src: url('./assets/fonts/HelveticaNeueThin.eot?#iefix') format('embedded-opentype'),
+        url('./assets/fonts/HelveticaNeueThin.woff2') format('woff2'),
+        url('./assets/fonts/HelveticaNeueThin.woff') format('woff'),
+        url('./assets/fonts/HelveticaNeueThin.ttf') format('truetype');
+    margin: 0;
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}

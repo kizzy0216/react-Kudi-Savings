@@ -1,0 +1,90 @@
+version: v1.0
+name: Build Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Synchronise
+    task:
+      secrets:
+        - name: gke-staging
+        - name: ssh-key
+      prologue:
+        commands:
+          - chmod 600 ~/.ssh/id
+          - chmod 600 ~/.ssh/id.pub
+          - ssh-add ~/.ssh/id
+          - checkout --use-cache
+      jobs:
+        - name: Everything
+          commands:
+            - bash ~/.scripts/sync.sh
+
+  - name: Test
+    task:
+      prologue:
+        commands:
+          - nvm install 8
+      jobs:
+      - name: Everything
+        commands:
+          - checkout
+          - npm ci
+          - npm test
+
+  - name: Push
+    task:
+      secrets:
+        - name: gke-staging
+        - name: ssh-key
+      prologue:
+        commands:
+          - chmod 600 ~/.ssh/id
+          - chmod 600 ~/.ssh/id.pub
+          - ssh-add ~/.ssh/id
+          - bash ~/.scripts/init-gke.sh
+          - checkout
+      jobs:
+      - name: Everything
+        commands:
+          - bash ~/.scripts/push-image.sh
+
+promotions:
+  - name: Deploy PR Environment
+    pipeline_file: deploy-pr.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - "^feature\/"
+          - "^bugfix\/"
+          - "^hotfix\/"
+
+  - name: Deploy Dev Environment
+    pipeline_file: deploy-dev.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - "^develop$"
+
+  - name: Deploy Test Environment
+    pipeline_file: deploy-test.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - "^develop$"
+
+  - name: Deploy Staging Environment
+    pipeline_file: deploy-staging.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - "^release\/"
+
+  - name: Deploy Production Environment
+    pipeline_file: deploy-production.yml
+    auto_promote_on:
+      - result: passed
+        branch:
+          - "^master$"

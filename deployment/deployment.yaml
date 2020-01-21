@@ -1,0 +1,12 @@
+apiVersion: stable.kudi.ai/v1
+kind: HTTPService
+metadata:
+  name: __SERVICE_NAME__
+spec:
+  image: __IMAGE__
+  replicas: 1
+  containerPort: 8080
+  domain: __DOMAIN_NAME__
+  requests:
+    memory: 300M
+    cpu: 200m

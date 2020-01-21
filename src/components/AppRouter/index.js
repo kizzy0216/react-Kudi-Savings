@@ -1,0 +1,37 @@
+import React, { lazy, Suspense } from 'react'
+import { withAuth } from 'utils/hoc'
+import PrivateRoute from './PrivateRoute'
+import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import { createBrowserHistory } from 'history'
+import { AppLoading } from '../loading'
+
+const history = createBrowserHistory()
+const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/Login'))
+
+
+const NotFound = lazy(() =>
+    import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
+)
+
+const AppRouter = () => (
+    <Router history={history}>
+        <Suspense fallback={<AppLoading />}>
+            <Switch>
+                <Route path="/login" component={Login} />
+                <PrivateRoute
+                    path="/"
+                    exact
+                    component={() => <Redirect to="/dashboard" />}
+                />
+                <PrivateRoute component={NotFound} />
+                <Route
+                    render={() => {
+                        return <Redirect to="/" />
+                    }}
+                />
+            </Switch>
+        </Suspense>
+    </Router>
+)
+
+export default withAuth(AppRouter)

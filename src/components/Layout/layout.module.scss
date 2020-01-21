@@ -1,0 +1,201 @@
+@import '../../styles/generic';
+
+.layout {
+    font-size: 1rem;
+    transition: all 0.3s ease;
+
+    @include md {
+        display: grid;
+        grid-template-columns: 3.33em 1fr;
+        grid-template-rows: repeat(2, max-content) 1fr;
+        grid-column-gap: 2.7em;
+      
+    }
+
+    .links {
+        &:nth-of-type(2) {
+            svg,
+            path {
+                fill: currentColor;
+                stroke: currentColor;
+            }
+        }
+    }
+
+    .sidebar {
+        top: 0;
+        left: 0;
+        font-size: 1.43em;
+        z-index: 3;
+        background: $kudi-blue;
+        @include md {
+           display: grid;
+            grid-template-rows: 5em 1fr 5em;
+            top: initial;
+            left: initial;
+            z-index: initial;
+            width: 3.33em;
+        }
+
+        button {
+            font-size: 1em;
+            min-height: 3.21em;
+            min-width: unset;
+            &>span {
+                &:nth-of-type(1) {
+                    min-width: 1.21em;
+                }
+            }
+        }
+        &Header, &Footer{
+            
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            
+        }
+        &Footer{
+            svg{
+                cursor: pointer;
+            }
+        }
+    }
+
+    .main {
+        height: 100vh;
+        overflow: auto;
+    }
+
+    .header,
+    .content {
+        @include md {
+            margin: 0 2.78em;
+        }
+    }
+
+    
+    .content {
+        @include md {
+            margin-top: 2.22em;
+        }
+    }
+
+    .header {
+        font-size: 1em;
+        background: $kudi-blue;
+        color: #fff;
+        position: fixed;
+        width: 100%;
+        z-index: 2;
+
+        @include md {
+            margin-top: 1.94em;
+            display: flex;
+            justify-content: space-between;
+            background: initial;
+            color: inherit;
+            position: fixed;
+            width: initial;
+            position: relative;
+            z-index: initial;
+        }
+
+        &>p {
+            font-weight: 500;
+            font-size: 2em;
+            line-height: 120%;
+            padding: 0.9em 4em;
+            font-weight: normal;
+
+            @include md {
+                font-size: 1.39em;
+                line-height: 120%;
+                font-weight: inherit;
+                padding: 0;
+            }
+        }
+
+        button {
+            font-size: 0.77em;
+            min-height: 3.21em;
+            max-height: 45px;
+            display: none;
+
+            @include md {
+                display: flex;
+            }
+        }
+
+        &Sub {
+            font-size: 1em;
+            background: #fff;
+            color: inherit;
+            display: flex;
+            z-index: 4;
+            box-shadow: 0px 4px 10px rgba(116, 140, 173, 0.1);
+            align-items: center;
+
+            @include md {
+                background: initial;
+                display: block;
+                box-shadow: none;
+            }
+
+            .backBtn {
+                height: 6em;
+                padding: 2.1em 2.4em;
+                cursor: pointer;
+
+                @include md {
+                    height: 1.11em;
+                    padding: 0;
+                    position: absolute;
+                    left: 0;
+                    top: 50%;
+                    transform: translateY(-50%);
+                }
+
+                svg {
+                    height: 100%;
+                }
+            }
+
+            &>input {
+                padding: 0.714em 0;
+                width: 100%;
+                font-size: 1.4em;
+                font-weight: normal;
+                border: 0;
+                outline: 0;
+            }
+
+            &>p {
+                padding: 0.9em 1em;
+
+                @include md {
+                    margin-left: 2.28em;
+                    padding: 0;
+                }
+            }
+        }
+    }
+
+   
+
+    .content {
+        font-size: 1em;
+
+        :global {
+            .badges {
+                font-size: 1em;
+                line-height: 123%;
+                padding: 0.31em 0.77em;
+            }
+        }
+
+        
+    }
+
+
+}
+
