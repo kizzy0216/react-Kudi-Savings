@@ -1,14 +1,14 @@
 export default function validate(values) {
     let errors = {}
-    let { username, password } = values
-    username.trim()
+    let { email, password } = values
+    email.trim()
     password.trim()
-    if (!username) {
-        errors.username = 'Mobile number is required'
-    } else if (!/^[0]+[0-9]{10}$/i.test(username)) {
-        errors.username = 'Mobile number is invalid'
+    if (!email) {
+        errors.email = 'Email address is required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)) {
+        errors.email = 'Email address is invalid'
     }
-    if (password.length < 4) {
+    if (password.length < 6) {
         errors.password = 'Minimum length must be greater than 6'
     }
 

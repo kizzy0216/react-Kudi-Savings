@@ -12,7 +12,7 @@ const Login = ({ auth, history }) => {
     const [token, setUser] = auth
     const [authError, setAuthError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    let defaultValues = { username: '', password: '' }
+    let defaultValues = { email: '', password: '' }
     const { values, errors, handleChange, handleSubmit } = useForm(
         submitData,
         validation,
@@ -38,13 +38,19 @@ const Login = ({ auth, history }) => {
                 })
                 history.push(`/`)
             })
-            .catch(response => {
+            .catch(({response}) => {
+          
                 setIsLoading(false)
-                if (response) {
-                    setAuthError(response.data.data.message)
-                } else {
-                    setAuthError('Weird!, an error occured')
-                }
+                //TODO: temporary response till endpoints are available
+                setUser({
+                    token: "helloo",
+                    user:values.email
+                })
+                history.push(`/`)
+                // if (response) {
+                //     return setAuthError(response.data.data.message)
+                // }
+                // return setAuthError('Weird!, an error occured')
             })
     }
 
@@ -58,14 +64,14 @@ const Login = ({ auth, history }) => {
                     {authError ? authError : 'Hello, welcome back.'}
                 </h2>
                 <Input
-                    label="Phone Number"
-                    placeholder="08XXX"
+                    label="Email Address"
+                    placeholder="xxx@kudi.com"
                     onChange={handleChange}
-                    value={values.username}
+                    value={values.email}
                     required
-                    name="username"
-                    id="username"
-                    error={errors.username}
+                    name="email"
+                    id="email"
+                    error={errors.email}
                     className="formInput"
                 />
 
@@ -76,8 +82,6 @@ const Login = ({ auth, history }) => {
                     name="password"
                     type="password"
                     label="Password"
-                    minLength={4}
-                    maxLength={4}
                     placeholder=""
                     error={errors.password}
                     required
