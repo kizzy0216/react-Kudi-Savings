@@ -41,7 +41,7 @@ const Cashout = () => (
                             },
                             {
                                 key: 'action',
-                                render: 'View'
+                                render: ''
                             }
                         ]}
                         data={[
@@ -50,7 +50,7 @@ const Cashout = () => (
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
                                 walletBalance: 'N2000',
-                                status: <Badge>'PENDING'</Badge>,
+                                status: <Badge>PENDING</Badge>,
                                 action: (
                                     <Button
                                         className={styles.contentCardButton}
@@ -66,7 +66,7 @@ const Cashout = () => (
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
                                 walletBalance: 'N2000',
-                                status: <Badge>'PENDING'</Badge>,
+                                status: <Badge>PENDING</Badge>,
                                 action: (
                                     <Button
                                         className={styles.contentCardButton}
@@ -82,7 +82,7 @@ const Cashout = () => (
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
                                 walletBalance: 'N2000',
-                                status: <Badge>'PENDING'</Badge>,
+                                status: <Badge>PENDING</Badge>,
                                 action: (
                                     <Button
                                         className={styles.contentCardButton}

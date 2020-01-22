@@ -29,8 +29,11 @@ const Layout = ({ children, auth }) => {
 
     return (
         <div className={styles.layout}>
+          
             <SideBar onLogout={() => setLogout()} className={styles.sidebar}>
+          
                 <SideBarList>
+           
                     <SideBarItem
                         className={styles.links}
                         icon={<DashboardLink />}

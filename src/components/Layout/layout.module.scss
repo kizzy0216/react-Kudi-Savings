@@ -8,17 +8,14 @@
         display: grid;
         grid-template-columns: max-content 1fr;
         grid-template-rows: repeat(2, max-content) 1fr;
-        grid-template-areas: "sidebar header"
-            "sidebar filter"
-            "sidebar content";
+        grid-template-areas:
+            'sidebar header'
+            'sidebar filter'
+            'sidebar content';
     }
-
-
-
 
     .links {
         &:nth-of-type(2) {
-
             svg,
             path {
                 fill: currentColor;
@@ -47,7 +44,7 @@
             font-size: 1em;
             min-height: 3.21em;
 
-            &>span {
+            & > span {
                 &:nth-of-type(1) {
                     min-width: 1.21em;
                 }
@@ -95,7 +92,7 @@
             z-index: initial;
         }
 
-        &>p {
+        & > p {
             font-weight: 500;
             font-size: 2em;
             line-height: 120%;
@@ -155,7 +152,7 @@
                 }
             }
 
-            &>input {
+            & > input {
                 padding: 0.714em 0;
                 width: 100%;
                 font-size: 1.4em;
@@ -164,7 +161,7 @@
                 outline: 0;
             }
 
-            &>p {
+            & > p {
                 padding: 0.9em 1em;
 
                 @include md {
@@ -190,7 +187,6 @@
         }
 
         :global {
-
             .SingleDatePickerInput,
             .DateRangePickerInput {
                 display: flex;
@@ -210,7 +206,7 @@
             }
         }
 
-        &>div {
+        & > div {
             font-weight: 400;
             font-size: 1.3em;
             line-height: 141%;
@@ -248,8 +244,6 @@
             font-size: 1em;
         }
     }
-
-
 }
 
 .modal {
@@ -263,19 +257,17 @@
         padding: 0;
     }
 
-
     &Header {
         position: relative;
     }
 
     &Footer {
-
         @include md {
             font-size: 1em;
             justify-content: flex-start;
         }
 
-        &>button {
+        & > button {
             @include md {
                 font-size: 1em;
             }
@@ -287,5 +279,16 @@
                 }
             }
         }
+    }
+}
+
+.logoSection {
+    background: $dark-kudi-blue;
+    &_Content {
+        display: flex;
+        align-items: center;
+    }
+    &_btn{
+        background-color: transparent;
     }
 }

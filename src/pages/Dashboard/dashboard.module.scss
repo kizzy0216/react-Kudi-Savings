@@ -1,3 +1,73 @@
-.Dashboard{
-    
+@import '../../styles/generic';
+
+.Dashboard {
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: 16.78em 1fr;
+    grid-column-gap: 2.78em;
+    &Left {
+        display: grid;
+        grid-template-rows: repeat(3, max-content);
+        grid-row-gap: 1.68em;
+    }
+    &Right {
+        display: grid;
+        grid-template-rows: repeat(2, max-content);
+        grid-row-gap: 2.78em;
+        &Card {
+            &Header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                font-weight: 500;
+            }
+        }
+    }
+    &_flex {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 0 0.88em;
+        line-height: 120%;
+        letter-spacing: 0.03em;
+        font-size: 0.88em;
+        p {
+        }
+        span {
+            font-weight: 500;
+            color: $text-darker;
+        }
+    }
+    &_center {
+        text-align: center;
+
+        p {
+            color: $text-darker;
+            font-weight: 500;
+            padding-bottom: 0.22em;
+            font-size: 0.72em;
+            line-height: 123%;
+        }
+        h3 {
+            font-weight: bold;
+            color: $grey;
+            font-size: 1.67em;
+            line-height: 123%;
+        }
+        &_footer {
+            font-size: 0.72em;
+            text-align: center;
+            line-height: 123%;
+        }
+    }
+    &Card {
+        font-size: 1em;
+        box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
+        color: $grey;
+    }
+}
+.footer {
+    color: $sky-blue;
+    span {
+        color: $sky-blue;
+    }
 }
