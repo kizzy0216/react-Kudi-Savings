@@ -6,14 +6,19 @@
 
     @include md {
         display: grid;
-        grid-template-columns: 3.33em 1fr;
+        grid-template-columns: max-content 1fr;
         grid-template-rows: repeat(2, max-content) 1fr;
-        grid-column-gap: 2.7em;
-      
+        grid-template-areas: "sidebar header"
+            "sidebar filter"
+            "sidebar content";
     }
+
+
+
 
     .links {
         &:nth-of-type(2) {
+
             svg,
             path {
                 fill: currentColor;
@@ -23,40 +28,29 @@
     }
 
     .sidebar {
+        position: absolute;
         top: 0;
         left: 0;
         font-size: 1.43em;
         z-index: 3;
-        background: $kudi-blue;
+
         @include md {
-           display: grid;
-            grid-template-rows: 5em 1fr 5em;
+            grid-area: sidebar;
+            font-size: 0.78em;
+            position: relative;
             top: initial;
             left: initial;
             z-index: initial;
-            width: 3.33em;
         }
 
         button {
             font-size: 1em;
             min-height: 3.21em;
-            min-width: unset;
+
             &>span {
                 &:nth-of-type(1) {
                     min-width: 1.21em;
                 }
-            }
-        }
-        &Header, &Footer{
-            
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            
-        }
-        &Footer{
-            svg{
-                cursor: pointer;
             }
         }
     }
@@ -67,13 +61,14 @@
     }
 
     .header,
+    .filters,
     .content {
         @include md {
             margin: 0 2.78em;
         }
     }
 
-    
+    .filters,
     .content {
         @include md {
             margin-top: 2.22em;
@@ -180,7 +175,63 @@
         }
     }
 
-   
+    .filters {
+        display: flex;
+        flex-wrap: nowrap;
+        font-size: 1em;
+        background: #fff;
+        padding: 0 1.2em;
+        box-shadow: 0px 5px 10px rgba(116, 140, 173, 0.1);
+
+        @include md {
+            background: initial;
+            padding: 0;
+            box-shadow: none;
+        }
+
+        :global {
+
+            .SingleDatePickerInput,
+            .DateRangePickerInput {
+                display: flex;
+                align-items: center;
+            }
+
+            .DateRangePicker {
+                width: 100%;
+
+                @include md {
+                    width: initial;
+                }
+            }
+
+            .DateRangePickerInput_calendarIcon {
+                padding: 0.55em;
+            }
+        }
+
+        &>div {
+            font-weight: 400;
+            font-size: 1.3em;
+            line-height: 141%;
+            letter-spacing: 0.03em;
+            border: 0;
+            background: transparent;
+            padding: 0.6em 0;
+
+            @include md {
+                font-size: 0.72em;
+                padding: 0;
+                margin-right: 1.11em;
+                border: inherit;
+                background: inherit;
+            }
+
+            button {
+                line-height: inherit;
+            }
+        }
+    }
 
     .content {
         font-size: 1em;
@@ -193,9 +244,48 @@
             }
         }
 
-        
+        table {
+            font-size: 1em;
+        }
     }
 
 
 }
 
+.modal {
+    font-size: 1.4rem;
+
+    @include md {
+        font-size: 0.77rem;
+    }
+
+    &Body {
+        padding: 0;
+    }
+
+
+    &Header {
+        position: relative;
+    }
+
+    &Footer {
+
+        @include md {
+            font-size: 1em;
+            justify-content: flex-start;
+        }
+
+        &>button {
+            @include md {
+                font-size: 1em;
+            }
+
+            &:nth-of-type(1) {
+                @include md {
+                    margin-right: 8.57em;
+                    width: 13.21em;
+                }
+            }
+        }
+    }
+}
