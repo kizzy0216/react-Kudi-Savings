@@ -6,22 +6,11 @@
 
     @include md {
         display: grid;
-        grid-template-columns: max-content 1fr;
-        grid-template-rows: repeat(2, max-content) 1fr;
+        grid-template-columns: 15.72em 1fr;
         grid-template-areas:
             'sidebar header'
             'sidebar filter'
             'sidebar content';
-    }
-
-    .links {
-        &:nth-of-type(2) {
-            svg,
-            path {
-                fill: currentColor;
-                stroke: currentColor;
-            }
-        }
     }
 
     .sidebar {
@@ -244,8 +233,126 @@
             font-size: 1em;
         }
     }
+    &Profile {
+        background: $dark-kudi-blue;
+    }
+}
+.sideNav {
+    font-size: 1rem;
+    background-color: $kudi-blue;
+    height: 100%;
+    color: $white;
+
+   
+    .logoSection {
+        background-color: $dark-kudi-blue;
+        font-size: 1rem;
+
+        &Header {
+            padding: 1.6em 0 2.78em;
+            justify-content: center;
+            display: flex;
+        }
+        &Flex {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 0 0.83em;
+           
+         
+        }
+        &Content {
+            margin-left: 0.55em;
+            font-weight: normal;
+            &:nth-of-type(1) {
+                border-bottom: 1px solid #2443A7;
+               
+          }
+            p {
+                font-size: 0.72em;
+                line-height: 123%;
+                margin-bottom: 0.27em;
+                letter-spacing: 0.03em;
+                color: $grey-2;
+            }
+            span {
+                font-size: 0.72em;
+                line-height: 123%;
+                letter-spacing: 0.03em;
+            }
+        }
+        &Button {
+            margin: 1.11em 0 1.67em;
+            background-color: transparent;
+            color: $kudi-green;
+        }
+    }
+
+    .navSection {
+        padding-top: 1.67em;
+        &Links {
+            font-size: 0.83em;
+            margin:auto auto 0.83em;
+            line-height: 120%;
+            &:nth-of-type(2) {
+                svg,
+                path {
+                    fill: currentColor;
+                    stroke: currentColor;
+                }
+            }
+        }
+    }
 }
 
+.logoutButton {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: to-rem(15 25);
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: to-rem(15);
+    background: transparent;
+    color: $kudi-blue-light;
+    border: 0;
+    border-top: 1px solid $kudi-blue-light;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    @include md {
+        padding: to-rem(15 13);
+    }
+
+    svg {
+        fill: $kudi-blue-light;
+        margin-right: to-rem(15);
+    }
+
+    &:hover {
+        background-color: $kudi-blue-light;
+        color: $white;
+
+        svg {
+            fill: $white;
+
+            path {
+                fill: $white;
+            }
+        }
+    }
+
+    @include md {
+        padding: to-rem(15 35 15 92);
+    }
+
+    @include sm {
+        position: relative;
+    }
+}
 .modal {
     font-size: 1.4rem;
 
@@ -279,16 +386,5 @@
                 }
             }
         }
-    }
-}
-
-.logoSection {
-    background: $dark-kudi-blue;
-    &_Content {
-        display: flex;
-        align-items: center;
-    }
-    &_btn{
-        background-color: transparent;
     }
 }
