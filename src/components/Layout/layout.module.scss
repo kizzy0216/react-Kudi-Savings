@@ -82,16 +82,17 @@
         }
 
         & > p {
-            font-weight: 500;
+           
             font-size: 2em;
             line-height: 120%;
             padding: 0.9em 4em;
             font-weight: normal;
+            color: #223856;
 
             @include md {
                 font-size: 1.39em;
                 line-height: 120%;
-                font-weight: inherit;
+              
                 padding: 0;
             }
         }
@@ -300,6 +301,9 @@
                     fill: currentColor;
                     stroke: currentColor;
                 }
+            }
+            svg{
+                width: 1.1em;
             }
         }
     }

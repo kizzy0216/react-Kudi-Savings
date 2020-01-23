@@ -13,48 +13,36 @@ import { Header, Content } from 'components/Layout'
 import styles from './dashboard.module.scss'
 import cx from 'classnames'
 import Chart from 'components/Chart'
+import { Eye, UpIcon, DownIcon } from 'assets/svg'
 
 const dataSource = [
     {
         label: '2007',
-        value: '1380000'
+        value: '108000'
     },
     {
         label: '2008',
-        value: '1450000'
+        value: '145000'
     },
     {
         label: '2009',
-        value: '1610000'
+        value: '101000'
     },
     {
         label: '2010',
-        value: '1540000'
+        value: '120000'
     },
     {
         label: '2011',
-        value: '1480000'
+        value: '1048000'
     },
     {
         label: '2012',
-        value: '1573000'
+        value: '107300'
     },
-    {
-        label: '2013',
-        value: '2232000'
-    },
-    {
-        label: '2014',
-        value: '2476000'
-    },
-    {
-        label: '2015',
-        value: '2832000'
-    },
-    {
-        label: '2016',
-        value: '3808000'
-    }
+   
+    
+    
 ]
 const Dashboard = () => {
     return (
@@ -64,147 +52,302 @@ const Dashboard = () => {
             </Header>
             <Content className={styles.content}>
                 <div className={styles.Dashboard}>
-                    <div className={styles.DashboardLeft}>
-                        <Card className={styles.DashboardCard}>
-                            <CardBody>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>New Agents</p>
-                                    <span>34</span>
-                                </div>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>Active Agents</p>
-                                    <span>56</span>
-                                </div>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>Inactive Agents</p>
-                                    <span>56</span>
-                                </div>
-                            </CardBody>
-                            <CardFooter>
-                                <div
-                                    className={cx(
-                                        styles.Dashboard_flex,
-                                        styles.footer
-                                    )}
-                                >
-                                    <p>Total Agents</p>
-                                    <span> N1,175,430 </span>
-                                </div>
-                            </CardFooter>
-                        </Card>
+                    <div className={styles.DashboardTop}>
                         <Card className={styles.DashboardCard}>
                             <CardBody>
                                 <div className={styles.Dashboard_center}>
-                                    <p>Agent Transactions</p>
-                                    <h3> N1,175,430</h3>
+                                    <p>Cash Collected Today</p>
+                                    <h3> N575,430</h3>
                                 </div>
                             </CardBody>
                             <CardFooter>
                                 <div className={styles.Dashboard_center_footer}>
-                                    <p> Total Commission - N176,100</p>
+                                    <div
+                                        className={
+                                            styles.Dashboard_center_footer_text
+                                        }
+                                    >
+                                        {' '}
+                                        <Badge variant="success">
+                                            <UpIcon /> <small> 8.5% </small>{' '}
+                                        </Badge>{' '}
+                                        Up from yesterday
+                                    </div>
                                 </div>
                             </CardFooter>
                         </Card>
+
                         <Card className={styles.DashboardCard}>
                             <CardBody>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>New Customers</p>
-                                    <span>450</span>
-                                </div>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>Active Customers</p>
-                                    <span>450</span>
-                                </div>
-                                <div className={styles.Dashboard_flex}>
-                                    <p>Inactive Customers</p>
-                                    <span>66</span>
-                                </div>
-                                <div
-                                    className={cx(
-                                        styles.Dashboard_flex,
-                                        styles.footer
-                                    )}
-                                >
-                                    <p>Total Customers</p>
-                                    <span>866</span>
+                                <div className={styles.Dashboard_center}>
+                                    <p>Cash Withdrawn Today </p>
+                                    <h3> N387,980</h3>
                                 </div>
                             </CardBody>
                             <CardFooter>
+                                <div className={styles.Dashboard_center_footer}>
+                                    <div
+                                        className={
+                                            styles.Dashboard_center_footer_text
+                                        }
+                                    >
+                                        {' '}
+                                        <Badge variant="danger">
+                                            <DownIcon />
+                                            <small> 8.5% </small>
+                                        </Badge>{' '}
+                                        Down from yesterday
+                                    </div>
+                                </div>
+                            </CardFooter>
+                        </Card>
+
+                        <Card className={styles.DashboardCard}>
+                            <CardBody>
                                 <div className={styles.Dashboard_center}>
-                                    <p>Total Savings</p>
-                                    <h3> N1,175,430</h3>
+                                    <p>Agent Onboarded Today</p>
+                                    <h3> 98</h3>
+                                </div>
+                            </CardBody>
+                            <CardFooter>
+                                <div className={styles.Dashboard_center_footer}>
+                                    <div
+                                        className={
+                                            styles.Dashboard_center_footer_text
+                                        }
+                                    >
+                                        {' '}
+                                        <Badge variant="danger">
+                                            <DownIcon />
+                                            <small> 8.5% </small>{' '}
+                                        </Badge>{' '}
+                                        Down from yesterday
+                                    </div>
                                 </div>
                             </CardFooter>
                         </Card>
                     </div>
-                    <div className={styles.DashboardRight}>
-                        <Card>
-                            <CardHeader>
-                                <h3>RECENT ACTIVITY</h3>
-                                <ButtonGroup>
-                                    <Button active>Week 1</Button>
-                                    <Button>Week 2</Button>
-                                    <Button>Week 3</Button>
-                                    <Button>Week 4</Button>
-                                </ButtonGroup>
-                            </CardHeader>
-                            <CardBody>
-                                <Table
-                                    column={[
-                                        { key: 'date', render: 'Date' },
-                                        {
-                                            key: 'fullName',
-                                            render: 'Fullname'
-                                        },
-                                        { key: 'amount', render: 'Amount' },
-                                        {
-                                            key: 'walletBalance',
-                                            render: 'Current Balance'
-                                        },
-                                        {
-                                            key: 'status',
-                                            render: 'Status'
-                                        },
-                                        {
-                                            key: 'action',
-                                            render: ''
+                    <div className={styles.DashboardBottom}>
+                        <div className={styles.DashboardLeft}>
+                            <Card className={styles.DashboardCard}>
+                                <CardBody>
+                                    <div className={styles.Dashboard_center}>
+                                        <p>Zonal Heads</p>
+                                        <h3> 43</h3>
+                                    </div>
+                                </CardBody>
+                                <CardFooter>
+                                    <div
+                                        className={
+                                            styles.Dashboard_center_footer
                                         }
-                                    ]}
-                                    data={[
-                                        {
-                                            date: '02 Jun 19',
-                                            fullName: 'Kunle Afolayan',
-                                            amount: 'N200',
-                                            walletBalance: 'N2000',
-                                            status: <Badge>PENDING</Badge>
-                                        },
-                                        {
-                                            date: '02 Jun 19',
-                                            fullName: 'Kunle Afolayan',
-                                            amount: 'N200',
-                                            walletBalance: 'N2000',
-                                            status: <Badge>PENDING</Badge>
-                                        },
-                                        {
-                                            date: '02 Jun 19',
-                                            fullName: 'Kunle Afolayan',
-                                            amount: 'N200',
-                                            walletBalance: 'N2000',
-                                            status: <Badge>PENDING</Badge>
-                                        }
-                                    ]}
-                                />
-                            </CardBody>
-                        </Card>
-                        <Card>
-                            <CardHeader></CardHeader>
-                            <CardBody>
-                                {/* <Chart
-                                    dataSource={dataSource}
-                                  
-                                /> */}
-                            </CardBody>
-                        </Card>
+                                    >
+                                        <p> Total Commission - N176,100</p>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+
+                            <Card className={styles.DashboardCard}>
+                                <CardBody>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>New Agents</p>
+                                        <span>34</span>
+                                    </div>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>Active Agents</p>
+                                        <span>56</span>
+                                    </div>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>Inactive Agents</p>
+                                        <span>56</span>
+                                    </div>
+                                </CardBody>
+                                <CardFooter>
+                                    <div
+                                        className={cx(
+                                            styles.Dashboard_flex,
+                                            styles.footer
+                                        )}
+                                    >
+                                        <p>Total Agents</p>
+                                        <span> N1,175,430 </span>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                            <Card className={styles.DashboardCard}>
+                                <CardBody>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>New Customers</p>
+                                        <span>450</span>
+                                    </div>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>Active Customers</p>
+                                        <span>450</span>
+                                    </div>
+                                    <div className={styles.Dashboard_flex}>
+                                        <p>Inactive Customers</p>
+                                        <span>66</span>
+                                    </div>
+                                    <div
+                                        className={cx(
+                                            styles.Dashboard_flex,
+                                            styles.footer
+                                        )}
+                                    >
+                                        <p>Total Customers</p>
+                                        <span>866</span>
+                                    </div>
+                                </CardBody>
+                                <CardFooter>
+                                    <div className={styles.Dashboard_center}>
+                                        <p>Total Savings</p>
+                                        <h4> N1,175,430</h4>
+                                    </div>
+                                </CardFooter>
+                            </Card>
+                        </div>
+                        <div className={styles.DashboardRight}>
+                            <Card>
+                                <CardHeader>
+                                    <div
+                                        className={styles.DashboardRightHeader}
+                                    >
+                                        <h3>RECENT ACTIVITY</h3>
+                                        <ButtonGroup>
+                                            <Button active>Week 1</Button>
+                                            <Button>Week 2</Button>
+                                            <Button>Week 3</Button>
+                                            <Button>Week 4</Button>
+                                        </ButtonGroup>
+                                    </div>
+                                </CardHeader>
+                                <CardBody>
+                                    <Table
+                                        column={[
+                                            { key: 'date', render: 'Date' },
+                                            {
+                                                key: 'fullName',
+                                                render: 'Fullname'
+                                            },
+
+                                            {
+                                                key: 'walletNumber',
+                                                render: 'Wallet Number'
+                                            },
+                                            { key: 'amount', render: 'Amount' },
+
+                                            {
+                                                key: 'type',
+                                                render: ''
+                                            }
+                                        ]}
+                                        data={[
+                                            {
+                                                date: '02 Jun 19',
+                                                fullName: 'Kunle Afolayan',
+                                                amount: 'N200',
+                                                walletNumber: '08087948121',
+                                                type: (
+                                                    <Badge className="badges">
+                                                        Deposit
+                                                    </Badge>
+                                                )
+                                            },
+                                            {
+                                                date: '02 Jun 19',
+                                                fullName: 'Kunle Afolayan',
+                                                amount: 'N200',
+                                                walletNumber: '08087988121',
+                                                type: (
+                                                    <Badge
+                                                        variant="danger"
+                                                        className="badges"
+                                                    >
+                                                        Withdrawal
+                                                    </Badge>
+                                                )
+                                            },
+                                            {
+                                                date: '02 Jun 19',
+                                                fullName: 'Kunle Afolayan',
+                                                amount: 'N200',
+                                                walletNumber: '09987948121',
+                                                type: (
+                                                    <Badge
+                                                        variant="success"
+                                                        className="badges"
+                                                    >
+                                                        New User
+                                                    </Badge>
+                                                )
+                                            }
+                                        ]}
+                                    />
+                                    <div className={styles.DashboardRightMore}>
+                                        <Button icon={<Eye />} variant="flat">
+                                            View All transactions
+                                        </Button>
+                                    </div>
+                                </CardBody>
+                            </Card>
+                            <Card>
+                                <CardHeader>
+                                    <div
+                                        className={styles.DashboardRightHeader}
+                                    >
+                                        <h3>TRANSACTION COUNT</h3>
+                                        <div
+                                            className={
+                                                styles.DashboardRightHeader_Dropdown
+                                            }
+                                        >
+                                            <span>Show:</span>
+                                            <Button
+                                            className={
+                                                styles.DashboardRightHeader_DropdownButton
+                                            }
+                                           
+                                                value="weekly"
+                                                options={[
+                                                    {
+                                                        value: 'daily',
+                                                        text: 'Daily'
+                                                    },
+                                                    {
+                                                        value: 'weekly',
+                                                        text: 'Weekly'
+                                                    },
+                                                    {
+                                                        value: 'pending',
+                                                        text: 'Monthly'
+                                                    },
+                                                    {
+                                                        value: 'paused',
+                                                        text: 'Yearly'
+                                                    }
+                                                ]}
+                                                dropdown
+                                            />
+                                        </div>
+                                    </div>
+                                </CardHeader>
+                                <CardBody>
+                                    <Chart
+                                        dataSource={dataSource}
+                                        type="splinearea"
+                                        chart={{
+                                            caption: "",
+                                            yaxisname: '',
+                                            subcaption: '',
+                                            captionAlignment: "left",
+                                            plottooltext:
+                                                '<div><b>$dataValue</b> iPhones sold in $label</div>',
+                                            theme: 'fusion'
+                                        }}
+                                    />
+                                </CardBody>
+                            </Card>
+                        </div>
                     </div>
                 </div>
             </Content>
