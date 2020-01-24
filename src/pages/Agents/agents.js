@@ -1,5 +1,5 @@
 import React from 'react'
-const  Agents = () => {
+const Agents = () => {
     return <div></div>
 }
 export default Agents

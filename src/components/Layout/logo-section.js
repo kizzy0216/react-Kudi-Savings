@@ -1,7 +1,7 @@
 import React from 'react'
 import styles from './layout.module.scss'
 import { Button } from '@kudi-inc/dip'
-import { KudiLogo, Avatar, Wallet  } from 'assets/svg'
+import { KudiLogo, Avatar, Wallet } from 'assets/svg'
 
 const LogoSection = () => {
     return (
@@ -25,9 +25,12 @@ const LogoSection = () => {
                 </div>
             </div>
             <div className={styles.logoSectionFlex}>
-            <Button className={styles.logoSectionButton} onClick={() => null}>
-                Fund Wallet
-            </Button>
+                <Button
+                    className={styles.logoSectionButton}
+                    onClick={() => null}
+                >
+                    Fund Wallet
+                </Button>
             </div>
         </div>
     )

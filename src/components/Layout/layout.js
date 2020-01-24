@@ -1,6 +1,6 @@
 import React from 'react'
 import { SideBarItem, Button } from '@kudi-inc/dip'
-import cx from "classnames"
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
@@ -76,7 +76,6 @@ const Layout = ({ children, auth }) => {
                     active={window.location.pathname === '/logout'}
                     onClick={() => setLogout()}
                 />
-               
             </div>
 
             <div className={styles.main}>{children}</div>

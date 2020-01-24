@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { withAuth } from 'utils/hoc'
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
 import { Button, AuthLayout, Input } from '@kudi-inc/dip'
 import { useForm } from 'components/Form'
 import LoginImage from 'assets/images/savings.png'
@@ -94,13 +94,11 @@ const Login = ({ auth, history }) => {
                     </Button>
                     <Button
                         type="button"
-                        
                         icon={<PhoneWarning />}
                         variant="flat"
                         className={styles.formButtonReset}
                     >
-                    <Link to="/forgot-password"> Can’t Login?</Link>
-                       
+                        <Link to="/forgot-password"> Can’t Login?</Link>
                     </Button>
                 </div>
             </form>

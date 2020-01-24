@@ -340,7 +340,7 @@ const Dashboard = () => {
                                             yaxisminvalue: '0',
                                             xaxisminvalue: '0',
                                             setAdaptiveYMin: '0',
-                                            palettecolors:"#109CF1",
+                                            palettecolors: '#109CF1',
                                             theme: 'fusion'
                                         }}
                                     />

@@ -21,4 +21,4 @@ export { ReactComponent as LogoutIcon } from './logout.svg'
 export { ReactComponent as UpIcon } from './up.svg'
 export { ReactComponent as DownIcon } from './down.svg'
 export { ReactComponent as DownloadIcon } from './download.svg'
-export { ReactComponent as PhoneWarning } from './phone-warning.svg';
+export { ReactComponent as PhoneWarning } from './phone-warning.svg'

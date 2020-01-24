@@ -1,1 +1,1 @@
-export {default } from "./CustomerInsights"
+export { default } from './CustomerInsights'

@@ -3,7 +3,7 @@ import FusionCharts from 'fusioncharts'
 import Charts from 'fusioncharts/fusioncharts.charts'
 import ReactFC from 'react-fusioncharts'
 import FusionTheme from 'fusioncharts/themes/fusioncharts.theme.fusion'
-import styles from "./chart.module.scss"
+import styles from './chart.module.scss'
 ReactFC.fcRoot(FusionCharts, Charts, FusionTheme)
 
 let dataSource = {
@@ -30,14 +30,14 @@ const Chart = props => {
     const chartConfigs = {
         type,
         width: '100%',
-        height:'220',
+        height: '220',
         dataFormat: 'json',
         dataLoadStartMessage: 'Please wait, chart is loading the data....',
         dataSource
     }
 
     return (
-        <section className={styles.Chart} >
+        <section className={styles.Chart}>
             <ReactFC {...chartConfigs} />
         </section>
     )
