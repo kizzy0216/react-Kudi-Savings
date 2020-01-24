@@ -54,10 +54,15 @@
         }
     }
 
-    .filters,
     .content {
         @include md {
             margin-top: 2.22em;
+        }
+    }
+    .filters {
+        @include md {
+            margin-top: 0.27em ;
+            margin-bottom: 2.22em;
         }
     }
 
@@ -82,7 +87,6 @@
         }
 
         & > p {
-           
             font-size: 2em;
             line-height: 120%;
             padding: 0.9em 4em;
@@ -92,7 +96,7 @@
             @include md {
                 font-size: 1.39em;
                 line-height: 120%;
-              
+
                 padding: 0;
             }
         }
@@ -165,6 +169,7 @@
     .filters {
         display: flex;
         flex-wrap: nowrap;
+        justify-content: space-between;
         font-size: 1em;
         background: #fff;
         padding: 0 1.2em;
@@ -243,8 +248,9 @@
     background-color: $kudi-blue;
     height: 100%;
     color: $white;
+    display: grid;
+    grid-template-rows: 16.88em 1fr 2.78em;
 
-   
     .logoSection {
         background-color: $dark-kudi-blue;
         font-size: 1rem;
@@ -259,16 +265,13 @@
             justify-content: center;
             align-items: center;
             margin: 0 0 0.83em;
-           
-         
         }
         &Content {
             margin-left: 0.55em;
             font-weight: normal;
-            &:nth-of-type(1) {
-                border-bottom: 1px solid #2443A7;
-               
-          }
+            &:nth-of-type(2) {
+                border-bottom: 1px solid #2443a7;
+            }
             p {
                 font-size: 0.72em;
                 line-height: 123%;
@@ -293,7 +296,7 @@
         padding-top: 1.67em;
         &Links {
             font-size: 0.83em;
-            margin:auto auto 0.83em;
+            margin: auto auto 0.83em;
             line-height: 120%;
             &:nth-of-type(2) {
                 svg,
@@ -302,60 +305,22 @@
                     stroke: currentColor;
                 }
             }
-            svg{
-                width: 1.1em;
+            span {
+                &:nth-of-type(2) {
+                    font-weight: 300;
+                }
+            }
+
+            svg {
+                width: 1.94em;
             }
         }
     }
 }
 
-.logoutButton {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    padding: to-rem(15 25);
-    text-align: center;
-    display: block;
-    width: 100%;
-    font-size: to-rem(15);
-    background: transparent;
-    color: $kudi-blue-light;
-    border: 0;
-    border-top: 1px solid $kudi-blue-light;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    @include md {
-        padding: to-rem(15 13);
-    }
-
-    svg {
-        fill: $kudi-blue-light;
-        margin-right: to-rem(15);
-    }
-
-    &:hover {
-        background-color: $kudi-blue-light;
-        color: $white;
-
-        svg {
-            fill: $white;
-
-            path {
-                fill: $white;
-            }
-        }
-    }
-
-    @include md {
-        padding: to-rem(15 35 15 92);
-    }
-
-    @include sm {
-        position: relative;
-    }
+.logout {
+    border-top: 1px solid #2443a7;
+    border-radius: 0px;
 }
 .modal {
     font-size: 1.4rem;

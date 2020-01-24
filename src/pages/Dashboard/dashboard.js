@@ -13,36 +13,30 @@ import { Header, Content } from 'components/Layout'
 import styles from './dashboard.module.scss'
 import cx from 'classnames'
 import Chart from 'components/Chart'
+import Filter from 'components/Filter'
 import { Eye, UpIcon, DownIcon } from 'assets/svg'
 
 const dataSource = [
     {
         label: '2007',
-        value: '108000'
+        value: '10000'
     },
     {
         label: '2008',
-        value: '145000'
+        value: '9100'
     },
     {
         label: '2009',
-        value: '101000'
+        value: '50000'
     },
     {
         label: '2010',
-        value: '120000'
+        value: '9000'
     },
     {
         label: '2011',
-        value: '1048000'
-    },
-    {
-        label: '2012',
-        value: '107300'
-    },
-   
-    
-    
+        value: '130000'
+    }
 ]
 const Dashboard = () => {
     return (
@@ -50,6 +44,7 @@ const Dashboard = () => {
             <Header>
                 <p> Dashboard </p>
             </Header>
+            <Filter />
             <Content className={styles.content}>
                 <div className={styles.Dashboard}>
                     <div className={styles.DashboardTop}>
@@ -207,7 +202,7 @@ const Dashboard = () => {
                             </Card>
                         </div>
                         <div className={styles.DashboardRight}>
-                            <Card>
+                            <Card className={styles.DashboardRightCard}>
                                 <CardHeader>
                                     <div
                                         className={styles.DashboardRightHeader}
@@ -303,10 +298,9 @@ const Dashboard = () => {
                                         >
                                             <span>Show:</span>
                                             <Button
-                                            className={
-                                                styles.DashboardRightHeader_DropdownButton
-                                            }
-                                           
+                                                className={
+                                                    styles.DashboardRightHeader_DropdownButton
+                                                }
                                                 value="weekly"
                                                 options={[
                                                     {
@@ -336,12 +330,17 @@ const Dashboard = () => {
                                         dataSource={dataSource}
                                         type="splinearea"
                                         chart={{
-                                            caption: "",
+                                            caption: '',
                                             yaxisname: '',
                                             subcaption: '',
-                                            captionAlignment: "left",
-                                            plottooltext:
-                                                '<div><b>$dataValue</b> iPhones sold in $label</div>',
+                                            valueFontSize: '10',
+                                            baseFont: 'HelveticaNeue',
+                                            valueFont: 'HelveticaNeue',
+                                            captionAlignment: 'left',
+                                            yaxisminvalue: '0',
+                                            xaxisminvalue: '0',
+                                            setAdaptiveYMin: '0',
+                                            palettecolors:"#109CF1",
                                             theme: 'fusion'
                                         }}
                                     />

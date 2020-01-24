@@ -34,12 +34,18 @@ const AppRouter = () => (
         <Suspense fallback={<AppLoading />}>
             <Switch>
                 <Route path="/login" component={Login} />
+                <Route
+                    path="/forgot-password"
+                    component={() => {
+                        return <div>Page Not Found</div>
+                    }}
+                />
                 <PrivateRoute
                     path="/"
                     exact
                     component={() => <Redirect to="/dashboard" />}
                 />
-           
+
                 <PrivateRoute path="/dashboard" component={Dashboard} />
                 <PrivateRoute path="/cashout" component={Cashout} />
                 <PrivateRoute path="/zonal-heads" component={ZonalHeads} />
@@ -49,7 +55,7 @@ const AppRouter = () => (
                     path="/customer-insights"
                     component={CustomerInsights}
                 />
-                    <PrivateRoute component={NotFound} /> 
+                <PrivateRoute component={NotFound} />
                 <Route
                     render={() => {
                         return <Redirect to="/" />

@@ -1,5 +1,6 @@
 import React from 'react'
-import {  SideBarItem, Button } from '@kudi-inc/dip'
+import { SideBarItem, Button } from '@kudi-inc/dip'
+import cx from "classnames"
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
@@ -57,27 +58,25 @@ const Layout = ({ children, auth }) => {
             <div className={styles.sideNav}>
                 <LogoSection />
                 <div className={styles.navSection}>
-                  
-                        {navItems.map((item, id) => (
-                            <SideBarItem
-                                key={id}
-                                className={styles.navSectionLinks}
-                                icon={item.icon}
-                                text={item.title}
-                                active={window.location.pathname === item.link}
-                                onClick={() => history.push(`${item.link}`)}
-                            />
-                        ))}
-                   
+                    {navItems.map((item, id) => (
+                        <SideBarItem
+                            key={id}
+                            className={styles.navSectionLinks}
+                            icon={item.icon}
+                            text={item.title}
+                            active={window.location.pathname === item.link}
+                            onClick={() => history.push(`${item.link}`)}
+                        />
+                    ))}
                 </div>
-                {/* <Button
-                variant="flat"
+                <SideBarItem
+                    className={cx(styles.navSectionLinks, styles.logout)}
                     icon={<LogoutIcon />}
-                    className={styles.logoutButton}
-                    onClick={()=>setLogout()}
-                >
-                    Log Out
-                </Button> */}
+                    text={'Logout'}
+                    active={window.location.pathname === '/logout'}
+                    onClick={() => setLogout()}
+                />
+               
             </div>
 
             <div className={styles.main}>{children}</div>

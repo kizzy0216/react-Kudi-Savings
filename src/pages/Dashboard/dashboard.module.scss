@@ -24,7 +24,7 @@
         }
         display: grid;
         grid-template-rows: repeat(2, max-content);
-        grid-row-gap: 2.78em;
+        grid-row-gap: 1.67em;
 
         &Header {
             display: flex;
@@ -87,7 +87,7 @@
         }
         h3,
         h4 {
-            font-weight: bold;
+            font-weight: normal;
             color: $grey;
 
             line-height: 123%;

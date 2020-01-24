@@ -30,6 +30,7 @@ const Chart = props => {
     const chartConfigs = {
         type,
         width: '100%',
+        height:'220',
         dataFormat: 'json',
         dataLoadStartMessage: 'Please wait, chart is loading the data....',
         dataSource
