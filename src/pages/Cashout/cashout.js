@@ -73,7 +73,7 @@ const Cashout = () => (
                                 date: '02 Jun 19',
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N19,000,500',
-                                walletBalance: 'N2000',
+                                walletBalance: 'N2,000',
                                 status: (
                                     <Badge
                                         variant="warning"
@@ -96,7 +96,7 @@ const Cashout = () => (
                                 date: '02 Jun 19',
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
-                                walletBalance: 'N2000',
+                                walletBalance: 'N2,000',
                                 status: (
                                     <Badge
                                         variant="warning"
@@ -142,7 +142,7 @@ const Cashout = () => (
                                 date: '02 Jun 19',
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
-                                walletBalance: 'N19,000,500',
+                                walletBalance: 'N19,800',
                                 status: (
                                     <Badge
                                         variant="warning"
@@ -165,7 +165,7 @@ const Cashout = () => (
                                 date: '02 Jun 19',
                                 agentName: 'Kunle Afolayan',
                                 amount: 'N200',
-                                walletBalance: 'N19,000,500',
+                                walletBalance: 'N9,500',
                                 status: (
                                     <Badge
                                         variant="warning"

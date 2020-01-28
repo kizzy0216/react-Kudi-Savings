@@ -2,6 +2,7 @@
 
 .Dashboard {
     font-size: 1rem;
+    font-weight: 400;
     &Top {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -56,7 +57,7 @@
             justify-content: center;
             padding: 0.83em 0;
             button {
-                font-size: 0.72em;
+                font-size: 0.92em;
                 line-height: 123%;
                 color: $sky-blue;
             }
