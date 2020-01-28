@@ -1,37 +1,83 @@
 import React from 'react'
-import { SideBarItem } from '@kudi-inc/dip'
+import { SideBarItem, Button } from '@kudi-inc/dip'
+import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
-import { DashboardLink } from 'assets/svg'
+import {
+    DashboardLink,
+    SettingsLink,
+    CILink,
+    CashoutLink,
+    AgentsLink,
+    TransactionsLink,
+    LogoutIcon
+} from 'assets/svg'
+import LogoSection from './logo-section'
 import styles from './layout.module.scss'
-import { Logo, User } from 'assets/svg'
 
 const Layout = ({ children, auth }) => {
     const [, , setLogout] = auth
 
     let history = useHistory()
-    const isDashboard = window.location.pathname === '/'
+    const navItems = [
+        {
+            title: 'Dashboard',
+            link: '/dashboard',
+            icon: <DashboardLink />
+        },
+        {
+            title: 'Agents',
+            link: '/agents',
+            icon: <AgentsLink />
+        },
+        {
+            title: 'Transactions',
+            link: '/transactions',
+            icon: <TransactionsLink />
+        },
+        {
+            title: 'Customer Insights',
+            link: '/customer-insights',
+            icon: <CILink />
+        },
+        {
+            title: 'Cashout',
+            link: '/cashout',
+            icon: <CashoutLink />
+        },
+        {
+            title: 'Settings',
+            link: '/settings',
+            icon: <SettingsLink />
+        }
+    ]
 
     return (
         <div className={styles.layout}>
-            <div className={styles.sidebar}>
-                <div className={styles.sidebarHeader}>
-                    <Logo />
+            <div className={styles.sideNav}>
+                <LogoSection />
+                <div className={styles.navSection}>
+                    {navItems.map((item, id) => (
+                        <SideBarItem
+                            key={id}
+                            className={styles.navSectionLinks}
+                            icon={item.icon}
+                            text={item.title}
+                            active={window.location.pathname === item.link}
+                            onClick={() => history.push(`${item.link}`)}
+                        />
+                    ))}
                 </div>
-                <div className={styles.sidebarList}>
-                    <SideBarItem
-                        className={styles.links}
-                        icon={<DashboardLink />}
-                        text=""
-                        active={isDashboard}
-                        onClick={() => history.push('/')}
-                    />
-                </div>
-                <div className={styles.sidebarFooter}>
-                    <User onClick={setLogout} title={'Logout'} />
-                </div>
+                <SideBarItem
+                    className={cx(styles.navSectionLinks, styles.logout)}
+                    icon={<LogoutIcon />}
+                    text={'Logout'}
+                    active={window.location.pathname === '/logout'}
+                    onClick={() => setLogout()}
+                />
             </div>
+
             <div className={styles.main}>{children}</div>
         </div>
     )

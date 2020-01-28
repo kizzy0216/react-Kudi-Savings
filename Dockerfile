@@ -1,5 +1,5 @@
 # Stage 1
-FROM node:10 as kudi-cashout
+FROM node:10 as kudi-savings
 WORKDIR /app
 COPY package.json package-lock.json
 COPY . ./

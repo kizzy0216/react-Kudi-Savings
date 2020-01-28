@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { withAuth } from 'utils/hoc'
+import { Link } from 'react-router-dom'
 import { Button, AuthLayout, Input } from '@kudi-inc/dip'
 import { useForm } from 'components/Form'
-import LoginImage from 'assets/images/appImg.jpeg'
-import LoginTiny from 'assets/images/appImg-tiny.jpeg'
+import LoginImage from 'assets/images/savings.png'
+import LoginTiny from 'assets/images/savings-tiny.png'
+import { PhoneWarning } from 'assets/svg'
 import validation from './validation'
 import styles from './auth.module.scss'
 import Axios from 'utils/axios'
@@ -38,13 +40,12 @@ const Login = ({ auth, history }) => {
                 })
                 history.push(`/`)
             })
-            .catch(({response}) => {
-          
+            .catch(({ response }) => {
                 setIsLoading(false)
                 //TODO: temporary response till endpoints are available
                 setUser({
-                    token: "helloo",
-                    user:values.email
+                    token: 'helloo',
+                    user: values.email
                 })
                 history.push(`/`)
                 // if (response) {
@@ -87,9 +88,19 @@ const Login = ({ auth, history }) => {
                     required
                     className="formInput"
                 />
-                <Button loading={isLoading} type="submit">
-                    Submit
-                </Button>
+                <div className={styles.formButtonGroup}>
+                    <Button loading={isLoading} type="submit">
+                        Submit
+                    </Button>
+                    <Button
+                        type="button"
+                        icon={<PhoneWarning />}
+                        variant="flat"
+                        className={styles.formButtonReset}
+                    >
+                        <Link to="/forgot-password"> Can’t Login?</Link>
+                    </Button>
+                </div>
             </form>
         </AuthLayout>
     )

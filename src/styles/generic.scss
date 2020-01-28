@@ -25,7 +25,7 @@ html {
 }
 
 body {
-    font-family: 'Helvetica Neue', sans-serif;
+    font-family: 'HelveticaNeue', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     box-sizing: border-box;
@@ -89,4 +89,6 @@ h1 {
             display: none !important;
         }
     }
+   div[class*="kudi-dip-badge"]{white-space: nowrap};
+  
 }
