@@ -1,0 +1,77 @@
+@import '../../styles/variables';
+@import '../../styles/breakpoint';
+.ST {
+    font-size: 1rem;
+    display: block;
+    @include md {
+        display: grid;
+        grid-template-columns: 34.05em 1fr;
+        grid-column-gap: 2.167em;
+    }
+
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 3.33em;
+        h3 {
+            font-weight: bold;
+            line-height: 123%;
+            font-size: 0.72em;
+            text-transform: uppercase;
+        }
+        button {
+            font-size: 0.72em;
+            &:nth-of-type(2) {
+                color: $danger;
+            }
+        }
+        &Badge {
+            font-size: 0.92em;
+        }
+    }
+    &Body {
+        padding: 1.55em;
+        &Grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            &Profile {
+                width: 8.27em;
+                height: 8.27em;
+                img {
+                    border-radius: 50%;
+                }
+            }
+            &Content {
+                display: flex;
+                justify-content: space-between;
+                font-weight: normal;
+                span {
+                    color: $grey;
+                    padding: 1.07em 0;
+                    font-size: 0.7em;
+                    &:nth-of-type(2) {
+                        color: $text-darker;
+                    }
+                }
+            }
+        }
+        &Flex {
+            display: flex;
+            justify-content: space-between;
+            font-weight: normal;
+            border-bottom: 1px solid #f0f4f9;
+            &:last-of-type {
+                border-bottom: none;
+            }
+            span {
+                color: $grey;
+                padding: 1.07em 0;
+                font-size: 0.7em;
+                &:nth-of-type(2) {
+                    color: $text-darker;
+                }
+            }
+        }
+    }
+}

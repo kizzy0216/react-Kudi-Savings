@@ -1,0 +1,53 @@
+@import '../../styles/variables';
+
+.Transactions {
+    font-size: 1rem;
+    &Card {
+        font-size: 1em;
+        box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
+        color: $grey;
+    }
+    &Table {
+        table {
+            tbody {
+                tr {
+                    td {
+                        font-weight: 400;
+                        padding: 1.1em 0;
+                        button {
+                            color: $sky-blue;
+                            span {
+                                font-size: 0.92em;
+                                line-height: 123%;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &Badge {
+        font-size: 0.92em;
+        text-transform: capitalize;
+    }
+    button[class*='kudi-dip-btn-grouped-active'] {
+        box-shadow: 0px 10px 15px rgba(171, 191, 216, 0.5);
+    }
+}
+.ButtonGroup {
+    padding: 0.4em 1em;
+    background: #e7eef7;
+    border-radius: 3px;
+    button {
+        border-radius: 3px;
+        border: none;
+
+        &:nth-of-type(2) {
+            background: transparent;
+            border: none;
+            span {
+                margin-left: 0.82em;
+            }
+        }
+    }
+}

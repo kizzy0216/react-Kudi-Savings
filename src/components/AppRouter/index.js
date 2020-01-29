@@ -22,6 +22,9 @@ const ZonalHeads = lazy(() =>
 const Transactions = lazy(() =>
     import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
+const SingleTransaction = lazy(() =>
+    import(/* webpackChunkName: "Transaction" */ 'pages/SingleTransaction')
+)
 const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
 )
@@ -46,11 +49,12 @@ const AppRouter = () => (
                     component={() => <Redirect to="/dashboard" />}
                 />
 
-                <PrivateRoute path="/dashboard" component={Dashboard} />
-                <PrivateRoute path="/cashout" component={Cashout} />
-                <PrivateRoute path="/zonal-heads" component={ZonalHeads} />
-                <PrivateRoute path="/settings" component={Settings} />
-                <PrivateRoute path="/transactions" component={Transactions} />
+                <PrivateRoute path="/dashboard"     exact component={Dashboard} />
+                <PrivateRoute path="/cashout"     exact component={Cashout} />
+                <PrivateRoute path="/zonal-heads"     exact component={ZonalHeads} />
+                <PrivateRoute path="/settings"     exact component={Settings} />
+                <PrivateRoute path="/transactions" exact component={Transactions} />
+                <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
                 <PrivateRoute
                     path="/customer-insights"
                     component={CustomerInsights}
