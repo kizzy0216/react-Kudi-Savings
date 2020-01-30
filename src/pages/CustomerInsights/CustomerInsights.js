@@ -49,7 +49,9 @@ const CustomerInsights = () => {
             <Content className={styles.content}>
                 <div className={styles.CI}>
                     <div className={styles.CIFirst}>
-                        <Card></Card>
+                        <Card>
+                            <CardHeader></CardHeader>
+                        </Card>
                         <Card>
                             <CardBody>
                                 <Chart
@@ -74,9 +76,33 @@ const CustomerInsights = () => {
                         </Card>
                     </div>
                     <div className={styles.CISecond}>
-                        <Card></Card>
                         <Card>
-                            <CardHeader>CUSTOMERS</CardHeader>
+                            <CardBody>
+                                <div className={styles.CIFlex}>
+                                    <span className={styles.CIHeader}>
+                                        Savings
+                                    </span>
+                                </div>
+                                <div className={styles.CIFlex}>
+                                    <span>New Plans</span>
+                                    <span>67</span>
+                                </div>
+
+                                <div className={styles.CIFlex}>
+                                    <span>Active Plans</span>
+                                    <span>320</span>
+                                </div>
+
+                                <div className={styles.CIFlex}>
+                                    <span>Inactive Plans</span>
+                                    <span>76</span>
+                                </div>
+                            </CardBody>
+                        </Card>
+                        <Card>
+                            <CardHeader className={styles.CIHeader}>
+                                CUSTOMERS
+                            </CardHeader>
                             <CardBody>
                                 <Chart
                                     type="doughnut2d"
@@ -88,11 +114,11 @@ const CustomerInsights = () => {
                                         valueFontSize: '10',
                                         baseFont: 'HelveticaNeue',
                                         valueFont: 'HelveticaNeue',
-                                        enableSmartLabels: "0",
-                                        pieRadius: "120",
-                                        doughnutRadius: "110",
-                                        showLegend: "0",
-                                        showLabels: "0",
+                                        enableSmartLabels: '0',
+                                        pieRadius: '100',
+                                        doughnutRadius: '90',
+                                        showLegend: '0',
+                                        showLabels: '0',
                                         palettecolors:
                                             '#F7685B,#2ED47A,#FFB946',
                                         theme: 'fusion'
@@ -100,6 +126,20 @@ const CustomerInsights = () => {
                                     dataFormat="JSON"
                                     dataSource={dataSourceDonut}
                                 />
+                                <div className={styles.CIFlex}>
+                                    <span>New </span>
+                                    <span>67</span>
+                                </div>
+
+                                <div className={styles.CIFlex}>
+                                    <span>Active</span>
+                                    <span>320</span>
+                                </div>
+
+                                <div className={styles.CIFlex}>
+                                    <span>Inactive</span>
+                                    <span>76</span>
+                                </div>
                             </CardBody>
                         </Card>
                     </div>

@@ -1,11 +1,13 @@
 @import '../../styles/variables';
 @import '../../styles/breakpoint';
-.ST {
+
+.First {
     font-size: 1rem;
     display: block;
     @include md {
         display: grid;
         grid-template-columns: 34.05em 1fr;
+        grid-row-gap: 1.67em;
         grid-column-gap: 2.167em;
     }
 
@@ -80,6 +82,22 @@
             color: $sky-blue;
             display: flex;
             justify-content: center;
+        }
+    }
+}
+.Second {
+    font-size: 1rem;
+    display: block;
+    margin-top: 1.67em;
+    @include md {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 1.88em;
+    }
+    &Header {
+        h3 {
+            font-size: 0.92em;
+            font-weight: bold;
         }
     }
 }

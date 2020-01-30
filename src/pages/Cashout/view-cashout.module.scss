@@ -1,11 +1,13 @@
 @import '../../styles/variables';
 @import '../../styles/breakpoint';
-.VC {
+
+.First {
     font-size: 1rem;
     display: block;
     @include md {
         display: grid;
         grid-template-columns: 34.05em 1fr;
+        grid-row-gap: 1.67em;
         grid-column-gap: 2.167em;
     }
 
@@ -61,7 +63,7 @@
             display: flex;
             justify-content: space-between;
             font-weight: normal;
-            border-bottom: 1px solid #f0f4f9;
+            border-bottom: 1px solid $light-grey;
             &:last-of-type {
                 border-bottom: none;
             }
@@ -74,13 +76,25 @@
                     text-align: right;
                 }
             }
-            
         }
-        &Button{
-            background: #F8FBFF;
+        &Button {
+            background: #f8fbff;
             color: $sky-blue;
             display: flex;
             justify-content: center;
+        }
+    }
+}
+.Second {
+    font-size: 1rem;
+    display: block;
+
+    margin-top: 1.67em;
+
+    &Header {
+        h3 {
+            font-size: 0.92em;
+            font-weight: bold;
         }
     }
 }

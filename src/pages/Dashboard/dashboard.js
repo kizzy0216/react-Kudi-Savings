@@ -62,10 +62,9 @@ const Dashboard = () => {
                                             styles.Dashboard_center_footer_text
                                         }
                                     >
-                                        {' '}
                                         <Badge variant="success">
-                                            <UpIcon /> <small> 8.5% </small>{' '}
-                                        </Badge>{' '}
+                                            <UpIcon /> <small> 8.5% </small>
+                                        </Badge>
                                         Up from yesterday
                                     </div>
                                 </div>
@@ -85,12 +84,11 @@ const Dashboard = () => {
                                         className={
                                             styles.Dashboard_center_footer_text
                                         }
-                                    >
-                                        {' '}
+                                    >                                    
                                         <Badge variant="danger">
                                             <DownIcon />
                                             <small> 8.5% </small>
-                                        </Badge>{' '}
+                                        </Badge>
                                         Down from yesterday
                                     </div>
                                 </div>
@@ -111,11 +109,10 @@ const Dashboard = () => {
                                             styles.Dashboard_center_footer_text
                                         }
                                     >
-                                        {' '}
                                         <Badge variant="danger">
                                             <DownIcon />
-                                            <small> 8.5% </small>{' '}
-                                        </Badge>{' '}
+                                            <small> 8.5% </small>
+                                        </Badge>
                                         Down from yesterday
                                     </div>
                                 </div>

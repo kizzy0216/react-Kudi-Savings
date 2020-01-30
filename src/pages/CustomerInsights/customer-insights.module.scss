@@ -1,14 +1,31 @@
+@import '../../styles/variables';
 .CI {
     display: grid;
     grid-template-columns: 35.27em 1fr;
     grid-column-gap: 2.61em;
     font-size: 1rem;
-    &First{
-        grid-template-rows: 25.11em 17.5em;
+    &First {
+        display: grid;
+        grid-template-rows: repeat(2, max-content); //25.11em 17.5em;
         grid-row-gap: 2em;
     }
-    &Second{
-        grid-template-rows: 11.55em 31.11em;
+    &Second {
+        display: grid;
+        grid-template-rows: repeat(2, max-content); //11.55em 31.11em;
         grid-row-gap: 2em;
+        
+    }
+    &Flex {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $light-grey;
+        padding: 1.07em 0;
+        &:last-of-type {
+            border: none;
+        }
+    }
+    &Header{
+        text-transform: uppercase;
+        font-weight: bold;
     }
 }

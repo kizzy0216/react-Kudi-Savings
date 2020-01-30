@@ -10,13 +10,13 @@ import {
 } from '@kudi-inc/dip'
 import { SettingsLink, Bin, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
-import styles from './view-cashout.module.scss'
+import styles from './profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
 const ViewCashout = () => {
     return (
         <Fragment>
             <Header>
-                <p> Cashout Request </p>
+                <p> Agent Profile </p>
             </Header>
             <Content className={styles.content}>
                 <div className={styles.contentCard}>

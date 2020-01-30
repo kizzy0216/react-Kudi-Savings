@@ -22,6 +22,9 @@ const Settings = lazy(() =>
 const ZonalHeads = lazy(() =>
     import(/* webpackChunkName: "ZonalHeads" */ 'pages/ZonalHeads')
 )
+const Agents = lazy(() =>
+    import(/* webpackChunkName: "ZonalHeads" */ 'pages/Agents')
+)
 const Transactions = lazy(() =>
     import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
@@ -31,10 +34,12 @@ const SingleTransaction = lazy(() =>
 const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
 )
+const SingleAgent= lazy(() =>
+import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/profile')
+)
 const NotFound = lazy(() =>
     import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
 )
-
 const AppRouter = () => (
     <Router history={history}>
         <Suspense fallback={<AppLoading />}>
@@ -52,13 +57,34 @@ const AppRouter = () => (
                     component={() => <Redirect to="/dashboard" />}
                 />
 
-                <PrivateRoute path="/dashboard"     exact component={Dashboard} />
-                <PrivateRoute path="/cashout"     exact component={Cashout} />
+                <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
-                <PrivateRoute path="/zonal-heads"     exact component={ZonalHeads} />
-                <PrivateRoute path="/settings"     exact component={Settings} />
-                <PrivateRoute path="/transactions" exact component={Transactions} />
-                <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
+                <PrivateRoute
+                    path="/zonal-heads"
+                    exact
+                    component={ZonalHeads}
+                />
+                <PrivateRoute
+                    path="/agents"
+                    exact
+                    component={Agents}
+                />
+                <PrivateRoute
+                    path="/agents/:id"
+                    exact
+                    component={SingleAgent}
+                />
+                <PrivateRoute path="/settings" exact component={Settings} />
+                <PrivateRoute
+                    path="/transactions"
+                    exact
+                    component={Transactions}
+                />
+                <PrivateRoute
+                    path="/transactions/:id"
+                    component={SingleTransaction}
+                />
                 <PrivateRoute
                     path="/customer-insights"
                     component={CustomerInsights}

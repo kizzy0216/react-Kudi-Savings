@@ -1,0 +1,41 @@
+@import '../../../styles/variables';
+.progress {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+
+    &Info {
+        font-size: 1em;
+        margin-right: 0.77em;
+        color: #748cad;
+        font-weight: normal;
+
+        span {
+            font-weight: 500;
+            display: inline-block;
+            margin-right: 0.28em;
+            color: initial;
+        }
+    }
+
+    &Wrapper {
+        background: #e7eef7;
+        border-radius: 10px;
+        width: 4.44em;
+        height: 0.56em;
+    }
+
+    &Bar {
+        border-radius: 10px;
+        height: 100%;
+    }
+}
+.success {
+    background-color: $kudi-green;
+}
+.pending {
+    background-color: #ffc657;
+}
+.warning {
+    background-color: $danger;
+}

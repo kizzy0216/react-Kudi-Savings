@@ -28,7 +28,7 @@
     .mobileFilter {
         display: flex;
         padding-left: 20px !important;
-        border-left: 1px solid #f0f4f9 !important;
+        border-left: 1px solid $light-grey !important;
 
         @include md {
             display: none;
