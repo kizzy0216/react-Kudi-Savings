@@ -1,3 +1,14 @@
-.CustomerInsights{
-
+.CI {
+    display: grid;
+    grid-template-columns: 35.27em 1fr;
+    grid-column-gap: 2.61em;
+    font-size: 1rem;
+    &First{
+        grid-template-rows: 25.11em 17.5em;
+        grid-row-gap: 2em;
+    }
+    &Second{
+        grid-template-rows: 11.55em 31.11em;
+        grid-row-gap: 2em;
+    }
 }

@@ -13,6 +13,9 @@ const Dashboard = lazy(() =>
 const Cashout = lazy(() =>
     import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
 )
+const ViewCashout = lazy(() =>
+    import(/* webpackChunkName: "Transaction" */ 'pages/Cashout/view-cashout')
+)
 const Settings = lazy(() =>
     import(/* webpackChunkName: "Settings" */ 'pages/Settings')
 )
@@ -51,6 +54,7 @@ const AppRouter = () => (
 
                 <PrivateRoute path="/dashboard"     exact component={Dashboard} />
                 <PrivateRoute path="/cashout"     exact component={Cashout} />
+                <PrivateRoute path="/cashout/:id" component={ViewCashout} />
                 <PrivateRoute path="/zonal-heads"     exact component={ZonalHeads} />
                 <PrivateRoute path="/settings"     exact component={Settings} />
                 <PrivateRoute path="/transactions" exact component={Transactions} />

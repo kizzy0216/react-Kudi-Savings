@@ -97,6 +97,7 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
+                                                onClick={() => history.push(`${url}/1234`)}
                                             >
                                                 View
                                             </Button>
@@ -124,6 +125,7 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
+                                                onClick={() => history.push(`${url}/34`)}
                                             >
                                                 View
                                             </Button>
@@ -151,6 +153,7 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
+                                                onClick={() => history.push(`${url}/134`)}
                                             >
                                                 View
                                             </Button>

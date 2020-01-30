@@ -9,21 +9,21 @@ import {
 } from '@kudi-inc/dip'
 import { SettingsLink, Bin, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
-import styles from './singleTransaction.module.scss'
+import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/images/agent.png'
-const Transaction = () => {
+const ViewCashout = () => {
     return (
         <Fragment>
             <Header>
-                <p> Transaction Overview </p>
+                <p> Cashout Request </p>
             </Header>
             <Content className={styles.content}>
                 <div className={styles.contentCard}>
-                    <div className={styles.ST}>
+                    <div className={styles.VC}>
                         <Card>
                             <CardHeader>
-                                <div className={styles.STHeader}>
-                                    <h3> AGENT INFORMATION</h3>
+                                <div className={styles.VCHeader}>
+                                    <h3> ZA INFORMATION</h3>
 
                                     <Button
                                         variant="flat"
@@ -36,12 +36,12 @@ const Transaction = () => {
                                     </Button>
                                 </div>
                             </CardHeader>
-                            <CardBody className={styles.STBody}>
-                                <div className={styles.STBodyGrid}>
-                                    <div className={styles.STBodyGridProfile}>
+                            <CardBody className={styles.VCBody}>
+                                <div className={styles.VCBodyGrid}>
+                                    <div className={styles.VCBodyGridProfile}>
                                         <img
                                             className={
-                                                styles.STBodyGridProfileImg
+                                                styles.VCBodyGridProfileImg
                                             }
                                             src={AgentImg}
                                             alt="agent"
@@ -49,26 +49,26 @@ const Transaction = () => {
                                     </div>
                                     <div>
                                         <div
-                                            className={styles.STBodyGridContent}
+                                            className={styles.VCBodyGridContent}
                                         >
                                             <span>Name</span>
                                             <span> Firstname Lastname</span>
                                         </div>
                                         <div
-                                            className={styles.STBodyGridContent}
+                                            className={styles.VCBodyGridContent}
                                         >
                                             <span>Phone number</span>
                                             <span> 08062361452</span>
                                         </div>
                                         <div
-                                            className={styles.STBodyGridContent}
+                                            className={styles.VCBodyGridContent}
                                         >
                                             <span>Gender</span>
                                             <span>Male</span>
                                         </div>
 
                                         <div
-                                            className={styles.STBodyGridContent}
+                                            className={styles.VCBodyGridContent}
                                         >
                                             <span>Address</span>
                                             <span>Streetname, lga, state</span>
@@ -79,34 +79,34 @@ const Transaction = () => {
                         </Card>
                         <Card>
                             <CardHeader>
-                                <div className={styles.STHeader}>
+                                <div className={styles.VCHeader}>
                                     <h3> Cashout</h3>
 
                                     <Badge
-                                        className={styles.STHeaderBadge}
+                                        className={styles.VCHeaderBadge}
                                         variant="success"
                                     >
                                         Success
                                     </Badge>
                                 </div>
                             </CardHeader>
-                            <CardBody className={styles.STBody}>
-                                <div className={styles.STBodyFlex}>
+                            <CardBody className={styles.VCBody}>
+                                <div className={styles.VCBodyFlex}>
                                     <span>Date</span>
                                     <span> 2 June, 2019</span>
                                 </div>
-                                <div className={styles.STBodyFlex}>
+                                <div className={styles.VCBodyFlex}>
                                     <span>Amount</span>
                                     <span> ₦100,000</span>
                                 </div>
-                                <div className={styles.STBodyFlex}>
+                                <div className={styles.VCBodyFlex}>
                                     <span> Reference ID</span>
                                     <span>
                                         AAP-DSTV-A2022-1a56c83e-a11a-4612-b2b3-bb3c1b376ef6
                                     </span>
                                 </div>
                             </CardBody>
-                            <CardFooter className={styles.STBodyButton}>
+                            <CardFooter className={styles.VCBodyButton}>
                                 <Button
                                     variant="flat"
                                     type="button"
@@ -123,4 +123,4 @@ const Transaction = () => {
         </Fragment>
     )
 }
-export default Transaction
+export default ViewCashout
