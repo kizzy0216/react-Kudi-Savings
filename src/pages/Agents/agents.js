@@ -10,7 +10,7 @@ import {
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-import { Eye } from 'assets/svg'
+import { Eye, AgentImg } from 'assets/svg'
 import styles from './agents.module.scss'
 const Agents = ({ history }) => {
     let { url } = useRouteMatch()
@@ -58,6 +58,10 @@ const Agents = ({ history }) => {
                                 },
                                 { key: 'start_date', render: 'Start Date' },
                                 {
+                                    key: 'user',
+                                    render: 'User'
+                                },
+                                {
                                     key: 'agentName',
                                     render: 'Full Name'
                                 },
@@ -76,7 +80,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
@@ -101,7 +105,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N19,000,500',
-
+user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -127,7 +131,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -152,6 +156,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -176,7 +181,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -201,7 +206,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -226,7 +231,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -251,7 +256,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -273,6 +278,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -294,6 +300,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -315,6 +322,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
+                                    user:<AgentImg/>,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar

@@ -1,9 +1,6 @@
 @import '../../styles/variables';
 .CI {
-    div[class*="progressBar_progressWrapper"]{
-        width:100%;
-        height: 0.285em;
-    }
+    
     
     display: grid;
     grid-template-columns: 35.27em 1fr;
@@ -11,7 +8,7 @@
     font-size: 1rem;
     &First {
         display: grid;
-        grid-template-rows: repeat(2, 1fr); //25.11em 17.5em;
+        grid-template-rows: repeat(2, max-content); //25.11em 17.5em;
         grid-row-gap: 2em;
         &Header{
             &Flex{
@@ -56,14 +53,24 @@
         &:last-of-type {
             border: none;
         }
-        Button{
-
+        &Footer{
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            padding: 1.44em 0 1em;
+            >*{
+                color:$sky-blue
+            }
         }
       
     }
     &Header{
         text-transform: uppercase;
         font-weight: bold;
+    }
+    div[class*="progressBar_progressWrapper"]{
+        width:100%;
+        height: 0.285em;
     }
 }
 :global{

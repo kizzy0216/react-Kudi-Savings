@@ -11,7 +11,7 @@ import Calendar from 'react-calendar'
 import moment from 'moment'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-
+import {DownloadIcon} from "assets/svg"
 import styles from './customer-insights.module.scss'
 import Chart from 'components/Chart'
 
@@ -143,7 +143,7 @@ const CustomerInsights = () => {
                                 <Chart
                                     dataSource={dataSource}
                                     type="splinearea"
-                                    height={320}
+                                    height={330}
                                     chart={{
                                         caption: '',
                                         yaxisname: '',
@@ -226,6 +226,12 @@ const CustomerInsights = () => {
                                 <div className={styles.CIFlex}>
                                     <span>Inactive</span>
                                     <span>76</span>
+                                </div>
+                                <div className={styles.CIFlexFooter}>
+                                <Button variant="flat" icon={<DownloadIcon />}>
+                    Dowload Report
+                </Button>
+                                   
                                 </div>
                             </CardBody>
                         </Card>
