@@ -12,7 +12,7 @@ const ProgressBar = ({ percentage, className }) => {
             : 'success'
     return (
         <div className={cx(styles.progress, className)}>
-            <p className={styles.progressInfo}>{percentage}</p>
+            <p className={styles.progressInfo}></p>
             <div className={styles.progressWrapper}>
                 <div
                     style={{ width: `${percentage}%` }}

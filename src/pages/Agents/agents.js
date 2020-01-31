@@ -1,28 +1,51 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import {
     Card,
     CardBody,
     Button,
-    Badge,
-    ButtonGroup,
-    Table
+    Table,
+    CardHeader,
+    ButtonGroup
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-import { SettingsLink, Bin, Eye } from 'assets/svg'
+import { Eye } from 'assets/svg'
 import styles from './agents.module.scss'
 const Agents = ({ history }) => {
     let { url } = useRouteMatch()
+    let [active, setActive] = useState('all')
     return (
         <Fragment>
             <Header>
                 <p> Agents </p>
-
                 <Button>Add new agent</Button>
             </Header>
             <Content className={styles.content}>
                 <Card className={styles.contentCard}>
+                    <CardHeader className={styles.Header}>
+                        Transaction History
+                        <ButtonGroup>
+                            <Button
+                                active={active === 'all'}
+                                onClick={() => setActive('all')}
+                            >
+                                All
+                            </Button>
+                            <Button
+                                active={active === 'highest'}
+                                onClick={() => setActive('highest')}
+                            >
+                                Highest
+                            </Button>
+                            <Button
+                                active={active === 'highest'}
+                                onClick={() => setActive('highest')}
+                            >
+                                Lowest
+                            </Button>
+                        </ButtonGroup>
+                    </CardHeader>
                     <CardBody className={styles.Agent}>
                         <Table
                             className={styles.AgentTable}
@@ -81,7 +104,7 @@ const Agents = ({ history }) => {
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
-                                            percentage={70}
+                                            percentage={20}
                                         />
                                     ),
                                     action: (
@@ -128,7 +151,7 @@ const Agents = ({ history }) => {
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
-                                            percentage={70}
+                                            percentage={49}
                                         />
                                     ),
                                     action: (
@@ -153,7 +176,7 @@ const Agents = ({ history }) => {
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
-                                            percentage={70}
+                                            percentage={34}
                                         />
                                     ),
                                     action: (
@@ -200,7 +223,7 @@ const Agents = ({ history }) => {
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
-                                            percentage={70}
+                                            percentage={20}
                                         />
                                     ),
                                     action: (

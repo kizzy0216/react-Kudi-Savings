@@ -8,15 +8,18 @@ import {
     CardFooter,
     Table
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye } from 'assets/svg'
+import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
+import { ProgressBar } from 'components/Common'
 import styles from './profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
-const ViewCashout = () => {
+const ViewCashout = ({ history }) => {
     return (
         <Fragment>
             <Header>
-                <p> Agent Profile </p>
+                <p>
+                    <ChevronLeft role="button" onClick={()=>console.log("hello")} /> Agent Profile{' '}
+                </p>
             </Header>
             <Content className={styles.content}>
                 <div className={styles.contentCard}>
@@ -24,7 +27,7 @@ const ViewCashout = () => {
                         <Card>
                             <CardHeader>
                                 <div className={styles.FirstHeader}>
-                                    <h3> ZA INFORMATION</h3>
+                                    <h3> AGENT INFORMATION</h3>
 
                                     <Button
                                         variant="flat"
@@ -91,7 +94,7 @@ const ViewCashout = () => {
                         <Card>
                             <CardHeader>
                                 <div className={styles.FirstHeader}>
-                                    <h3> Cashout</h3>
+                                    <h3> SIGNUP INFORMATION</h3>
 
                                     <Badge
                                         className={styles.FirstHeaderBadge}
@@ -103,18 +106,20 @@ const ViewCashout = () => {
                             </CardHeader>
                             <CardBody className={styles.FirstBody}>
                                 <div className={styles.FirstBodyFlex}>
-                                    <span>Date</span>
+                                    <span>Date Onboarded:</span>
                                     <span> 2 June, 2019</span>
                                 </div>
                                 <div className={styles.FirstBodyFlex}>
-                                    <span>Amount</span>
-                                    <span> ₦100,000</span>
+                                    <span>Active Customers: </span>
+                                    <span> 130</span>
                                 </div>
                                 <div className={styles.FirstBodyFlex}>
-                                    <span> Reference ID</span>
-                                    <span>
-                                        AAP-DSTV-A2022-1a56c83e-a11a-4612-b2b3-bb3c1b376ef6
-                                    </span>
+                                    <span> Inactive Customers </span>
+                                    <span>56</span>
+                                </div>
+                                <div className={styles.FirstBodyFlex}>
+                                    <span> Total Customers </span>
+                                    <span>56</span>
                                 </div>
                             </CardBody>
                             <CardFooter className={styles.FirstBodyButton}>
@@ -123,108 +128,65 @@ const ViewCashout = () => {
                                     type="button"
                                     icon={<Eye />}
                                 >
-                                    {' '}
-                                    View
+                                    View Customers
                                 </Button>
                             </CardFooter>
                         </Card>
                     </div>
                     <div className={styles.Second}>
                         <Card>
-                            <CardHeader>
-                                <div className={styles.SecondHeader}>
-                                    <h3> CUSTOMER CASH OUT REQUEST</h3>
+                            <div className={styles.Wallet}>
+                                <CardBody className={styles.WalletContent}>
+                                    <p>Wallet Balance</p>
+                                    <h2>N1,825,000</h2>
+                                    <Button
+                                        variant="flat"
+                                        type="button"
+                                        icon={<Eye />}
+                                    >
+                                        View History
+                                    </Button>
+                                </CardBody>
+                                <div className={styles.Progress}>
+                                    <CardBody
+                                        className={styles.ProgressCardBody}
+                                    >
+                                        <p>Badge</p>
+                                        <Badge variant="success">
+                                            {' '}
+                                            <UpIcon />
+                                            <small> 8.5% </small>
+                                        </Badge>
+                                    </CardBody>
+                                    <CardBody
+                                        className={styles.ProgressCardBody}
+                                    >
+                                        <p>Progress</p>
+                                        <ProgressBar
+                                            className={styles.progress}
+                                            percentage={70}
+                                        />
+                                    </CardBody>
                                 </div>
-                            </CardHeader>
-                            <CardBody>
-                            <Table
-                            className={styles.CashoutTable}
-                            column={[
-                                { key: 'date', render: 'Date' },
-                                {
-                                    key: 'agentName',
-                                    render: 'Agent Name'
-                                },
-                                { key: 'amount', render: 'Amount' },
-                                {
-                                    key: 'walletBalance',
-                                    render: 'Current Balance'
-                                },
-                                {
-                                    key: 'status',
-                                    render: 'Status'
-                                },
-                                {
-                                    key: 'action',
-                                    render: ''
-                                }
-                            ]}
-                            data={[
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N19,000,500',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                  
-                                },
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N19,000,500',
-                                    walletBalance: 'N2,000',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                 
-                                },
-                               
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N19,800',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                   
-                                },
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N9,500',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                   
-                                },
-                               
-                            ]}
-                        />
-                            </CardBody>
+                            </div>
+                        </Card>
+                        <Card>
+                            <div className={styles.Withdrawal}>
+                                <div className={styles.WithdrawalContent}>
+                                    <CardBody className={styles.WithdrawalContentBody}>
+                                        <p>cash Collected</p>
+                                        <h4>N1,825,000</h4>
+                                    </CardBody>
+                                    <CardBody>
+                                        <p>cash Withdrawn</p>
+                                        <h4>N1,825,000</h4>
+                                    </CardBody>
+                                </div>
+
+                                <CardBody className={styles.ProgressCardBody}>
+                                    <Button type="button">Reconcile</Button>
+                                </CardBody>
+                            </div>
                         </Card>
                     </div>
                 </div>

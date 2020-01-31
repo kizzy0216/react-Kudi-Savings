@@ -61,7 +61,7 @@
     }
     .filters {
         @include md {
-            margin-top: 0.27em ;
+            margin-top: 0.27em;
             margin-bottom: 2.22em;
         }
     }
@@ -98,6 +98,11 @@
                 line-height: 120%;
 
                 padding: 0;
+            }
+            svg {
+                width: 0.5em;
+                margin-right: 0.58em;
+                cursor: pointer;
             }
         }
 

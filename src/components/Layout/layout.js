@@ -1,5 +1,5 @@
 import React from 'react'
-import { SideBarItem, Button } from '@kudi-inc/dip'
+import { SideBarItem } from '@kudi-inc/dip'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'

@@ -1,19 +1,21 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import {
     Card,
     CardBody,
+    CardHeader,
     Table,
     ButtonGroup,
     Button,
     Badge
 } from '@kudi-inc/dip'
-import { useRouteMatch} from 'react-router-dom'
+import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { Eye } from 'assets/svg'
 import styles from './transactions.module.scss'
 
-const Transactions = ({history}) => {
+const Transactions = ({ history }) => {
     let { url } = useRouteMatch()
+    let [active, setActive]=useState("all")
     return (
         <Fragment>
             <Header>
@@ -21,6 +23,15 @@ const Transactions = ({history}) => {
             </Header>
             <Content className={styles.content}>
                 <Card className={styles.contentCard}>
+                    <CardHeader className={styles.Header}>
+                        Transaction History
+                        <ButtonGroup>
+                            <Button active={active==="all"} onClick={()=>setActive("all")}>All</Button>
+                            <Button active={active==="wallet"}  onClick={()=>setActive("wallet")}>Wallet</Button>
+                            <Button  active={active==="bankAccount"} onClick={()=>setActive("bankAccount")}>Bank Account</Button>
+                    
+                        </ButtonGroup>
+                    </CardHeader>
                     <CardBody className={styles.Transactions}>
                         <div className={styles.TransactionsHeader}>
                             <Table
@@ -69,9 +80,11 @@ const Transactions = ({history}) => {
                                                 icon={<Eye />}
                                                 variant="flat"
                                                 type="button"
-                                                onClick={() => history.push(`${url}/1234`)}
+                                                onClick={() =>
+                                                    history.push(`${url}/1234`)
+                                                }
                                             >
-                                               View
+                                                View
                                             </Button>
                                         )
                                     },
@@ -97,7 +110,9 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
-                                                onClick={() => history.push(`${url}/1234`)}
+                                                onClick={() =>
+                                                    history.push(`${url}/1234`)
+                                                }
                                             >
                                                 View
                                             </Button>
@@ -125,7 +140,9 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
-                                                onClick={() => history.push(`${url}/34`)}
+                                                onClick={() =>
+                                                    history.push(`${url}/34`)
+                                                }
                                             >
                                                 View
                                             </Button>
@@ -153,7 +170,9 @@ const Transactions = ({history}) => {
                                                 }
                                                 icon={<Eye />}
                                                 variant="flat"
-                                                onClick={() => history.push(`${url}/134`)}
+                                                onClick={() =>
+                                                    history.push(`${url}/134`)
+                                                }
                                             >
                                                 View
                                             </Button>
