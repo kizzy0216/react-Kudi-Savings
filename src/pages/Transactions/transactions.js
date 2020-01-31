@@ -15,7 +15,7 @@ import styles from './transactions.module.scss'
 
 const Transactions = ({ history }) => {
     let { url } = useRouteMatch()
-    let [active, setActive]=useState("all")
+    let [active, setActive] = useState('all')
     return (
         <Fragment>
             <Header>
@@ -26,10 +26,24 @@ const Transactions = ({ history }) => {
                     <CardHeader className={styles.Header}>
                         Transaction History
                         <ButtonGroup>
-                            <Button active={active==="all"} onClick={()=>setActive("all")}>All</Button>
-                            <Button active={active==="wallet"}  onClick={()=>setActive("wallet")}>Wallet</Button>
-                            <Button  active={active==="bankAccount"} onClick={()=>setActive("bankAccount")}>Bank Account</Button>
-                    
+                            <Button
+                                active={active === 'all'}
+                                onClick={() => setActive('all')}
+                            >
+                                All
+                            </Button>
+                            <Button
+                                active={active === 'wallet'}
+                                onClick={() => setActive('wallet')}
+                            >
+                                Wallet
+                            </Button>
+                            <Button
+                                active={active === 'bankAccount'}
+                                onClick={() => setActive('bankAccount')}
+                            >
+                                Bank Account
+                            </Button>
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.Transactions}>

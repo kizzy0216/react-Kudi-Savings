@@ -25,12 +25,12 @@ let dataSource = {
 }
 
 const Chart = props => {
-    const { chart, type, dataSource: data } = props
+    const { chart, type, dataSource: data , height} = props
     dataSource = { chart: { ...dataSource.chart, ...chart }, data }
     const chartConfigs = {
         type,
         width: '100%',
-        height: '220',
+        height,
         dataFormat: 'json',
         dataLoadStartMessage: 'Please wait, chart is loading the data....',
         dataSource

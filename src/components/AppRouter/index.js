@@ -25,6 +25,9 @@ const ZonalHeads = lazy(() =>
 const Agents = lazy(() =>
     import(/* webpackChunkName: "ZonalHeads" */ 'pages/Agents')
 )
+const CreateAgent = lazy(() =>
+    import(/* webpackChunkName: "ZonalHeads" */ 'pages/Agents/create-agent')
+)
 const Transactions = lazy(() =>
     import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
@@ -34,8 +37,8 @@ const SingleTransaction = lazy(() =>
 const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
 )
-const SingleAgent= lazy(() =>
-import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
+const SingleAgent = lazy(() =>
+    import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
 const NotFound = lazy(() =>
     import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
@@ -65,10 +68,11 @@ const AppRouter = () => (
                     exact
                     component={ZonalHeads}
                 />
+                <PrivateRoute path="/agents" exact component={Agents} />
                 <PrivateRoute
-                    path="/agents"
+                    path="/create-agent"
                     exact
-                    component={Agents}
+                    component={CreateAgent}
                 />
                 <PrivateRoute
                     path="/agents/:id"

@@ -1,6 +1,17 @@
-import React, { Fragment } from 'react'
-import { Card, CardBody, CardHeader, Button, Badge } from '@kudi-inc/dip'
+import React, { Fragment, useState } from 'react'
+import {
+    Card,
+    CardBody,
+    CardHeader,
+    Button,
+    DateRangePicker
+} from '@kudi-inc/dip'
+import cx from 'classnames'
+import Calendar from 'react-calendar'
+import moment from 'moment'
 import { Header, Content } from 'components/Layout'
+import { ProgressBar } from 'components/Common'
+
 import styles from './customer-insights.module.scss'
 import Chart from 'components/Chart'
 
@@ -41,6 +52,19 @@ const dataSourceDonut = [
     }
 ]
 const CustomerInsights = () => {
+    let [date, setDate] = useState(new Date())
+    const [startDate, setStartDate] = useState(moment())
+    const [endDate, setEndDate] = useState(moment().add(1, 'months'))
+    const [focusedInput, setfocusedInput] = useState(null)
+
+    const onDatesChange = ({ startDate, endDate }) => {
+        setStartDate(startDate)
+        setEndDate(endDate)
+    }
+
+    const onFocusChange = focusedInput => {
+        setfocusedInput(focusedInput)
+    }
     return (
         <Fragment>
             <Header>
@@ -50,13 +74,76 @@ const CustomerInsights = () => {
                 <div className={styles.CI}>
                     <div className={styles.CIFirst}>
                         <Card>
-                            <CardHeader></CardHeader>
+                            <CardHeader className={styles.CIFirstHeader}>
+                                <div className={styles.CIFirstHeaderFlex}>
+                                    <h2>65 new customers</h2>
+                                    <div className={styles.CIFirstHeaderFlex}>
+                                        <div>
+                                            <DateRangePicker
+                                                onDatesChange={onDatesChange}
+                                                onFocusChange={false}
+                                                displayFormat="DD MMM, YY"
+                                                focusedInput={focusedInput}
+                                                startDate={startDate}
+                                                endDate={endDate}
+                                                className={styles.CIFirstHeaderFlexDate}
+                                            />
+                                        </div>
+                                        {/* <div
+                                            className={
+                                                styles.CIFirstHeaderDropdown
+                                            }
+                                        >
+                                            <span>Show:</span>
+                                            <Button
+                                                className={
+                                                    styles.CIFirstHeaderDropdownButton
+                                                }
+                                                value="weekly"
+                                                options={[
+                                                    {
+                                                        value: 'daily',
+                                                        text: 'Daily'
+                                                    },
+                                                    {
+                                                        value: 'weekly',
+                                                        text: 'Weekly'
+                                                    },
+                                                    {
+                                                        value: 'pending',
+                                                        text: 'Monthly'
+                                                    },
+                                                    {
+                                                        value: 'paused',
+                                                        text: 'Yearly'
+                                                    }
+                                                ]}
+                                                dropdown
+                                            />
+                                        </div> */}
+                                    </div>
+                                </div>
+                                <ProgressBar
+                                    className={cx(
+                                        styles.progress,
+                                        styles.Progress
+                                    )}
+                                    percentage={85}
+                                />
+                            </CardHeader>
+                            <CardBody>
+                                <Calendar
+                                    onChange={date => setDate(date)}
+                                    value={date}
+                                />
+                            </CardBody>
                         </Card>
                         <Card>
                             <CardBody>
                                 <Chart
                                     dataSource={dataSource}
                                     type="splinearea"
+                                    height={320}
                                     chart={{
                                         caption: '',
                                         yaxisname: '',

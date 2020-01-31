@@ -84,7 +84,7 @@ const Dashboard = () => {
                                         className={
                                             styles.Dashboard_center_footer_text
                                         }
-                                    >                                    
+                                    >
                                         <Badge variant="danger">
                                             <DownIcon />
                                             <small> 8.5% </small>
@@ -326,6 +326,7 @@ const Dashboard = () => {
                                     <Chart
                                         dataSource={dataSource}
                                         type="splinearea"
+                                        height={220}
                                         chart={{
                                             caption: '',
                                             yaxisname: '',

@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, { useState } from 'react'
 import { Table, Card, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Eye } from 'assets/svg'
@@ -9,30 +9,30 @@ const Customers = ({ history }) => {
     return (
         <div>
             <Card>
-            <CardHeader className={styles.Header}>
-                        Customers
-                        <ButtonGroup>
-                            <Button
-                                active={active === 'all'}
-                                onClick={() => setActive('all')}
-                            >
-                                All
-                            </Button>
-                            <Button
-                                active={active === 'highest'}
-                                onClick={() => setActive('highest')}
-                            >
-                                Highest
-                            </Button>
-                            <Button
-                                active={active === 'highest'}
-                                onClick={() => setActive('highest')}
-                            >
-                                Lowest
-                            </Button>
-                        </ButtonGroup>
-                    </CardHeader>
-                   
+                <CardHeader className={styles.Header}>
+                    Customers
+                    <ButtonGroup>
+                        <Button
+                            active={active === 'all'}
+                            onClick={() => setActive('all')}
+                        >
+                            All
+                        </Button>
+                        <Button
+                            active={active === 'highest'}
+                            onClick={() => setActive('highest')}
+                        >
+                            Highest
+                        </Button>
+                        <Button
+                            active={active === 'highest'}
+                            onClick={() => setActive('highest')}
+                        >
+                            Lowest
+                        </Button>
+                    </ButtonGroup>
+                </CardHeader>
+
                 <Table
                     className={styles.CashoutTable}
                     column={[
@@ -45,7 +45,7 @@ const Customers = ({ history }) => {
                             key: 'walletNumber',
                             render: 'Current Balance'
                         },
-                      
+
                         {
                             key: 'savingsPlan',
                             render: 'Savings Plan'

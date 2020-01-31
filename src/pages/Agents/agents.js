@@ -19,7 +19,9 @@ const Agents = ({ history }) => {
         <Fragment>
             <Header>
                 <p> Agents </p>
-                <Button>Add new agent</Button>
+                <Button onClick={() => history.push('/create-agent')}>
+                    Add new agent
+                </Button>
             </Header>
             <Content className={styles.content}>
                 <Card className={styles.contentCard}>

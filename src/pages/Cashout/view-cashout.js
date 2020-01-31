@@ -137,93 +137,96 @@ const ViewCashout = () => {
                                 </div>
                             </CardHeader>
                             <CardBody>
-                            <Table
-                            className={styles.CashoutTable}
-                            column={[
-                                { key: 'date', render: 'Date' },
-                                {
-                                    key: 'agentName',
-                                    render: 'Agent Name'
-                                },
-                                { key: 'amount', render: 'Amount' },
-                                {
-                                    key: 'walletBalance',
-                                    render: 'Current Balance'
-                                },
-                                {
-                                    key: 'status',
-                                    render: 'Status'
-                                },
-                                {
-                                    key: 'action',
-                                    render: ''
-                                }
-                            ]}
-                            data={[
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N19,000,500',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                  
-                                },
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N19,000,500',
-                                    walletBalance: 'N2,000',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                 
-                                },
-                               
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N19,800',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                   
-                                },
-                                {
-                                    date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    walletBalance: 'N9,500',
-                                    status: (
-                                        <Badge
-                                            variant="warning"
-                                            className={styles.CashoutBadge}
-                                        >
-                                            Pending
-                                        </Badge>
-                                    ),
-                                   
-                                },
-                               
-                            ]}
-                        />
+                                <Table
+                                    className={styles.CashoutTable}
+                                    column={[
+                                        { key: 'date', render: 'Date' },
+                                        {
+                                            key: 'agentName',
+                                            render: 'Agent Name'
+                                        },
+                                        { key: 'amount', render: 'Amount' },
+                                        {
+                                            key: 'walletBalance',
+                                            render: 'Current Balance'
+                                        },
+                                        {
+                                            key: 'status',
+                                            render: 'Status'
+                                        },
+                                        {
+                                            key: 'action',
+                                            render: ''
+                                        }
+                                    ]}
+                                    data={[
+                                        {
+                                            date: '02 Jun 19',
+                                            agentName: 'Kunle Afolayan',
+                                            amount: 'N200',
+                                            walletBalance: 'N19,000,500',
+                                            status: (
+                                                <Badge
+                                                    variant="warning"
+                                                    className={
+                                                        styles.CashoutBadge
+                                                    }
+                                                >
+                                                    Pending
+                                                </Badge>
+                                            )
+                                        },
+                                        {
+                                            date: '02 Jun 19',
+                                            agentName: 'Kunle Afolayan',
+                                            amount: 'N19,000,500',
+                                            walletBalance: 'N2,000',
+                                            status: (
+                                                <Badge
+                                                    variant="warning"
+                                                    className={
+                                                        styles.CashoutBadge
+                                                    }
+                                                >
+                                                    Pending
+                                                </Badge>
+                                            )
+                                        },
+
+                                        {
+                                            date: '02 Jun 19',
+                                            agentName: 'Kunle Afolayan',
+                                            amount: 'N200',
+                                            walletBalance: 'N19,800',
+                                            status: (
+                                                <Badge
+                                                    variant="warning"
+                                                    className={
+                                                        styles.CashoutBadge
+                                                    }
+                                                >
+                                                    Pending
+                                                </Badge>
+                                            )
+                                        },
+                                        {
+                                            date: '02 Jun 19',
+                                            agentName: 'Kunle Afolayan',
+                                            amount: 'N200',
+                                            walletBalance: 'N9,500',
+                                            status: (
+                                                <Badge
+                                                    variant="warning"
+                                                    className={
+                                                        styles.CashoutBadge
+                                                    }
+                                                >
+                                                    Pending
+                                                </Badge>
+                                            )
+                                        }
+                                    ]}
+                                />
                             </CardBody>
                         </Card>
                     </div>

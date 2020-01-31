@@ -35,35 +35,6 @@ const Filter = () => {
                 startDate={startDate}
                 endDate={endDate}
             />
-            {/* <ButtonGroup className={cx(styles.grpBtn, 'hideOnMobile')}>
-        <Button active>All</Button>
-        <Button
-          value="active"
-          options={[
-            { value: 'active', text: 'Active' },
-            { value: 'pending', text: 'Pending' },
-            { value: 'paused', text: 'Paused' },
-            { value: 'deleted', text: 'Deleted' }
-          ]}
-          dropdown
-        >
-          Select
-        </Button>
-      </ButtonGroup>
-      <Button
-        className={cx(styles.mobileFilter)}
-        value="active"
-        options={[
-          { value: 'active', text: 'Active' },
-          { value: 'pending', text: 'Pending' },
-          { value: 'paused', text: 'Paused' },
-          { value: 'deleted', text: 'Deleted' }
-        ]}
-        dropdown
-      >
-        Select
-      </Button>
-     */}
         </Filters>
     )
 }
