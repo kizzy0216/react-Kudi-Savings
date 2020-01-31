@@ -88,7 +88,7 @@
 .Second {
     font-size: 1rem;
     display: block;
-    margin-top: 1.67em;
+    margin: 1.67em 0;
     @include md {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -100,6 +100,9 @@
             font-weight: bold;
         }
     }
+}
+.Third{
+
 }
 .Wallet {
     display: grid;
@@ -176,3 +179,4 @@
         }
     }
 }
+

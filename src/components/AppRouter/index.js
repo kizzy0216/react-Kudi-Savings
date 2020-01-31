@@ -35,7 +35,7 @@ const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
 )
 const SingleAgent= lazy(() =>
-import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/profile')
+import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
 const NotFound = lazy(() =>
     import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')

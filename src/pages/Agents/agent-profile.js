@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import {
     Card,
     CardBody,
@@ -11,14 +11,20 @@ import {
 import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-import styles from './profile.module.scss'
+import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
+import Customers from './customers'
 const ViewCashout = ({ history }) => {
+    let [show, setShow] = useState(false)
     return (
         <Fragment>
             <Header>
                 <p>
-                    <ChevronLeft role="button" onClick={()=>console.log("hello")} /> Agent Profile{' '}
+                    <ChevronLeft
+                        role="button"
+                        onClick={() => history.goBack()}
+                    />
+                    Agent Profile
                 </p>
             </Header>
             <Content className={styles.content}>
@@ -127,8 +133,9 @@ const ViewCashout = ({ history }) => {
                                     variant="flat"
                                     type="button"
                                     icon={<Eye />}
+                                    onClick={() => setShow(!show)}
                                 >
-                                    View Customers
+                                    {show ? 'Hide ' : 'View '}Customers
                                 </Button>
                             </CardFooter>
                         </Card>
@@ -173,7 +180,9 @@ const ViewCashout = ({ history }) => {
                         <Card>
                             <div className={styles.Withdrawal}>
                                 <div className={styles.WithdrawalContent}>
-                                    <CardBody className={styles.WithdrawalContentBody}>
+                                    <CardBody
+                                        className={styles.WithdrawalContentBody}
+                                    >
                                         <p>cash Collected</p>
                                         <h4>N1,825,000</h4>
                                     </CardBody>
@@ -189,6 +198,7 @@ const ViewCashout = ({ history }) => {
                             </div>
                         </Card>
                     </div>
+                    <div className={styles.Third}>{show && <Customers />}</div>
                 </div>
             </Content>
         </Fragment>

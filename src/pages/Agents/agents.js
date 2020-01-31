@@ -24,7 +24,7 @@ const Agents = ({ history }) => {
             <Content className={styles.content}>
                 <Card className={styles.contentCard}>
                     <CardHeader className={styles.Header}>
-                        Transaction History
+                        All
                         <ButtonGroup>
                             <Button
                                 active={active === 'all'}
@@ -112,6 +112,9 @@ const Agents = ({ history }) => {
                                             className={styles.AgentButton}
                                             icon={<Eye />}
                                             variant="flat"
+                                            onClick={() =>
+                                                history.push(`${url}/1234`)
+                                            }
                                         >
                                             View
                                         </Button>
@@ -209,6 +212,9 @@ const Agents = ({ history }) => {
                                             className={styles.contentCardButton}
                                             icon={<Eye />}
                                             variant="flat"
+                                            onClick={() =>
+                                                history.push(`${url}/34`)
+                                            }
                                         >
                                             View
                                         </Button>
@@ -231,6 +237,9 @@ const Agents = ({ history }) => {
                                             className={styles.contentCardButton}
                                             icon={<Eye />}
                                             variant="flat"
+                                            onClick={() =>
+                                                history.push(`${url}/94`)
+                                            }
                                         >
                                             View
                                         </Button>
