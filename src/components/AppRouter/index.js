@@ -40,6 +40,12 @@ const CustomerInsights = lazy(() =>
 const SingleAgent = lazy(() =>
     import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
+const FundWallet = lazy(() =>
+    import(/* webpackChunkName: "FundWallet" */ 'pages/FundWallet')
+)
+const KudiPin = lazy(() =>
+    import(/* webpackChunkName: "KudiPin" */ 'pages/FundWallet/kudi-pin')
+)
 const NotFound = lazy(() =>
     import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
 )
@@ -63,6 +69,16 @@ const AppRouter = () => (
                 <PrivateRoute path="/dashboard" exact component={Dashboard} />
                 <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
+                <PrivateRoute
+                    exact
+                    path="/fund-wallet"
+                    component={FundWallet}
+                />
+                <PrivateRoute
+                    exact
+                    path="/fund-wallet/enter-pin"
+                    component={KudiPin}
+                />
                 <PrivateRoute
                     path="/zonal-heads"
                     exact

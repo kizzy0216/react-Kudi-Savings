@@ -11,7 +11,7 @@ import Calendar from 'react-calendar'
 import moment from 'moment'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-import {DownloadIcon} from "assets/svg"
+import { DownloadIcon } from 'assets/svg'
 import styles from './customer-insights.module.scss'
 import Chart from 'components/Chart'
 
@@ -86,7 +86,9 @@ const CustomerInsights = () => {
                                                 focusedInput={focusedInput}
                                                 startDate={startDate}
                                                 endDate={endDate}
-                                                className={styles.CIFirstHeaderFlexDate}
+                                                className={
+                                                    styles.CIFirstHeaderFlexDate
+                                                }
                                             />
                                         </div>
                                         {/* <div
@@ -228,10 +230,12 @@ const CustomerInsights = () => {
                                     <span>76</span>
                                 </div>
                                 <div className={styles.CIFlexFooter}>
-                                <Button variant="flat" icon={<DownloadIcon />}>
-                    Dowload Report
-                </Button>
-                                   
+                                    <Button
+                                        variant="flat"
+                                        icon={<DownloadIcon />}
+                                    >
+                                        Dowload Report
+                                    </Button>
                                 </div>
                             </CardBody>
                         </Card>

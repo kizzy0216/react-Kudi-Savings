@@ -56,7 +56,7 @@ const Layout = ({ children, auth }) => {
     return (
         <div className={styles.layout}>
             <div className={styles.sideNav}>
-                <LogoSection />
+                <LogoSection history={history} />
                 <div className={styles.navSection}>
                     {navItems.map((item, id) => (
                         <SideBarItem

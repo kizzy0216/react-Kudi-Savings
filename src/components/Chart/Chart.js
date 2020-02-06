@@ -25,7 +25,7 @@ let dataSource = {
 }
 
 const Chart = props => {
-    const { chart, type, dataSource: data , height} = props
+    const { chart, type, dataSource: data, height } = props
     dataSource = { chart: { ...dataSource.chart, ...chart }, data }
     const chartConfigs = {
         type,

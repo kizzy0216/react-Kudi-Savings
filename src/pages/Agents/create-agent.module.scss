@@ -1,3 +1,40 @@
-.CA{
-    
+.CA {
+    font-size: 1rem;
+    &Header {
+        font-size: 0.83em;
+        height: 4em;
+        display: flex;
+        align-items: center;
+        font-weight: normal;
+    }
+    &Body {
+        display: grid;
+        grid-template-columns: 9.61em 1fr;
+        grid-column-gap: 3.33em;
+       
+
+    }
+    &Form{
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 4.44em;   
+
+        input{
+            margin-bottom: 1.67em;
+        }
+        input[type=checkbox]{
+            border: 1px solid;
+        }
+        &Two{
+            display:grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 1.11em;   
+        }
+        button{
+            margin-top: 3.5em;
+        }
+    }
+    &ID{
+        
+    }
 }

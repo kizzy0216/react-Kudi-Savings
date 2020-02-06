@@ -3,7 +3,7 @@ import styles from './layout.module.scss'
 import { Button } from '@kudi-inc/dip'
 import { KudiLogo, Avatar, Wallet } from 'assets/svg'
 
-const LogoSection = () => {
+const LogoSection = ({ history }) => {
     return (
         <div className={styles.logoSection}>
             <header className={styles.logoSectionHeader}>
@@ -27,7 +27,7 @@ const LogoSection = () => {
             <div className={styles.logoSectionFlex}>
                 <Button
                     className={styles.logoSectionButton}
-                    onClick={() => null}
+                    onClick={() => history.push('/fund-wallet')}
                 >
                     Fund Wallet
                 </Button>

@@ -1,0 +1,84 @@
+@import '../../styles/variables';
+.FundWallet {
+    font-size: 1rem;
+    min-height: 85vh;
+    &Header {
+        padding: 1.1em 2.78em;
+        &Tab {
+            display: flex;
+
+            button {
+                margin-right: 1.94em;
+                color: $grey;
+            }
+
+            &Active {
+                color: $text-darker;
+            }
+        }
+        p {
+            font-size: 0.72em;
+            color: #efa310;
+            font-weight: normal;
+            margin: 2.38em 0 0;
+        }
+    }
+    &Body {
+        padding: 1.1em 2.78em;
+        &Input {
+            width: 18.14em;
+            input {
+                margin-bottom: 0.83em;
+            }
+            margin-bottom: 1.39em;
+        }
+        &Card {
+            width: 23.16em;
+            &List {
+                display: flex;
+                justify-content: space-between;
+                border: 1px solid #d2ddeb;
+                margin-bottom: 0.83em;
+                padding: 0.83em;
+                color: $text-darker;
+                border-radius: 3px;
+            }
+            &Submit {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 1.67em;
+            }
+        }
+        &Flex {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.83em;
+            & > div {
+                font-weight: 500;
+                font-size: 0.72em;
+                button {
+                    color: $sky-blue;
+                }
+            }
+        }
+    }
+}
+.ButtonGroup {
+    padding: 0.2em 0.5em;
+    background: #e7eef7;
+    border-radius: 3px;
+    margin-bottom: 1.167em;
+    button {
+        border-radius: 3px;
+        border: none;
+        font: 0.72em;
+
+        &:nth-of-type(2) {
+            background: transparent;
+            border: none;
+            span {
+                margin-left: 0.82em;
+            }
+        }
+    }
+}

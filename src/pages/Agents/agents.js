@@ -80,7 +80,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     progress: (
                                         <ProgressBar
                                             className={styles.progress}
@@ -105,7 +105,7 @@ const Agents = ({ history }) => {
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N19,000,500',
-user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -131,7 +131,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -156,7 +156,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -181,7 +181,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -206,7 +206,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -231,7 +231,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -256,7 +256,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -278,7 +278,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -300,7 +300,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
@@ -322,7 +322,7 @@ user:<AgentImg/>,
                                     start_date: '02 Jun 19',
                                     agentName: 'Kunle Afolayan',
                                     amount: 'N200',
-                                    user:<AgentImg/>,
+                                    user: <AgentImg />,
                                     checkbox: <input type="checkbox" />,
                                     progress: (
                                         <ProgressBar
