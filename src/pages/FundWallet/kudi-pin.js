@@ -1,10 +1,11 @@
-import React, { Fragment } from 'react'
-import styles from './fund-wallet.module.scss'
+import React, { Fragment, useState } from 'react'
 import { Button, Input, Card, CardHeader } from '@kudi-inc/dip'
 import { Close, WalletSuccess, WalletFail } from 'assets/svg'
-
 import { Header, Content } from 'components/Layout'
+import styles from './fund-wallet.module.scss'
 const KudiPin = () => {
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isSuccess, setIsSuccess] = useState(true)
     return (
         <Fragment>
             <Header>
@@ -19,41 +20,57 @@ const KudiPin = () => {
                             </CardHeader>
 
                             <div className={styles.KudiPinBody}>
-                                <form className={styles.KudiPinBodyForm}>
-                                    <Input
-                                        type="password"
-                                        label="Enter Kudi PIN"
-                                    />
-                                    <div
-                                        className={styles.KudiPinBodyFormSubmit}
-                                    >
-                                        <Button type="button">Continue</Button>
-                                        <Button
-                                            icon={<Close />}
-                                            variant="flat"
-                                            type="button"
+                                {!isSubmitted && (
+                                    <form className={styles.KudiPinBodyForm}>
+                                        <Input
+                                            type="password"
+                                            label="Enter Kudi PIN"
+                                        />
+                                        <div
+                                            className={
+                                                styles.KudiPinBodyFormSubmit
+                                            }
                                         >
-                                            Cancel
-                                        </Button>
+                                            <Button
+                                                onClick={() =>
+                                                    setIsSubmitted(!isSubmitted)
+                                                }
+                                                type="button"
+                                            >
+                                                Continue
+                                            </Button>
+                                            <Button
+                                                icon={<Close />}
+                                                variant="flat"
+                                                type="button"
+                                            >
+                                                Cancel
+                                            </Button>
+                                        </div>
+                                    </form>
+                                )}
+                                {isSubmitted && isSuccess && (
+                                    <div className={styles.KudiPinBodySuccess}>
+                                        <WalletSuccess />
+                                        <h2>Wallet Top-Up Successful</h2>
+                                        <p>
+                                            Your wallet has being credited with
+                                            N1,000.00
+                                        </p>
+                                        <Button>Continue</Button>
                                     </div>
-                                </form>
-                                <div className={styles.KudiPinBodySuccess}>
-                                    <WalletSuccess />
-                                    <h2>Wallet Top-Up Successful</h2>
-                                    <p>
-                                        Your wallet has being credited with
-                                        N1,000.00
-                                    </p>
-                                    <Button>Continue</Button>
-                                </div>
-                                <div className={styles.KudiPinBodyFail}>
-                                    <WalletFail />
-                                    <h2>Wallet Top-Up Failed </h2>
-                                    <p>
-                                        Your wallet wasn’t credited fund your
-                                        account & try again.
-                                    </p>
-                                </div>
+                                )}
+                                {isSubmitted && !isSuccess && (
+                                    <div className={styles.KudiPinBodyFail}>
+                                        <WalletFail />
+                                        <h2>Wallet Top-Up Failed </h2>
+                                        <p>
+                                            Your wallet wasn’t credited fund
+                                            your account & try again.
+                                        </p>
+                                        <Button>Continue</Button>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>

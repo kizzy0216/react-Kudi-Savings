@@ -82,3 +82,49 @@
         }
     }
 }
+.KudiPin {
+    font-size: 1rem;
+    &Header {
+        p {
+            margin: 1.67em 2.78em;
+            font-size: 0.72em;
+            color: $sky-blue;
+        }
+    }
+    &Body {
+        padding: 1.67em 2.78em;
+        width: 23.16em;
+        &Success,
+        &Fail {
+            margin: auto;
+            text-align: center;
+            svg{
+                margin-bottom:3.88em;
+            }
+            h2{
+                color: $kudi-blue;
+                font-size:1.39em;
+                margin-bottom: 1.11em;
+                line-height: 124%;
+                font-weight: normal;
+            }
+            p{
+                font-weight: normal;
+                color: $text-darker;
+                margin-bottom: 1.68em;
+            }
+            button{
+                background: transparent;
+                border: 1px solid $kudi-blue;
+                margin: auto;
+            }
+        }
+        &Form {
+            &Submit {
+                display: flex;
+                justify-content: space-between;
+                margin-top: 1.67em;
+            }
+        }
+    }
+}

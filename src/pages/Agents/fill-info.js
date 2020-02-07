@@ -1,10 +1,13 @@
 import React from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
-const Form = ({ setActive }) => (
+const Form = ({step, setStep}) => (
     <form className={styles.CABody}>
         <div className={styles.CABodyUpload}>
+        <div className={styles.CABodyOverlay}>
             <input type="file" />
+            </div>
+            <p>Upload Picture</p>
         </div>
         <div>
             <div className={styles.CAForm}>
@@ -29,7 +32,7 @@ const Form = ({ setActive }) => (
                     </div>
                 </div>
             </div>
-            <Button type="button">Continue</Button>
+            <Button type="button" onClick={()=> setStep(step+1)}>Continue</Button>
         </div>
     </form>
 )

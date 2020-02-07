@@ -1,40 +1,179 @@
+@import '../../styles/variables';
 .CA {
     font-size: 1rem;
+    min-height: 85vh;
     &Header {
         font-size: 0.83em;
         height: 4em;
         display: flex;
         align-items: center;
         font-weight: normal;
+        text-transform: uppercase;
     }
     &Body {
         display: grid;
         grid-template-columns: 9.61em 1fr;
         grid-column-gap: 3.33em;
-       
-
+        &Overlay {
+            background-image: url('../../assets/images/agent.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 9.78em;
+        }
+        &Upload {
+            input[type='file'] {
+                cursor: pointer;
+                width: 100%;
+                height: 9.78em;
+                overflow: hidden;
+                color: transparent;
+                &:before {
+                    width: 100%;
+                    height: 9.78em;
+                    content: ' ';
+                    display: inline-block;
+                    padding: 2.78em 0.72em;
+                    text-align: center;
+                    font-family: Helvetica, Arial, sans-serif;
+                    background: rgba(80, 80, 80, 0.5);
+                }
+                &::-webkit-file-upload-button {
+                    visibility: hidden;
+                }
+            }
+            p {
+                color: $grey;
+                font-size: 0.83em;
+                margin-top: 1em;
+                font-weight: normal;
+            }
+        }
     }
-    &Form{
+    &Form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 4.44em;   
+        grid-column-gap: 4.44em;
 
-        input{
+        input {
             margin-bottom: 1.67em;
         }
-        input[type=checkbox]{
+        input[type='checkbox'] {
             border: 1px solid;
         }
-        &Two{
-            display:grid;
+
+        &Two {
+            display: grid;
             grid-template-columns: repeat(2, 1fr);
-            grid-column-gap: 1.11em;   
+            grid-column-gap: 1.11em;
         }
-        button{
+        button {
             margin-top: 3.5em;
         }
     }
-    &ID{
-        
+    &ID {
+        width: 23.55em;
+        &Overlay {
+            background-image: url('../../assets/images/upload-id.png');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            height: 9.94em;
+        }
+        &Upload {
+            input[type='file'] {
+                cursor: pointer;
+                width: 100%;
+                height: 9.94em;
+                overflow: hidden;
+                color: transparent;
+                &:before {
+                    width: 100%;
+                    height: 9.94em;
+                    content: ' ';
+                    display: inline-block;
+                    background: rgba(80, 80, 80, 0.5);
+                    padding: 2.78em 0.72em;
+                    text-align: center;
+                    font-family: Helvetica, Arial, sans-serif;
+                }
+
+                &::-webkit-file-upload-button {
+                    visibility: hidden;
+                }
+            }
+            p {
+                font-weight: normal;
+                color: $grey;
+                font-size: 0.83em;
+                margin-top: 1em;
+            }
+            button {
+                margin-top: 5.55em;
+            }
+        }
+        &Submit {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &Otp {
+        width: 23.55em;
+        &Body {
+            color: $grey;
+            text-align: center;
+            font-weight: normal;
+            &Form {
+                form {
+                    margin: 2.22em 0 1.94em;
+                    & > input {
+                        width: 3.83em;
+                        height: 3.056em;
+                        margin-right: 0.83em;
+                        border: 1px solid #d2ddeb;
+                        text-align: center;
+                    }
+                    &>button{
+                        font-size: 1em;
+                    }
+                }
+            }
+            img {
+                margin: 0.65em 0 2.22em;
+                border-radius: 50%;
+                width: 5.56em;
+            }
+            p{
+                font-size: 0.83em;
+                margin:0 0.72em
+            }
+        }
+        &Submit {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+}
+.AccountSetup {
+    padding: 1.67em 2.78em;
+    & > svg {
+        margin-bottom: 3.88em;
+    }
+    & > h2 {
+        color: $kudi-blue;
+        font-size: 1.39em;
+        margin-bottom: 1.11em;
+        line-height: 124%;
+        font-weight: normal;
+    }
+    & > p {
+        font-weight: normal;
+        color: $text-darker;
+        margin-bottom: 1.68em;
+    }
+    & > button {
+        background: transparent;
+        border: 1px solid $kudi-blue;
+        margin: auto;
     }
 }
