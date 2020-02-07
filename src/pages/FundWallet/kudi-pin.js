@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react'
 import { Button, Input, Card, CardHeader } from '@kudi-inc/dip'
-import { Close, WalletSuccess, WalletFail } from 'assets/svg'
+import { Close, WalletSuccess, WalletFail, Back } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './fund-wallet.module.scss'
-const KudiPin = () => {
+const KudiPin = ({ history }) => {
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [isSuccess, setIsSuccess] = useState(true)
     return (
@@ -16,7 +16,10 @@ const KudiPin = () => {
                     <div className={styles.KudiPin}>
                         <div>
                             <CardHeader className={styles.KudiPinHeader}>
-                                <p> Change Amount / Card</p>
+                                <div onClick={() => history.goBack()}>
+                                    <Back />
+                                    <p> Change Amount / Card</p>
+                                </div>
                             </CardHeader>
 
                             <div className={styles.KudiPinBody}>
@@ -57,7 +60,7 @@ const KudiPin = () => {
                                             Your wallet has being credited with
                                             N1,000.00
                                         </p>
-                                        <Button>Continue</Button>
+                                        <Button onClick={() => history.goBack()} type="button">Continue</Button>
                                     </div>
                                 )}
                                 {isSubmitted && !isSuccess && (

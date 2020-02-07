@@ -42,6 +42,10 @@
                 padding: 0.83em;
                 color: $text-darker;
                 border-radius: 3px;
+                &Number {
+                    font-weight: normal;
+                    font-size: 0.72em;
+                }
             }
             &Submit {
                 display: flex;
@@ -73,7 +77,7 @@
         border: none;
         font: 0.72em;
 
-        &:nth-of-type(2) {
+        [class$='btn-grouped-active'] {
             background: transparent;
             border: none;
             span {
@@ -84,11 +88,23 @@
 }
 .KudiPin {
     font-size: 1rem;
+    min-height: 85vh;
     &Header {
-        p {
-            margin: 1.67em 2.78em;
+        div {
+            display: flex;
+            margin: 0.6em 1.35em;
             font-size: 0.72em;
-            color: $sky-blue;
+            cursor: pointer;
+            svg {
+                path {
+                    fill: $sky-blue;
+                    color: $sky-blue;
+                }
+                margin-right: 0.61em;
+            }
+            p {
+                color: $sky-blue;
+            }
         }
     }
     &Body {
@@ -98,22 +114,22 @@
         &Fail {
             margin: auto;
             text-align: center;
-            svg{
-                margin-bottom:3.88em;
+            svg {
+                margin-bottom: 3.88em;
             }
-            h2{
+            h2 {
                 color: $kudi-blue;
-                font-size:1.39em;
+                font-size: 1.39em;
                 margin-bottom: 1.11em;
                 line-height: 124%;
                 font-weight: normal;
             }
-            p{
+            p {
                 font-weight: normal;
                 color: $text-darker;
                 margin-bottom: 1.68em;
             }
-            button{
+            button {
                 background: transparent;
                 border: 1px solid $kudi-blue;
                 margin: auto;

@@ -108,7 +108,9 @@ const FundWallet = ({ history, match }) => {
                                                         styles.FundWalletBodyCardList
                                                     }
                                                 >
-                                                    <div></div>
+                                                    <div className={
+                                                        styles.FundWalletBodyCardListNumber
+                                                    }>4025***</div>
                                                     <Verve />
                                                 </div>
                                                 <div
@@ -116,7 +118,9 @@ const FundWallet = ({ history, match }) => {
                                                         styles.FundWalletBodyCardList
                                                     }
                                                 >
-                                                    <div></div>
+                                                    <div className={
+                                                        styles.FundWalletBodyCardListNumber
+                                                    }>53399***</div>
                                                     <img
                                                         src={MasterCard}
                                                         alt="mastercard"
@@ -127,7 +131,11 @@ const FundWallet = ({ history, match }) => {
                                                         styles.FundWalletBodyCardList
                                                     }
                                                 >
-                                                    <div></div>
+                                                    <div className={
+                                                        styles.FundWalletBodyCardListNumber
+                                                    }>
+                                                    2671***
+                                                    </div>
                                                     <img
                                                         src={Visa}
                                                         alt="Visa"
