@@ -1,11 +1,11 @@
 import React from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
-const Form = ({step, setStep}) => (
+const Form = ({ step, setStep }) => (
     <form className={styles.CABody}>
         <div className={styles.CABodyUpload}>
-        <div className={styles.CABodyOverlay}>
-            <input type="file" />
+            <div className={styles.CABodyOverlay}>
+                <input type="file" />
             </div>
             <p>Upload Picture</p>
         </div>
@@ -16,9 +16,33 @@ const Form = ({step, setStep}) => (
                     <Input type="tel" label="Phone number" />
                     <Input type="text" label="Business Name" />
                     <div className={styles.CAFormTwo}>
-                        <Input type="checkbox" />
-
-                        <Input type="checkbox" />
+                        <div className={styles.CAFormTwoCheck}>
+                            <p>Male</p>
+                            <div className={styles.CAFormTwoCheckbox}>
+                                <input
+                                    type="checkbox"
+                                    value="None"
+                                    id="roundedOne"
+                                    name="check"
+                                    checked={true}
+                                />
+                                <label for="roundedOne"></label>
+                            </div>
+                        </div>
+                        <div className={styles.CAFormTwoCheck}>
+                            <p>Female</p>
+                            <div className={styles.CAFormTwoCheckbox}>
+                                <input
+                                    type="checkbox"
+                                    value="None"
+                                    id="roundedOne"
+                                    name="check"
+                                    checked={false}
+                                />
+                                <label for="roundedOne"></label>
+                            </div>
+                        </div>
+                       
                     </div>
                 </div>
                 <div>
@@ -32,7 +56,9 @@ const Form = ({step, setStep}) => (
                     </div>
                 </div>
             </div>
-            <Button type="button" onClick={()=> setStep(step+1)}>Continue</Button>
+            <Button type="button" className={styles.CAFormButton} onClick={() => setStep(step + 1)}>
+                Continue
+            </Button>
         </div>
     </form>
 )

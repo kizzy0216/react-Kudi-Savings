@@ -66,8 +66,62 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             grid-column-gap: 1.11em;
+
+            &Check {
+                border: 1px solid #d2ddeb;
+                border-radius: 3px;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 .83em;
+                height:55px;
+            
+                &box {
+                    width: 30px;
+                    height: 30px;
+                    position: relative;
+                    background: #fcfff4;
+                    border-radius: 50px;
+                  
+                    label {
+                        width: 28px;
+                        height: 28px;
+                        position: absolute;
+                        top: 3px;
+                        left: 4px;
+                        cursor: pointer;
+                        background: $grey;
+                        border-radius: 50px;
+                      
+                        &:after {
+                            content: '';
+                            width: 12px;
+                            height: 5px;
+                            position: absolute;
+                            top: 10px;
+                            left: 8px;
+                            border: 2px solid #fcfff4;
+                            border-top: none;
+                            border-right: none;
+                            background: transparent;
+                            opacity: 0;
+                            transform: rotate(-45deg);
+                        }
+                        &:hover::after {
+                            opacity: 0.3;
+                        }
+                    }
+                    input[type='checkbox'] {
+                        visibility: hidden;
+                        &:checked + label:after {
+                            opacity: 1;
+                        }
+                    }
+                }
+            }
         }
-        button {
+        &Button {
+
             margin-top: 3.5em;
         }
     }
@@ -133,7 +187,7 @@
                         border: 1px solid #d2ddeb;
                         text-align: center;
                     }
-                    &>button{
+                    & > button {
                         font-size: 1em;
                     }
                 }
@@ -143,9 +197,9 @@
                 border-radius: 50%;
                 width: 5.56em;
             }
-            p{
+            p {
                 font-size: 0.83em;
-                margin:0 0.72em
+                margin: 0 0.72em;
             }
         }
         &Submit {
