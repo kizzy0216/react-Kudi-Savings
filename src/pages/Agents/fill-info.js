@@ -1,65 +1,174 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
-const Form = ({ step, setStep }) => (
-    <form className={styles.CABody}>
-        <div className={styles.CABodyUpload}>
-            <div className={styles.CABodyOverlay}>
-                <input type="file" />
-            </div>
-            <p>Upload Picture</p>
-        </div>
-        <div>
-            <div className={styles.CAForm}>
-                <div>
-                    <Input type="text" label="First name" />
-                    <Input type="tel" label="Phone number" />
-                    <Input type="text" label="Business Name" />
-                    <div className={styles.CAFormTwo}>
-                        <div className={styles.CAFormTwoCheck}>
-                            <p>Male</p>
-                            <div className={styles.CAFormTwoCheckbox}>
-                                <input
-                                    type="checkbox"
-                                    value="None"
-                                    id="roundedOne"
-                                    name="check"
-                                    checked={true}
-                                />
-                                <label for="roundedOne"></label>
-                            </div>
-                        </div>
-                        <div className={styles.CAFormTwoCheck}>
-                            <p>Female</p>
-                            <div className={styles.CAFormTwoCheckbox}>
-                                <input
-                                    type="checkbox"
-                                    value="None"
-                                    id="roundedOne"
-                                    name="check"
-                                    checked={false}
-                                />
-                                <label for="roundedOne"></label>
-                            </div>
-                        </div>
-                       
+import {states} from "./states"
+import { Close, Back } from 'assets/svg'
+const Form = ({ step, setStep, handleAgent, agent }) => {
+    const [id, setId] = useState(null)
+    const [gender, setGender] = useState("FEMALE")
+    const [isSubmitted, setIsSubmitted] = useState(false)
+    const handleChange = event => {
+        setIsSubmitted(true)
+        setId(URL.createObjectURL(event.target.files[0]))
+    }
+    return (
+        <form className={styles.CABody}>
+            <div className={styles.CABodyUpload}>
+                {!isSubmitted ? (
+                    <div className={styles.CABodyOverlay}>
+                        <input
+                            accept="image/*"
+                            type="file"
+                            onChange={handleChange}
+                        />
                     </div>
+                ) : (
+                    <img src={id} alt="id card" />
+                )}
+                <div className={styles.CABodyUploadFlex}>
+                    <p>Upload Picture</p>
+                    {isSubmitted && (
+                        <Button
+                            icon={<Close />}
+                            variant="flat"
+                            onClick={() => setIsSubmitted(!isSubmitted)}
+                            type="button"
+                        >
+                            Remove
+                        </Button>
+                    )}
                 </div>
-                <div>
-                    <Input type="text" label="Last name" />
-                    <Input type="text" label="Email address" />
-                    <Input type="text" label="Address" />
-                    <div className={styles.CAFormTwo}>
-                        <Select label="Select State" options={[]} />
+            </div>
+            <div>
+                <div className={styles.CAForm}>
+                    <div>
+                        <Input
+                            type="text"
+                            required
+                            name="firstName"
+                            value={agent.firstName}
+                            label="First name"
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Input
+                            type="tel"
+                            required
+                            name="phoneNumber"
+                            label="Phone number"
+                            value={agent.phoneNumber}
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Input
+                            type="number"
+                            required
+                            name="bvn"                      
+                            label="BVN"
+                            value={agent.bvn}
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Select
+                            required
+                            name="marketId"
+                            value={agent.marketId}
+                            label="Assign Market"
+                            options={[]}
+                        />
 
-                        <Select label="Select LGA" options={[]} />
+                        <div className={styles.CAFormTwo}>
+                            <div className={styles.CAFormTwoCheck}>
+                                <p>Male</p>
+                                <div className={styles.CAFormTwoCheckbox}>
+                                    <input
+                                        type="checkbox"
+                                        value="MALE"
+                                        id="MALE"
+                                        name="check"
+                                        checked={gender==="MALE"}
+                                        onChange={({target})=>{
+                                            console.log(target.value)
+                                            return setGender(target.value)}}
+                                    />
+                                    <label htmlFor="MALE"></label>
+                                </div>
+                            </div>
+                            <div className={styles.CAFormTwoCheck}>
+                                <p>Female</p>
+                                <div className={styles.CAFormTwoCheckbox}>
+                                    <input
+                                        type="checkbox"
+                                        value="FEMALE"
+                                        id="FEMALE"
+                                        name="check"
+                                        checked={gender==="FEMALE"}
+                                        onChange={({target})=>{
+                                            console.log(target.value)
+                                            return setGender(target.value)}}
+                                    />
+                                    <label htmlFor="FEMALE"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <Input
+                            type="text"
+                            label="Last name"
+                            required
+                            name="lastName"
+                            value={agent.lastName}
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Input
+                            type="email"
+                            required
+                            name="email"
+                            value={agent.email}
+                            label="Email address"
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Input
+                            type="date"
+                            name="dob"
+                            required
+                            value={agent.dob}
+                            label="Date of Birth"
+                            onChange={e => handleAgent(e)}
+                        />
+                        <Input
+                            type="text"
+                            name="address"
+                            value={agent.address}
+                            label="Address"
+                            required
+                            onChange={e => handleAgent(e)}
+                        />
+                        <div className={styles.CAFormTwo}>
+                            <Select
+                                name="state"
+                                value={agent.state}
+                                required
+                                label="Select State"
+                                options={states}
+                            />
+
+                            <Select
+                                label="Select LGA"
+                                value={agent.lga}
+                                required
+                                options={[]}
+                            />
+                        </div>
                     </div>
                 </div>
+                <Button
+                    type="button"
+                    className={styles.CAFormButton}
+                    onClick={() => setStep(step + 1)}
+                >
+                    Continue
+                </Button>
             </div>
-            <Button type="button" className={styles.CAFormButton} onClick={() => setStep(step + 1)}>
-                Continue
-            </Button>
-        </div>
-    </form>
-)
+        </form>
+    )
+}
 export default Form

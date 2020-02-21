@@ -1,12 +1,11 @@
-import React, { Fragment, useState } from 'react'
+ import React, { Fragment, useState } from 'react'
 import {
     Card,
     CardBody,
     CardHeader,
     Button,
     Badge,
-    CardFooter,
-    Table
+    CardFooter
 } from '@kudi-inc/dip'
 import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
 import { Header, Content } from 'components/Layout'

@@ -28,6 +28,7 @@ const KudiPin = ({ history }) => {
                                         <Input
                                             type="password"
                                             label="Enter Kudi PIN"
+                                            required
                                         />
                                         <div
                                             className={

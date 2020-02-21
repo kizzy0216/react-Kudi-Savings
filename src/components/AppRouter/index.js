@@ -10,6 +10,9 @@ const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/Login'))
 const Dashboard = lazy(() =>
     import(/* webpackChunkName: "Dashboard" */ 'pages/Dashboard')
 )
+const ZonalDashboard = lazy(() =>
+    import(/* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal')
+)
 const Cashout = lazy(() =>
     import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
 )
@@ -67,6 +70,7 @@ const AppRouter = () => (
                 />
 
                 <PrivateRoute path="/dashboard" exact component={Dashboard} />
+                <PrivateRoute path="/dashboard/zonal" exact component={ZonalDashboard} />
                 <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
                 <PrivateRoute

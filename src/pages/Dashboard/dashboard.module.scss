@@ -37,7 +37,7 @@
                 line-height: 123%;
             }
             button {
-                font-size: 0.72em;
+                font-size: 0.93em;
             }
             &_Dropdown {
                 line-height: 123%;
@@ -129,9 +129,6 @@
 [class*='badges'] {
     margin-left: auto;
     padding-right: 0.27em;
-    // &:nth-of-type(1){
-    // margin-right: -0.2em;
-    // margin-bottom: -0.2em;}
 }
 [class*='kudi-dip-btn-dropdown'] {
     min-width: 3em;
