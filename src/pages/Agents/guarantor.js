@@ -96,15 +96,21 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                         />
                         <div className={styles.CAFormTwo}>
                             <Select
-                                onChange={e => handleGuarantor(e)}
+                                onSelect={state =>
+                                    setAgent({ ...agent, state })
+                                }
+                                name="state"
                                 label="Select State"
                                 options={states}
                             />
 
-                            <Select
+                            <Input
+                                type="text"
+                                name="lga"
+                                required
+                                value={agent.lga}
+                                label="LGA"
                                 onChange={e => handleGuarantor(e)}
-                                label="Select LGA"
-                                options={[]}
                             />
                         </div>
                     </div>

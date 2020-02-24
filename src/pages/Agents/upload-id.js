@@ -2,24 +2,24 @@ import React, { useState } from 'react'
 import { Button } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
 import { Close, Back } from 'assets/svg'
-import Axios from 'utils/axios'
-const Form = ({ step, setStep, agent }) => {
+import { uploadAvatar, createAgent } from 'services/agents'
+const Form = ({ step, setStep, agent, setAgent }) => {
     const [id, setId] = useState(null)
     const [isSubmitted, setIsSubmitted] = useState(false)
-    const handleImageChange = event => {
+    const handleImageChange = async event => {
         setIsSubmitted(true)
         setId(URL.createObjectURL(event.target.files[0]))
+        let file = new FormData()
+        file.append('file', event.target.files[0])
+        const response = await uploadAvatar(file)
+        setAgent({ ...agent, imageId: response.data.id })
     }
-    const handleSubmit=()=>{
-        Axios.post(`/agents/create`, agent)
-        .then(({ data }) => {
-           
 
-        })
-        .catch(({ response }) => {
-           
-        })
-    
+    const handleSubmit = async e => {
+        e.preventDefault()
+        await createAgent(agent)
+            .then(({ data }) => {})
+            .catch(({ response }) => {})
     }
     return (
         <form className={styles.CAID}>
@@ -58,7 +58,7 @@ const Form = ({ step, setStep, agent }) => {
                     >
                         Back
                     </Button>
-                    <Button onClick={()=>handleSubmit} type="submit">
+                    <Button onClick={() => handleSubmit} type="submit">
                         Submit
                     </Button>
                 </div>

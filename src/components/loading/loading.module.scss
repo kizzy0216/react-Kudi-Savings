@@ -53,12 +53,23 @@
 
 .content {
     font-size: 1em;
-
     margin: 0 2.78em 1.67em 2.78em;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.11em;
 
+    & > div {
+        &:not(:last-child) {
+            margin: 0;
+        }
+    }
+}
+.block {
+    font-size: 1em;
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    margin: 0 2.78em 1.67em 2.78em;
+    gap: 1.11em;
     & > div {
         &:not(:last-child) {
             margin: 0;

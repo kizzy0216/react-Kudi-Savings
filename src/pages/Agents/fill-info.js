@@ -1,14 +1,19 @@
 import React, { useState } from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
-import {states} from "./states"
+import { states } from './states'
 import { Close } from 'assets/svg'
-const Form = ({ step, setStep, handleAgent, agent }) => {
+import { uploadAvatar } from 'services/agents'
+const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
     const [id, setId] = useState(null)
     const [isSubmitted, setIsSubmitted] = useState(false)
-    const handleChange = event => {
+    const handleChange = async event => {
         setIsSubmitted(true)
         setId(URL.createObjectURL(event.target.files[0]))
+        let file = new FormData()
+        file.append('file', event.target.files[0])
+        const response = await uploadAvatar(file)
+        setAgent({ ...agent, imageId: response.data.id })
     }
     return (
         <form className={styles.CABody}>
@@ -60,7 +65,7 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                         <Input
                             type="number"
                             required
-                            name="bvn"                      
+                            name="bvn"
                             label="BVN"
                             value={agent.bvn}
                             onChange={e => handleAgent(e)}
@@ -80,10 +85,10 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                                     <input
                                         type="checkbox"
                                         value="MALE"
-                                        id="MALE" 
+                                        id="MALE"
                                         name="gender"
-                                        checked={agent.gender==="MALE"}
-                                        onChange={(e)=> handleAgent(e)}
+                                        checked={agent.gender === 'MALE'}
+                                        onChange={e => handleAgent(e)}
                                     />
                                     <label htmlFor="MALE"></label>
                                 </div>
@@ -96,8 +101,8 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                                         value="FEMALE"
                                         id="FEMALE"
                                         name="gender"
-                                        checked={agent.gender==="FEMALE"}
-                                        onChange={(e)=> handleAgent(e)}
+                                        checked={agent.gender === 'FEMALE'}
+                                        onChange={e => handleAgent(e)}
                                     />
                                     <label htmlFor="FEMALE"></label>
                                 </div>
@@ -139,6 +144,9 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                         />
                         <div className={styles.CAFormTwo}>
                             <Select
+                                onSelect={state =>
+                                    setAgent({ ...agent, state })
+                                }
                                 name="state"
                                 value={agent.state}
                                 required
@@ -146,11 +154,13 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                                 options={states}
                             />
 
-                            <Select
-                                label="Select LGA"
-                                value={agent.lga}
+                            <Input
+                                type="text"
+                                name="lga"
                                 required
-                                options={[]}
+                                value={agent.lga}
+                                label="LGA"
+                                onChange={e => handleAgent(e)}
                             />
                         </div>
                     </div>
