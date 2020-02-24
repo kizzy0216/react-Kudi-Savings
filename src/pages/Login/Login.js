@@ -29,18 +29,12 @@ const Login = ({ auth, history }) => {
         setIsLoading(true)
         await loginUser(values)
             .then(({ data }) => {
-                const { jwt, role, wallet, agent } = data
                 setIsLoading(false)
-                setUser({
-                    token: jwt,
-                    role,
-                    wallet,
-                    agent
-                })
+                setUser(data.data)
                 history.push(`/`)
             })
             .catch(({ response }) => {
-                setIsLoading(false)      
+                setIsLoading(false)
                 if (response) {
                     return setAuthError(response.data.message)
                 }
