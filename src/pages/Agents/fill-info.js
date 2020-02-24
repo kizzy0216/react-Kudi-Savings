@@ -2,10 +2,9 @@ import React, { useState } from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
 import {states} from "./states"
-import { Close, Back } from 'assets/svg'
+import { Close } from 'assets/svg'
 const Form = ({ step, setStep, handleAgent, agent }) => {
     const [id, setId] = useState(null)
-    const [gender, setGender] = useState("FEMALE")
     const [isSubmitted, setIsSubmitted] = useState(false)
     const handleChange = event => {
         setIsSubmitted(true)
@@ -81,12 +80,10 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                                     <input
                                         type="checkbox"
                                         value="MALE"
-                                        id="MALE"
-                                        name="check"
-                                        checked={gender==="MALE"}
-                                        onChange={({target})=>{
-                                            console.log(target.value)
-                                            return setGender(target.value)}}
+                                        id="MALE" 
+                                        name="gender"
+                                        checked={agent.gender==="MALE"}
+                                        onChange={(e)=> handleAgent(e)}
                                     />
                                     <label htmlFor="MALE"></label>
                                 </div>
@@ -98,11 +95,9 @@ const Form = ({ step, setStep, handleAgent, agent }) => {
                                         type="checkbox"
                                         value="FEMALE"
                                         id="FEMALE"
-                                        name="check"
-                                        checked={gender==="FEMALE"}
-                                        onChange={({target})=>{
-                                            console.log(target.value)
-                                            return setGender(target.value)}}
+                                        name="gender"
+                                        checked={agent.gender==="FEMALE"}
+                                        onChange={(e)=> handleAgent(e)}
                                     />
                                     <label htmlFor="FEMALE"></label>
                                 </div>

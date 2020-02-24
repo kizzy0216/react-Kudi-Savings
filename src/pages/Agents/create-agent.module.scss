@@ -13,7 +13,7 @@
     &Body {
         display: grid;
         grid-template-columns: 9.61em 1fr;
-        grid-column-gap: 3.33em;
+        grid-column-gap: 2.94em;
         &Overlay {
             background-image: url('../../assets/images/agent.png');
             background-repeat: no-repeat;
@@ -152,6 +152,7 @@
         }
         &Button {
             margin-top: 3.5em;
+            float:right;
         }
     }
     &ID {

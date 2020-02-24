@@ -8,8 +8,7 @@ import LoginTiny from 'assets/images/savings-tiny.png'
 import { PhoneWarning } from 'assets/svg'
 import validation from './validation'
 import styles from './auth.module.scss'
-import Axios from 'utils/axios'
-
+import { loginUser } from 'services/auth'
 const Login = ({ auth, history }) => {
     const [token, setUser] = auth
     const [authError, setAuthError] = useState('')
@@ -26,9 +25,9 @@ const Login = ({ auth, history }) => {
         }
     }, [token, history])
 
-    function submitData() {
+    async function submitData() {
         setIsLoading(true)
-        Axios.post(`/login`, values)
+        await loginUser(values)
             .then(({ data }) => {
                 const { jwt, role, wallet, agent } = data
                 setIsLoading(false)
@@ -41,17 +40,11 @@ const Login = ({ auth, history }) => {
                 history.push(`/`)
             })
             .catch(({ response }) => {
-                setIsLoading(false)
-                //TODO: temporary response till endpoints are available
-                setUser({
-                    token: 'helloo',
-                    user: values.email
-                })
-                history.push(`/`)
-                // if (response) {
-                //     return setAuthError(response.data.data.message)
-                // }
-                // return setAuthError('Weird!, an error occured')
+                setIsLoading(false)      
+                if (response) {
+                    return setAuthError(response.data.message)
+                }
+                return setAuthError('Weird!, an error occured')
             })
     }
 
@@ -68,11 +61,12 @@ const Login = ({ auth, history }) => {
                     label="Email Address"
                     placeholder="xxx@kudi.com"
                     onChange={handleChange}
-                    value={values.email}
+                    value={values.username}
                     required
-                    name="email"
-                    id="email"
-                    error={errors.email}
+                    type="email"
+                    name="username"
+                    id="username"
+                    error={errors.username}
                     className="formInput"
                 />
 

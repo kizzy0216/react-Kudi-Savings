@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 import { getDefaultAuth } from '../context/AuthContext'
-axios.defaults.baseURL = 'https://testing.kudi.ai'
+axios.defaults.baseURL = 'https://savings-dev.kudi.ng'
 let Axios = axios.create({
     headers: {
         'Content-Type': 'application/json'

@@ -1,17 +1,14 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
 import { Close, Back } from 'assets/svg'
-const Guarantor = ({ step, setStep, agent, handleAgent }) => {
-    const [id, setId] = useState(null)
-    const [isSubmitted, setIsSubmitted] = useState(false)
-    const handleChange = event => {
-        setIsSubmitted(true)
-        setId(URL.createObjectURL(event.target.files[0]))
-    }
-    const [guarantor, setGuarantor] = useState({})
+import { states } from './states'
+const Guarantor = ({ step, setStep, agent, setAgent }) => {
     const handleGuarantor = ({ target }) => {
-        setGuarantor({ ...guarantor, [target.name]: target.value })
+        setAgent({
+            ...agent,
+            guarantor: { ...agent.guarantor, [target.name]: target.value }
+        })
     }
 
     return (
@@ -23,7 +20,7 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                             type="text"
                             name="firstName"
                             required
-                            value={guarantor.firstName}
+                            value={agent.guarantor.firstName}
                             onChange={e => handleGuarantor(e)}
                             label="First name"
                         />
@@ -32,7 +29,7 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                             label="Phone number"
                             name="phoneNumber"
                             required
-                            value={guarantor.phoneNumber}
+                            value={agent.guarantor.phoneNumber}
                             onChange={e => handleGuarantor(e)}
                         />
                         <Input
@@ -40,7 +37,7 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                             label="BVN"
                             name="bvn"
                             required
-                            value={guarantor.bvn}
+                            value={agent.guarantor.bvn}
                             onChange={e => handleGuarantor(e)}
                         />
                         <div className={styles.CAFormTwo}>
@@ -49,12 +46,12 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                                 <div className={styles.CAFormTwoCheckbox}>
                                     <input
                                         type="checkbox"
-                                        value="None"
-                                        id="roundedOne"
-                                        name="check"
+                                        value="MALE"
+                                        id="MALE"
+                                        name="gender"
                                         checked={true}
                                     />
-                                    <label for="roundedOne"></label>
+                                    <label htmlFor="MALE"></label>
                                 </div>
                             </div>
                             <div className={styles.CAFormTwoCheck}>
@@ -63,11 +60,11 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                                     <input
                                         type="checkbox"
                                         value="None"
-                                        id="roundedOne"
-                                        name="check"
+                                        id="FEMALE"
+                                        name="gender"
                                         checked={false}
                                     />
-                                    <label for="roundedOne"></label>
+                                    <label htmlFor="FEMALE"></label>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +73,7 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                         <Input
                             type="text"
                             name="lastName"
-                            value={guarantor.lastName}
+                            value={agent.guarantor.lastName}
                             onChange={e => handleGuarantor(e)}
                             label="Last name"
                             required
@@ -87,7 +84,7 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                             name="email"
                             onChange={e => handleGuarantor(e)}
                             required
-                            value={guarantor.email}
+                            value={agent.guarantor.email}
                         />
                         <Input
                             type="text"
@@ -95,22 +92,36 @@ const Guarantor = ({ step, setStep, agent, handleAgent }) => {
                             name="address"
                             onChange={e => handleGuarantor(e)}
                             required
-                            value={guarantor.address}
+                            value={agent.guarantor.address}
                         />
                         <div className={styles.CAFormTwo}>
-                            <Select     onChange={e => handleGuarantor(e)} label="Select State" options={[]} />
+                            <Select
+                                onChange={e => handleGuarantor(e)}
+                                label="Select State"
+                                options={states}
+                            />
 
-                            <Select     onChange={e => handleGuarantor(e)} label="Select LGA" options={[]} />
+                            <Select
+                                onChange={e => handleGuarantor(e)}
+                                label="Select LGA"
+                                options={[]}
+                            />
                         </div>
                     </div>
                 </div>
-                <Button
-                    type="button"
-                    className={styles.CAFormButton}
-                    onClick={() => setStep(step + 1)}
-                >
-                    Continue
-                </Button>
+                <div className={styles.CAIDSubmit}>
+                    <Button
+                        icon={<Back />}
+                        variant="flat"
+                        onClick={() => setStep(step - 1)}
+                        type="button"
+                    >
+                        Back
+                    </Button>
+                    <Button onClick={() => setStep(step + 1)} type="button">
+                        Submit
+                    </Button>
+                </div>
             </form>
         </div>
     )
