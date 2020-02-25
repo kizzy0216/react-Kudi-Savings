@@ -49,7 +49,8 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                                         value="MALE"
                                         id="MALE"
                                         name="gender"
-                                        checked={true}
+                                        checked={agent.guarantor.gender === 'MALE'}
+                                        onChange={e => handleGuarantor(e)}
                                     />
                                     <label htmlFor="MALE"></label>
                                 </div>
@@ -59,10 +60,11 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                                 <div className={styles.CAFormTwoCheckbox}>
                                     <input
                                         type="checkbox"
-                                        value="None"
+                                        value="FEMALE"
                                         id="FEMALE"
                                         name="gender"
-                                        checked={false}
+                                        checked={agent.guarantor.gender === 'FEMALE'}
+                                        onChange={e => handleGuarantor(e)}
                                     />
                                     <label htmlFor="FEMALE"></label>
                                 </div>
@@ -108,7 +110,7 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                                 type="text"
                                 name="lga"
                                 required
-                                value={agent.lga}
+                                value={agent.guarantor.lga}
                                 label="LGA"
                                 onChange={e => handleGuarantor(e)}
                             />

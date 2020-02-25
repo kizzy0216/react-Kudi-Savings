@@ -12,7 +12,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
         let file = new FormData()
         file.append('file', event.target.files[0])
         const response = await uploadAvatar(file)
-        setAgent({ ...agent, imageId: response.data.id })
+        setAgent({ ...agent, identificationImageId: response.data.id })
     }
 
     const handleSubmit = async e => {
@@ -22,7 +22,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
             .catch(({ response }) => {})
     }
     return (
-        <form className={styles.CAID}>
+        <form  onSubmit={handleSubmit} className={styles.CAID}>
             <div className={styles.CAIDUpload}>
                 {!isSubmitted ? (
                     <div className={styles.CAIDOverlay}>
@@ -58,7 +58,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
                     >
                         Back
                     </Button>
-                    <Button onClick={() => handleSubmit} type="submit">
+                    <Button  type="submit">
                         Submit
                     </Button>
                 </div>

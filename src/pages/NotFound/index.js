@@ -1,18 +1,9 @@
 import React from 'react'
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    CardHeader,
-    ButtonGroup,
-    Button,
-    Table,
-    Badge
-} from '@kudi-inc/dip'
+import { Card, CardBody } from '@kudi-inc/dip'
 import styles from './notFound.module.scss'
 import { Page404 } from 'assets/svg'
 import { Link } from 'react-router-dom'
-import { Header, Content } from 'components/Layout'
+import { Content } from 'components/Layout'
 
 const NotFound = () => {
     return (

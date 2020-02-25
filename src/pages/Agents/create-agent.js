@@ -21,7 +21,6 @@ const CreateAgent = ({ history }) => {
         address: '',
         state: '',
         lga: '',
-        managerId: '',
         marketId: [],
         phoneNumber: '',
         identificationImageId: '',
@@ -75,6 +74,7 @@ const CreateAgent = ({ history }) => {
                     step={step}
                     handleAgent={handleAgent}
                     agent={agent}
+                    setAgent={setAgent}
                 />
             )
         },
