@@ -62,6 +62,7 @@ const Login = ({ auth, history }) => {
                     id="username"
                     error={errors.username}
                     className="formInput"
+                    autoComplete="username"
                 />
 
                 <Input
@@ -75,6 +76,7 @@ const Login = ({ auth, history }) => {
                     error={errors.password}
                     required
                     className="formInput"
+                    autoComplete="password"
                 />
                 <div className={styles.formButtonGroup}>
                     <Button loading={isLoading} type="submit">

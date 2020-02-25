@@ -53,10 +53,12 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             value={agent.firstName}
                             label="First name"
                             onChange={e => handleAgent(e)}
+                            autoComplete="firstname"
                         />
                         <Input
                             type="tel"
                             required
+                            autoComplete="phoneNumber"
                             name="phoneNumber"
                             label="Phone number"
                             value={agent.phoneNumber}
@@ -65,6 +67,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         <Input
                             type="number"
                             required
+                            autoComplete="bvn"
                             name="bvn"
                             label="BVN"
                             value={agent.bvn}
@@ -72,6 +75,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         />
                         <Select
                             required
+                            autoComplete="marketId"
                             name="marketId"
                             value={agent.marketId}
                             label="Assign Market"
@@ -100,6 +104,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                                         type="checkbox"
                                         value="FEMALE"
                                         id="FEMALE"
+                                        autoComplete="FEMALE"
                                         name="gender"
                                         checked={agent.gender === 'FEMALE'}
                                         onChange={e => handleAgent(e)}
@@ -114,6 +119,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             type="text"
                             label="Last name"
                             required
+                            autoComplete="lastName"
                             name="lastName"
                             value={agent.lastName}
                             onChange={e => handleAgent(e)}
@@ -121,6 +127,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         <Input
                             type="email"
                             required
+                            autoComplete="email"
                             name="email"
                             value={agent.email}
                             label="Email address"
@@ -139,6 +146,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             name="address"
                             value={agent.address}
                             label="Address"
+                            autoComplete="address"
                             required
                             onChange={e => handleAgent(e)}
                         />
@@ -152,6 +160,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                                 required
                                 label="Select State"
                                 options={states}
+                                autoComplete="state"
                             />
 
                             <Input
@@ -160,6 +169,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                                 required
                                 value={agent.lga}
                                 label="LGA"
+                                autoComplete="lga"
                                 onChange={e => handleAgent(e)}
                             />
                         </div>
