@@ -1,5 +1,5 @@
 import Axios, { MediaService } from 'utils/axios'
 
-export const createAgent = agent => Axios.get(`/markets`, agent)
+export const createAgent = agent => Axios.post(`/agents/create`, agent)
 
-export const uploadAvatar = agent => MediaService.post(`/images`, agent)
+export const uploadAvatar = image => MediaService.post(`/images`, image)
