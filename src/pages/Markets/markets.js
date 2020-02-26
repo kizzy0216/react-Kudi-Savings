@@ -11,16 +11,16 @@ import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
 import { Eye, AgentImg, Add } from 'assets/svg'
-import styles from './agents.module.scss'
-const Agents = ({ history }) => {
+import styles from './markets.module.scss'
+const Markets = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
     return (
         <Fragment>
             <Header>
-                <p> Agents </p>
-                <Button variant="flat" icon={<Add/>} onClick={() => history.push('/create-agent')}>
-                    Add new agent
+                <p> Markets </p>
+                <Button variant="flat" icon={<Add/>} onClick={() => history.push('/create-market')}>
+                    Add New Market
                 </Button>
             </Header>
             <Content className={styles.content}>
@@ -348,4 +348,4 @@ const Agents = ({ history }) => {
         </Fragment>
     )
 }
-export default Agents
+export default Markets

@@ -6,12 +6,22 @@ import { createBrowserHistory } from 'history'
 import { AppLoading } from '../loading'
 
 const history = createBrowserHistory()
+
 const Login = lazy(() => import(/* webpackChunkName: "Login" */ 'pages/Login'))
+
 const Dashboard = lazy(() =>
     import(/* webpackChunkName: "Dashboard" */ 'pages/Dashboard')
 )
+const Markets = lazy(() =>
+    import(/* webpackChunkName: "Markets" */ 'pages/Markets')
+)
+const CreateMarket = lazy(() =>
+    import(/* webpackChunkName: "CreateMarket" */ 'pages/Markets/create-market')
+)
 const ZonalDashboard = lazy(() =>
-    import(/* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal')
+    import(
+        /* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal'
+    )
 )
 const Cashout = lazy(() =>
     import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
@@ -26,16 +36,20 @@ const ZonalHeads = lazy(() =>
     import(/* webpackChunkName: "ZonalHeads" */ 'pages/ZonalHeads')
 )
 const Agents = lazy(() =>
-    import(/* webpackChunkName: "ZonalHeads" */ 'pages/Agents')
+    import(/* webpackChunkName: "Agents" */ 'pages/Agents')
 )
 const CreateAgent = lazy(() =>
-    import(/* webpackChunkName: "ZonalHeads" */ 'pages/Agents/create-agent')
+    import(/* webpackChunkName: "CreateAgent" */ 'pages/Agents/create-agent')
 )
+
 const Transactions = lazy(() =>
     import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
+
 const SingleTransaction = lazy(() =>
-    import(/* webpackChunkName: "Transaction" */ 'pages/SingleTransaction')
+    import(
+        /* webpackChunkName: "SingleTransaction" */ 'pages/SingleTransaction'
+    )
 )
 const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
@@ -70,7 +84,18 @@ const AppRouter = () => (
                 />
 
                 <PrivateRoute path="/dashboard" exact component={Dashboard} />
-                <PrivateRoute path="/dashboard/zonal" exact component={ZonalDashboard} />
+                <PrivateRoute
+                    path="/dashboard/zonal"
+                    exact
+                    component={ZonalDashboard}
+                />
+                <PrivateRoute path="/markets" exact component={Markets} />
+                
+                <PrivateRoute
+                    path="/create-market"
+                    exact
+                    component={CreateMarket}
+                />
                 <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
                 <PrivateRoute

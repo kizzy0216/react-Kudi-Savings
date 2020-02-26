@@ -11,7 +11,8 @@ import {
     CashoutLink,
     AgentsLink,
     TransactionsLink,
-    LogoutIcon
+    LogoutIcon,
+    MarketsLink 
 } from 'assets/svg'
 import LogoSection from './logo-section'
 import styles from './layout.module.scss'
@@ -25,6 +26,11 @@ const Layout = ({ children, auth }) => {
             title: 'Dashboard',
             link: '/dashboard',
             icon: <DashboardLink />
+        },
+        {
+            title: 'Markets',
+            link: '/markets',
+            icon: <MarketsLink />
         },
         {
             title: 'Agents',

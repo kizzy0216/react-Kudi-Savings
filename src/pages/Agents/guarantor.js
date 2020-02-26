@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
 import { Close, Back } from 'assets/svg'
-import { states } from './states'
+import { states } from 'utils/data'
 const Guarantor = ({ step, setStep, agent, setAgent }) => {
     const handleGuarantor = ({ target }) => {
         setAgent({

@@ -72,7 +72,6 @@ const Login = ({ auth, history }) => {
                     name="password"
                     type="password"
                     label="Password"
-                    placeholder=""
                     error={errors.password}
                     required
                     className="formInput"

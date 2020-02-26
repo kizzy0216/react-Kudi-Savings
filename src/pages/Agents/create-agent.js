@@ -21,7 +21,7 @@ const CreateAgent = ({ history }) => {
         address: '',
         state: '',
         lga: '',
-        marketId: [],
+        marketId: "12345",
         phoneNumber: '',
         identificationImageId: '',
         imageId: '',
