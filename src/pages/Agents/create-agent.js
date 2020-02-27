@@ -1,4 +1,4 @@
-import React, { Fragment, useState} from 'react'
+import React, { Fragment, useState, useContext} from 'react'
 import { Card, CardBody, CardHeader } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import { ChevronLeft } from 'assets/svg'
@@ -10,6 +10,7 @@ import GUARANTOR from './guarantor'
 import AccountSetup from './account-setup'
 
 const CreateAgent = ({ history }) => {
+    
     let [step, setStep] = useState(0)
     const [agent, setAgent] = useState({
         firstName: '',
@@ -21,7 +22,7 @@ const CreateAgent = ({ history }) => {
         address: '',
         state: '',
         lga: '',
-        marketId: "12345",
+        marketId: "",
         phoneNumber: '',
         identificationImageId: '',
         imageId: '',
@@ -50,6 +51,7 @@ const CreateAgent = ({ history }) => {
                     handleAgent={handleAgent}
                     agent={agent}
                     setAgent={setAgent}
+              
                 />
             )
         },

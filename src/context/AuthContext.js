@@ -33,3 +33,4 @@ export const AuthProviderContainer = ({ children, history }) => {
         </AuthProvider>
     )
 }
+export default AuthContext

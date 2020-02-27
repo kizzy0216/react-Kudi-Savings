@@ -63,6 +63,7 @@
                 font-size: 0.83em;
                 p {
                     color: $grey;
+                    span{color: $danger;}
                 }
                 & > button {
                     margin-top: 0.83em;

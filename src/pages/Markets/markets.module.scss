@@ -1,6 +1,6 @@
 @import '../../styles/variables';
 
-.Agent{
+.Agent {
     font-size: 1rem;
     &Card {
         font-size: 1em;
@@ -51,28 +51,28 @@
         }
     }
 }
-.Header{
-    display:flex;
+.Header {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;
     font-weight: normal;
 }
-.CM{
+.CM {
     font-size: 1rem;
-    &Form{
+    &Form {
         width: 20em;
-        & > div  {
+        & > div {
             margin-bottom: 1.67em;
         }
-       
-        &Submit{
+
+        &Submit {
             display: flex;
             justify-content: space-between;
             margin-top: 4.33em;
         }
     }
-    &Header{
+    &Header {
         font-size: 0.83em;
         height: 4em;
         display: flex;

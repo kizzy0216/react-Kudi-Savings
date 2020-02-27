@@ -1,15 +1,22 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
 import { states } from 'utils/data'
 import { Close } from 'assets/svg'
 import { uploadAvatar } from 'services/agents'
 import { isInfo } from './validation'
+import AuthContext from 'context/AuthContext'
 
 const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
     const [id, setId] = useState(null)
+    const [auth] = useContext(AuthContext)
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [errors, setErrors] = useState({})
+
+    let markets = auth.markets.map(({ city, id }) => ({
+        text: city,
+        value: id
+    }))
 
     const handleChange = async event => {
         setIsSubmitted(true)
@@ -25,8 +32,8 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
         setErrors(errors)
         if (Object.keys(errors).length > 0) return
         setStep(step + 1)
-        console.log('got here')
     }
+
     return (
         <form className={styles.CABody}>
             <div className={styles.CABodyUpload}>
@@ -44,20 +51,23 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                 <div className={styles.CABodyUploadFlex}>
                     <p>
                         {!id ? (
-                            <>
-                                {errors && errors.imageId
-                                    ? errors.imageId
-                                    : 'Chane Picture'}
-                            </>
+                            errors && errors.imageId ? (
+                                <span>{errors.imageId}</span>
+                            ) : (
+                                'Upload Picture'
+                            )
                         ) : (
-                            'Upload Picture'
+                            'Change Picture'
                         )}
                     </p>
                     {isSubmitted && (
                         <Button
                             icon={<Close />}
                             variant="flat"
-                            onClick={() => setIsSubmitted(!isSubmitted)}
+                            onClick={() => {
+                                setId(null)
+                                return setIsSubmitted(!isSubmitted)
+                            }}
                             type="button"
                         >
                             Remove
@@ -107,9 +117,12 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             name="marketId"
                             value={agent.marketId}
                             label="Assign Market"
-                            options={[]}
+                            options={markets}
                             status={errors.marketId && 'error'}
                             error={errors.marketId}
+                            onSelect={marketId =>
+                                setAgent({ ...agent, marketId })
+                            }
                         />
 
                         <div className={styles.CAFormTwo}>
