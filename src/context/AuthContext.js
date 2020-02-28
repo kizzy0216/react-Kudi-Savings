@@ -10,6 +10,10 @@ export const getDefaultAuth = () => {
         return null
     }
 }
+export const setLogout = () => {
+    localStorage.removeItem('auth-token')
+    window.location.href = '/'
+}
 
 export const AuthProviderContainer = ({ children, history }) => {
     const defaultAuth = getDefaultAuth()
@@ -22,11 +26,7 @@ export const AuthProviderContainer = ({ children, history }) => {
 
         setAuth(value)
     }
-    const setLogout = () => {
-        localStorage.removeItem('auth-token')
-        window.location.href = '/'
-    }
-
+   
     return (
         <AuthProvider value={[auth, setAuthAndCache, setLogout]}>
             {children}

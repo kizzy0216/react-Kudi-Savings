@@ -38,6 +38,11 @@ const Layout = ({ children, auth }) => {
             icon: <AgentsLink />
         },
         {
+            title: 'Zonal Heads',
+            link: '/zonal-heads',
+            icon: <AgentsLink />
+        },
+        {
             title: 'Transactions',
             link: '/transactions',
             icon: <TransactionsLink />

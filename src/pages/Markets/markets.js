@@ -17,16 +17,32 @@ import { getMarkets } from 'services/markets'
 const Markets = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
+    let formattedData = []
+    const { data, isLoading, error, failureCount, refetch } = useQuery(
+        ['Markets', {}],
+        getMarkets
+    )
 
-    const {
-        data,
-        isLoading,
-        isFetching,
-        error,
-        failureCount,
-        refetch
-    } = useQuery(['Markets', {}], getMarkets)
-    console.log(data, 'hmm')
+    if (data) {
+        formattedData = data.data.data.list.map(
+            ({ city, state, lga, id, timeCreated, ...rest }) => ({
+                ...rest,
+                timeCreated: timeCreated ? timeCreated : 'N/A',
+                state: state ? state : 'N/A',
+                city: city ? city : 'N/A',
+                lga: lga ? lga : 'N/A',
+                action: (
+                    <Button
+                        icon={<Eye />}
+                        variant="flat"
+                        onClick={() => history.push(`${url}/${id}`)}
+                    >
+                        View
+                    </Button>
+                )
+            })
+        )
+    }
     return (
         <Fragment>
             <Header>
@@ -65,11 +81,13 @@ const Markets = ({ history }) => {
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.Agent}>
-                        {isLoading ? (
+                        {isLoading && (
                             <span>
                                 Loading... (Attempt: {failureCount + 1})
                             </span>
-                        ) : error ? (
+                        )}
+
+                        {error && (
                             <span>
                                 Error!
                                 <button
@@ -80,7 +98,9 @@ const Markets = ({ history }) => {
                                     Retry
                                 </button>
                             </span>
-                        ) : (
+                        )}
+
+                        {data && (
                             <Table
                                 className={styles.AgentTable}
                                 column={[
@@ -108,7 +128,7 @@ const Markets = ({ history }) => {
                                         render: 'ACTION'
                                     }
                                 ]}
-                                data={data && data.data.list}
+                                data={formattedData}
                             />
                         )}
                     </CardBody>

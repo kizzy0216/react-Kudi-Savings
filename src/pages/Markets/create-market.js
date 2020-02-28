@@ -8,7 +8,7 @@ import {
     CardBody
 } from '@kudi-inc/dip'
 import cx from 'classnames'
-import { useToasts } from 'react-toast-notifications'
+import { toaster } from 'evergreen-ui'
 import { ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import { states } from 'utils/data'
@@ -17,7 +17,6 @@ import { createMarket } from 'services/markets'
 import { marketValidation } from './validation'
 
 const CreateMarket = ({ history }) => {
-    const { addToast } = useToasts()
     const [loading, setLoading] = useState(false)
     const [market, setMarket] = useState({
         marketName: '',
@@ -42,21 +41,23 @@ const CreateMarket = ({ history }) => {
         await createMarket(market)
             .then(() => {
                 setLoading(false)
-                addToast('Market Created Successfully', {
-                    appearance: 'success'
-                })
+                toaster.success(
+                    'Market Created Successfully'
+                  )
+               
                 history.goBack()
             })
             .catch(({ response }) => {
                 setLoading(false)
                 if (response) {
-                    addToast('Error, Please try again', {
-                        appearance: 'error'
-                    })
+                    return toaster.danger(
+                        'Error creating market'
+                      )
+                    
                 }
-                addToast('An error occured', {
-                    appearance: 'error'
-                })
+                toaster.danger(
+                    'Error Occured, contact Admin'
+                  )
             })
     }
 

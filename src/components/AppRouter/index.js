@@ -35,11 +35,26 @@ const Settings = lazy(() =>
 const ZonalHeads = lazy(() =>
     import(/* webpackChunkName: "ZonalHeads" */ 'pages/ZonalHeads')
 )
+const CreateZonalHead = lazy(() =>
+    import(
+        /* webpackChunkName: "CreateZonalHead" */ 'pages/ZonalHeads/create-zonal-head'
+    )
+)
+const SingleZonalHead = lazy(() =>
+    import(
+        /* webpackChunkName: "SingleZonalHead" */ 'pages/ZonalHeads/zonal-head-profile'
+    )
+)
 const Agents = lazy(() =>
     import(/* webpackChunkName: "Agents" */ 'pages/Agents')
 )
+
 const CreateAgent = lazy(() =>
     import(/* webpackChunkName: "CreateAgent" */ 'pages/Agents/create-agent')
+)
+
+const SingleAgent = lazy(() =>
+    import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
 
 const Transactions = lazy(() =>
@@ -54,9 +69,7 @@ const SingleTransaction = lazy(() =>
 const CustomerInsights = lazy(() =>
     import(/* webpackChunkName: "CustomerInsights" */ 'pages/CustomerInsights')
 )
-const SingleAgent = lazy(() =>
-    import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
-)
+
 const FundWallet = lazy(() =>
     import(/* webpackChunkName: "FundWallet" */ 'pages/FundWallet')
 )
@@ -90,7 +103,7 @@ const AppRouter = () => (
                     component={ZonalDashboard}
                 />
                 <PrivateRoute path="/markets" exact component={Markets} />
-                
+
                 <PrivateRoute
                     path="/create-market"
                     exact
@@ -112,6 +125,16 @@ const AppRouter = () => (
                     path="/zonal-heads"
                     exact
                     component={ZonalHeads}
+                />
+                <PrivateRoute
+                    path="/zonal-heads/:id"
+                    exact
+                    component={SingleZonalHead}
+                />
+                <PrivateRoute
+                    path="/create-zonal-head"
+                    exact
+                    component={CreateZonalHead}
                 />
                 <PrivateRoute path="/agents" exact component={Agents} />
                 <PrivateRoute
