@@ -19,7 +19,7 @@ import { marketValidation } from './validation'
 const CreateMarket = ({ history }) => {
     const [loading, setLoading] = useState(false)
     const [market, setMarket] = useState({
-        marketName: '',
+        name: '',
         city: '',
         state: '',
         lga: '',
@@ -86,13 +86,13 @@ const CreateMarket = ({ history }) => {
                             >
                                 <Input
                                     type="text"
-                                    name="marketName"
-                                    value={market.marketName}
+                                    name="name"
+                                    value={market.name}
                                     label="Market name"
                                     onChange={e => handleMarket(e)}
-                                    autoComplete="marketName"
-                                    error={errors.marketName}
-                                    status={errors.marketName && 'error'}
+                                    autoComplete="name"
+                                    error={errors.name}
+                                    status={errors.name && 'error'}
                                 />
                                 <Input
                                     type="text"

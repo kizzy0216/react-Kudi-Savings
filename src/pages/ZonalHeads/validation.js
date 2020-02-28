@@ -12,7 +12,6 @@ export const zonalHeadValidation=(values)=>{
     if (values.phoneNumber && values.phoneNumber.length < 11) {
         errors.phoneNumber = 'Enter valid phone number'
     }
- 
   
     if (!values.email) {
         errors.email = 'Email address is required'
@@ -33,8 +32,6 @@ export const zonalHeadValidation=(values)=>{
     if (!values.marketIds) {
         errors.marketIds = 'Select a market'
     }
-    if (!values.address) {
-        errors.address = 'Address is required'
-    }
+   
     return errors
 };

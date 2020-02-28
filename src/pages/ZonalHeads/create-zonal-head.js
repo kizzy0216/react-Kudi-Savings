@@ -26,10 +26,9 @@ const CreateZonalHead = ({ history }) => {
     const [zonalHead, setZH] = useState({
         firstName: '',
         lastName: '',
-        bvn: '',
+        password: '123456',
         email: '',
         gender: 'MALE',
-        address: '',
         state: '',
         type: '',
         phoneNumber: ''
@@ -43,20 +42,21 @@ const CreateZonalHead = ({ history }) => {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        const errors = zonalHeadValidation(zonalHead)
+        const errors = zonalHeadValidation({...zonalHead, marketIds} )
+        console.log(errors)
         setErrors(errors)
         if (Object.keys(errors).length > 0) return
         setLoading(true)
-        await createZH(zonalHead)
+        await createZH({...zonalHead, marketIds} )
             .then(() => {
                 setLoading(false)
-                toaster.success('Market Created Successfully')
+                toaster.success(`${zonalHead.type} Created Successfully`)
                 history.goBack()
             })
             .catch(({ response }) => {
                 setLoading(false)
                 if (response) {
-                    return toaster.danger('Error creating market')
+                    return toaster.danger('Error creating user')
                 }
                 toaster.danger('An Error occured, contact Admin')
             })

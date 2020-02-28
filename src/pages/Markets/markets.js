@@ -25,7 +25,7 @@ const Markets = ({ history }) => {
 
     if (data) {
         formattedData = data.data.data.list.map(
-            ({ city, state, lga, id, timeCreated, ...rest }) => ({
+            ({  city, state, lga, id, timeCreated, ...rest }) => ({
                 ...rest,
                 timeCreated: timeCreated ? timeCreated : 'N/A',
                 state: state ? state : 'N/A',
@@ -104,12 +104,9 @@ const Markets = ({ history }) => {
                             <Table
                                 className={styles.AgentTable}
                                 column={[
+                                   
                                     {
-                                        key: 'checkbox',
-                                        render: <input type="checkbox" />
-                                    },
-                                    {
-                                        key: 'marketName',
+                                        key: 'name',
                                         render: 'Market Name'
                                     },
                                     {

@@ -1,9 +1,8 @@
 export const marketValidation = values => {
     let errors = {}
-    if (!values.marketName) {
-        errors.marketName = 'Marketname is required'
+    if (!values.name) {
+        errors.name = 'Market name is required'
     }
-  
     if (!values.state) {
         errors.state = 'State is required'
     }
