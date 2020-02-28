@@ -2,7 +2,12 @@
 @import '../../styles/breakpoint';
 .ZH {
     font-size: 1rem;
-
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: normal;
+    }
     &Form {
         &Body {
             display: grid;
@@ -20,6 +25,19 @@
     }
     &Body {
         padding: 1.67em;
+    }
+    &Table {
+        td {
+            font-weight: 400;
+            padding: 1.42em 0;
+            button {
+                color: $sky-blue;
+                span {
+                    font-size: 0.92em;
+                    line-height: 123%;
+                }
+            }
+        }
     }
     &Two {
         display: grid;

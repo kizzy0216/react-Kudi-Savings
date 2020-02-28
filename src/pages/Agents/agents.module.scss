@@ -1,6 +1,6 @@
 @import '../../styles/variables';
 
-.Agent{
+.Agent {
     font-size: 1rem;
     &Card {
         font-size: 1em;
@@ -8,20 +8,14 @@
         color: $grey;
     }
     &Table {
-        table {
-            tbody {
-                tr {
-                    td {
-                        font-weight: 400;
-                        padding: 1.42em 0;
-                        button {
-                            color: $sky-blue;
-                            span {
-                                font-size: 0.92em;
-                                line-height: 123%;
-                            }
-                        }
-                    }
+        td {
+            font-weight: 400;
+            padding: 1.42em 0;
+            button {
+                color: $sky-blue;
+                span {
+                    font-size: 0.92em;
+                    line-height: 123%;
                 }
             }
         }
@@ -51,8 +45,8 @@
         }
     }
 }
-.Header{
-    display:flex;
+.Header {
+    display: flex;
     justify-content: space-between;
     align-items: center;
     text-transform: uppercase;

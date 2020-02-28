@@ -1,31 +1,83 @@
 import React, { Fragment, useState } from 'react'
+import { useQuery } from 'react-query'
 import {
     Card,
     CardBody,
     Button,
     Table,
     CardHeader,
-    ButtonGroup
+    ButtonGroup,
+    Badge
 } from '@kudi-inc/dip'
+import moment from "moment"
+import cx from 'classnames'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
-import { Eye, AgentImg, Add } from 'assets/svg'
+import { Eye, Add } from 'assets/svg'
 import styles from './zonal-heads.module.scss'
+import { getManagers } from 'services/zonal-heads'
 const ZonalHeads = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
+    let formattedData = []
+    const { data, isLoading, error, failureCount, refetch } = useQuery(
+        ['Managers', {}],
+        getManagers
+    )
+    if (data) {
+        formattedData = data.data.data.list.map(
+            ({
+                firstName,
+                lastName,
+                status,
+                email,
+                timeCreated,
+                id,
+                ...rest
+            }) => ({
+                ...rest,
+                timeCreated: timeCreated ?   moment(timeCreated ).format("Do MMM YYYY") : 'N/A',
+                fullName: `${firstName} ${lastName}`,
+                status: status ? (
+                    <Badge
+                        variant={status === 'ACTIVE' ? 'success' : 'pending'}
+                    >
+                        {status}
+                    </Badge>
+                ) : (
+                    'N/A'
+                ),
+
+                email: email ? email : 'N/A',
+
+                action: (
+                    <Button
+                        icon={<Eye />}
+                        variant="flat"
+                        onClick={() => history.push(`${url}/${id}`)}
+                    >
+                        View
+                    </Button>
+                )
+            })
+        )
+    }
     return (
         <Fragment>
             <Header>
                 <p> Zonal Heads </p>
-                <Button variant="flat" icon={<Add/>} onClick={() => history.push('/create-zonal-head')}>
+                <Button
+                    variant="flat"
+                    icon={<Add />}
+                    onClick={() => history.push('/create-zonal-head')}
+                >
                     Add Zonal Head
                 </Button>
             </Header>
             <Content className={styles.content}>
                 <Card className={styles.contentCard}>
-                    <CardHeader className={styles.Header}>
+                    <CardHeader className={cx(styles.Header, styles.ZHHeader)}>
                         All
                         <ButtonGroup>
                             <Button
@@ -48,300 +100,57 @@ const ZonalHeads = ({ history }) => {
                             </Button>
                         </ButtonGroup>
                     </CardHeader>
-                    <CardBody className={styles.Agent}>
-                        <Table
-                            className={styles.AgentTable}
-                            column={[
-                                {
-                                    key: 'checkbox',
-                                    render: <input type="checkbox" />
-                                },
-                                { key: 'start_date', render: 'Start Date' },
-                                {
-                                    key: 'user',
-                                    render: 'User'
-                                },
-                                {
-                                    key: 'agentName',
-                                    render: 'Full Name'
-                                },
-                                { key: 'amount', render: 'Amount' },
-                                {
-                                    key: 'progress',
-                                    render: 'Progress'
-                                },
-                                {
-                                    key: 'action',
-                                    render: 'ACTION'
-                                }
-                            ]}
-                            data={[
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    checkbox: <input type="checkbox" />,
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/1234`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N19,000,500',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={20}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.AgentButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/1234`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
+                    <CardBody className={styles.ZH}>
+                        {isLoading && (
+                            <span>
+                                Loading... (Attempt: {failureCount + 1})
+                            </span>
+                        )}
 
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/1234`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={49}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/234`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={34}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/124`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/34`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={20}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                            onClick={() =>
-                                                history.push(`${url}/94`)
-                                            }
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                },
-                                {
-                                    start_date: '02 Jun 19',
-                                    agentName: 'Kunle Afolayan',
-                                    amount: 'N200',
-                                    user: <AgentImg />,
-                                    checkbox: <input type="checkbox" />,
-                                    progress: (
-                                        <ProgressBar
-                                            className={styles.progress}
-                                            percentage={70}
-                                        />
-                                    ),
-                                    action: (
-                                        <Button
-                                            className={styles.contentCardButton}
-                                            icon={<Eye />}
-                                            variant="flat"
-                                        >
-                                            View
-                                        </Button>
-                                    )
-                                }
-                            ]}
-                        />
+                        {error && (
+                            <span>
+                                Error!
+                                <button
+                                    onClick={() =>
+                                        refetch({ disableThrow: true })
+                                    }
+                                >
+                                    Retry
+                                </button>
+                            </span>
+                        )}
+                        {data && (
+                            <Table
+                                className={styles.ZHTable}
+                                column={[
+                                    {
+                                        key: 'fullName',
+                                        render: 'Full Name'
+                                    },
+                                   
+                                    {
+                                        key: 'phoneNumber',
+                                        render: 'Phone Number'
+                                    },
+
+                                    {
+                                        key: 'email',
+                                        render: 'Email'
+                                    },
+                                    { key: 'status', render: 'Status' },
+                                    { key: 'type', render: 'Type' },
+                                    {
+                                        key: 'timeCreated',
+                                        render: 'Time Created'
+                                    },
+                                    {
+                                        key: 'action',
+                                        render: 'ACTION'
+                                    }
+                                ]}
+                                data={formattedData}
+                            />
+                        )}
                     </CardBody>
                 </Card>
             </Content>
