@@ -243,6 +243,11 @@
         table {
             font-size: 1em;
         }
+        & > div[class*='card'] {
+            @include md {
+                min-height: calc(100vh - 11em);
+            }
+        }
     }
     &Profile {
         background: $dark-kudi-blue;

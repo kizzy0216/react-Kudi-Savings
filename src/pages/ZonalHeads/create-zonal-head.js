@@ -26,11 +26,11 @@ const CreateZonalHead = ({ history }) => {
     const [zonalHead, setZH] = useState({
         firstName: '',
         lastName: '',
-        password: '123456',
+        password: '',
         email: '',
         gender: 'MALE',
         state: '',
-        type: '',
+        type: 'ZONAL',
         phoneNumber: ''
     })
 
@@ -42,12 +42,12 @@ const CreateZonalHead = ({ history }) => {
 
     const handleSubmit = async e => {
         e.preventDefault()
-        const errors = zonalHeadValidation({...zonalHead, marketIds} )
+        const errors = zonalHeadValidation({ ...zonalHead, marketIds })
         console.log(errors)
         setErrors(errors)
         if (Object.keys(errors).length > 0) return
         setLoading(true)
-        await createZH({...zonalHead, marketIds} )
+        await createZH({ ...zonalHead, marketIds })
             .then(() => {
                 setLoading(false)
                 toaster.success(`${zonalHead.type} Created Successfully`)
@@ -212,22 +212,14 @@ const CreateZonalHead = ({ history }) => {
                                         status={errors.state && 'error'}
                                     />
                                     <Select
-                                        onSelect={type =>
-                                            setZH({ ...zonalHead, type })
-                                        }
-                                        name="state"
-                                        value={zonalHead.type}
-                                        label="Select Type"
-                                        options={[
-                                            { value: 'ADMIN', text: 'Admin' },
-                                            {
-                                                value: 'ZONAL',
-                                                text: 'Zonal head'
-                                            }
-                                        ]}
-                                        autoComplete="type"
-                                        error={errors.type}
-                                        status={errors.type && 'error'}
+                                        onChange={e => handleZH(e)}
+                                        name="password"
+                                        value={zonalHead.password}
+                                        label="Enter Password"
+                                        type="password"
+                                        autoComplete="password"
+                                        error={errors.password}
+                                        status={errors.password && 'error'}
                                     />
                                     <div className={styles.ZHMultipleSelect}>
                                         <SelectMenu

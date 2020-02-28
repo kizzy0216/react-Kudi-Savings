@@ -9,22 +9,26 @@ import {
     ButtonGroup,
     Badge
 } from '@kudi-inc/dip'
-import moment from "moment"
+import moment from 'moment'
 import cx from 'classnames'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import { ProgressBar } from 'components/Common'
+import { TableLoading } from 'components/loading'
 import { Eye, Add } from 'assets/svg'
 import styles from './zonal-heads.module.scss'
 import { getManagers } from 'services/zonal-heads'
+
 const ZonalHeads = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
     let formattedData = []
+
     const { data, isLoading, error, failureCount, refetch } = useQuery(
         ['Managers', {}],
         getManagers
     )
+
     if (data) {
         formattedData = data.data.data.list.map(
             ({
@@ -37,7 +41,9 @@ const ZonalHeads = ({ history }) => {
                 ...rest
             }) => ({
                 ...rest,
-                timeCreated: timeCreated ?   moment(timeCreated ).format("Do MMM YYYY") : 'N/A',
+                timeCreated: timeCreated
+                    ? moment(timeCreated).format('Do MMM YYYY')
+                    : 'N/A',
                 fullName: `${firstName} ${lastName}`,
                 status: status ? (
                     <Badge
@@ -101,11 +107,7 @@ const ZonalHeads = ({ history }) => {
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.ZH}>
-                        {isLoading && (
-                            <span>
-                                Loading... (Attempt: {failureCount + 1})
-                            </span>
-                        )}
+                        {isLoading && <TableLoading />}
 
                         {error && (
                             <span>
@@ -119,6 +121,7 @@ const ZonalHeads = ({ history }) => {
                                 </button>
                             </span>
                         )}
+
                         {data && (
                             <Table
                                 className={styles.ZHTable}
@@ -127,7 +130,7 @@ const ZonalHeads = ({ history }) => {
                                         key: 'fullName',
                                         render: 'Full Name'
                                     },
-                                   
+
                                     {
                                         key: 'phoneNumber',
                                         render: 'Phone Number'

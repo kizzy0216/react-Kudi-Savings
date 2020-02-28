@@ -13,12 +13,13 @@ import { Header, Content } from 'components/Layout'
 import { Eye, Add } from 'assets/svg'
 import styles from './markets.module.scss'
 import { getMarkets } from 'services/markets'
+import { TableLoading } from 'components/loading'
 
 const Markets = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
     let formattedData = []
-    const { data, isLoading, error, failureCount, refetch } = useQuery(
+    const { data, isLoading, error,  refetch } = useQuery(
         ['Markets', {}],
         getMarkets
     )
@@ -81,11 +82,7 @@ const Markets = ({ history }) => {
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.Agent}>
-                        {isLoading && (
-                            <span>
-                                Loading... (Attempt: {failureCount + 1})
-                            </span>
-                        )}
+                    {isLoading && <TableLoading />}
 
                         {error && (
                             <span>
