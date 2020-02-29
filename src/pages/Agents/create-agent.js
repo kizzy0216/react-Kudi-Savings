@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useReducer } from 'react'
 import { Card, CardBody, CardHeader } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import { ChevronLeft } from 'assets/svg'
@@ -8,10 +8,10 @@ import Form from './fill-info'
 import UploadId from './upload-id'
 import GUARANTOR from './guarantor'
 import AccountSetup from './account-setup'
-
+import AgentReducer from './agent-reducer'
 const CreateAgent = ({ history }) => {
     let [step, setStep] = useState(0)
-    const [agent, setAgent] = useState({
+    const [agent, setAgent] = useReducer(AgentReducer, {
         firstName: '',
         lastName: '',
         bvn: '',
@@ -34,10 +34,16 @@ const CreateAgent = ({ history }) => {
             lga: '',
             phoneNumber: '',
             gender: 'MALE'
-        }
+        },
+        avatar: {},
+        idCard:{}
     })
+
     const handleAgent = ({ target }) => {
-        setAgent({ ...agent, [target.name]: target.value })
+        setAgent({
+            type: 'UPDATE_DETAILS',
+            payload:{[target.name]: target.value}
+        })
     }
     let active = [
         {

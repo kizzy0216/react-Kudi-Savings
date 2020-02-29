@@ -8,23 +8,42 @@ import { isInfo } from './validation'
 import AuthContext from 'context/AuthContext'
 
 const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
-    const [id, setId] = useState(null)
+
     const [auth] = useContext(AuthContext)
-    const [isSubmitted, setIsSubmitted] = useState(false)
+    const [isUploaded, setIsUploaded] = useState(false)
     const [errors, setErrors] = useState({})
 
+    const [progressData, setProgressData] = useState(0)
     let markets = auth.markets.map(({ city, id }) => ({
         text: city,
         value: id
     }))
-
+    const uploadProgress = {
+        onUploadProgress: ProgressEvent => {
+            const totalLength = ProgressEvent.lengthComputable
+                ? ProgressEvent.total
+                : ProgressEvent.target.getResponseHeader('content-length') ||
+                  ProgressEvent.target.getResponseHeader(
+                      'x-decompressed-content-length'
+                  )
+            if (totalLength !== null) {
+                setProgressData(
+                    Math.floor((ProgressEvent.loaded * 100) / totalLength)
+                )
+            }
+        }
+    }
     const handleChange = async event => {
-        setIsSubmitted(true)
-        setId(URL.createObjectURL(event.target.files[0]))
+        setIsUploaded(true)
         let file = new FormData()
         file.append('file', event.target.files[0])
-        const response = await uploadAvatar(file)
-        setAgent({ ...agent, imageId: response.data.id })
+        const response = await uploadAvatar(file, uploadProgress)
+     
+        setAgent({
+            type: 'UPDATE_AVATAR',
+            payload: response.data 
+        })
+        
     }
 
     const handleContinue = () => {
@@ -37,7 +56,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
     return (
         <form className={styles.CABody}>
             <div className={styles.CABodyUpload}>
-                {!isSubmitted ? (
+                {!agent.imageId ? (
                     <div className={styles.CABodyOverlay}>
                         <input
                             accept="image/*"
@@ -46,27 +65,43 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         />
                     </div>
                 ) : (
-                    <img src={id} alt="id card" />
+                    <img
+                        src={agent.avatar.thumbnail}
+                        alt="id card"
+                    />
                 )}
                 <div className={styles.CABodyUploadFlex}>
                     <p>
-                        {!id ? (
+                        {!isUploaded ? (
                             errors && errors.imageId ? (
                                 <span>{errors.imageId}</span>
                             ) : (
                                 'Upload Picture'
                             )
                         ) : (
-                            'Change Picture'
+                            <span
+                                className={`${
+                                    agent.imageId ? 'img-success' : ''
+                                }`}
+                            >
+                                {agent.imageId ? `` : 'Uploading...'}
+                                {progressData === 100 && !agent.imageId
+                                    ? 99
+                                    : progressData}
+                                %
+                            </span>
                         )}
                     </p>
-                    {isSubmitted && (
+                    {isUploaded && (
                         <Button
                             icon={<Close />}
                             variant="flat"
                             onClick={() => {
-                                setId(null)
-                                return setIsSubmitted(!isSubmitted)
+                                setAgent({
+                                   type: 'REMOVE_AVATAR'
+                                })
+                                setProgressData(0)
+                                return setIsUploaded(!isUploaded)
                             }}
                             type="button"
                         >
@@ -121,7 +156,10 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             status={errors.marketId && 'error'}
                             error={errors.marketId}
                             onSelect={marketId =>
-                                setAgent({ ...agent, marketId })
+                                setAgent({
+                                    type: 'UPDATE_DETAILS',
+                                    payload: { marketId }
+                                })
                             }
                         />
 
@@ -204,7 +242,10 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         <div className={styles.CAFormTwo}>
                             <Select
                                 onSelect={state =>
-                                    setAgent({ ...agent, state })
+                                    setAgent({
+                                    type: 'UPDATE_DETAILS',
+                                    payload: { state }
+                                })
                                 }
                                 name="state"
                                 value={agent.state}

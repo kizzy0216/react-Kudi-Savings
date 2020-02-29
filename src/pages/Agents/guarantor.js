@@ -1,13 +1,13 @@
 import React from 'react'
 import { Button, Input, Select } from '@kudi-inc/dip'
 import styles from './create-agent.module.scss'
-import { Close, Back } from 'assets/svg'
+import { Back } from 'assets/svg'
 import { states } from 'utils/data'
 const Guarantor = ({ step, setStep, agent, setAgent }) => {
     const handleGuarantor = ({ target }) => {
         setAgent({
-            ...agent,
-            guarantor: { ...agent.guarantor, [target.name]: target.value }
+            type: 'UPDATE_GUARANTOR',
+            payload: { [target.name]: target.value }
         })
     }
 
@@ -103,7 +103,10 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                         <div className={styles.CAFormTwo}>
                             <Select
                                 onSelect={state =>
-                                    setAgent({ ...agent, state })
+                                    setAgent({
+                                        type: 'UPDATE_GUARANTOR',
+                                        payload: { state }
+                                    })
                                 }
                                 name="state"
                                 label="Select State"

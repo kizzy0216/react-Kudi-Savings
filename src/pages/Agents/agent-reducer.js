@@ -1,23 +1,46 @@
-const AgentReducer = (params, { type, payload }) => {
+const AgentReducer = (agent, { type, payload }) => {
+    console.log(payload, 'hmmm complicated shit')
     switch (type) {
-        case 'UPDATE_ORDER':
+        case 'UPDATE_DETAILS':
             return {
-                ...params,
-                page: 0,
-                order: payload
+                ...agent,
+                ...payload
             }
-        case 'UPDATE_PAGE':
+        case 'UPDATE_GUARANTOR':
             return {
-                ...params,
-                page: payload
+                ...agent,
+                guarantor: {
+                    ...agent.guarantor,
+                    ...payload
+                }
             }
-        case 'UPDATE_DATE':
+        case 'UPDATE_AVATAR':
             return {
-                ...params,
-                page: 0
+                ...agent,
+                imageId:payload.id,
+                avatar:payload
             }
+            case 'REMOVE_AVATAR':
+            return {
+                ...agent,
+                imageId:"",
+                avatar:{}
+            }
+            case 'UPDATE_ID':
+            return {
+                ...agent,
+                identificationImageId:payload.id,
+                idCard:payload
+            }
+            case 'REMOVE_ID':
+            return {
+                ...agent,
+                identificationImageId:"",
+                idCard:{}
+            }
+        
         default:
-            return params
+            return agent
     }
 }
 export default AgentReducer
