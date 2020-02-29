@@ -15,6 +15,9 @@ const Dashboard = lazy(() =>
 const Markets = lazy(() =>
     import(/* webpackChunkName: "Markets" */ 'pages/Markets')
 )
+const SingleMarket = lazy(() =>
+    import(/* webpackChunkName: "SingleMarket" */ 'pages/Markets/single-market')
+)
 const CreateMarket = lazy(() =>
     import(/* webpackChunkName: "CreateMarket" */ 'pages/Markets/create-market')
 )
@@ -103,12 +106,18 @@ const AppRouter = () => (
                     component={ZonalDashboard}
                 />
                 <PrivateRoute path="/markets" exact component={Markets} />
-
+                
+                <PrivateRoute
+                    path="/markets/:id"
+                    exact
+                    component={SingleMarket}
+                />
                 <PrivateRoute
                     path="/create-market"
                     exact
                     component={CreateMarket}
                 />
+                
                 <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
                 <PrivateRoute

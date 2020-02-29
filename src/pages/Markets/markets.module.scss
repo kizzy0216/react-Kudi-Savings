@@ -81,3 +81,35 @@
         text-transform: uppercase;
     }
 }
+.SM {
+    font-size: 1rem;
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    grid-column-gap: 1.67em;
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: normal;
+        text-transform: uppercase;
+    }
+    &Body {
+        &List {
+            & > div {
+                display: flex;
+                justify-content: space-between;
+                padding: 1.14em 0;
+                border-bottom: 1px solid $light-grey;
+                &:last-child {
+                    border-bottom: none;
+                }
+                span {
+                    color: $grey;
+                    &:last-child {
+                        color: $text-darker;
+                    }
+                }
+            }
+        }
+
+    }
+}

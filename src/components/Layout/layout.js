@@ -78,7 +78,6 @@ const Layout = ({ children, auth }) => {
             userType: ['ADMIN', 'ZONAL']
         }
     ]
-    console.log(user)
     return (
         <div className={styles.layout}>
             <div className={styles.sideNav}>
