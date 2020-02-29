@@ -316,7 +316,7 @@ const Dashboard = () => {
                             </CardBody>
                         </Card>
                     ))}
-                    {Array(1)
+                {Array(1)
                     .fill()
                     .map((_, index) => (
                         <Card key={index}>

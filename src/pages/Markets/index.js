@@ -1,1 +1,1 @@
-export {default} from "./markets"
+export { default } from './markets'

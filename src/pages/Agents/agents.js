@@ -20,7 +20,7 @@ const Agents = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
     let formattedData = []
-    const { data, isLoading, error,  refetch } = useQuery(
+    const { data, isLoading, error, refetch } = useQuery(
         ['Agents', {}],
         getAgents
     )
@@ -92,7 +92,7 @@ const Agents = ({ history }) => {
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.Agent}>
-                    {isLoading && <TableLoading />}
+                        {isLoading && <TableLoading />}
 
                         {error && (
                             <span>
@@ -107,37 +107,41 @@ const Agents = ({ history }) => {
                             </span>
                         )}
                         {data && (
-                        <Table
-                            className={styles.AgentTable}
-                            column={[
-                                {
-                                    key: 'checkbox',
-                                    render: <input type="checkbox" />
-                                },
-                                { key: 'timeCreated', render: 'Time Created' },
-                                {
-                                    key: 'email',
-                                    render: 'Email'
-                                },
-                                {
-                                    key: 'fullName',
-                                    render: 'Full Name'
-                                },
-                                {
-                                    key: 'phoneNumber',
-                                    render: 'Phone Number'
-                                },
-                                {
-                                    key: 'progress',
-                                    render: 'Progress'
-                                },
-                                {
-                                    key: 'action',
-                                    render: 'ACTION'
-                                }
-                            ]}
-                            data={formattedData}
-                        />)}
+                            <Table
+                                className={styles.AgentTable}
+                                column={[
+                                    {
+                                        key: 'checkbox',
+                                        render: <input type="checkbox" />
+                                    },
+                                    {
+                                        key: 'timeCreated',
+                                        render: 'Time Created'
+                                    },
+                                    {
+                                        key: 'email',
+                                        render: 'Email'
+                                    },
+                                    {
+                                        key: 'fullName',
+                                        render: 'Full Name'
+                                    },
+                                    {
+                                        key: 'phoneNumber',
+                                        render: 'Phone Number'
+                                    },
+                                    {
+                                        key: 'progress',
+                                        render: 'Progress'
+                                    },
+                                    {
+                                        key: 'action',
+                                        render: 'ACTION'
+                                    }
+                                ]}
+                                data={formattedData}
+                            />
+                        )}
                     </CardBody>
                 </Card>
             </Content>

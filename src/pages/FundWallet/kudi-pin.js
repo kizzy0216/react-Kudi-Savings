@@ -61,7 +61,12 @@ const KudiPin = ({ history }) => {
                                             Your wallet has being credited with
                                             N1,000.00
                                         </p>
-                                        <Button onClick={() => history.goBack()} type="button">Continue</Button>
+                                        <Button
+                                            onClick={() => history.goBack()}
+                                            type="button"
+                                        >
+                                            Continue
+                                        </Button>
                                     </div>
                                 )}
                                 {isSubmitted && !isSuccess && (

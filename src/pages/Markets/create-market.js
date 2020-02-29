@@ -41,27 +41,19 @@ const CreateMarket = ({ history }) => {
         await createMarket(market)
             .then(() => {
                 setLoading(false)
-                toaster.success(
-                    'Market Created Successfully'
-                  )
-               
+                toaster.success('Market Created Successfully')
+
                 history.goBack()
             })
             .catch(({ response }) => {
                 setLoading(false)
                 if (response) {
-                    return toaster.danger(
-                        'Error creating market'
-                      )
-                    
+                    return toaster.danger('Error creating market')
                 }
-                toaster.danger(
-                    'Error Occured, contact Admin'
-                  )
+                toaster.danger('Error Occured, contact Admin')
             })
     }
 
-    
     return (
         <Fragment>
             <div>

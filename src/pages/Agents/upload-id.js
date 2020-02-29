@@ -22,7 +22,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
             .catch(({ response }) => {})
     }
     return (
-        <form  onSubmit={handleSubmit} className={styles.CAID}>
+        <form onSubmit={handleSubmit} className={styles.CAID}>
             <div className={styles.CAIDUpload}>
                 {!isSubmitted ? (
                     <div className={styles.CAIDOverlay}>
@@ -58,9 +58,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
                     >
                         Back
                     </Button>
-                    <Button  type="submit">
-                        Submit
-                    </Button>
+                    <Button type="submit">Submit</Button>
                 </div>
             </div>
         </form>

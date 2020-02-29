@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { SideBarItem } from '@kudi-inc/dip'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
+import { AuthContext } from 'context/AuthContext'
 import {
     DashboardLink,
     SettingsLink,
@@ -12,73 +13,91 @@ import {
     AgentsLink,
     TransactionsLink,
     LogoutIcon,
-    MarketsLink 
+    MarketsLink
 } from 'assets/svg'
 import LogoSection from './logo-section'
 import styles from './layout.module.scss'
 
 const Layout = ({ children, auth }) => {
-    const [, , setLogout] = auth
+    const [user, , setLogout] = auth
 
     let history = useHistory()
     const navItems = [
         {
             title: 'Dashboard',
             link: '/dashboard',
-            icon: <DashboardLink />
+            icon: <DashboardLink />,
+            userType: ['ADMIN']
+        },
+        {
+            title: 'Dashboard',
+            link: '/dashboard/zonal',
+            icon: <DashboardLink />,
+            userType: ['ZONAL']
         },
         {
             title: 'Markets',
             link: '/markets',
-            icon: <MarketsLink />
+            icon: <MarketsLink />,
+            userType: ['ADMIN', 'ZONAL']
         },
         {
             title: 'Agents',
             link: '/agents',
-            icon: <AgentsLink />
+            icon: <AgentsLink />,
+            userType: ['ADMIN', 'ZONAL']
         },
         {
             title: 'Zonal Heads',
             link: '/zonal-heads',
-            icon: <AgentsLink />
+            icon: <AgentsLink />,
+            userType: ['ADMIN']
         },
         {
             title: 'Transactions',
             link: '/transactions',
-            icon: <TransactionsLink />
+            icon: <TransactionsLink />,
+            userType: ['ADMIN', 'ZONAL']
         },
         {
             title: 'Customer Insights',
             link: '/customer-insights',
-            icon: <CILink />
+            icon: <CILink />,
+            userType: ['ADMIN', 'ZONAL']
         },
         {
             title: 'Cashout',
             link: '/cashout',
-            icon: <CashoutLink />
+            icon: <CashoutLink />,
+            userType: ['ADMIN', 'ZONAL']
         },
         {
             title: 'Settings',
             link: '/settings',
-            icon: <SettingsLink />
+            icon: <SettingsLink />,
+            userType: ['ADMIN', 'ZONAL']
         }
     ]
-
+    console.log(user)
     return (
         <div className={styles.layout}>
             <div className={styles.sideNav}>
                 <LogoSection history={history} />
                 <div className={styles.navSection}>
-                    {navItems.map((item, id) => (
-                        <SideBarItem
-                            key={id}
-                            className={styles.navSectionLinks}
-                            icon={item.icon}
-                            text={item.title}
-                            active={window.location.pathname === item.link}
-                            onClick={() => history.push(`${item.link}`)}
-                        />
-                    ))}
+                    {navItems.map((item, id) =>
+                        item && item.userType.includes(user.type) ? (
+                            <SideBarItem
+                                key={id}
+                                className={styles.navSectionLinks}
+                                icon={item.icon}
+                                text={item.title}
+                                active={window.location.pathname === item.link}
+                                onClick={() => history.push(`${item.link}`)}
+                            />
+                        ) : (
+                            ''
+                        )
+                    )}
                 </div>
                 <SideBarItem
                     className={cx(styles.navSectionLinks, styles.logout)}

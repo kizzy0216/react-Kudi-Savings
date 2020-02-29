@@ -26,7 +26,7 @@ export const AuthProviderContainer = ({ children, history }) => {
 
         setAuth(value)
     }
-   
+
     return (
         <AuthProvider value={[auth, setAuthAndCache, setLogout]}>
             {children}

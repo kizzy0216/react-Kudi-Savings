@@ -11,11 +11,15 @@ const Settings = () => {
             <Content className={styles.content}>
                 <div className={styles.Settings}>
                     <Card>
-                        <CardHeader className={styles.SettingsHeader}>Account Information</CardHeader>
+                        <CardHeader className={styles.SettingsHeader}>
+                            Account Information
+                        </CardHeader>
                         <CardBody></CardBody>
                     </Card>
                     <Card>
-                        <CardHeader  className={styles.SettingsHeader}>Business Information</CardHeader>
+                        <CardHeader className={styles.SettingsHeader}>
+                            Business Information
+                        </CardHeader>
                         <CardBody></CardBody>
                     </Card>
                     <Card>

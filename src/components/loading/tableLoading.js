@@ -6,7 +6,7 @@ import { Card, CardBody } from '@kudi-inc/dip'
 const Dashboard = () => {
     return (
         <Fragment>
-            <div >
+            <div>
                 <Card>
                     <CardBody className={styles.Table}>
                         {Array(105)
@@ -32,7 +32,6 @@ const Dashboard = () => {
                     </CardBody>
                 </Card>
             </div>
-            
         </Fragment>
     )
 }

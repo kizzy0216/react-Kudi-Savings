@@ -36,4 +36,4 @@ export const states = [
     { text: 'TARABA', value: 'taraba' },
     { text: 'YOBE', value: 'yobe' },
     { text: 'ZAMFARA', value: 'zamfara' }
-  ];
+]

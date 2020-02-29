@@ -49,7 +49,9 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                                         value="MALE"
                                         id="MALE"
                                         name="gender"
-                                        checked={agent.guarantor.gender === 'MALE'}
+                                        checked={
+                                            agent.guarantor.gender === 'MALE'
+                                        }
                                         onChange={e => handleGuarantor(e)}
                                     />
                                     <label htmlFor="MALE"></label>
@@ -63,7 +65,9 @@ const Guarantor = ({ step, setStep, agent, setAgent }) => {
                                         value="FEMALE"
                                         id="FEMALE"
                                         name="gender"
-                                        checked={agent.guarantor.gender === 'FEMALE'}
+                                        checked={
+                                            agent.guarantor.gender === 'FEMALE'
+                                        }
                                         onChange={e => handleGuarantor(e)}
                                     />
                                     <label htmlFor="FEMALE"></label>

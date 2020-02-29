@@ -80,7 +80,7 @@ const Dashboard = () => {
                                 <CardBody>
                                     <div className={styles.Dashboard_center}>
                                         <p>Agent Transactions </p>
-                                        <h4> N1,175,430  </h4>
+                                        <h4> N1,175,430 </h4>
                                     </div>
                                 </CardBody>
                                 <CardFooter>

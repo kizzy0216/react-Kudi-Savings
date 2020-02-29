@@ -19,14 +19,14 @@ const Markets = ({ history }) => {
     let { url } = useRouteMatch()
     let [active, setActive] = useState('all')
     let formattedData = []
-    const { data, isLoading, error,  refetch } = useQuery(
+    const { data, isLoading, error, refetch } = useQuery(
         ['Markets', {}],
         getMarkets
     )
 
     if (data) {
         formattedData = data.data.data.list.map(
-            ({  city, state, lga, id, timeCreated, ...rest }) => ({
+            ({ city, state, lga, id, timeCreated, ...rest }) => ({
                 ...rest,
                 timeCreated: timeCreated ? timeCreated : 'N/A',
                 state: state ? state : 'N/A',
@@ -82,7 +82,7 @@ const Markets = ({ history }) => {
                         </ButtonGroup>
                     </CardHeader>
                     <CardBody className={styles.Agent}>
-                    {isLoading && <TableLoading />}
+                        {isLoading && <TableLoading />}
 
                         {error && (
                             <span>
@@ -101,7 +101,6 @@ const Markets = ({ history }) => {
                             <Table
                                 className={styles.AgentTable}
                                 column={[
-                                   
                                     {
                                         key: 'name',
                                         render: 'Market Name'

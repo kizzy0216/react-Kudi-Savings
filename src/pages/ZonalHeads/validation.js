@@ -1,4 +1,4 @@
-export const zonalHeadValidation=(values)=>{
+export const zonalHeadValidation = values => {
     let errors = {}
     if (!values.firstName) {
         errors.firstName = 'First name is required'
@@ -12,7 +12,7 @@ export const zonalHeadValidation=(values)=>{
     if (values.phoneNumber && values.phoneNumber.length < 11) {
         errors.phoneNumber = 'Enter valid phone number'
     }
-  
+
     if (!values.email) {
         errors.email = 'Email address is required'
     } else if (
@@ -32,6 +32,6 @@ export const zonalHeadValidation=(values)=>{
     if (!values.marketIds) {
         errors.marketIds = 'Select a market'
     }
-   
+
     return errors
-};
+}

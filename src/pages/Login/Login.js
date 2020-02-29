@@ -47,7 +47,11 @@ const Login = ({ auth, history }) => {
             infoBackground={LoginImage}
             infoBackgroundPlaceholder={LoginTiny}
         >
-            <form className={styles.form} onSubmit={handleSubmit} autoComplete="off">
+            <form
+                className={styles.form}
+                onSubmit={handleSubmit}
+                autoComplete="off"
+            >
                 <h2 className={styles.formIntro}>
                     {authError ? authError : 'Hello, welcome back.'}
                 </h2>

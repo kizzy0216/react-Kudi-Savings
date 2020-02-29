@@ -5,13 +5,11 @@ import { AuthProviderContainer } from 'context/AuthContext'
 
 const App = () => {
     return (
-    
         <AuthProviderContainer>
             <BrowserRouter>
                 <AppRouter />
             </BrowserRouter>
         </AuthProviderContainer>
-     
     )
 }
 

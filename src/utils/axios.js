@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getDefaultAuth,setLogout } from '../context/AuthContext'
+import { getDefaultAuth, setLogout } from '../context/AuthContext'
 
 //Default Request Config
 
@@ -30,18 +30,17 @@ Axios.interceptors.request.use(defaultConfig => {
 })
 
 Axios.interceptors.response.use(
-    response => { 
+    response => {
         return response
     },
-   ({response}) => {
-        if(response.status===403){
+    ({ response }) => {
+        if (response && response.status === 403) {
             return setLogout()
         }
         return Promise.reject(response)
     }
 )
 export default Axios
-
 
 // Media Service Request Config
 export const MediaService = axios.create()

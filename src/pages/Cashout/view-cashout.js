@@ -11,11 +11,14 @@ import { SettingsLink, Bin, Close, ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/images/agent.png'
-const ViewCashout = ({history}) => {
+const ViewCashout = ({ history }) => {
     return (
         <Fragment>
             <Header>
-                <p><ChevronLeft onClick={()=>history.goBack()}/> Cashout Request </p>
+                <p>
+                    <ChevronLeft onClick={() => history.goBack()} /> Cashout
+                    Request{' '}
+                </p>
             </Header>
             <Content className={styles.content}>
                 <div className={styles.contentCard}>
@@ -116,7 +119,7 @@ const ViewCashout = ({history}) => {
                             </CardBody>
                             <CardFooter className={styles.FirstFooter}>
                                 <Button type="button">Approve</Button>
-                                <Button type="button"  icon={<Close />}>
+                                <Button type="button" icon={<Close />}>
                                     Decline
                                 </Button>
                             </CardFooter>
