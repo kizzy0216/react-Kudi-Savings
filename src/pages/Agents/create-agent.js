@@ -36,13 +36,13 @@ const CreateAgent = ({ history }) => {
             gender: 'MALE'
         },
         avatar: {},
-        idCard:{}
+        idCard: {}
     })
 
     const handleAgent = ({ target }) => {
         setAgent({
             type: 'UPDATE_DETAILS',
-            payload:{[target.name]: target.value}
+            payload: { [target.name]: target.value }
         })
     }
     let active = [

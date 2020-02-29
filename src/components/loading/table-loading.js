@@ -3,7 +3,7 @@ import styles from './loading.module.scss'
 import ContentLoader from 'react-content-loader'
 import { Card, CardBody } from '@kudi-inc/dip'
 
-const Dashboard = () => {
+const TableLoading = () => {
     return (
         <Fragment>
             <div>
@@ -36,4 +36,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default TableLoading

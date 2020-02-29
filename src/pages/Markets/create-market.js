@@ -63,7 +63,7 @@ const CreateMarket = ({ history }) => {
                             role="button"
                             onClick={() => history.goBack()}
                         />
-                        Create New Agent
+                        Create New Market
                     </p>
                 </Header>
                 <Content className={styles.content}>

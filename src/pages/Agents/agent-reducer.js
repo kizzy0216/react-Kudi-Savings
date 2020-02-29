@@ -17,28 +17,28 @@ const AgentReducer = (agent, { type, payload }) => {
         case 'UPDATE_AVATAR':
             return {
                 ...agent,
-                imageId:payload.id,
-                avatar:payload
+                imageId: payload.id,
+                avatar: payload
             }
-            case 'REMOVE_AVATAR':
+        case 'REMOVE_AVATAR':
             return {
                 ...agent,
-                imageId:"",
-                avatar:{}
+                imageId: '',
+                avatar: {}
             }
-            case 'UPDATE_ID':
+        case 'UPDATE_ID':
             return {
                 ...agent,
-                identificationImageId:payload.id,
-                idCard:payload
+                identificationImageId: payload.id,
+                idCard: payload
             }
-            case 'REMOVE_ID':
+        case 'REMOVE_ID':
             return {
                 ...agent,
-                identificationImageId:"",
-                idCard:{}
+                identificationImageId: '',
+                idCard: {}
             }
-        
+
         default:
             return agent
     }
