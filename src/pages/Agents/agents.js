@@ -16,6 +16,7 @@ import { Eye, Add } from 'assets/svg'
 import styles from './agents.module.scss'
 import { getAgents } from 'services/agents'
 import { TableLoading } from 'components/loading'
+import { formatCurrency } from 'utils/function'
 
 const Agents = ({ history }) => {
   let { url } = useRouteMatch()
@@ -25,13 +26,13 @@ const Agents = ({ history }) => {
     ['Agents', {}],
     getAgents
   )
-  if (data) {
+  if (data && data.data) {
     formattedData = data.data.data.list.map(
       ({
         firstName,
         lastName,
         status,
-  
+        cashBalance,
         id,
         timeCreated,
         ...rest
@@ -41,6 +42,7 @@ const Agents = ({ history }) => {
           ? moment(timeCreated).format('Do MMM YYYY')
           : 'N/A',
         fullName: `${firstName} ${lastName}`,
+        cashBalance: formatCurrency(cashBalance),
         status: status ? (
           <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
             {status}
@@ -113,7 +115,6 @@ const Agents = ({ history }) => {
               <Table
                 className={styles.AgentTable}
                 column={[
-                  
                   {
                     key: 'timeCreated',
                     render: 'Time Created'
@@ -123,7 +124,7 @@ const Agents = ({ history }) => {
                     key: 'fullName',
                     render: 'Full Name'
                   },
-                 
+
                   {
                     key: 'phoneNumber',
                     render: 'Phone Number'

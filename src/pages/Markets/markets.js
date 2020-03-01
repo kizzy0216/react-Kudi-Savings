@@ -37,15 +37,15 @@ const Markets = ({ history }) => {
         state: state ? state : 'N/A',
         city: city ? city : 'N/A',
         lga: lga ? lga : 'N/A',
-        action: (
-          <Button
-            icon={<Eye />}
-            variant="flat"
-            onClick={() => history.push(`${url}/${id}`)}
-          >
-            View
-          </Button>
-        )
+        // action: (
+        //   <Button
+        //     icon={<Eye />}
+        //     variant="flat"
+        //     onClick={() => history.push(`${url}/${id}`)}
+        //   >
+        //     View
+        //   </Button>
+        // )
       })
     )
   }
@@ -118,10 +118,10 @@ const Markets = ({ history }) => {
                       key: 'lga',
                       render: 'LGA'
                     },
-                    {
+                    {/* {
                       key: 'action',
                       render: 'ACTION'
-                    }
+                    } */}
                   ]}
                   data={formattedData}
                 />

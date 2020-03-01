@@ -3,4 +3,4 @@ export const convertObjToArray = obj => {
   return newArray
 }
 
-export const formatCurrency = num => (num ? `₦ ${String(num.toFixed(2))}` : 0)
+export const formatCurrency = num => (num ? `₦${(num.toFixed(2))}` : 0)

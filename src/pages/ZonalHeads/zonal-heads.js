@@ -13,7 +13,6 @@ import moment from 'moment'
 import cx from 'classnames'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
-import { ProgressBar } from 'components/Common'
 import { TableLoading } from 'components/loading'
 import { Eye, Add } from 'assets/svg'
 import styles from './zonal-heads.module.scss'
@@ -24,7 +23,7 @@ const ZonalHeads = ({ history }) => {
   let [active, setActive] = useState('all')
   let formattedData = []
 
-  const { data, isLoading, error, failureCount, refetch } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery(
     ['Managers', {}],
     getManagers
   )
