@@ -69,7 +69,6 @@ const Form = ({ step, setStep, agent, setAgent }) => {
                 )}
 
                 <div className={styles.CAIDUploadFlex}>
-                    
                     <p>
                         {!idUploaded ? (
                             errors && errors ? (
@@ -80,11 +79,16 @@ const Form = ({ step, setStep, agent, setAgent }) => {
                         ) : (
                             <span
                                 className={`${
-                                    agent.identificationImageId ? 'img-success' : ''
+                                    agent.identificationImageId
+                                        ? 'img-success'
+                                        : ''
                                 }`}
                             >
-                                {agent.identificationImageId ? `` : 'Uploading...'}
-                                {progressData === 100 && !agent.identificationImageId
+                                {agent.identificationImageId
+                                    ? ``
+                                    : 'Uploading...'}
+                                {progressData === 100 &&
+                                !agent.identificationImageId
                                     ? 99
                                     : progressData}
                                 %

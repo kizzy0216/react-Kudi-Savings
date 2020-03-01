@@ -13,7 +13,7 @@ const Login = ({ auth, history }) => {
     const [token, setUser] = auth
     const [authError, setAuthError] = useState('')
     const [isLoading, setIsLoading] = useState(false)
-    let defaultValues = { email: '', password: '' }
+    let defaultValues = { username: '', password: '' }
     const { values, errors, handleChange, handleSubmit } = useForm(
         submitData,
         validation,
@@ -33,10 +33,13 @@ const Login = ({ auth, history }) => {
                 setUser(data.data)
                 history.push(`/`)
             })
-            .catch(({ response }) => {
+            .catch(data => {
                 setIsLoading(false)
-                if (response) {
-                    return setAuthError(response.data.message)
+                if (data && data.response) {
+                    if (data.response) {
+                        return setAuthError(data.response.data.message)
+                    }
+                    return setAuthError('Weird!, an error occured')
                 }
                 return setAuthError('Weird!, an error occured')
             })

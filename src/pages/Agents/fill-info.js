@@ -8,7 +8,6 @@ import { isInfo } from './validation'
 import AuthContext from 'context/AuthContext'
 
 const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
-
     const [auth] = useContext(AuthContext)
     const [isUploaded, setIsUploaded] = useState(false)
     const [errors, setErrors] = useState({})
@@ -38,12 +37,11 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
         let file = new FormData()
         file.append('file', event.target.files[0])
         const response = await uploadAvatar(file, uploadProgress)
-     
+
         setAgent({
             type: 'UPDATE_AVATAR',
-            payload: response.data 
+            payload: response.data
         })
-        
     }
 
     const handleContinue = () => {
@@ -65,10 +63,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                         />
                     </div>
                 ) : (
-                    <img
-                        src={agent.avatar.thumbnail}
-                        alt="id card"
-                    />
+                    <img src={agent.avatar.thumbnail} alt="id card" />
                 )}
                 <div className={styles.CABodyUploadFlex}>
                     <p>
@@ -98,7 +93,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             variant="flat"
                             onClick={() => {
                                 setAgent({
-                                   type: 'REMOVE_AVATAR'
+                                    type: 'REMOVE_AVATAR'
                                 })
                                 setProgressData(0)
                                 return setIsUploaded(!isUploaded)
@@ -243,9 +238,9 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
                             <Select
                                 onSelect={state =>
                                     setAgent({
-                                    type: 'UPDATE_DETAILS',
-                                    payload: { state }
-                                })
+                                        type: 'UPDATE_DETAILS',
+                                        payload: { state }
+                                    })
                                 }
                                 name="state"
                                 value={agent.state}

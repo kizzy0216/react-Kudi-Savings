@@ -184,55 +184,55 @@ const Dashboard = () => {
                                     primaryColor={'#F0F4F9'}
                                     secondaryColor={'#fdfdfd'}
                                 >
-                                <rect
-                                x="0"
-                                y="0"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
-                            
-                            <rect
-                                x="0"
-                                y="70"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
-                            <rect
-                                x="0"
-                                y="150"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
-                            <rect
-                                x="0"
-                                y="230"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
-                            <rect
-                                x="0"
-                                y="310"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
-                            <rect
-                                x="0"
-                                y="390"
-                                rx="13"
-                                ry="13"
-                                width="400"
-                                height="26"
-                            />
+                                    <rect
+                                        x="0"
+                                        y="0"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
+
+                                    <rect
+                                        x="0"
+                                        y="70"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
+                                    <rect
+                                        x="0"
+                                        y="150"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
+                                    <rect
+                                        x="0"
+                                        y="230"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
+                                    <rect
+                                        x="0"
+                                        y="310"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
+                                    <rect
+                                        x="0"
+                                        y="390"
+                                        rx="13"
+                                        ry="13"
+                                        width="400"
+                                        height="26"
+                                    />
                                 </ContentLoader>
                             </CardBody>
                         </Card>
@@ -248,7 +248,6 @@ const Dashboard = () => {
                                     primaryColor={'#F0F4F9'}
                                     secondaryColor={'#fdfdfd'}
                                 >
-                                  
                                     <rect
                                         x="0"
                                         y="0"

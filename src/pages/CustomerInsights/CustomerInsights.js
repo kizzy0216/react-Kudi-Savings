@@ -81,7 +81,7 @@ const CustomerInsights = () => {
                                         <div>
                                             <DateRangePicker
                                                 onDatesChange={onDatesChange}
-                                                onFocusChange={false}
+                                                onFocusChange={() => false}
                                                 displayFormat="DD MMM, YY"
                                                 focusedInput={focusedInput}
                                                 startDate={startDate}

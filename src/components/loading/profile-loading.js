@@ -82,6 +82,7 @@ const ProfileLoading = () => {
                                     primaryColor={'#F0F4F9'}
                                     secondaryColor={'#fdfdfd'}
                                     height={21}
+                                    key={`sh-${index}`}
                                 >
                                     <rect
                                         x="0"
@@ -115,6 +116,7 @@ const ProfileLoading = () => {
                                     primaryColor={'#F0F4F9'}
                                     secondaryColor={'#fdfdfd'}
                                     height={20}
+                                    key={index}
                                 >
                                     <rect
                                         x="0"
@@ -146,6 +148,7 @@ const ProfileLoading = () => {
                                     primaryColor={'#F0F4F9'}
                                     secondaryColor={'#fdfdfd'}
                                     height={20}
+                                    key={`pf-${index}`}
                                 >
                                     <rect
                                         x="0"

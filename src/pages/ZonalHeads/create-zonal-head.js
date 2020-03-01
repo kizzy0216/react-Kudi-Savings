@@ -15,7 +15,7 @@ import { Header, Content } from 'components/Layout'
 import { states } from 'utils/data'
 import styles from './zonal-heads.module.scss'
 import { createZH } from 'services/zonal-heads'
-import { getMarkets } from 'services/markets'
+import { getAllMarkets } from 'services/markets'
 import { zonalHeadValidation } from './validation'
 
 const CreateZonalHead = ({ history }) => {
@@ -43,7 +43,7 @@ const CreateZonalHead = ({ history }) => {
     const handleSubmit = async e => {
         e.preventDefault()
         const errors = zonalHeadValidation({ ...zonalHead, marketIds })
-        console.log(errors)
+      
         setErrors(errors)
         if (Object.keys(errors).length > 0) return
         setLoading(true)
@@ -63,7 +63,7 @@ const CreateZonalHead = ({ history }) => {
     }
 
     const fetchMarkets = async () => {
-        const response = await getMarkets()
+        const response = await getAllMarkets()
         const formatMarket = response.data.data.list.map(({ id, name }) => ({
             value: id,
             label: name

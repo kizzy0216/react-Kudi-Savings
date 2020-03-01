@@ -106,7 +106,7 @@ const AppRouter = () => (
                     component={ZonalDashboard}
                 />
                 <PrivateRoute path="/markets" exact component={Markets} />
-                
+
                 <PrivateRoute
                     path="/markets/:id"
                     exact
@@ -117,7 +117,7 @@ const AppRouter = () => (
                     exact
                     component={CreateMarket}
                 />
-                
+
                 <PrivateRoute path="/cashout" exact component={Cashout} />
                 <PrivateRoute path="/cashout/:id" component={ViewCashout} />
                 <PrivateRoute

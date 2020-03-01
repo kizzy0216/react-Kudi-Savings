@@ -1,10 +1,9 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { SideBarItem } from '@kudi-inc/dip'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
-import { AuthContext } from 'context/AuthContext'
 import {
     DashboardLink,
     SettingsLink,
@@ -52,6 +51,8 @@ const Layout = ({ children, auth }) => {
             link: '/zonal-heads',
             icon: <AgentsLink />,
             userType: ['ADMIN']
+
+    
         },
         {
             title: 'Transactions',
