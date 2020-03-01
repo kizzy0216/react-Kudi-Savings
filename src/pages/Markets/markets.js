@@ -36,7 +36,7 @@ const Markets = ({ history }) => {
           : 'N/A',
         state: state ? state : 'N/A',
         city: city ? city : 'N/A',
-        lga: lga ? lga : 'N/A',
+        lga: lga ? lga : 'N/A'
         // action: (
         //   <Button
         //     icon={<Eye />}
@@ -118,10 +118,12 @@ const Markets = ({ history }) => {
                       key: 'lga',
                       render: 'LGA'
                     },
-                    {/* {
+                    {
+                      /* {
                       key: 'action',
                       render: 'ACTION'
-                    } */}
+                    } */
+                    }
                   ]}
                   data={formattedData}
                 />

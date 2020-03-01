@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
-import moment from "moment"
+import moment from 'moment'
 import {
   Card,
   CardBody,
@@ -87,6 +87,10 @@ const ViewCashout = ({ history, match: { params } }) => {
                         <span>Address</span>
                         <span>{agent.address}</span>
                       </div>
+                      <div className={styles.FirstBodyGridContent}>
+                        <span>Assigned Market: </span>
+                        <span> {agent.assignedMarket.name}</span>
+                      </div>
                     </div>
                   </div>
                 </CardBody>
@@ -100,22 +104,24 @@ const ViewCashout = ({ history, match: { params } }) => {
                       className={styles.FirstHeaderBadge}
                       variant="success"
                     >
-                      Success
+                      {agent.status}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>Date Onboarded:</span>
-                    <span> {moment(agent.timeCreated).format('Do MMM, YYYY')}</span>
+                    <span>
+                      {moment(agent.timeCreated).format('Do MMM, YYYY')}
+                    </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Active Customers: </span>
-                    <span> 130</span>
+                    <span> N/A</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> Inactive Customers </span>
-                    <span>56</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> Total Customers </span>
@@ -144,19 +150,18 @@ const ViewCashout = ({ history, match: { params } }) => {
                       View History
                     </Button>
                   </CardBody>
-                  
                 </div>
               </Card>
               <Card>
                 <div className={styles.Withdrawal}>
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
-                      <p>cash Collected</p>
-                      <h4>N1,825,000</h4>
+                      <p>Amount Seeded</p>
+                      <h4>{formatCurrency(agent.amountSeeded)}</h4>
                     </CardBody>
                     <CardBody>
                       <p>cash Withdrawn</p>
-                      <h4>N1,825,000</h4>
+                      <h4>N/A</h4>
                     </CardBody>
                   </div>
 
@@ -166,10 +171,25 @@ const ViewCashout = ({ history, match: { params } }) => {
                 </div>
               </Card>
               <Card>
-                <CardHeader className={styles.SecondHeader}>
+                <CardHeader className={styles.FirstHeader}>
                   <h3>Zonal Head</h3>
+                  <Button variant="flat" icon={<SettingsLink />}>
+                    View Profile
+                  </Button>
                 </CardHeader>
-                <CardBody> Zonal Head</CardBody>
+                <CardBody>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Full Name: </span>
+                    <span>
+                      {`${agent.manager.lastName} ${agent.manager.firstName}`}
+                    </span>
+                  </div>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Email: </span>
+                    <span>{agent.manager.email}</span>
+                  </div>
+                 
+                </CardBody>
               </Card>
             </div>
             <div className={styles.Third}>{show && <Customers />}</div>
