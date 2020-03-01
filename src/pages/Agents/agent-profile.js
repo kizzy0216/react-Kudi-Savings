@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import { useQuery } from 'react-query'
 import {
   Card,
   CardBody,
@@ -13,8 +14,15 @@ import { ProgressBar } from 'components/Common'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
 import Customers from './customers'
-const ViewCashout = ({ history }) => {
+import { getAgent } from 'services/agents'
+const ViewCashout = ({ history , match: { params } }) => {
   let [show, setShow] = useState(false)
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ['SingleAgent', { id: params.id }],
+    getAgent
+  )
+  let agent = data && data.data ? data.data.data : {}
   return (
     <Fragment>
       <Header>
@@ -51,20 +59,20 @@ const ViewCashout = ({ history }) => {
                   <div>
                     <div className={styles.FirstBodyGridContent}>
                       <span>Name</span>
-                      <span> Firstname Lastname</span>
+                     <span> {`${agent.lastName} ${agent.firstName}`}</span>
                     </div>
                     <div className={styles.FirstBodyGridContent}>
                       <span>Phone number</span>
-                      <span> 08062361452</span>
+                      <span>{agent.phoneNumber}</span>
                     </div>
                     <div className={styles.FirstBodyGridContent}>
                       <span>Gender</span>
-                      <span>Male</span>
+                      <span>{agent.gender}</span>
                     </div>
 
                     <div className={styles.FirstBodyGridContent}>
                       <span>Address</span>
-                      <span>Streetname, lga, state</span>
+                      <span>{agent.address}</span>
                     </div>
                   </div>
                 </div>
@@ -83,7 +91,7 @@ const ViewCashout = ({ history }) => {
               <CardBody className={styles.FirstBody}>
                 <div className={styles.FirstBodyFlex}>
                   <span>Date Onboarded:</span>
-                  <span> 2 June, 2019</span>
+                  <span> {agent.timeCreated}</span>
                 </div>
                 <div className={styles.FirstBodyFlex}>
                   <span>Active Customers: </span>
@@ -95,7 +103,7 @@ const ViewCashout = ({ history }) => {
                 </div>
                 <div className={styles.FirstBodyFlex}>
                   <span> Total Customers </span>
-                  <span>56</span>
+                  <span>{agent.totalCustomers}</span>
                 </div>
               </CardBody>
               <CardFooter className={styles.FirstBodyButton}>

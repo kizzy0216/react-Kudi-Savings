@@ -1,12 +1,14 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
+import moment from 'moment'
 import {
   Card,
   CardBody,
   Button,
   Table,
   CardHeader,
-  ButtonGroup
+  ButtonGroup,
+  Badge
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
@@ -25,14 +27,28 @@ const Agents = ({ history }) => {
   )
   if (data) {
     formattedData = data.data.data.list.map(
-      ({ firstName, lastName, status, email, id, timeCreated, ...rest }) => ({
+      ({
         firstName,
         lastName,
         status,
-        email,
-        timeCreated,
+  
         id,
+        timeCreated,
+        ...rest
+      }) => ({
         ...rest,
+        timeCreated: timeCreated
+          ? moment(timeCreated).format('Do MMM YYYY')
+          : 'N/A',
+        fullName: `${firstName} ${lastName}`,
+        status: status ? (
+          <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
+            {status}
+          </Badge>
+        ) : (
+          'N/A'
+        ),
+
         action: (
           <Button
             icon={<Eye />}
@@ -97,29 +113,28 @@ const Agents = ({ history }) => {
               <Table
                 className={styles.AgentTable}
                 column={[
-                  {
-                    key: 'checkbox',
-                    render: <input type="checkbox" />
-                  },
+                  
                   {
                     key: 'timeCreated',
                     render: 'Time Created'
                   },
-                  {
-                    key: 'email',
-                    render: 'Email'
-                  },
+
                   {
                     key: 'fullName',
                     render: 'Full Name'
                   },
+                 
                   {
                     key: 'phoneNumber',
                     render: 'Phone Number'
                   },
                   {
-                    key: 'progress',
-                    render: 'Progress'
+                    key: 'cashBalance',
+                    render: 'Balance'
+                  },
+                  {
+                    key: 'status',
+                    render: 'status'
                   },
                   {
                     key: 'action',

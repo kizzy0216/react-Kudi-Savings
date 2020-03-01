@@ -6,3 +6,5 @@ export const uploadAvatar = (image, callback) =>
   MediaService.post(`/images`, image, callback)
 
 export const getAgents = () => Axios.get(`/agents`)
+
+export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)

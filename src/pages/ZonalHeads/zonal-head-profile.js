@@ -18,6 +18,7 @@ import AgentImg from 'assets/images/agent.png'
 import { getManager } from 'services/zonal-heads'
 import { formatCurrency } from 'utils/function'
 
+
 const ViewCashout = ({ history, match: { params } }) => {
   let [show, setShow] = useState(false)
   let [marketShow, setMarketShow] = useState(false)
