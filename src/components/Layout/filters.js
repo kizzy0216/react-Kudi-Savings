@@ -4,12 +4,12 @@ import PropTypes from 'prop-types'
 import cx from 'classnames'
 
 const Filters = ({ children, className }) => {
-    return <div className={cx(styles.filters, className)}> {children} </div>
+  return <div className={cx(styles.filters, className)}> {children} </div>
 }
 
 Filters.propTypes = {
-    children: PropTypes.node,
-    className: PropTypes.string
+  children: PropTypes.node,
+  className: PropTypes.string
 }
 
 export default Filters

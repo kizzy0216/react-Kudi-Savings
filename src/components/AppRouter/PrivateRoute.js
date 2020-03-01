@@ -4,29 +4,29 @@ import ErrorBoundary from '../ErrorBoundary'
 import { Layout } from '../Layout/'
 
 const PrivateRoute = ({
-    component: Component,
-    title,
-    renderHeader,
-    ...rest
+  component: Component,
+  title,
+  renderHeader,
+  ...rest
 }) => {
-    const isAuthenticated = localStorage.getItem('auth-token') ? true : false
+  const isAuthenticated = localStorage.getItem('auth-token') ? true : false
 
-    return (
-        <Route
-            {...rest}
-            render={props =>
-                isAuthenticated ? (
-                    <ErrorBoundary>
-                        <Layout>
-                            <Component {...props} />
-                        </Layout>
-                    </ErrorBoundary>
-                ) : (
-                    <Redirect to="/login" />
-                )
-            }
-        />
-    )
+  return (
+    <Route
+      {...rest}
+      render={props =>
+        isAuthenticated ? (
+          <ErrorBoundary>
+            <Layout>
+              <Component {...props} />
+            </Layout>
+          </ErrorBoundary>
+        ) : (
+          <Redirect to="/login" />
+        )
+      }
+    />
+  )
 }
 
 export default PrivateRoute
