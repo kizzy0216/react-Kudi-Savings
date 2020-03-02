@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
+import { SideSheet } from 'evergreen-ui'
 import {
   Card,
   CardBody,
@@ -12,25 +13,29 @@ import {
 import { SettingsLink, Bin, Eye, ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
-import AgentImg from 'assets/images/agent.png'
+import AgentImg from 'assets/svg/profile-pic.svg'
 import Customers from './customers'
 import { getAgent, getUsers } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
+import EditAgent from './edit-agent'
 
-const ViewCashout = ({ history, match: { params } }) => {
+const ViewCashout = ({ history, match: { params, url } }) => {
   let [show, setShow] = useState(false)
-
+  let [showEdit, setShowEdit] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleAgent', { id: params.id }],
     getAgent
   )
   let agent = data && data.data ? data.data.data : {}
-  const {
-    data: imageData,
-    isLoading: imageLoading
-  } = useQuery(data && ['Image', { id: agent.imageId }], fecthImage)
-
+  const { data: imageData, isLoading: imageLoading } = useQuery(
+    data && ['Image', { id: agent.imageId }],
+    fecthImage
+  )
+  let identity = useQuery(
+    data && ['Image', { id: agent.identificationImageId }],
+    fecthImage
+  )
   const users = useQuery(data && ['Image', { id: agent.id }], getUsers)
 
   return (
@@ -59,7 +64,11 @@ const ViewCashout = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> AGENT INFORMATION</h3>
 
-                    <Button variant="flat" icon={<SettingsLink />}>
+                    <Button
+                      variant="flat"
+                      onClick={() => history.push(`/${url}/edit`)}
+                      icon={<SettingsLink />}
+                    >
                       Edit Profile
                     </Button>
                     <Button variant="flat" icon={<Bin />}>
@@ -198,9 +207,23 @@ const ViewCashout = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div>
-            <div className={styles.Third}>{show && <Customers  users={users}/>}</div>
+            <div className={styles.Third}>
+              {show && <Customers users={users} />}
+            </div>
           </div>
         )}
+        {/* <SideSheet
+          onCloseComplete={() => setShowEdit(false)}
+          isShown={showEdit}
+          width={1200}
+        >
+          <EditAgent
+            avatar={imageData ? imageData.data.medium : null}
+            idCard={identity && identity.data? identity.data.data.medium: null}
+            setShowEdit={setShowEdit}
+            agent={agent}
+          />
+        </SideSheet> */}
       </Content>
     </Fragment>
   )

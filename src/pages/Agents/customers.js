@@ -21,10 +21,19 @@ const Customers = ({ history, users }) => {
 
   if (data && data.data) {
     customer = data.data.data.list.map(
-      ({ firstName, lastName, status, cashBalance, id, ...rest }) => ({
+      ({
+        firstName,
+        lastName,
+        status,
+        totalSaved,
+        totalWithdrawn,
+        cashBalance,
+        id,
+        ...rest
+      }) => ({
         ...rest,
         fullName: `${firstName} ${lastName}`,
-        cashBalance: formatCurrency(cashBalance),
+
         status: status ? (
           <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
             {status}
@@ -32,7 +41,8 @@ const Customers = ({ history, users }) => {
         ) : (
           'N/A'
         ),
-
+        totalSaved: formatCurrency(totalSaved),
+        totalWithdrawn: formatCurrency(totalWithdrawn),
         action: (
           <Button
             icon={<Eye />}
@@ -87,8 +97,12 @@ const Customers = ({ history, users }) => {
               },
               { key: 'phoneNumber', render: 'Phone Number' },
               {
-                key: 'cashBalance',
-                render: 'Current Balance'
+                key: 'totalSaved',
+                render: 'Amount Saved'
+              },
+              {
+                key: 'totalSaved',
+                render: 'Amount Saved'
               },
               {
                 key: 'status',

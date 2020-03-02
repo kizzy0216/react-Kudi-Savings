@@ -51,7 +51,9 @@ const SingleZonalHead = lazy(() =>
 const Agents = lazy(() =>
   import(/* webpackChunkName: "Agents" */ 'pages/Agents')
 )
-
+const EditAgent = lazy(() =>
+  import(/* webpackChunkName: "EditAgent" */ 'pages/Agents/edit-agent')
+)
 const CreateAgent = lazy(() =>
   import(/* webpackChunkName: "CreateAgent" */ 'pages/Agents/create-agent')
 )
@@ -107,7 +109,6 @@ const AppRouter = () => (
 
         <PrivateRoute path="/markets/:id" exact component={SingleMarket} />
         <PrivateRoute path="/create-market" exact component={CreateMarket} />
-
         <PrivateRoute path="/cashout" exact component={Cashout} />
         <PrivateRoute path="/cashout/:id" component={ViewCashout} />
         <PrivateRoute exact path="/fund-wallet" component={FundWallet} />
@@ -126,6 +127,7 @@ const AppRouter = () => (
         <PrivateRoute path="/agents" exact component={Agents} />
         <PrivateRoute path="/create-agent" exact component={CreateAgent} />
         <PrivateRoute path="/agents/:id" exact component={SingleAgent} />
+        <PrivateRoute path="/agents/:id/edit" exact component={EditAgent} />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />

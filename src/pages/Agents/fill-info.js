@@ -11,12 +11,14 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
   const [auth] = useContext(AuthContext)
   const [isUploaded, setIsUploaded] = useState(false)
   const [errors, setErrors] = useState({})
-
+  let markets = []
   const [progressData, setProgressData] = useState(0)
-  let markets = auth.markets.map(({ name, id }) => ({
-    text: name,
-    value: id
-  }))
+  if (auth && auth.market) {
+    markets = auth.markets.map(({ name, id }) => ({
+      text: name,
+      value: id
+    }))
+  }
   const uploadProgress = {
     onUploadProgress: ProgressEvent => {
       const totalLength = ProgressEvent.lengthComputable

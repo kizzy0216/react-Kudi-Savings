@@ -4,7 +4,8 @@ import styles from './create-agent.module.scss'
 import { Close, Back } from 'assets/svg'
 import { uploadAvatar, createAgent } from 'services/agents'
 import { toaster } from 'evergreen-ui'
-const Form = ({ step, setStep, agent, setAgent }) => {
+
+const Form = ({ step, setStep, agent, setAgent, history }) => {
   const [progressData, setProgressData] = useState(0)
   const [idUploaded, setIdUploaded] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -46,6 +47,7 @@ const Form = ({ step, setStep, agent, setAgent }) => {
       .then(({ data }) => {
         setLoading(false)
         toaster.success('Agent Created Successfully')
+        history.push('/agents')
       })
       .catch(({ response }) => {
         toaster.danger('Create Agent Failed')

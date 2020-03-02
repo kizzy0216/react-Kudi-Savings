@@ -1,0 +1,19 @@
+.FundWallet {
+  font-size: 1rem;
+  &Header {
+    font-size: 1em;
+    text-transform: uppercase;
+    font-weight: normal;
+  }
+  &Body {
+    padding: 4em;
+  }
+  &Form {
+    & > div {
+      margin-bottom: 1.67em;
+    }
+    button {
+      margin-top: 3em;
+    }
+  }
+}

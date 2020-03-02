@@ -81,6 +81,7 @@ const CreateAgent = ({ history }) => {
           handleAgent={handleAgent}
           agent={agent}
           setAgent={setAgent}
+          history={history}
         />
       )
     },
