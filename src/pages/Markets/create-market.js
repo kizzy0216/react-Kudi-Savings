@@ -41,9 +41,7 @@ const CreateMarket = ({ history }) => {
     await createMarket(market)
       .then(() => {
         setLoading(false)
-        toaster.success('Market Created Successfully', {
-          duration: 100000
-        })
+        toaster.success('Market Created Successfully')
 
         history.goBack()
       })
