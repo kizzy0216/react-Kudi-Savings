@@ -196,7 +196,7 @@ const CreateZonalHead = ({ history }) => {
                     error={errors.state}
                     status={errors.state && 'error'}
                   />
-                  <Select
+                  <Input
                     onChange={e => handleZH(e)}
                     name="password"
                     value={zonalHead.password}
