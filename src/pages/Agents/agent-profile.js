@@ -14,9 +14,9 @@ import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
 import Customers from './customers'
-import { getAgent } from 'services/agents'
+import { getAgent, getUsers } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
-import { formatCurrency } from 'utils/function'
+import { formatCurrency, fecthImage } from 'utils/function'
 
 const ViewCashout = ({ history, match: { params } }) => {
   let [show, setShow] = useState(false)
@@ -26,6 +26,13 @@ const ViewCashout = ({ history, match: { params } }) => {
     getAgent
   )
   let agent = data && data.data ? data.data.data : {}
+  const {
+    data: imageData,
+    isLoading: imageLoading
+  } = useQuery(data && ['Image', { id: agent.imageId }], fecthImage)
+
+  const users = useQuery(data && ['Image', { id: agent.id }], getUsers)
+
   return (
     <Fragment>
       <Header>
@@ -65,7 +72,7 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <div className={styles.FirstBodyGridProfile}>
                       <img
                         className={styles.FirstBodyGridProfileImg}
-                        src={AgentImg}
+                        src={imageData ? imageData.data.medium : AgentImg}
                         alt="agent"
                       />
                     </div>
@@ -188,11 +195,10 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <span>Email: </span>
                     <span>{agent.manager.email}</span>
                   </div>
-                 
                 </CardBody>
               </Card>
             </div>
-            <div className={styles.Third}>{show && <Customers />}</div>
+            <div className={styles.Third}>{show && <Customers  users={users}/>}</div>
           </div>
         )}
       </Content>

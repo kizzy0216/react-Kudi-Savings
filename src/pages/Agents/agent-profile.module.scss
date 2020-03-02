@@ -36,12 +36,16 @@
     padding: 1.55em;
     &Grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: auto 1fr;
+      grid-column-gap: 2.22em;
       &Profile {
-        width: 8.27em;
-        height: 8.27em;
+        width: 12.92em;
+        height: 12.92em;
         img {
           border-radius: 50%;
+          width: 12.92em;
+          object-position: center;
+          object-fit: cover;
         }
       }
       &Content {

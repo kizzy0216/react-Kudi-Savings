@@ -8,3 +8,5 @@ export const uploadAvatar = (image, callback) =>
 export const getAgents = () => Axios.get(`/agents`)
 
 export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
+export const getUsers = async ({ id }) =>
+  await Axios.get(`/users/${id}/downline`)

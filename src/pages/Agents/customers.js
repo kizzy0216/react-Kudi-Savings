@@ -1,11 +1,50 @@
 import React, { useState } from 'react'
-import { Table, Card, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
+import {
+  Table,
+  Card,
+  CardHeader,
+  Button,
+  ButtonGroup,
+  Badge
+} from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Eye } from 'assets/svg'
 import styles from './agents.module.scss'
-const Customers = ({ history }) => {
+import { TableLoading } from 'components/loading'
+import { formatCurrency } from 'utils/function'
+
+const Customers = ({ history, users }) => {
+  let { data, isLoading, error, refetch } = users
   let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
+  let customer = []
+
+  if (data && data.data) {
+    customer = data.data.data.list.map(
+      ({ firstName, lastName, status, cashBalance, id, ...rest }) => ({
+        ...rest,
+        fullName: `${firstName} ${lastName}`,
+        cashBalance: formatCurrency(cashBalance),
+        status: status ? (
+          <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
+            {status}
+          </Badge>
+        ) : (
+          'N/A'
+        ),
+
+        action: (
+          <Button
+            icon={<Eye />}
+            variant="flat"
+            onClick={() => history.push(`${url}/${id}`)}
+          >
+            View
+          </Button>
+        )
+      })
+    )
+  }
   return (
     <div>
       <Card>
@@ -29,219 +68,46 @@ const Customers = ({ history }) => {
             </Button>
           </ButtonGroup>
         </CardHeader>
+        {isLoading && <TableLoading />}
+        {error && (
+          <span>
+            Error!
+            <button onClick={() => refetch({ disableThrow: true })}>
+              Retry
+            </button>
+          </span>
+        )}
+        {data && data.data && (
+          <Table
+            className={styles.CashoutTable}
+            column={[
+              {
+                key: 'fullName',
+                render: 'Full Name'
+              },
+              { key: 'phoneNumber', render: 'Phone Number' },
+              {
+                key: 'cashBalance',
+                render: 'Current Balance'
+              },
+              {
+                key: 'status',
+                render: 'Status'
+              },
+              {
+                key: 'savingsPlan',
+                render: 'Savings Plan'
+              },
+              { key: 'withdrawals', render: 'Withdrawals' },
 
-        <Table
-          className={styles.CashoutTable}
-          column={[
-            {
-              key: 'fullName',
-              render: 'Full Name'
-            },
-            { key: 'phoneNumber', render: 'Phone Number' },
-            {
-              key: 'walletNumber',
-              render: 'Current Balance'
-            },
-
-            {
-              key: 'savingsPlan',
-              render: 'Savings Plan'
-            },
-            { key: 'withdrawals', render: 'Withdrawals' },
-
-            {
-              key: 'action',
-              render: ''
-            }
-          ]}
-          data={[
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                  onClick={() => history.push(`${url}/1234`)}
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N19,000,500',
-              walletNumber: 'N2,000',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.CashoutButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N2,000',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                  onClick={() => history.push(`${url}/1234`)}
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                  onClick={() => history.push(`${url}/1234`)}
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,800',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                  onClick={() => history.push(`${url}/234`)}
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N9,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                  onClick={() => history.push(`${url}/124`)}
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            },
-            {
-              fullName: 'Kunle Afolayan',
-              withdrawals: 'N200',
-              walletNumber: 'N19,000,500',
-              savingsPlan: '1',
-              action: (
-                <Button
-                  className={styles.contentCardButton}
-                  icon={<Eye />}
-                  variant="flat"
-                >
-                  View
-                </Button>
-              )
-            }
-          ]}
-        />
+              {
+                key: 'action',
+                render: ''
+              }
+            ]}
+            data={customer}
+          />
+        )}
       </Card>
     </div>
   )
