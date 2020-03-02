@@ -28,16 +28,17 @@ const ViewCashout = ({ history, match: { params, url } }) => {
     getAgent
   )
   let agent = data && data.data ? data.data.data : {}
-  const { data: imageData, isLoading: imageLoading } = useQuery(
+
+  const { data: imageData } = useQuery(
     data && ['Image', { id: agent.imageId }],
     fecthImage
   )
-  let identity = useQuery(
-    data && ['Image', { id: agent.identificationImageId }],
-    fecthImage
-  )
+
   const users = useQuery(data && ['Image', { id: agent.id }], getUsers)
 
+  if (agent) {
+    localStorage.setItem('agent', JSON.stringify(agent))
+  }
   return (
     <Fragment>
       <Header>
@@ -66,7 +67,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
 
                     <Button
                       variant="flat"
-                      onClick={() => history.push(`/${url}/edit`)}
+                      onClick={() => history.push(`${url}/edit`)}
                       icon={<SettingsLink />}
                     >
                       Edit Profile

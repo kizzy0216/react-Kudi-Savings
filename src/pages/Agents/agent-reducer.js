@@ -1,5 +1,4 @@
 const AgentReducer = (agent, { type, payload }) => {
-  console.log(payload, 'hmmm complicated shit')
   switch (type) {
     case 'UPDATE_DETAILS':
       return {

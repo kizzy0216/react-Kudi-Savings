@@ -44,5 +44,5 @@ export default Axios
 
 // Media Service Request Config
 export const MediaService = axios.create()
-MediaService.defaults.baseURL = 'https://staging-media-service.herokuapp.com'
+MediaService.defaults.baseURL = 'https://staging-media-service.herokuapp.com/'
 

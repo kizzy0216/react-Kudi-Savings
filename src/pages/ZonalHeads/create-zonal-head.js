@@ -213,7 +213,7 @@ const CreateZonalHead = ({ history }) => {
                       options={markets}
                       selected={selectedNames}
                       onSelect={market => assignMarket(market)}
-                      onDeselect={() => console.log('hmm')}
+                  
                     >
                       <SelectMenuButton type="button">
                         {selectedNames || 'Select Markets...'}

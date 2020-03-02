@@ -39,9 +39,9 @@ const Login = ({ auth, history }) => {
           if (data.response) {
             return setAuthError(data.response.data.message)
           }
-          return setAuthError('Weird!, an error occured')
+          return setAuthError('Weird! an error occured')
         }
-        return setAuthError('Weird!, an error occured')
+        return setAuthError('Weird! an error occured')
       })
   }
 

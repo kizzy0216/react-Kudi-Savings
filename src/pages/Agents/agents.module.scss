@@ -74,13 +74,16 @@
       &Profile {
         grid-column-gap: 3.4em;
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 13em 1fr;
         justify-content: center;
         align-items: center;
         margin-bottom: 1.67em;
 
         &Avatar {
           text-align: center;
+         input{
+           visibility: hidden;
+         }
 
           img[class='img-id'] {
             border-radius: 4px;
@@ -96,7 +99,7 @@
         &Info {
           section {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             grid-gap: 1.67em;
           }
         }

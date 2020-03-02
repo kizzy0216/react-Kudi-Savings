@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, Fragment } from 'react'
 import { useQuery } from 'react-query'
 import {
   Card,
@@ -8,20 +8,34 @@ import {
   Input,
   Select
 } from '@kudi-inc/dip'
-import { updateAgent, uploadAvatar } from 'services/agents'
-
+import { Header, Content } from 'components/Layout'
+import { ChevronLeft } from 'assets/svg'
+import { updateAgent, uploadAvatar, getAgent } from 'services/agents'
 import { toaster } from 'evergreen-ui'
 import styles from './agents.module.scss'
 import { states } from 'utils/data'
 import AuthContext from 'context/AuthContext'
+import { fecthImage } from 'utils/function'
+import AgentImg from 'assets/svg/profile-pic.svg'
 
-const EditAgent = ({ setShowEdit, agent, avatar, idCard }) => {
+const EditAgent = ({ history, match: { params } }) => {
   const [auth] = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
+  const [uploadedAvatar, setUploadedAvatar] = useState({})
   const [imgUploaded, setImgUploaded] = useState(false)
-  const [edited, setEdited] = useState(agent)
+  const [uploadedId, setUploadedId] = useState({})
+  const [idUploaded, setIdUploaded] = useState(false)
+  const [edited, setEdited] = useState(
+    JSON.parse(localStorage.getItem('agent'))
+  )
   const [errors, setErrors] = useState({})
   const [imgProgress, setImgProcess] = useState(0)
+  const [idProgress, setIdProcess] = useState(0)
+  let { data: avatar } = useQuery(['Image', { id: edited.imageId }], fecthImage)
+  let { data: idCard } = useQuery(
+    ['Image', { id: edited.identificationImageId }],
+    fecthImage
+  )
 
   const uploadProgress = {
     onUploadProgress: ProgressEvent => {
@@ -37,229 +51,356 @@ const EditAgent = ({ setShowEdit, agent, avatar, idCard }) => {
     }
   }
 
-  const handleChange = async event => {
-    event.preventDefault()
-    setImgUploaded(true)
-    let file = new FormData()
-    file.append('file', event.target.files[0])
-    const response = await uploadAvatar(file, uploadProgress)
-    console.log(response, 'hmmmmm')
-    setEdited({ ...edited, imageId: response.data.medium })
+  const uploadIdProgress = {
+    onUploadProgress: ProgressEvent => {
+      const totalLength = ProgressEvent.lengthComputable
+        ? ProgressEvent.total
+        : ProgressEvent.target.getResponseHeader('content-length') ||
+          ProgressEvent.target.getResponseHeader(
+            'x-decompressed-content-length'
+          )
+      if (totalLength !== null) {
+        setIdProcess(Math.floor((ProgressEvent.loaded * 100) / totalLength))
+      }
+    }
   }
 
-  const handleIdChange = e => {
-    e.preventDefault()
+  const handleChange = async event => {
+    try {
+      let file = new FormData()
+      file.append('file', event.target.files[0])
+      const response = await uploadAvatar(file, uploadProgress)
+      setUploadedAvatar(response)
+      setImgUploaded(true)
+    } catch (e) {
+      console.log(e, e.response)
+    }
   }
-  const handleFundWallet = async e => {
+
+  const handleIdChange = async event => {
+    try {
+      let file = new FormData()
+      file.append('file', event.target.files[0])
+      const response = await uploadAvatar(file, uploadIdProgress)
+      setUploadedId(response)
+      setIdUploaded(true)
+    } catch (e) {
+      console.log(e, e.response)
+    }
+  }
+
+  const handleEditWallet = async e => {
     e.preventDefault()
     setLoading(true)
-    setShowEdit(false)
-    // await fundWallet(zonalHead.id)
-    // .then(({ data }) => {
-    //   setLoading(false)
-    //   toaster.success('Processing Top Up')
-
-    // })
-    // .catch(({ response }) => {
-    //   toaster.danger('Create Agent Failed')
-    // })
+    let {
+      token,
+      tokenExpired,
+      tokenExpiredAt,
+      timeCreated,
+      cashBalance,
+      assignedMarket,
+      lastCollectionTime,
+      totalCustomers,
+      walletId,
+      status,
+      manager,
+      amountSeeded,
+      ...rest
+    } = edited
+    try {
+      await updateAgent(rest)
+      toaster.success('Processing Top Up')
+    } catch (e) {
+      toaster.danger('Create Agent Failed')
+    }
   }
-  console.log(idCard, 'idCr')
+
   return (
-    <Card className={styles.EditAgent}>
-      <CardHeader className={styles.EditAgentHeader}>Fund Wallet</CardHeader>
-      <CardBody className={styles.EditAgentBody}>
-        <form onSubmit={handleFundWallet} className={styles.EditAgentForm}>
-          <div className={styles.EditAgentFormBody}>
-            <div className={styles.EditAgentFormBodyProfile}>
-              <div className={styles.EditAgentFormBodyProfileAvatar}>
-                <img src={avatar} alt="avatar" />
-                <input accept="image/*" type="file" onChange={()=>handleChange} />
-                <div>
-                  <span>Change Picture</span>
-                </div>
-              </div>
-              <div className={styles.EditAgentFormBodyProfileInfo}>
-                <div className={styles.EditAgentFormHeader}>
-                  PERSONAL INFORMATION
-                </div>
-                <section>
-                  <Input
-                    type="text"
-                    label="First Name"
-                    name="firstName"
-                    value={edited.firstName}
-                    onChange={e =>
-                      setEdited({ ...edited, firstName: e.target.value })
-                    }
-                  />
-                  <Input
-                    type="text"
-                    label="Last Name"
-                    name="lastName"
-                    value={edited.lastName}
-                    onChange={e =>
-                      setEdited({ ...edited, lastName: e.target.value })
-                    }
-                  />
-                  <Input
-                    type="text"
-                    label="Phone Number"
-                    value={edited.phoneNumber ? edited.phoneNumber : ''}
-                    onChange={e =>
-                      setEdited({ ...edited, phoneNumber: e.target.value })
-                    }
-                  />
-                  <Input
-                    value={edited.email}
-                    name="email"
-                    type="text"
-                    label="Email"
-                    onChange={e =>
-                      setEdited({ ...edited, email: e.target.value })
-                    }
-                  />
-                  <Input
-                    type="number"
-                    label="BVN"
-                    onChange={e =>
-                      setEdited({ ...edited, bvn: e.target.value })
-                    }
-                    value={edited.bvn}
-                  />
+    <Fragment>
+      <Header>
+        <p>
+          <ChevronLeft role="button" onClick={() => history.goBack()} />
+          Agent Profile
+        </p>
+      </Header>
+      <Content className={styles.content}>
+        <Card className={styles.EditAgent}>
+          <CardHeader className={styles.EditAgentHeader}>
+            Fund Wallet
+          </CardHeader>
+          <CardBody className={styles.EditAgentBody}>
+            <form onSubmit={handleEditWallet} className={styles.EditAgentForm}>
+              <div className={styles.EditAgentFormBody}>
+                <div className={styles.EditAgentFormBodyProfile}>
+                  <div className={styles.EditAgentFormBodyProfileAvatar}>
+                    {imgUploaded ? (
+                      <img src={uploadedAvatar.data.medium} alt="avatar" />
+                    ) : (
+                      <label>
+                        <input
+                          accept="image/*"
+                          type="file"
+                          onChange={handleChange}
+                        />
+                        <img
+                          src={
+                            avatar && avatar.data
+                              ? avatar.data.medium
+                              : AgentImg
+                          }
+                          alt="avatar"
+                        />
+                      </label>
+                    )}
 
-                  <Select
-                    onSelect={gender => setEdited({ ...edited, gender })}
-                    name="gender"
-                    value={edited.gender}
-                    label="Gender"
-                    options={[
-                      { text: 'Male', value: 'MALE' },
-                      { text: 'Female', value: 'FEMALE' }
-                    ]}
-                    autoComplete="gender"
-                    error={errors.gender}
-                    status={errors.gender && 'error'}
-                  />
-                  <Select
-                    onSelect={state =>
-                      setEdited({
-                        ...edited,
-                        guarantor: { ...edited.guarantor, state }
-                      })
-                    }
-                    name="state"
-                    value={edited.state}
-                    required
-                    label="State"
-                    options={states}
-                    autoComplete="state"
-                    error={errors.state}
-                    status={errors.state && 'error'}
-                  />
-                  <Input
-                    value={edited.lga}
-                    name="lga"
-                    type="text"
-                    label="LGA"
-                    onChange={e =>
-                      setEdited({ ...edited, lga: e.target.value })
-                    }
-                  />
-                  <Select
-                    onSelect={state =>
-                      setEdited({
-                        ...edited,
-                        guarantor: { ...edited.guarantor, state }
-                      })
-                    }
-                    name="state"
-                    value={edited.assignedMarket.name}
-                    label="Reassign Market"
-                    options={
-                      auth && auth.markets
-                        ? auth.markets.map(({ name, id }) => ({
-                            text: name,
-                            value: id
-                          }))
-                        : []
-                    }
-                    autoComplete="marketId"
-                    error={errors.marketId}
-                    status={errors.marketId && 'error'}
-                  />
-                </section>
-              </div>
-            </div>
-          </div>
+                    <p>{imgProgress ? `${imgProgress}%` : ''}</p>
+                  </div>
+                  <div className={styles.EditAgentFormBodyProfileInfo}>
+                    <div className={styles.EditAgentFormHeader}>
+                      PERSONAL INFORMATION
+                    </div>
+                    <section>
+                      <Input
+                        type="text"
+                        label="First Name"
+                        name="firstName"
+                        value={edited.firstName}
+                        onChange={e =>
+                          setEdited({ ...edited, firstName: e.target.value })
+                        }
+                      />
+                      <Input
+                        type="text"
+                        label="Last Name"
+                        name="lastName"
+                        value={edited.lastName}
+                        onChange={e =>
+                          setEdited({ ...edited, lastName: e.target.value })
+                        }
+                      />
+                      <Input
+                        type="text"
+                        label="Phone Number"
+                        value={edited.phoneNumber ? edited.phoneNumber : ''}
+                        onChange={e =>
+                          setEdited({ ...edited, phoneNumber: e.target.value })
+                        }
+                      />
+                      <Input
+                        value={edited.email}
+                        name="email"
+                        type="text"
+                        label="Email"
+                        onChange={e =>
+                          setEdited({ ...edited, email: e.target.value })
+                        }
+                      />
+                      <Input
+                        type="number"
+                        label="BVN"
+                        onChange={e =>
+                          setEdited({ ...edited, bvn: e.target.value })
+                        }
+                        value={edited.bvn}
+                      />
 
-          <div className={styles.EditAgentFormBody}>
-            <div className={styles.EditAgentFormBodyProfile}>
-              <div className={styles.EditAgentFormBodyProfileAvatar}>
-                <img src={idCard} className="img-id" alt="id card" />
-                <input accept="image/*" type="file" onChange={()=>handleIdChange} />
-                <div>
-                  <span>Change ID</span>
+                      <Select
+                        onSelect={gender => setEdited({ ...edited, gender })}
+                        name="gender"
+                        value={edited.gender}
+                        label="Gender"
+                        options={[
+                          { text: 'Male', value: 'MALE' },
+                          { text: 'Female', value: 'FEMALE' }
+                        ]}
+                        autoComplete="gender"
+                        error={errors.gender}
+                        status={errors.gender && 'error'}
+                      />
+                      <Select
+                        onSelect={state =>
+                          setEdited({
+                            ...edited,
+                            state
+                          })
+                        }
+                        name="state"
+                        value={edited.state}
+                        required
+                        label="State"
+                        options={states}
+                        autoComplete="state"
+                        error={errors.state}
+                        status={errors.state && 'error'}
+                      />
+                      <Input
+                        value={edited.lga}
+                        name="lga"
+                        type="text"
+                        label="LGA"
+                        onChange={e =>
+                          setEdited({ ...edited, lga: e.target.value })
+                        }
+                      />
+                      <Select
+                        onSelect={marketId =>
+                          setEdited({
+                            ...edited,
+                            marketId
+                          })
+                        }
+                        name="state"
+                        value={edited.assignedMarket.name}
+                        label="Reassign Market"
+                        options={
+                          auth && auth.markets
+                            ? auth.markets.map(({ name, id }) => ({
+                                text: name,
+                                value: id
+                              }))
+                            : []
+                        }
+                        autoComplete="marketId"
+                        error={errors.marketId}
+                        status={errors.marketId && 'error'}
+                      />
+                    </section>
+                  </div>
                 </div>
               </div>
-              <div className={styles.EditAgentFormBodyProfileInfo}>
-                <div className={styles.EditAgentFormHeader}>
-                  GUARANTOR'S INFORMATION
-                </div>
-                <section>
-                  <Input
-                    type="text"
-                    label="First name"
-                    name="guarantorName"
-                    value={edited.guarantor.firstName}
-                  />
-                  <Input
-                    type="text"
-                    label="Last name"
-                    name="guarantorlastName"
-                    value={edited.guarantor.lastName}
-                  />
-                  <Input
-                    type="text"
-                    label="Phone Number"
-                    name="guarantorPhoneNumber"
-                    value={edited.guarantor.phoneNumber}
-                  />
-                  <Input
-                    type="bvn"
-                    name="guarantorAddress"
-                    label="Address"
-                    value={edited.guarantor.address}
-                  />
-                  <Select
-                    onSelect={state =>
-                      setEdited({
-                        ...edited,
-                        guarantor: { ...edited.guarantor, state }
-                      })
-                    }
-                    name="state"
-                    value={edited.guarantor.gender}
-                    label="Gender"
-                    options={[
-                      { text: 'MALE', value: 'MALE' },
-                      { text: 'FEMALE', value: 'FEMALE' }
-                    ]}
-                    autoComplete="gender"
-                    error={errors.gender}
-                    status={errors.gender && 'error'}
-                  />
-                </section>
-              </div>
-            </div>
-          </div>
 
-          <Button type="submit" loading={loading}>
-            Submit
-          </Button>
-        </form>
-      </CardBody>
-    </Card>
+              <div className={styles.EditAgentFormBody}>
+                <div className={styles.EditAgentFormBodyProfile}>
+                  <div className={styles.EditAgentFormBodyProfileAvatar}>
+                    <div className={styles.EditAgentFormBodyProfileAvatar}>
+                      {idUploaded ? (
+                        <img src={uploadedId.data.medium} alt="avatar" />
+                      ) : (
+                        <label>
+                          <input
+                            accept="image/*"
+                            type="file"
+                            onChange={handleIdChange}
+                          />
+                          <img
+                            className="img-id"
+                            src={
+                              idCard && idCard.data
+                                ? idCard.data.medium
+                                : AgentImg
+                            }
+                            alt="id card"
+                          />
+                        </label>
+                      )}
+
+                      <p>
+                        {idProgress
+                          ? `${
+                              idProgress === 100 && !uploadedId.data
+                                ? 99
+                                : idProgress
+                            }%`
+                          : 'Upload Id'}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={styles.EditAgentFormBodyProfileInfo}>
+                    <div className={styles.EditAgentFormHeader}>
+                      GUARANTOR'S INFORMATION
+                    </div>
+                    <section>
+                      <Input
+                        type="text"
+                        label="First name"
+                        name="guarantorName"
+                        value={edited.guarantor.firstName}
+                        onChange={e =>
+                          setEdited({
+                            ...edited,
+                            guarantor: {
+                              ...edited.guarantor,
+                              firstName: e.target.value
+                            }
+                          })
+                        }
+                      />
+                      <Input
+                        type="text"
+                        label="Last name"
+                        name="guarantorlastName"
+                        value={edited.guarantor.lastName}
+                        onChange={e =>
+                          setEdited({
+                            ...edited,
+                            guarantor: {
+                              ...edited.guarantor,
+                              lastName: e.target.value
+                            }
+                          })
+                        }
+                      />
+                      <Input
+                        type="text"
+                        label="Phone Number"
+                        name="guarantorPhoneNumber"
+                        value={edited.guarantor.phoneNumber}
+                        onChange={e =>
+                          setEdited({
+                            ...edited,
+                            guarantor: {
+                              ...edited.guarantor,
+                              phoneNumber: e.target.value
+                            }
+                          })
+                        }
+                      />
+                      <Input
+                        type="bvn"
+                        name="guarantorAddress"
+                        label="Address"
+                        value={edited.guarantor.address}
+                        onChange={e =>
+                          setEdited({
+                            ...edited,
+                            guarantor: {
+                              ...edited.guarantor,
+                              address: e.target.value
+                            }
+                          })
+                        }
+                      />
+                      <Select
+                        onSelect={state =>
+                          setEdited({
+                            ...edited,
+                            guarantor: { ...edited.guarantor, state }
+                          })
+                        }
+                        name="state"
+                        value={edited.guarantor.gender}
+                        label="Gender"
+                        options={[
+                          { text: 'MALE', value: 'MALE' },
+                          { text: 'FEMALE', value: 'FEMALE' }
+                        ]}
+                        autoComplete="gender"
+                        error={errors.gender}
+                        status={errors.gender && 'error'}
+                      />
+                    </section>
+                  </div>
+                </div>
+              </div>
+
+              <Button type="submit" loading={loading}>
+                Submit
+              </Button>
+            </form>
+          </CardBody>
+        </Card>
+      </Content>
+    </Fragment>
   )
 }
 export default EditAgent
