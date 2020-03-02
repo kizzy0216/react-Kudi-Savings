@@ -15,7 +15,7 @@ import { Header, Content } from 'components/Layout'
 import { states } from 'utils/data'
 import styles from './zonal-heads.module.scss'
 import { createZH } from 'services/zonal-heads'
-import { getAllMarkets } from 'services/markets'
+import { getMarkets } from 'services/markets'
 import { zonalHeadValidation } from './validation'
 
 const CreateZonalHead = ({ history }) => {
@@ -63,7 +63,7 @@ const CreateZonalHead = ({ history }) => {
   }
 
   const fetchMarkets = async () => {
-    const response = await getAllMarkets()
+    const response = await getMarkets({page:1})
     const formatMarket = response.data.data.list.map(({ id, name }) => ({
       value: id,
       label: name
