@@ -4,32 +4,33 @@ export const AuthProvider = AuthContext.Provider
 export const AuthConsumer = AuthContext.Consumer
 
 export const getDefaultAuth = () => {
-    try {
-        return JSON.parse(localStorage.getItem('auth-token'))
-    } catch (e) {
-        return null
-    }
+  try {
+    return JSON.parse(localStorage.getItem('auth-token'))
+  } catch (e) {
+    return null
+  }
+}
+export const setLogout = () => {
+  localStorage.removeItem('auth-token')
+  window.location.href = '/'
 }
 
 export const AuthProviderContainer = ({ children, history }) => {
-    const defaultAuth = getDefaultAuth()
-    const [auth, setAuth] = useState(defaultAuth)
+  const defaultAuth = getDefaultAuth()
+  const [auth, setAuth] = useState(defaultAuth)
 
-    const setAuthAndCache = (value = null) => {
-        value
-            ? localStorage.setItem('auth-token', JSON.stringify(value))
-            : localStorage.removeItem('auth-token')
+  const setAuthAndCache = (value = null) => {
+    value
+      ? localStorage.setItem('auth-token', JSON.stringify(value))
+      : localStorage.removeItem('auth-token')
 
-        setAuth(value)
-    }
-    const setLogout = () => {
-        localStorage.removeItem('auth-token')
-        window.location.href = '/'
-    }
+    setAuth(value)
+  }
 
-    return (
-        <AuthProvider value={[auth, setAuthAndCache, setLogout]}>
-            {children}
-        </AuthProvider>
-    )
+  return (
+    <AuthProvider value={[auth, setAuthAndCache, setLogout]}>
+      {children}
+    </AuthProvider>
+  )
 }
+export default AuthContext

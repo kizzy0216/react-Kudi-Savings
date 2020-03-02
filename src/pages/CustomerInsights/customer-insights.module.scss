@@ -1,3 +1,96 @@
-.CustomerInsights{
-
+@import '../../styles/variables';
+.CI {
+    
+    
+    display: grid;
+    grid-template-columns: 35.27em 1fr;
+    grid-column-gap: 2.61em;
+    font-size: 1rem;
+    &First {
+        display: grid;
+        grid-template-rows: repeat(2, max-content); //25.11em 17.5em;
+        grid-row-gap: 2em;
+        &Header{
+            &Flex{
+                display:flex;
+                justify-content:space-between;
+                align-items: center;
+                margin-bottom: 1.43em;
+               &:last-of-type{
+                   margin-bottom: 0;
+               }
+                h2{
+                   font-size:1.29em; 
+                   font-weight:normal;
+                }
+                &Date{
+                    font-size: .92em;
+                }
+            }
+            &Dropdown {
+                line-height: 123%;
+                &Button {
+                    border: none;
+                    background: transparent;
+                    color: $sky-blue;
+                    font-size: .92em;
+                }
+               
+            }
+        }
+    }
+    &Second {
+        display: grid;
+        grid-template-rows: repeat(2, max-content); //11.55em 31.11em;
+        grid-row-gap: 2em;
+        
+    }
+    &Flex {
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid $light-grey;
+        padding: 1.07em 0;
+        &:last-of-type {
+            border: none;
+        }
+        &Footer{
+            display:flex;
+            justify-content: center;
+            align-items:center;
+            padding: 1.44em 0 1em;
+            >*{
+                color:$sky-blue
+            }
+        }
+      
+    }
+    &Header{
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+    div[class*="progressBar_progressWrapper"]{
+        width:100%;
+        height: 0.285em;
+    }
+}
+:global{
+    .react-calendar{
+        width:100%;
+        border:none;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-weight:normal;
+        &__navigation{
+            display: none !important;
+           
+        }
+        &__tile--active{
+           
+            background-color: $sky-blue;
+        }
+        abbr[title] {
+            text-decoration: none;}
+    }
+    .react-calendar__month-view__days__day--weekend {
+        color: $grey;
+    }
 }

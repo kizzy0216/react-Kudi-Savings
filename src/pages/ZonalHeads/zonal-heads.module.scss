@@ -1,0 +1,111 @@
+@import '../../styles/variables';
+@import '../../styles/breakpoint';
+.ZH {
+    font-size: 1rem;
+    &Header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-weight: normal;
+        text-transform: uppercase;
+    }
+    &Form {
+        &Body {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-column-gap: 4.5em;
+            & > div {
+                margin-bottom: 1.67em;
+            }
+        }
+
+        &Submit {
+            display: flex;
+            justify-content: space-between;
+        }
+    }
+    &Body {
+        padding: 1.67em;
+    }
+    &Table {
+        td {
+            padding: 1.42em 0;
+            button {
+                color: $sky-blue;
+                span {
+                    font-size: 0.92em;
+                    line-height: 123%;
+                }
+            }
+        }
+    }
+    &Two {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 1.11em;
+        margin-bottom: 1.67em;
+
+        &Check {
+            border: 1px solid #d2ddeb;
+            border-radius: 3px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 0.83em;
+            height: 55px;
+
+            &box {
+                width: 30px;
+                height: 30px;
+                position: relative;
+                background: #fcfff4;
+                border-radius: 50px;
+
+                label {
+                    width: 28px;
+                    height: 28px;
+                    position: absolute;
+                    top: 3px;
+                    left: 4px;
+                    cursor: pointer;
+                    background: $grey;
+                    border-radius: 50px;
+
+                    &:after {
+                        content: '';
+                        width: 12px;
+                        height: 5px;
+                        position: absolute;
+                        top: 10px;
+                        left: 8px;
+                        border: 2px solid #fcfff4;
+                        border-top: none;
+                        border-right: none;
+                        background: transparent;
+                        opacity: 0;
+                        transform: rotate(-45deg);
+                    }
+                    &:hover::after {
+                        opacity: 0.3;
+                    }
+                }
+                input[type='checkbox'] {
+                    visibility: hidden;
+                    &:checked + label:after {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+    &MultipleSelect {
+        & > button {
+            height: 4.142em;
+            background: transparent;
+            border: 1px solid $border-grey;
+            font-size: 0.78em;
+            width: 100%;
+            box-shadow: none;
+        }
+    }
+}
