@@ -120,13 +120,13 @@ const EditAgent = ({ history, match: { params } }) => {
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => history.goBack()} />
-          Agent Profile
+          Edit Agent
         </p>
       </Header>
       <Content className={styles.content}>
         <Card className={styles.EditAgent}>
           <CardHeader className={styles.EditAgentHeader}>
-            Fund Wallet
+            Fill Information
           </CardHeader>
           <CardBody className={styles.EditAgentBody}>
             <form onSubmit={handleEditWallet} className={styles.EditAgentForm}>
@@ -152,8 +152,15 @@ const EditAgent = ({ history, match: { params } }) => {
                         />
                       </label>
                     )}
-
-                    <p>{imgProgress ? `${imgProgress}%` : ''}</p>
+                    <p>
+                      {imgProgress
+                        ? `${
+                            imgProgress === 100 && !imgUploaded.data
+                              ? 99
+                              : imgProgress
+                          }%`
+                        : 'Change Avatar'}
+                    </p>
                   </div>
                   <div className={styles.EditAgentFormBodyProfileInfo}>
                     <div className={styles.EditAgentFormHeader}>
@@ -301,7 +308,7 @@ const EditAgent = ({ history, match: { params } }) => {
                                 ? 99
                                 : idProgress
                             }%`
-                          : 'Upload Id'}
+                          : 'Change Id'}
                       </p>
                     </div>
                   </div>

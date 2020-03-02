@@ -53,11 +53,14 @@
 }
 
 .EditAgent {
+  font-size: 1rem;
   &Header {
-    font-size: 1em;
-    text-transform: uppercase;
+    font-size: 0.83em;
+    height: 4em;
+    display: flex;
+    align-items: center;
     font-weight: normal;
-    color: $kudi-blue;
+    text-transform: uppercase;
   }
   &Body {
     padding: 1.25em 4em;
@@ -81,9 +84,9 @@
 
         &Avatar {
           text-align: center;
-         input{
-           visibility: hidden;
-         }
+          input {
+            visibility: hidden;
+          }
 
           img[class='img-id'] {
             border-radius: 4px;
@@ -92,8 +95,8 @@
             border-radius: 50%;
             object-fit: cover;
             object-position: center;
-            width: 12.92em;
-            height: 12.92em;
+            width: 10em;
+            height: 10em;
           }
         }
         &Info {
