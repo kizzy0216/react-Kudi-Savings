@@ -92,6 +92,10 @@ const EditAgent = ({ history, match: { params } }) => {
   const handleEditWallet = async e => {
     e.preventDefault()
     setLoading(true)
+    if (!edited.marketId) {
+      edited.marketId = edited.assignedMarket.id
+    }
+    
     let {
       token,
       tokenExpired,
@@ -109,8 +113,13 @@ const EditAgent = ({ history, match: { params } }) => {
     } = edited
     try {
       await updateAgent(rest)
-      toaster.success('Processing Top Up')
+      setLoading(false)
+      toaster.success('Agent Details Updated')
     } catch (e) {
+      setLoading(false)
+      if (e.data.message) {
+        return toaster.danger(e.data.message)
+      }
       toaster.danger('Create Agent Failed')
     }
   }

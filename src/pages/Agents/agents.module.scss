@@ -84,8 +84,13 @@
 
         &Avatar {
           text-align: center;
+          p {
+            margin-top: 0.72em;
+            font-size: 0.72em;
+          }
           input {
             visibility: hidden;
+            cursor: pointer;
           }
 
           img[class='img-id'] {
@@ -97,6 +102,7 @@
             object-position: center;
             width: 10em;
             height: 10em;
+            cursor: pointer;
           }
         }
         &Info {
