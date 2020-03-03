@@ -22,7 +22,7 @@ import EditZH from './edit-zonal'
 
 const ViewCashout = ({ history, match: { params, url } }) => {
   let [show, setShow] = useState(false)
-  let [marketShow, setMarketShow] = useState(false)
+  let [marketShow, setMarketShow] = useState(true)
   let [pageLoaded, setPageLoaded] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
   let [showEdit, setShowEdit] = useState(false)
