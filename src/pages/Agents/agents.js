@@ -132,24 +132,24 @@ const Agents = ({ history }) => {
               />
             )}
           </CardBody>
-          <CardFooter>
-            <div className={styles.AgentTablePagination}>
-              {page > 1 && (
+          {data && (
+            <CardFooter>
+              <div className={styles.AgentTablePagination}>
+                {page > 1 && (
+                  <Button
+                    variant="flat"
+                    onClick={() => setPage(page - 1)}
+                    icon={<ChevronLeft />}
+                  ></Button>
+                )}
+                <p> Page {page} </p>
                 <Button
                   variant="flat"
-                  onClick={() => setPage(page - 1)}
-                  icon={<ChevronLeft />}
-                >
-                  Back
-                </Button>
-              )}
-              <p> Page {page} </p>
-              <Button variant="flat" onClick={() => setPage(page + 1)}>
-                {' '}
-                Next
-              </Button>
-            </div>
-          </CardFooter>
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              </div>
+            </CardFooter>
+          )}
         </Card>
       </Content>
     </Fragment>

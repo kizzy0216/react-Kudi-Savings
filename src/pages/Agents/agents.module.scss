@@ -19,13 +19,16 @@
       }
     }
     &Pagination {
-      display: flex;
-      max-width: 13.6em;
-      justify-content: space-between;
+      display: grid;
+      justify-content: center;
       align-items: center;
-      margin: 0.83em auto 0;
+      grid-template-columns: repeat(3, 4em);
       font-weight: normal;
-      font-size: 0.93em;
+      font-size: 1em;
+      &>*{
+        justify-content: center;
+        display: flex;
+      }
   }
   }
   &Badge {

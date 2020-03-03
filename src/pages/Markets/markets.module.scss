@@ -1,116 +1,120 @@
 @import '../../styles/variables';
 
 .Agent {
-    font-size: 1rem;
-    &Card {
-        font-size: 1em;
-        box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
-        color: $grey;
-    }
-    &Table {
-        td {
-            font-weight: 400;
-            padding: 1.42em 0;
-            button {
-                color: $sky-blue;
-                span {
-                    font-size: 0.92em;
-                    line-height: 123%;
-                }
-            }
+  font-size: 1rem;
+  &Card {
+    font-size: 1em;
+    box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
+    color: $grey;
+  }
+  &Table {
+    td {
+      font-weight: 400;
+      padding: 1.42em 0;
+      button {
+        color: $sky-blue;
+        span {
+          font-size: 0.92em;
+          line-height: 123%;
         }
-        &Pagination {
-            display: flex;
-            max-width: 8em;
-            justify-content: space-between;
-            margin: 0.83em auto 0;
-            font-weight: normal;
-            font-size: 0.82em;
-        }
+      }
     }
-    &Badge {
-        font-size: 0.92em;
-        text-transform: capitalize;
+    &Pagination {
+      display: grid;
+      justify-content: center;
+      align-items: center;
+      grid-template-columns: repeat(3, 4em);
+      font-weight: normal;
+      font-size: 1em;
+      & > * {
+        justify-content: center;
+        display: flex;
+      }
     }
-    button[class*='kudi-dip-btn-grouped-active'] {
-        box-shadow: 0px 10px 15px rgba(171, 191, 216, 0.5);
-    }
+  }
+  &Badge {
+    font-size: 0.92em;
+    text-transform: capitalize;
+  }
+  button[class*='kudi-dip-btn-grouped-active'] {
+    box-shadow: 0px 10px 15px rgba(171, 191, 216, 0.5);
+  }
 }
 .ButtonGroup {
-    padding: 0.4em 1em;
-    background: #e7eef7;
+  padding: 0.4em 1em;
+  background: #e7eef7;
+  border-radius: 3px;
+  button {
     border-radius: 3px;
-    button {
-        border-radius: 3px;
-        border: none;
+    border: none;
 
-        &:nth-of-type(2) {
-            background: transparent;
-            border: none;
-            span {
-                margin-left: 0.82em;
-            }
-        }
+    &:nth-of-type(2) {
+      background: transparent;
+      border: none;
+      span {
+        margin-left: 0.82em;
+      }
     }
+  }
 }
 .Header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-transform: uppercase;
-    font-weight: normal;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-transform: uppercase;
+  font-weight: normal;
 }
 .CM {
-    font-size: 1rem;
-    &Form {
-        width: 20em;
-        & > div {
-            margin-bottom: 1.67em;
-        }
+  font-size: 1rem;
+  &Form {
+    width: 20em;
+    & > div {
+      margin-bottom: 1.67em;
+    }
 
-        &Submit {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 4.33em;
-        }
+    &Submit {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 4.33em;
     }
-    &Header {
-        font-size: 0.83em;
-        height: 4em;
-        display: flex;
-        align-items: center;
-        font-weight: normal;
-        text-transform: uppercase;
-    }
+  }
+  &Header {
+    font-size: 0.83em;
+    height: 4em;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
 }
 .SM {
-    font-size: 1rem;
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    grid-column-gap: 1.67em;
-    &Header {
+  font-size: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-column-gap: 1.67em;
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+  &Body {
+    &List {
+      & > div {
         display: flex;
         justify-content: space-between;
-        font-weight: normal;
-        text-transform: uppercase;
-    }
-    &Body {
-        &List {
-            & > div {
-                display: flex;
-                justify-content: space-between;
-                padding: 1.14em 0;
-                border-bottom: 1px solid $light-grey;
-                &:last-child {
-                    border-bottom: none;
-                }
-                span {
-                    color: $grey;
-                    &:last-child {
-                        color: $text-darker;
-                    }
-                }
-            }
+        padding: 1.14em 0;
+        border-bottom: 1px solid $light-grey;
+        &:last-child {
+          border-bottom: none;
         }
+        span {
+          color: $grey;
+          &:last-child {
+            color: $text-darker;
+          }
+        }
+      }
     }
+  }
 }

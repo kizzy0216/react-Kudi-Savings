@@ -130,7 +130,7 @@ const Markets = ({ history }) => {
               </Fragment>
             )}
           </CardBody>
-          <CardFooter>
+          {data && (  <CardFooter>
             <div className={styles.AgentTablePagination}>
               <Button
                 variant="flat"
@@ -140,7 +140,7 @@ const Markets = ({ history }) => {
               <p> Page {page} </p>
               <Button variant="flat" onClick={() => setPage(page + 1)}></Button>
             </div>
-          </CardFooter>
+          </CardFooter>)}
         </Card>
       </Content>
     </Fragment>
