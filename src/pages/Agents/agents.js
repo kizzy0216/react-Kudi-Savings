@@ -34,7 +34,7 @@ const Agents = ({ history }) => {
         ...rest,
         fullName: `${firstName} ${lastName}`,
         cashBalance: formatCurrency(cashBalance),
-        market:market.name,
+        market: market ? market.name : 'N/A',
         status: status ? (
           <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
             {status}

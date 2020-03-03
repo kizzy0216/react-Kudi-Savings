@@ -7,11 +7,11 @@ import {
   Card,
   CardHeader,
   CardBody,
-  CardFooter,
-  Table
+  CardFooter
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
+import Table from 'components/Table'
 import { Eye, Add, ChevronLeft } from 'assets/svg'
 import styles from './markets.module.scss'
 import { getMarkets } from 'services/markets'
@@ -19,11 +19,12 @@ import { TableLoading } from 'components/loading'
 
 const Markets = ({ history }) => {
   let { url } = useRouteMatch()
+  let limit = 60
   const [page, setPage] = useState(1)
   let [active, setActive] = useState('all')
   let formattedData = []
   const { data, isLoading, error, refetch, fetchMore } = useQuery(
-    ['Markets', { page }],
+    ['Markets', { page, limit }],
     getMarkets
   )
 
@@ -49,6 +50,7 @@ const Markets = ({ history }) => {
       })
     )
   }
+
   return (
     <Fragment>
       <Header>
@@ -130,17 +132,26 @@ const Markets = ({ history }) => {
               </Fragment>
             )}
           </CardBody>
-          {data && (  <CardFooter>
-            <div className={styles.AgentTablePagination}>
-              <Button
-                variant="flat"
-                onClick={() => setPage(page - 1)}
-                icon={<ChevronLeft />}
-              ></Button>
-              <p> Page {page} </p>
-              <Button variant="flat" onClick={() => setPage(page + 1)}></Button>
-            </div>
-          </CardFooter>)}
+          {data && formattedData.length > 20 && (
+            <CardFooter>
+              <div className={styles.AgentTablePagination}>
+                {page > 1 && (
+                  <Button
+                    variant="flat"
+                    onClick={() => setPage(page - 1)}
+                    icon={<ChevronLeft />}
+                  ></Button>
+                )}
+                <p> Page {page} </p>
+                {formattedData.length === limit && (
+                  <Button
+                    variant="flat"
+                    onClick={() => setPage(page + 1)}
+                  ></Button>
+                )}
+              </div>
+            </CardFooter>
+          )}
         </Card>
       </Content>
     </Fragment>
