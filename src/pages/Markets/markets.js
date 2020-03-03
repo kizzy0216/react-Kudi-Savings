@@ -1,5 +1,6 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
+import { SideSheet } from 'evergreen-ui'
 import moment from 'moment'
 import {
   Button,
@@ -9,48 +10,59 @@ import {
   CardBody,
   CardFooter
 } from '@kudi-inc/dip'
-import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
-import { Eye, Add, ChevronLeft } from 'assets/svg'
+import { SettingsLink, Add, ChevronLeft } from 'assets/svg'
 import styles from './markets.module.scss'
 import { getMarkets } from 'services/markets'
 import { TableLoading } from 'components/loading'
+import EditMarket from './edit-market'
+import AuthContext from 'context/AuthContext'
+import { Headers } from './data'
 
 const Markets = ({ history }) => {
-  let { url } = useRouteMatch()
+  const [auth] = useContext(AuthContext)
+  const [show, setShow] = useState(false)
   let limit = 60
   const [page, setPage] = useState(1)
   let [active, setActive] = useState('all')
   let formattedData = []
-  const { data, isLoading, error, refetch} = useQuery(
+  const [market, setMarket] = useState({})
+  const { data, isLoading, error, refetch } = useQuery(
     ['Markets', { page, limit }],
     getMarkets
   )
 
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
-      ({ city, state, lga, id, timeCreated, ...rest }) => ({
+      ({ city, state, lga, id, timeCreated,population, ...rest }) => ({
         ...rest,
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
           : 'N/A',
-        state: state ? state : 'N/A',
+   
         city: city ? city : 'N/A',
         lga: lga ? lga : 'N/A',
+        state: state ? state : 'N/A',
+        population: population ? population : 'N/A',
         action: (
           <Button
-            icon={<Eye />}
+            icon={<SettingsLink />}
             variant="flat"
-            onClick={() => history.push(`${url}/${id}`)}
+            onClick={() => {
+              setMarket({ city, state, lga, id, timeCreated,population, ...rest })
+              return setShow(true)
+            }}
           >
-            View
+            Edit Market
           </Button>
         )
       })
     )
   }
-
+  let headers = Headers.map(({ key, render, access }) =>
+    access.includes(auth.type) ? { key, render } : []
+  )
   return (
     <Fragment>
       <Header>
@@ -88,7 +100,7 @@ const Markets = ({ history }) => {
               </Button>
             </ButtonGroup>
           </CardHeader>
-          <CardBody className={styles.Agent}>
+          <CardBody className={styles.Market}>
             {isLoading && <TableLoading />}
 
             {error && (
@@ -101,38 +113,16 @@ const Markets = ({ history }) => {
             )}
 
             {data && (
-              <Fragment>
-                <Table
-                  className={styles.AgentTable}
-                  column={[
-                    {
-                      key: 'name',
-                      render: 'Market Name'
-                    },
-                    {
-                      key: 'timeCreated',
-                      render: 'Time Created'
-                    },
-                    { key: 'city', render: 'City' },
-
-                    { key: 'state', render: 'State' },
-                    {
-                      key: 'lga',
-                      render: 'LGA'
-                    },
-                    {
-                      key: 'action',
-                      render: 'ACTION'
-                    }
-                  ]}
-                  data={formattedData}
-                />
-              </Fragment>
+              <Table
+                className={styles.MarketTable}
+                column={headers}
+                data={formattedData}
+              />
             )}
           </CardBody>
           {data && formattedData.length > 20 && (
             <CardFooter>
-              <div className={styles.AgentTablePagination}>
+              <div className={styles.MarketTablePagination}>
                 {page > 1 && (
                   <Button
                     variant="flat"
@@ -151,7 +141,13 @@ const Markets = ({ history }) => {
             </CardFooter>
           )}
         </Card>
-       
+        <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
+          <EditMarket
+            setShow={setShow}
+            market={market}
+            refetch={refetch}
+          />
+        </SideSheet>
       </Content>
     </Fragment>
   )
