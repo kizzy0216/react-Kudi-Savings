@@ -15,7 +15,7 @@ import { toaster, SelectMenu, Button as SelectMenuButton } from 'evergreen-ui'
 import styles from './zonal-heads.module.scss'
 import { isValidEdit } from './validation'
 
-const EditAgent = ({ zonalHead, setShowEdit, refetch }) => {
+const EditZH = ({ zonalHead, setShowEdit, refetch }) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [markets, setMarkets] = useState([])
@@ -197,4 +197,4 @@ const EditAgent = ({ zonalHead, setShowEdit, refetch }) => {
     </Card>
   )
 }
-export default EditAgent
+export default EditZH
