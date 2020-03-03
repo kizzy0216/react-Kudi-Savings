@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import moment from 'moment'
 import {
   Table,
   Card,
@@ -28,30 +29,26 @@ const Customers = ({ history, users }) => {
         totalSaved,
         totalWithdrawn,
         cashBalance,
+        timeCreated,
         id,
         ...rest
       }) => ({
         ...rest,
         fullName: `${firstName} ${lastName}`,
-
-        status: status ? (
-          <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
-            {status}
-          </Badge>
-        ) : (
-          'N/A'
-        ),
         totalSaved: formatCurrency(totalSaved),
         totalWithdrawn: formatCurrency(totalWithdrawn),
-        action: (
-          <Button
-            icon={<Eye />}
-            variant="flat"
-            onClick={() => history.push(`${url}/${id}`)}
-          >
-            View
-          </Button>
-        )
+        timeCreated: timeCreated
+        ? moment(timeCreated).format('Do MMM, YYYY')
+        : 'N/A',
+        // action: (
+        //   <Button
+        //     icon={<Eye />}
+        //     variant="flat"
+        //     onClick={() => history.push(`${url}/${id}`)}
+        //   >
+        //     View
+        //   </Button>
+        // )
       })
     )
   }
@@ -101,22 +98,12 @@ const Customers = ({ history, users }) => {
                 render: 'Amount Saved'
               },
               {
-                key: 'totalSaved',
-                render: 'Amount Saved'
+                key: 'totalWithdrawn',
+                render: 'Amount Withdrawn'
               },
               {
-                key: 'status',
-                render: 'Status'
-              },
-              {
-                key: 'savingsPlan',
-                render: 'Savings Plan'
-              },
-              { key: 'withdrawals', render: 'Withdrawals' },
-
-              {
-                key: 'action',
-                render: ''
+                key: 'timeCreated',
+                render: 'Time Created'
               }
             ]}
             data={customer}
