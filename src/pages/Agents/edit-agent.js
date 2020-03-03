@@ -17,6 +17,7 @@ import { states } from 'utils/data'
 import AuthContext from 'context/AuthContext'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
+import { isValidUpdate } from './validation'
 
 const EditAgent = ({ history, match: { params } }) => {
   const [auth] = useContext(AuthContext)
@@ -91,11 +92,21 @@ const EditAgent = ({ history, match: { params } }) => {
 
   const handleEditWallet = async e => {
     e.preventDefault()
+    const errors = isValidUpdate(edited)
+
+    setErrors(errors)
+    if (Object.keys(errors).length > 0) return
+
     setLoading(true)
     if (!edited.marketId) {
       edited.marketId = edited.assignedMarket.id
     }
-    
+    if (uploadedId && uploadedId.data) {
+      edited.identificationImageId = uploadedId.data.id
+    }
+    if (uploadedAvatar && uploadedAvatar.data) {
+      edited.imageId = uploadedAvatar.data.id
+    }
     let {
       token,
       tokenExpired,
@@ -115,6 +126,7 @@ const EditAgent = ({ history, match: { params } }) => {
       await updateAgent(rest)
       setLoading(false)
       toaster.success('Agent Details Updated')
+      history.goBack()
     } catch (e) {
       setLoading(false)
       if (e.data.message) {
@@ -163,8 +175,8 @@ const EditAgent = ({ history, match: { params } }) => {
                     )}
                     <p>
                       {imgProgress
-                        ? `${
-                            imgProgress === 100 && !imgUploaded.data
+                        ? ` ${
+                            imgProgress === 100 && !uploadedAvatar.data
                               ? 99
                               : imgProgress
                           }%`
@@ -257,6 +269,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         onChange={e =>
                           setEdited({ ...edited, lga: e.target.value })
                         }
+                        error={errors.lga}
+                        status={errors.lga && 'error'}
                       />
                       <Select
                         onSelect={marketId =>
@@ -330,6 +344,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         type="text"
                         label="First name"
                         name="guarantorName"
+                        error={errors.guarantorFirstName}
+                        status={errors.guarantorFirstName && 'error'}
                         value={edited.guarantor.firstName}
                         onChange={e =>
                           setEdited({
@@ -346,6 +362,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         label="Last name"
                         name="guarantorlastName"
                         value={edited.guarantor.lastName}
+                        error={errors.guarantorLastName}
+                        status={errors.guarantorLastName && 'error'}
                         onChange={e =>
                           setEdited({
                             ...edited,
@@ -361,6 +379,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         label="Phone Number"
                         name="guarantorPhoneNumber"
                         value={edited.guarantor.phoneNumber}
+                        error={errors.guarantorPhoneNumber}
+                        status={errors.guarantorPhoneNumber && 'error'}
                         onChange={e =>
                           setEdited({
                             ...edited,
@@ -376,6 +396,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         name="guarantorAddress"
                         label="Address"
                         value={edited.guarantor.address}
+                        error={errors.guarantorAddress}
+                        status={errors.guarantorAddress && 'error'}
                         onChange={e =>
                           setEdited({
                             ...edited,
@@ -401,8 +423,8 @@ const EditAgent = ({ history, match: { params } }) => {
                           { text: 'FEMALE', value: 'FEMALE' }
                         ]}
                         autoComplete="gender"
-                        error={errors.gender}
-                        status={errors.gender && 'error'}
+                        error={errors.guarantorGender}
+                        status={errors.guarantorGender && 'error'}
                       />
                     </section>
                   </div>
