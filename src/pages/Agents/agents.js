@@ -138,11 +138,16 @@ const Agents = ({ history }) => {
                 <Button
                   variant="flat"
                   onClick={() => setPage(page - 1)}
-                  icon={<ChevronLeft/>}
-                >Back</Button>
+                  icon={<ChevronLeft />}
+                >
+                  Back
+                </Button>
               )}
               <p> Page {page} </p>
-              <Button variant="flat"  onClick={() => setPage(page + 1)}> Next</Button>
+              <Button variant="flat" onClick={() => setPage(page + 1)}>
+                {' '}
+                Next
+              </Button>
             </div>
           </CardFooter>
         </Card>

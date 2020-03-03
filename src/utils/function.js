@@ -7,5 +7,5 @@ export const convertObjToArray = obj => {
 export const formatCurrency = num =>
   typeof num === 'number' ? `₦${num.toFixed(2)}` : `N/A`
 
-export const fecthImage = async ({id}) =>
+export const fecthImage = async ({ id }) =>
   await MediaService.get(`/images/${id}`)

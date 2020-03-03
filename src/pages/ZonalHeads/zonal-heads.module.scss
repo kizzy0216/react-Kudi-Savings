@@ -123,5 +123,36 @@
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     grid-gap: 1.67em;
+    button {
+      &:last-child {
+        margin-top: 3em;
+      }
+    }
+    button[class*='flx-wrap_nowrap'] {
+      height: 4.22em;
+      background: transparent;
+      background-image: none;
+      box-shadow: none;
+      border: 1px solid $border-grey;
+      &:hover,
+      &:active {
+        background: transparent;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+    button[class*='css-'] {
+      background: none;
+      box-shadow: none;
+      background-image: none;
+      color: $text-darker;
+      font-weight: 300;
+      font-size: 0.82em;
+      &:focus {
+        box-shadow: none !important;
+        background: none !important;
+      }
+    }
   }
 }

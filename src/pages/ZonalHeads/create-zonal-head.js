@@ -63,7 +63,7 @@ const CreateZonalHead = ({ history }) => {
   }
 
   const fetchMarkets = async () => {
-    const response = await getMarkets({page:1})
+    const response = await getMarkets({ page: 1 })
     const formatMarket = response.data.data.list.map(({ id, name }) => ({
       value: id,
       label: name
@@ -75,22 +75,32 @@ const CreateZonalHead = ({ history }) => {
     fetchMarkets()
   }, [])
   const assignMarket = market => {
-    let selectedMarkets
-    let selected = []
-    if (marketIds.length === 0) {
-      selectedMarkets = `${market.label} selected`
-      selected = [...marketIds, market.value]
+    const selected = [...marketIds, market.value]
+    const selectedItems = selected
+    const selectedItemsLength = selectedItems.length
+    let selectedNames = ''
+    if (selectedItemsLength === 0) {
+      selectedNames = ''
     } else {
-      if (marketIds.includes(market.value)) {
-        selected = marketIds.filter(item => item !== market.value)
-        selectedMarkets = `${selected.length} markets selected`
-      } else {
-        selected = [...marketIds, market.value]
-        selectedMarkets = `${selected.length} markets selected`
-      }
+      selectedNames = selectedItemsLength.toString() + ' selected...'
     }
     setMarketIds(selected)
-    setSelectedNames(selectedMarkets)
+    setSelectedNames(selectedNames)
+  }
+  const deSelectMarket = item => {
+    const deselectedItemIndex = marketIds.indexOf(item.value)
+    const selectedItems = marketIds.filter(
+      (_item, i) => i !== deselectedItemIndex
+    )
+    const selectedItemsLength = selectedItems.length
+    let selectedNames = ''
+    if (selectedItemsLength === 0) {
+      selectedNames = ''
+    } else {
+      selectedNames = selectedItemsLength.toString() + ' selected...'
+    }
+    setMarketIds(selectedItems)
+    setSelectedNames(selectedNames)
   }
 
   return (
@@ -208,15 +218,15 @@ const CreateZonalHead = ({ history }) => {
                   />
                   <div className={styles.ZHMultipleSelect}>
                     <SelectMenu
-                      isMultiSelect
+                      isMultiSelect={true}
                       title="Select multiple markets"
                       options={markets}
-                      selected={selectedNames}
+                      selected={marketIds}
                       onSelect={market => assignMarket(market)}
-                  
+                      onDeselect={market => deSelectMarket(market)}
                     >
                       <SelectMenuButton type="button">
-                        {selectedNames || 'Select Markets...'}
+                        {selectedNames || 'Select Markets'}
                       </SelectMenuButton>
                     </SelectMenu>
                   </div>

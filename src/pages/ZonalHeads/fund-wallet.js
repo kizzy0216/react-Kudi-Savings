@@ -3,7 +3,7 @@ import { useQuery } from 'react-query'
 import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { fundWallet } from 'services/zonal-heads'
 import { toaster } from 'evergreen-ui'
-import styles from "./fund-wallet.module.scss"
+import styles from './fund-wallet.module.scss'
 const FundWallet = ({ managerId, setShowDialog, zonalHead }) => {
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -25,7 +25,7 @@ const FundWallet = ({ managerId, setShowDialog, zonalHead }) => {
     <Card className={styles.FundWallet}>
       <CardHeader className={styles.FundWalletHeader}>Fund Wallet</CardHeader>
       <CardBody className={styles.FundWalletBody}>
-        <form onSubmit={handleFundWallet} className={styles.FundWalletForm} >
+        <form onSubmit={handleFundWallet} className={styles.FundWalletForm}>
           <Input
             type="text"
             label="Full name"
@@ -41,12 +41,7 @@ const FundWallet = ({ managerId, setShowDialog, zonalHead }) => {
             value={zonalHead.phoneNumber}
             disabled
           />
-          <Input
-            value={amount}
-            name="amount"
-            type="tel"
-            label="Enter Amount"
-          />
+          <Input value={amount} name="amount" type="tel" label="Enter Amount" />
           <Button type="submit" loading={loading}>
             Submit
           </Button>
