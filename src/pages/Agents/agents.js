@@ -23,11 +23,13 @@ const Agents = ({ history }) => {
   let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
   const [page, setPage] = useState(1)
+  let limit = 60
   let formattedData = []
   const { data, isLoading, error, refetch } = useQuery(
-    ['Agents', { page }],
+    ['Agents', { page, limit }],
     getAgents
   )
+
   if (data && data.data) {
     formattedData = data.data.data.list.map(
       ({ firstName, lastName, status, cashBalance, id, market, ...rest }) => ({

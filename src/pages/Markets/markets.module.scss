@@ -118,3 +118,17 @@
     }
   }
 }
+.Edit {
+  &Header {
+    font-weight: normal;
+    color: $text-darker;
+    text-transform: uppercase;
+    
+  }
+  &Body {
+    padding: 2.5em 3em;
+    div {
+      margin-bottom: 1.67em;
+    }
+  }
+}

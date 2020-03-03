@@ -52,7 +52,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className={styles.Dashboard_center}>
                   <p>Cash Collected Today</p>
-                  <h3> N575,430</h3>
+                  <h3> N/A</h3>
                 </div>
               </CardBody>
               <CardFooter>
@@ -71,7 +71,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className={styles.Dashboard_center}>
                   <p>Cash Withdrawn Today </p>
-                  <h3> N387,980</h3>
+                  <h3> N/A</h3>
                 </div>
               </CardBody>
               <CardFooter>
@@ -91,7 +91,7 @@ const Dashboard = () => {
               <CardBody>
                 <div className={styles.Dashboard_center}>
                   <p>Agent Onboarded Today</p>
-                  <h3> 98</h3>
+                  <h3> N/A</h3>
                 </div>
               </CardBody>
               <CardFooter>
@@ -113,12 +113,12 @@ const Dashboard = () => {
                 <CardBody>
                   <div className={styles.Dashboard_center}>
                     <p>Zonal Heads</p>
-                    <h3> 43</h3>
+                    <h3> N/A</h3>
                   </div>
                 </CardBody>
                 <CardFooter>
                   <div className={styles.Dashboard_center_footer}>
-                    <p> Total Commission - N176,100</p>
+                    <p> Total Commission - N/A</p>
                   </div>
                 </CardFooter>
               </Card>
@@ -127,21 +127,21 @@ const Dashboard = () => {
                 <CardBody>
                   <div className={styles.Dashboard_flex}>
                     <p>New Agents</p>
-                    <span>34</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.Dashboard_flex}>
                     <p>Active Agents</p>
-                    <span>56</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.Dashboard_flex}>
                     <p>Inactive Agents</p>
-                    <span>56</span>
+                    <span>N/A</span>
                   </div>
                 </CardBody>
                 <CardFooter>
                   <div className={cx(styles.Dashboard_flex, styles.footer)}>
                     <p>Total Agents</p>
-                    <span> N1,175,430 </span>
+                    <span> N/A </span>
                   </div>
                 </CardFooter>
               </Card>
@@ -149,25 +149,25 @@ const Dashboard = () => {
                 <CardBody>
                   <div className={styles.Dashboard_flex}>
                     <p>New Customers</p>
-                    <span>450</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.Dashboard_flex}>
                     <p>Active Customers</p>
-                    <span>450</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.Dashboard_flex}>
                     <p>Inactive Customers</p>
-                    <span>66</span>
+                    <span>N/A</span>
                   </div>
                   <div className={cx(styles.Dashboard_flex, styles.footer)}>
                     <p>Total Customers</p>
-                    <span>866</span>
+                    <span>N/A</span>
                   </div>
                 </CardBody>
                 <CardFooter>
                   <div className={styles.Dashboard_center}>
                     <p>Total Savings</p>
-                    <h4> N1,175,430</h4>
+                    <h4> N/A</h4>
                   </div>
                 </CardFooter>
               </Card>

@@ -1,17 +1,26 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
+import moment from 'moment'
+import { SideSheet } from 'evergreen-ui'
 import { Card, CardBody, CardHeader, Button } from '@kudi-inc/dip'
 import { SettingsLink, ChevronLeft, Reassign } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import { ProfileLoading } from 'components/loading'
 import styles from './markets.module.scss'
 import { getSingleMarket } from 'services/markets'
+import EditMarket from './edit-market'
 
 const SingleMarket = ({ history, match: { params } }) => {
+  const [show, setShow] = useState(false)
+  let market = {}
   const { data, isLoading, error, refetch } = useQuery(
-    ['SingleMarket', {}],
-    getSingleMarket(params.id)
+    params && ['SingleMarket', { id: params.id }],
+    getSingleMarket
   )
+  if (data) {
+    console.log(data.data.data)
+    market = data.data.data
+  }
 
   return (
     <Fragment>
@@ -38,28 +47,35 @@ const SingleMarket = ({ history, match: { params } }) => {
                 <CardHeader className={styles.SMHeader}>
                   <h3> MARKET</h3>
 
-                  <Button variant="flat" icon={<SettingsLink />}>
+                  <Button
+                    variant="flat"
+                    onClick={() => setShow(true)}
+                    icon={<SettingsLink />}
+                  >
                     Edit
                   </Button>
                 </CardHeader>
                 <CardBody className={styles.SMBody}>
                   <div className={styles.SMBodyList}>
                     <div>
-                      <span>Name</span>
-                      <span> Firstname Lastname</span>
+                      <span>Market Name</span>
+                      <span> {market.name}</span>
                     </div>
                     <div>
-                      <span>Phone number</span>
-                      <span> 08062361452</span>
+                      <span>Population</span>
+                      <span> {market.population}</span>
                     </div>
                     <div>
-                      <span>Gender</span>
-                      <span>Male</span>
+                      <span>City</span>
+                      <span> {market.city}</span>
                     </div>
-
                     <div>
-                      <span>Address</span>
-                      <span>Streetname, lga, state</span>
+                      <span>Lga</span>
+                      <span>{market.lga}</span>
+                    </div>
+                    <div>
+                      <span>State</span>
+                      <span>{market.state}</span>
                     </div>
                   </div>
                 </CardBody>
@@ -71,8 +87,11 @@ const SingleMarket = ({ history, match: { params } }) => {
                 <CardBody className={styles.SMBody}>
                   <div className={styles.SMBodyList}>
                     <div>
-                      <span>Date Onboarded:</span>
-                      <span> 2 </span>
+                      <span>Date Created:</span>
+                      <span>
+                        {' '}
+                        {moment(market.timeCreated).format('Do MMM, YYYY')}{' '}
+                      </span>
                       <Button variant="flat" icon={<Reassign />}>
                         Reassign
                       </Button>
@@ -82,7 +101,7 @@ const SingleMarket = ({ history, match: { params } }) => {
                     </div>
                     <div>
                       <span>Active Customers: </span>
-                      <span> 130</span>
+                      <span> N/A</span>
                       <Button variant="flat" icon={<Reassign />}>
                         Reassign
                       </Button>
@@ -92,7 +111,7 @@ const SingleMarket = ({ history, match: { params } }) => {
                     </div>
                     <div>
                       <span> Inactive Customers </span>
-                      <span>56</span>
+                      <span>N/A</span>
                       <Button variant="flat" icon={<Reassign />}>
                         Reassign
                       </Button>
@@ -102,7 +121,7 @@ const SingleMarket = ({ history, match: { params } }) => {
                     </div>
                     <div>
                       <span> Total Customers </span>
-                      <span>56</span>
+                      <span>N/A</span>
                       <Button variant="flat" icon={<Reassign />}>
                         Reassign
                       </Button>
@@ -114,8 +133,11 @@ const SingleMarket = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div>
-          )}{' '}
+          )}
         </div>
+        <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
+          <EditMarket setShow={setShow} history={history} market={market} />
+        </SideSheet>
       </Content>
     </Fragment>
   )

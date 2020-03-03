@@ -23,7 +23,7 @@ const Markets = ({ history }) => {
   const [page, setPage] = useState(1)
   let [active, setActive] = useState('all')
   let formattedData = []
-  const { data, isLoading, error, refetch, fetchMore } = useQuery(
+  const { data, isLoading, error, refetch} = useQuery(
     ['Markets', { page, limit }],
     getMarkets
   )
@@ -37,16 +37,16 @@ const Markets = ({ history }) => {
           : 'N/A',
         state: state ? state : 'N/A',
         city: city ? city : 'N/A',
-        lga: lga ? lga : 'N/A'
-        // action: (
-        //   <Button
-        //     icon={<Eye />}
-        //     variant="flat"
-        //     onClick={() => history.push(`${url}/${id}`)}
-        //   >
-        //     View
-        //   </Button>
-        // )
+        lga: lga ? lga : 'N/A',
+        action: (
+          <Button
+            icon={<Eye />}
+            variant="flat"
+            onClick={() => history.push(`${url}/${id}`)}
+          >
+            View
+          </Button>
+        )
       })
     )
   }
@@ -121,10 +121,8 @@ const Markets = ({ history }) => {
                       render: 'LGA'
                     },
                     {
-                      /* {
                       key: 'action',
                       render: 'ACTION'
-                    } */
                     }
                   ]}
                   data={formattedData}
@@ -153,6 +151,7 @@ const Markets = ({ history }) => {
             </CardFooter>
           )}
         </Card>
+       
       </Content>
     </Fragment>
   )
