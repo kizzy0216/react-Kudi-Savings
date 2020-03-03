@@ -132,7 +132,7 @@ const EditAgent = ({ history, match: { params } }) => {
       if (e.data.message) {
         return toaster.danger(e.data.message)
       }
-      toaster.danger('Create Agent Failed')
+      toaster.danger('Edit Agent Failed')
     }
   }
 
@@ -196,6 +196,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         onChange={e =>
                           setEdited({ ...edited, firstName: e.target.value })
                         }
+                        error={errors.firstName}
+                        status={errors.firstName && 'error'}
                       />
                       <Input
                         type="text"
@@ -205,6 +207,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         onChange={e =>
                           setEdited({ ...edited, lastName: e.target.value })
                         }
+                        error={errors.lastName}
+                        status={errors.lastName && 'error'}
                       />
                       <Input
                         type="text"
@@ -213,6 +217,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         onChange={e =>
                           setEdited({ ...edited, phoneNumber: e.target.value })
                         }
+                        error={errors.phoneNumber}
+                        status={errors.phoneNumber && 'error'}
                       />
                       <Input
                         value={edited.email}
@@ -222,6 +228,8 @@ const EditAgent = ({ history, match: { params } }) => {
                         onChange={e =>
                           setEdited({ ...edited, email: e.target.value })
                         }
+                        error={errors.email}
+                        status={errors.email && 'error'}
                       />
                       <Input
                         type="number"
@@ -230,6 +238,8 @@ const EditAgent = ({ history, match: { params } }) => {
                           setEdited({ ...edited, bvn: e.target.value })
                         }
                         value={edited.bvn}
+                        error={errors.bvn}
+                        status={errors.bvn && 'error'}
                       />
 
                       <Select

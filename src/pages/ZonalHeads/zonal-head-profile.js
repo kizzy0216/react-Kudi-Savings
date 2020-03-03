@@ -8,22 +8,24 @@ import {
   Button,
   Badge,
   CardFooter,
-
+  Table
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
+import { SettingsLink, Bin, Eye, ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
-import { ProgressBar } from 'components/Common'
 import { ProfileLoading } from 'components/loading'
 import styles from './profile.module.scss'
-import AgentImg from 'assets/images/agent.png'
+import AgentImg from 'assets/svg/profile-pic.svg'
 import { getManager } from 'services/zonal-heads'
 import { formatCurrency } from 'utils/function'
-import FundWallet from './fund-wallet.js'
+import FundWallet from './fund-wallet'
+import EditZH from './edit-zonal'
 
-const ViewCashout = ({ history, match: { params } }) => {
+const ViewCashout = ({ history, match: { params, url } }) => {
   let [show, setShow] = useState(false)
-  let [marketShow, setMarketShow] = useState(false)
+  let [marketShow, setMarketShow] = useState(true)
+  let [pageLoaded, setPageLoaded] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
+  let [showEdit, setShowEdit] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleManager', { id: params.id }],
     getManager
@@ -56,7 +58,11 @@ const ViewCashout = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> ZONAL HEAD INFORMATION</h3>
 
-                    <Button variant="flat" icon={<SettingsLink />}>
+                    <Button
+                      variant="flat"
+                      onClick={() => setShowEdit(true)}
+                      icon={<SettingsLink />}
+                    >
                       Edit Profile
                     </Button>
                     <Button variant="flat" icon={<Bin />}>
@@ -117,15 +123,15 @@ const ViewCashout = ({ history, match: { params } }) => {
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Active Agents: </span>
-                    <span> 130</span>
+                    <span> N/A</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> Inactive Agents </span>
-                    <span>56</span>
+                    <span>N/A</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> Total Agents </span>
-                    <span>56</span>
+                    <span>N/A</span>
                   </div>
                 </CardBody>
                 <CardFooter className={styles.FirstBodyButton}>
@@ -159,34 +165,18 @@ const ViewCashout = ({ history, match: { params } }) => {
                       View History
                     </Button>
                   </CardBody>
-                  <div className={styles.Progress}>
-                    <CardBody className={styles.ProgressCardBody}>
-                      <p>Badge</p>
-                      <Badge variant="success">
-                        <UpIcon />
-                        <small> 8.5% </small>
-                      </Badge>
-                    </CardBody>
-                    <CardBody className={styles.ProgressCardBody}>
-                      <p>Progress</p>
-                      <ProgressBar
-                        className={styles.progress}
-                        percentage={70}
-                      />
-                    </CardBody>
-                  </div>
                 </div>
               </Card>
               <Card>
                 <div className={styles.Withdrawal}>
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
-                      <p>cash Collected</p>
-                      <h4>N1,825,000</h4>
+                      <p>Amount Seeded</p>
+                      <h4>{formatCurrency(zonalHead.amountSeeded)}</h4>
                     </CardBody>
                     <CardBody>
-                      <p>cash Withdrawn</p>
-                      <h4>N1,825,000</h4>
+                      <p>Cash Withdrawn</p>
+                      <h4>N/A</h4>
                     </CardBody>
                   </div>
 
@@ -198,12 +188,75 @@ const ViewCashout = ({ history, match: { params } }) => {
                 </div>
               </Card>
             </div>
+            <div>
+              {marketShow && (
+                <Table
+                  className={styles.AgentTable}
+                  column={[
+                    {
+                      key: 'name',
+                      render: 'Market Name'
+                    },
+                    {
+                      key: 'timeCreated',
+                      render: 'Time Created'
+                    },
+                    { key: 'city', render: 'City' },
+
+                    { key: 'state', render: 'State' },
+                    {
+                      key: 'lga',
+                      render: 'LGA'
+                    }
+                  ]}
+                  data={zonalHead.markets}
+                />
+              )}
+              {show && (
+                <Table
+                  className={styles.AgentTable}
+                  column={[
+                    {
+                      key: 'firstName',
+                      render: 'First Name'
+                    },
+                    {
+                      key: 'lastName',
+                      render: 'Last Name'
+                    },
+
+                    {
+                      key: 'phoneNumber',
+                      render: 'Phone Number'
+                    },
+                    {
+                      key: 'timeCreated',
+                      render: 'Time Created'
+                    },
+                    { key: 'state', render: 'State' },
+                    {
+                      key: 'lga',
+                      render: 'LGA'
+                    }
+                  ]}
+                  data={[]}
+                />
+              )}
+            </div>
           </div>
         )}
-        {/* onCloseComplete={() => setState({ isShown: false, isLoading: false })}
-        isConfirmLoading={state.isLoading}
-        onConfirm={() => setState({ isLoading: true })}
-        confirmLabel={state.isLoading ? 'Loading...' : 'Confirm Loading'} */}
+
+        <SideSheet
+          onCloseComplete={() => setShowDialog(false)}
+          isShown={showEdit}
+        >
+          <EditZH
+            setShowEdit={setShowEdit}
+            history={history}
+            zonalHead={zonalHead}
+            url={url}
+          />
+        </SideSheet>
         <SideSheet
           onCloseComplete={() => setShowDialog(false)}
           isShown={showDialog}
