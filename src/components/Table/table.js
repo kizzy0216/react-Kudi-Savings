@@ -2,7 +2,7 @@ import React, { Fragment } from 'react'
 import { Table } from '@kudi-inc/dip'
 import styles from './table.module.scss'
 import { EmptyTable } from 'assets/svg'
-const TableContainer = ({ data, column, placeholder }) => {
+const TableContainer = ({ data, column, placeholder, className }) => {
   return (
     <Fragment>
       {data && data.length === 0 && (
@@ -23,7 +23,7 @@ const TableContainer = ({ data, column, placeholder }) => {
           </div>
         </div>
       )}
-      {data && data.length > 0 && <Table column={column} data={data} />}
+      {data && data.length > 0 && <Table className={className} column={column} data={data} />}
     </Fragment>
   )
 }

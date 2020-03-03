@@ -18,7 +18,6 @@ const SingleMarket = ({ history, match: { params } }) => {
     getSingleMarket
   )
   if (data) {
-  
     market = data.data.data
   }
 
@@ -135,9 +134,7 @@ const SingleMarket = ({ history, match: { params } }) => {
             </div>
           )}
         </div>
-        <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
-          <EditMarket setShow={setShow} history={history} market={market} />
-        </SideSheet>
+       
       </Content>
     </Fragment>
   )

@@ -1,6 +1,6 @@
 @import '../../styles/variables';
 
-.Agent {
+.Market{
   font-size: 1rem;
   &Card {
     font-size: 1em;
@@ -129,6 +129,9 @@
     padding: 2.5em 3em;
     div {
       margin-bottom: 1.67em;
+    }
+    button{
+      margin-top:4em;
     }
   }
 }
