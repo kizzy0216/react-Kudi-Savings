@@ -15,7 +15,7 @@ import { toaster, SelectMenu, Button as SelectMenuButton } from 'evergreen-ui'
 import styles from './zonal-heads.module.scss'
 import { isValidEdit } from './validation'
 
-const EditAgent = ({ zonalHead, setShowEdit, history, url }) => {
+const EditAgent = ({ zonalHead, setShowEdit, refetch }) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [markets, setMarkets] = useState([])
@@ -29,7 +29,7 @@ const EditAgent = ({ zonalHead, setShowEdit, history, url }) => {
   )
 
   const fetchMarkets = async () => {
-    const response = await getMarkets({ page: 1 })
+    const response = await getMarkets({ page: 1, limit:60 })
     const formatMarket = response.data.data.list.map(({ id, name }) => ({
       value: id,
       label: name
@@ -42,11 +42,9 @@ const EditAgent = ({ zonalHead, setShowEdit, history, url }) => {
 
   const handleEditZh = async e => {
     e.preventDefault()
-    // const errors = isValidEdit(edited)
-
+    // const errors = isValidEdit({...edited, marketIds })
     // setErrors(errors)
     // if (Object.keys(errors).length > 0) return
-
     setLoading(true)
 
     let {
@@ -68,8 +66,8 @@ const EditAgent = ({ zonalHead, setShowEdit, history, url }) => {
       await updateZH({ ...rest, marketIds })
       setLoading(false)
       toaster.success('Zonal Heads Details Updated')
+      refetch({ disableThrow: true })
       setShowEdit(false)
-      history.push(`${url}`)
     } catch (e) {
       setLoading(false)
       if (e.data.message) {
@@ -123,7 +121,7 @@ const EditAgent = ({ zonalHead, setShowEdit, history, url }) => {
             name="firstName"
             value={edited.firstName}
             onChange={e => setEdited({ ...edited, firstName: e.target.value })}
-            error={errors && errors.firstName}
+            error={errors.firstName}
             status={errors.firstName && 'error'}
           />
           <Input

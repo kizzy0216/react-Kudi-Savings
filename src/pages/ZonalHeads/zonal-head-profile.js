@@ -252,9 +252,8 @@ const ViewCashout = ({ history, match: { params, url } }) => {
         >
           <EditZH
             setShowEdit={setShowEdit}
-            history={history}
             zonalHead={zonalHead}
-            url={url}
+            refetch={refetch}
           />
         </SideSheet>
         <SideSheet
