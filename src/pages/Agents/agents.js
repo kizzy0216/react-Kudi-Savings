@@ -30,10 +30,11 @@ const Agents = ({ history }) => {
   )
   if (data && data.data) {
     formattedData = data.data.data.list.map(
-      ({ firstName, lastName, status, cashBalance, id, ...rest }) => ({
+      ({ firstName, lastName, status, cashBalance, id, market, ...rest }) => ({
         ...rest,
         fullName: `${firstName} ${lastName}`,
         cashBalance: formatCurrency(cashBalance),
+        market:market.name,
         status: status ? (
           <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
             {status}
@@ -114,6 +115,10 @@ const Agents = ({ history }) => {
                   {
                     key: 'phoneNumber',
                     render: 'Phone Number'
+                  },
+                  {
+                    key: 'market',
+                    render: 'Market'
                   },
                   {
                     key: 'cashBalance',
