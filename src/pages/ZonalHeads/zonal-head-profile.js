@@ -1,13 +1,14 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
-import { Dialog } from 'evergreen-ui'
+import { SideSheet } from 'evergreen-ui'
 import {
   Card,
   CardBody,
   CardHeader,
   Button,
   Badge,
-  CardFooter
+  CardFooter,
+
 } from '@kudi-inc/dip'
 import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
@@ -17,6 +18,7 @@ import styles from './profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
 import { getManager } from 'services/zonal-heads'
 import { formatCurrency } from 'utils/function'
+import FundWallet from './fund-wallet.js'
 
 const ViewCashout = ({ history, match: { params } }) => {
   let [show, setShow] = useState(false)
@@ -161,7 +163,6 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <CardBody className={styles.ProgressCardBody}>
                       <p>Badge</p>
                       <Badge variant="success">
-                        {' '}
                         <UpIcon />
                         <small> 8.5% </small>
                       </Badge>
@@ -203,13 +204,12 @@ const ViewCashout = ({ history, match: { params } }) => {
         isConfirmLoading={state.isLoading}
         onConfirm={() => setState({ isLoading: true })}
         confirmLabel={state.isLoading ? 'Loading...' : 'Confirm Loading'} */}
-        <Dialog
+        <SideSheet
           onCloseComplete={() => setShowDialog(false)}
           isShown={showDialog}
-          title="Fund Wallet"
         >
-          Dialog content
-        </Dialog>
+          <FundWallet setShowDialog={setShowDialog} zonalHead={zonalHead} />
+        </SideSheet>
       </Content>
     </Fragment>
   )

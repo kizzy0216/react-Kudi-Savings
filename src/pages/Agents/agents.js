@@ -28,19 +28,8 @@ const Agents = ({ history }) => {
   )
   if (data && data.data) {
     formattedData = data.data.data.list.map(
-      ({
-        firstName,
-        lastName,
-        status,
-        cashBalance,
-        id,
-        timeCreated,
-        ...rest
-      }) => ({
+      ({ firstName, lastName, status, cashBalance, id, ...rest }) => ({
         ...rest,
-        timeCreated: timeCreated
-          ? moment(timeCreated).format('Do MMM YYYY')
-          : 'N/A',
         fullName: `${firstName} ${lastName}`,
         cashBalance: formatCurrency(cashBalance),
         status: status ? (
@@ -115,11 +104,6 @@ const Agents = ({ history }) => {
               <Table
                 className={styles.AgentTable}
                 column={[
-                  {
-                    key: 'timeCreated',
-                    render: 'Time Created'
-                  },
-
                   {
                     key: 'fullName',
                     render: 'Full Name'

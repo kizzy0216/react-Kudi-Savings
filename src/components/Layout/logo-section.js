@@ -21,17 +21,10 @@ const LogoSection = ({ history }) => {
         <Wallet />
         <div className={styles.logoSectionContent}>
           <p>Wallet Balance</p>
-          <span>&#8358; 500,000</span>
+          <span>&#8358;0.00</span>
         </div>
       </div>
-      <div className={styles.logoSectionFlex}>
-        <Button
-          className={styles.logoSectionButton}
-          onClick={() => history.push('/fund-wallet')}
-        >
-          Fund Wallet
-        </Button>
-      </div>
+      
     </div>
   )
 }
