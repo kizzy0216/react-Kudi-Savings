@@ -62,6 +62,9 @@ const SingleAgent = lazy(() =>
   import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
 
+const Customers = lazy(() =>
+  import(/* webpackChunkName: "Customers" */ 'pages/Customers')
+)
 const Transactions = lazy(() =>
   import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
@@ -113,6 +116,7 @@ const AppRouter = () => (
         <PrivateRoute path="/cashout/:id" component={ViewCashout} />
         <PrivateRoute exact path="/fund-wallet" component={FundWallet} />
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
+        <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute
           path="/zonal-heads/:id"

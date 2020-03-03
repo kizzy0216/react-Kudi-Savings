@@ -12,7 +12,8 @@ import {
   AgentsLink,
   TransactionsLink,
   LogoutIcon,
-  MarketsLink
+  MarketsLink,
+  CustomersLink
 } from 'assets/svg'
 import LogoSection from './logo-section'
 import styles from './layout.module.scss'
@@ -59,11 +60,18 @@ const Layout = ({ children, auth }) => {
       userType: ['ADMIN', 'ZONAL']
     },
     {
+      title: 'Customers',
+      link: '/customers',
+      icon: <CustomersLink />,
+      userType: ['ADMIN', 'ZONAL']
+    },
+    {
       title: 'Customer Insights',
       link: '/customer-insights',
       icon: <CILink />,
       userType: ['ADMIN', 'ZONAL']
     },
+
     {
       title: 'Cashout',
       link: '/cashout',
