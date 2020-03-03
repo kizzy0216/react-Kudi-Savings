@@ -18,6 +18,15 @@
         }
       }
     }
+    &Pagination {
+      display: flex;
+      max-width: 13.6em;
+      justify-content: space-between;
+      align-items: center;
+      margin: 0.83em auto 0;
+      font-weight: normal;
+      font-size: 0.93em;
+  }
   }
   &Badge {
     font-size: 0.92em;

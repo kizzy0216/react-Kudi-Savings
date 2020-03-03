@@ -132,7 +132,7 @@ const EditAgent = ({ history, match: { params } }) => {
       if (e.data.message) {
         return toaster.danger(e.data.message)
       }
-      toaster.danger('Create Agent Failed')
+      toaster.danger('Edit Agent Failed')
     }
   }
 

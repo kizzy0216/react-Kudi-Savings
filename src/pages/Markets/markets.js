@@ -137,7 +137,7 @@ const Markets = ({ history }) => {
                 onClick={() => setPage(page - 1)}
                 icon={<ChevronLeft />}
               ></Button>
-              <p> Page {page}</p>
+              <p> Page {page} </p>
               <Button variant="flat" onClick={() => setPage(page + 1)}></Button>
             </div>
           </CardFooter>

@@ -7,8 +7,7 @@ import {
   CardHeader,
   Button,
   Badge,
-  CardFooter,
-
+  CardFooter
 } from '@kudi-inc/dip'
 import { SettingsLink, Bin, Eye, ChevronLeft, UpIcon } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
@@ -18,12 +17,14 @@ import styles from './profile.module.scss'
 import AgentImg from 'assets/images/agent.png'
 import { getManager } from 'services/zonal-heads'
 import { formatCurrency } from 'utils/function'
-import FundWallet from './fund-wallet.js'
+import FundWallet from './fund-wallet'
+import EditZH from './edit-zonal'
 
 const ViewCashout = ({ history, match: { params } }) => {
   let [show, setShow] = useState(false)
   let [marketShow, setMarketShow] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
+  let [showEdit, setShowEdit] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleManager', { id: params.id }],
     getManager
@@ -56,7 +57,11 @@ const ViewCashout = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> ZONAL HEAD INFORMATION</h3>
 
-                    <Button variant="flat" icon={<SettingsLink />}>
+                    <Button
+                      variant="flat"
+                      onClick={() => setShowEdit(true)}
+                      icon={<SettingsLink />}
+                    >
                       Edit Profile
                     </Button>
                     <Button variant="flat" icon={<Bin />}>
@@ -200,10 +205,17 @@ const ViewCashout = ({ history, match: { params } }) => {
             </div>
           </div>
         )}
-        {/* onCloseComplete={() => setState({ isShown: false, isLoading: false })}
-        isConfirmLoading={state.isLoading}
-        onConfirm={() => setState({ isLoading: true })}
-        confirmLabel={state.isLoading ? 'Loading...' : 'Confirm Loading'} */}
+
+        <SideSheet
+          onCloseComplete={() => setShowDialog(false)}
+          isShown={showEdit}
+        >
+          <EditZH
+            setShowEdit={setShowEdit}
+            history={history}
+            zonalHead={zonalHead}
+          />
+        </SideSheet>
         <SideSheet
           onCloseComplete={() => setShowDialog(false)}
           isShown={showDialog}

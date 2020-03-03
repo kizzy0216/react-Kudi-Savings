@@ -33,3 +33,7 @@ export const zonalHeadValidation = values => {
 
   return errors
 }
+
+export const isValidEdit=()=>{
+  
+}
