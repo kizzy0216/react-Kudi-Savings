@@ -18,7 +18,7 @@ const SingleMarket = ({ history, match: { params } }) => {
     getSingleMarket
   )
   if (data) {
-    console.log(data.data.data)
+  
     market = data.data.data
   }
 
