@@ -1,41 +1,41 @@
 @import '../../../styles/variables';
 .progress {
-    font-size: 1rem;
-    display: flex;
-    align-items: center;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
 
-    &Info {
-        font-size: 1em;
-        margin-right: 0.77em;
-        color: #748cad;
-        font-weight: normal;
+  &Info {
+    font-size: 1em;
+    margin-right: 0.77em;
+    color: #748cad;
+    font-weight: normal;
 
-        span {
-            font-weight: 500;
-            display: inline-block;
-            margin-right: 0.28em;
-            color: initial;
-        }
+    span {
+      font-weight: 500;
+      display: inline-block;
+      margin-right: 0.28em;
+      color: initial;
     }
+  }
 
-    &Wrapper {
-        background: #e7eef7;
-        border-radius: 10px;
-        width: 4.44em;
-        height: 0.56em;
-    }
+  &Wrapper {
+    background: #e7eef7;
+    border-radius: 10px;
+    width: 4.44em;
+    height: 0.56em;
+  }
 
-    &Bar {
-        border-radius: 10px;
-        height: 100%;
-    }
+  &Bar {
+    border-radius: 10px;
+    height: 100%;
+  }
 }
 .success {
-    background-color: $kudi-green;
+  background-color: $kudi-green;
 }
 .warning {
-    background-color: #ffc657;
+  background-color: #ffc657;
 }
 .danger {
-    background-color: $danger;
+  background-color: $danger;
 }

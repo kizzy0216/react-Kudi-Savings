@@ -13,7 +13,8 @@ import {
   TransactionsLink,
   LogoutIcon,
   MarketsLink,
-  CustomersLink
+  CustomersLink,
+  PlansLink
 } from 'assets/svg'
 import LogoSection from './logo-section'
 import styles from './layout.module.scss'
@@ -71,7 +72,12 @@ const Layout = ({ children, auth }) => {
       icon: <CILink />,
       userType: ['ADMIN', 'ZONAL']
     },
-
+    {
+      title: 'Plans',
+      link: '/plans',
+      icon: <PlansLink />,
+      userType: ['ADMIN']
+    },
     {
       title: 'Cashout',
       link: '/cashout',
@@ -88,7 +94,7 @@ const Layout = ({ children, auth }) => {
   return (
     <div className={styles.layout}>
       <div className={styles.sideNav}>
-        <LogoSection history={history} />
+        <LogoSection history={history} user={user}/>
         <div className={styles.navSection}>
           {navItems.map((item, id) =>
             item && item.userType.includes(user.type) ? (

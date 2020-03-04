@@ -35,7 +35,7 @@ export const zonalHeadValidation = values => {
 }
 
 export const isValidEdit = values => {
-  console.log(values, "hmm")
+  console.log(values, 'hmm')
   let errors = {}
   if (!values.firstName) {
     errors.firstName = 'First name is required'

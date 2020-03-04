@@ -2,99 +2,99 @@
 @import '../../styles/breakpoint';
 
 .First {
-    font-size: 1rem;
-    display: block;
-    @include md {
-        display: grid;
-        grid-template-columns: 2fr 1fr;
-        grid-row-gap: 1.67em;
-        grid-column-gap: 2.167em;
-    }
+  font-size: 1rem;
+  display: block;
+  @include md {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    grid-row-gap: 1.67em;
+    grid-column-gap: 2.167em;
+  }
 
-    &Header {
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.33em;
+    h3 {
+      font-weight: bold;
+      line-height: 123%;
+      font-size: 0.93em;
+      text-transform: uppercase;
+    }
+    button {
+      font-size: 0.93em;
+      &:nth-of-type(2) {
+        color: $danger;
+      }
+    }
+    &Badge {
+      font-size: 0.93em;
+    }
+  }
+  &Body {
+    padding: 1.55em;
+    &Grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      &Profile {
+        width: 8.27em;
+        height: 8.27em;
+        img {
+          border-radius: 50%;
+        }
+      }
+      &Content {
         display: flex;
         justify-content: space-between;
-        align-items: center;
-        height: 3.33em;
-        h3 {
-            font-weight: bold;
-            line-height: 123%;
-            font-size: 0.93em;
-            text-transform: uppercase;
+        font-weight: normal;
+        span {
+          color: $grey;
+          padding: 1.37em 0;
+          font-size: 0.9em;
+          &:nth-of-type(2) {
+            color: $text-darker;
+            text-align: right;
+          }
         }
-        button {
-            font-size: 0.93em;
-            &:nth-of-type(2) {
-                color: $danger;
-            }
-        }
-        &Badge {
-            font-size: 0.93em;
-        }
+      }
     }
-    &Body {
-        padding: 1.55em;
-        &Grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            &Profile {
-                width: 8.27em;
-                height: 8.27em;
-                img {
-                    border-radius: 50%;
-                }
-            }
-            &Content {
-                display: flex;
-                justify-content: space-between;
-                font-weight: normal;
-                span {
-                    color: $grey;
-                    padding: 1.37em 0;
-                    font-size: 0.9em;
-                    &:nth-of-type(2) {
-                        color: $text-darker;
-                        text-align: right;
-                    }
-                }
-            }
-        }
 
-        &Flex {
-            display: flex;
-            justify-content: space-between;
-            font-weight: normal;
+    &Flex {
+      display: flex;
+      justify-content: space-between;
+      font-weight: normal;
 
-            &:last-of-type {
-                border-bottom: none;
-            }
-            span {
-                color: $grey;
-                padding: 1.37em 0;
-                font-size: 0.9em;
-                &:nth-of-type(2) {
-                    color: $text-darker;
-                    text-align: right;
-                }
-            }
+      &:last-of-type {
+        border-bottom: none;
+      }
+      span {
+        color: $grey;
+        padding: 1.37em 0;
+        font-size: 0.9em;
+        &:nth-of-type(2) {
+          color: $text-darker;
+          text-align: right;
         }
-
-        &Button {
-            background: #f8fbff;
-            color: $sky-blue;
-            display: flex;
-            justify-content: center;
-        }
+      }
     }
-    &Footer {
-        display: flex;
-        justify-content: space-between;
 
-        button {
-            &:last-child {
-                background: transparent;
-                border: 1px solid $kudi-blue;
-            }
-        }
+    &Button {
+      background: #f8fbff;
+      color: $sky-blue;
+      display: flex;
+      justify-content: center;
     }
+  }
+  &Footer {
+    display: flex;
+    justify-content: space-between;
+
+    button {
+      &:last-child {
+        background: transparent;
+        border: 1px solid $kudi-blue;
+      }
+    }
+  }
 }

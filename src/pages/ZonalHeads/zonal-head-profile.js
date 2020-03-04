@@ -120,7 +120,10 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>Date Onboarded:</span>
-                    <span> {moment(zonalHead.timeCreated).format('Do MMM, YYYY')}</span>
+                    <span>
+                      {' '}
+                      {moment(zonalHead.timeCreated).format('Do MMM, YYYY')}
+                    </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Active Agents: </span>
@@ -261,7 +264,11 @@ const ViewCashout = ({ history, match: { params, url } }) => {
           onCloseComplete={() => setShowDialog(false)}
           isShown={showDialog}
         >
-          <FundWallet setShowDialog={setShowDialog} zonalHead={zonalHead} />
+          <FundWallet
+            setShowDialog={setShowDialog}
+            zonalHead={zonalHead}
+            refetch={refetch}
+          />
         </SideSheet>
       </Content>
     </Fragment>
