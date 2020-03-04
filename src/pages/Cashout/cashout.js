@@ -2,13 +2,14 @@ import React, { Fragment } from 'react'
 import {
   Card,
   CardBody,
-  Table,
   ButtonGroup,
   Button,
-  Badge
+  Badge,
+  CardHeader
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
+import Table from 'components/Table'
 import { Eye } from 'assets/svg'
 import styles from './cashout.module.scss'
 const Cashout = ({ history }) => {
@@ -24,6 +25,10 @@ const Cashout = ({ history }) => {
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
+        <CardHeader className={styles.Header}>
+           Cashout
+            
+          </CardHeader>
           <CardBody className={styles.Cashout}>
             <Table
               className={styles.CashoutTable}
@@ -47,253 +52,9 @@ const Cashout = ({ history }) => {
                   render: ''
                 }
               ]}
-              data={[
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                      onClick={() => history.push(`${url}/1234`)}
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N19,000,500',
-                  walletBalance: 'N2,000',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.CashoutButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N2,000',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                      onClick={() => history.push(`${url}/1234`)}
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                      onClick={() => history.push(`${url}/1234`)}
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,800',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                      onClick={() => history.push(`${url}/234`)}
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N9,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                      onClick={() => history.push(`${url}/124`)}
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                },
-                {
-                  date: '02 Jun 19',
-                  agentName: 'Kunle Afolayan',
-                  amount: 'N200',
-                  walletBalance: 'N19,000,500',
-                  status: (
-                    <Badge variant="warning" className={styles.CashoutBadge}>
-                      Pending
-                    </Badge>
-                  ),
-                  action: (
-                    <Button
-                      className={styles.contentCardButton}
-                      icon={<Eye />}
-                      variant="flat"
-                    >
-                      View
-                    </Button>
-                  )
-                }
-              ]}
+              placeholder="cashout"
+              data={
+                []}
             />
           </CardBody>
         </Card>

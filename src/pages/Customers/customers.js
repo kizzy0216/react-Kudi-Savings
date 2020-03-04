@@ -31,7 +31,12 @@ const Customers = () => {
                     key: 'fullName',
                     render: 'Full name'
                   },
+                  {
+                    key: 'phoneNumber',
+                    render: 'Phone Number'
+                  },
                   { key: 'amountSaved ', render: 'Amount Saved' },
+
                   {
                     key: 'amountWithdrawn',
                     render: 'Amount Withdrawn'

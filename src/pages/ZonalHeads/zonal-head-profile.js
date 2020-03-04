@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from 'react'
+import moment from 'moment'
 import { useQuery } from 'react-query'
 import { SideSheet } from 'evergreen-ui'
 import {
@@ -119,7 +120,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>Date Onboarded:</span>
-                    <span> {zonalHead.timeCreated}</span>
+                    <span> {moment(zonalHead.timeCreated).format('Do MMM, YYYY')}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Active Agents: </span>
