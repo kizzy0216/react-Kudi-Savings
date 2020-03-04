@@ -11,7 +11,7 @@ export const getManagers = async () => await Axios.get(`/managers/`)
 export const getManager = async ({ id }) => await Axios.get(`/managers/${id}`)
 
 //fund zonal head's wallet
-export const fundWallet = managerId => Axios.post(`/topup/${managerId}/agent`)
+export const fundWallet = (managerId, amount) => Axios.post(`/topup/${managerId}/manager`, {amount})
 
 //edit new zonal head
 export const updateZH = data => Axios.put(`/managers/${data.id}/update`, data)

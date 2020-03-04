@@ -29,7 +29,7 @@ const EditZH = ({ zonalHead, setShowEdit, refetch }) => {
   )
 
   const fetchMarkets = async () => {
-    const response = await getMarkets({ page: 1, limit:60 })
+    const response = await getMarkets({ page: 1, limit: 60 })
     const formatMarket = response.data.data.list.map(({ id, name }) => ({
       value: id,
       label: name

@@ -25,10 +25,7 @@ const Cashout = ({ history }) => {
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
-        <CardHeader className={styles.Header}>
-           Cashout
-            
-          </CardHeader>
+          <CardHeader className={styles.Header}>Cashout</CardHeader>
           <CardBody className={styles.Cashout}>
             <Table
               className={styles.CashoutTable}
@@ -53,8 +50,7 @@ const Cashout = ({ history }) => {
                 }
               ]}
               placeholder="cashout"
-              data={
-                []}
+              data={[]}
             />
           </CardBody>
         </Card>

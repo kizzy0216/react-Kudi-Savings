@@ -134,7 +134,6 @@ const SingleMarket = ({ history, match: { params } }) => {
             </div>
           )}
         </div>
-       
       </Content>
     </Fragment>
   )

@@ -1,21 +1,33 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
+import { useQuery } from 'react-query'
 import { Card, CardBody, Button, CardHeader } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
-import styles from './customers.module.scss'
-const Customers = () => {
+import { getPlans } from 'services/plans'
+import styles from './plans.module.scss'
+const Plans = () => {
+  const [page, setPage] = useState(0)
+  let limit = 60
+  const { data, isLoading, error, refetch } = useQuery(
+    ['Plans', { page, limit }],
+    getPlans
+  )
+  if (data) {
+    console.log(data.data)
+  }
+
   return (
     <Fragment>
       <Header>
-        <p> Customers </p>
+        <p> Plans</p>
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
-          <CardHeader className={styles.Header}>All Customers</CardHeader>
-          <CardBody className={styles.Transactions}>
-            <div className={styles.TransactionsHeader}>
+          <CardHeader className={styles.Header}>All Plans</CardHeader>
+          <CardBody className={styles.Plans}>
+            <div className={styles.PlansHeader}>
               <Table
-                className={styles.TransactionsTable}
+                className={styles.PlansTable}
                 column={[
                   { key: 'date', render: 'Date' },
                   {
@@ -55,4 +67,4 @@ const Customers = () => {
     </Fragment>
   )
 }
-export default Customers
+export default Plans

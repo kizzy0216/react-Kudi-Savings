@@ -1,136 +1,135 @@
 @import '../../styles/generic';
 
 .Dashboard {
-    font-size: 1rem;
-    font-weight: 400;
-    &Top {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-column-gap: 2.78em;
-        margin-bottom: 1.67em;
-    }
-    &Bottom {
-        display: grid;
-        grid-template-columns: 16.78em 1fr;
-        grid-column-gap: 2.78em;
-    }
-    &Left {
-        display: grid;
-        grid-template-rows: repeat(3, max-content);
-        grid-row-gap: 1.68em;
-    }
-    &Right {
-        &Card {
-            box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
-        }
-        display: grid;
-        grid-template-rows: repeat(2, max-content);
-        grid-row-gap: 1.67em;
-
-        &Header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 500;
-            h3 {
-                font-size: 0.92em;
-                line-height: 123%;
-            }
-            button {
-                font-size: 0.93em;
-            }
-            &_Dropdown {
-                line-height: 123%;
-                &Button {
-                    border: none;
-                    background: transparent;
-                    color: $sky-blue;
-                }
-                > span,
-                > div {
-                    font-size: 0.92em;
-                }
-            }
-        }
-        &More {
-            display: flex;
-            justify-content: center;
-            padding: 0.83em 0;
-            button {
-                font-size: 0.92em;
-                line-height: 123%;
-                color: $sky-blue;
-            }
-        }
-    }
-    &_flex {
-        display: flex;
-        justify-content: space-between;
-        padding: 0 0 0.88em;
-        line-height: 120%;
-        letter-spacing: 0.03em;
-        font-size: 0.78em;
-        p {
-        }
-        span {
-            font-weight: 500;
-            color: $text-darker;
-        }
-    }
-    &_center {
-        text-align: center;
-
-        p {
-            color: $grey;
-            padding-bottom: 0.22em;
-            font-size: 0.77em;
-            line-height: 123%;
-        }
-        h3,
-        h4 {
-            font-weight: normal;
-            color: $grey;
-
-            line-height: 123%;
-        }
-        h3 {
-            font-size: 3em;
-        }
-        h4 {
-            font-size: 1.7em;
-        }
-        &_footer {
-            font-size: 0.61em;
-            text-align: center;
-            line-height: 123%;
-            &_text {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-
-                div {
-                    margin-right: 0.4em;
-                }
-            }
-        }
-    }
+  font-size: 1rem;
+  font-weight: 400;
+  &Top {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 2.78em;
+    margin-bottom: 1.67em;
+  }
+  &Bottom {
+    display: grid;
+    grid-template-columns: 16.78em 1fr;
+    grid-column-gap: 2.78em;
+  }
+  &Left {
+    display: grid;
+    grid-template-rows: repeat(3, max-content);
+    grid-row-gap: 1.68em;
+  }
+  &Right {
     &Card {
-        font-size: 1em;
-        box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
-        color: $grey;
+      box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
     }
+    display: grid;
+    grid-template-rows: repeat(2, max-content);
+    grid-row-gap: 1.67em;
+
+    &Header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      h3 {
+        font-size: 0.92em;
+        line-height: 123%;
+      }
+      button {
+        font-size: 0.93em;
+      }
+      &_Dropdown {
+        line-height: 123%;
+        &Button {
+          border: none;
+          background: transparent;
+          color: $sky-blue;
+        }
+        > span,
+        > div {
+          font-size: 0.92em;
+        }
+      }
+    }
+    &More {
+      display: flex;
+      justify-content: center;
+      padding: 0.83em 0;
+      button {
+        font-size: 0.92em;
+        line-height: 123%;
+        color: $sky-blue;
+      }
+    }
+  }
+  &_flex {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0 0.88em;
+    line-height: 120%;
+    letter-spacing: 0.03em;
+    font-size: 0.78em;
+    p {
+    }
+    span {
+      font-weight: 500;
+      color: $text-darker;
+    }
+  }
+  &_center {
+    text-align: center;
+
+    p {
+      color: $grey;
+      padding-bottom: 0.22em;
+      font-size: 0.77em;
+      line-height: 123%;
+    }
+    h3,
+    h4 {
+      font-weight: normal;
+      color: $grey;
+
+      line-height: 123%;
+    }
+    h3 {
+      font-size: 3em;
+    }
+    h4 {
+      font-size: 1.7em;
+    }
+    &_footer {
+      font-size: 0.61em;
+      text-align: center;
+      line-height: 123%;
+      &_text {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        div {
+          margin-right: 0.4em;
+        }
+      }
+    }
+  }
+  &Card {
+    font-size: 1em;
+    box-shadow: 0px 10px 30px rgba(116, 140, 173, 0.2);
+    color: $grey;
+  }
 }
 .footer {
+  color: $sky-blue;
+  span {
     color: $sky-blue;
-    span {
-        color: $sky-blue;
-    }
+  }
 }
 [class*='badges'] {
-    margin-left: auto;
-    padding-right: 0.27em;
+  margin-left: auto;
+  padding-right: 0.27em;
 }
 [class*='kudi-dip-btn-dropdown'] {
-    min-width: 3em;
+  min-width: 3em;
 }
-

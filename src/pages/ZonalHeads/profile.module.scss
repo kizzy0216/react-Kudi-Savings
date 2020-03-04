@@ -110,7 +110,7 @@
 
 .Wallet {
   display: grid;
-  grid-template-columns:  1fr;
+  grid-template-columns: 1fr;
   justify-content: center;
   font-size: 1rem;
 
@@ -161,9 +161,8 @@
     &Body {
       border-right: 1px solid $light-grey;
     }
-    
   }
-  button{
+  button {
     margin: auto;
   }
 }

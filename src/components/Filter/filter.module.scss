@@ -1,55 +1,55 @@
 @import '../../styles/breakpoint';
 @import '../../styles/variables';
 .filters {
-    :global {
-        .SingleDatePickerInput,
-        .DateRangePickerInput {
-            border: 0;
+  :global {
+    .SingleDatePickerInput,
+    .DateRangePickerInput {
+      border: 0;
 
-            @include md {
-                border: 1px solid #d2ddeb;
-            }
-        }
-
-        .DateInput__small {
-            padding-right: 10px;
-            min-width: initial;
-        }
+      @include md {
+        border: 1px solid #d2ddeb;
+      }
     }
 
-    & > div {
-        width: 50%;
-
-        @include md {
-            width: initial;
-        }
+    .DateInput__small {
+      padding-right: 10px;
+      min-width: initial;
     }
+  }
 
-    .mobileFilter {
-        display: flex;
-        padding-left: 20px !important;
-        border-left: 1px solid $light-grey !important;
+  & > div {
+    width: 50%;
 
-        @include md {
-            display: none;
-        }
+    @include md {
+      width: initial;
     }
-    &Caption {
-        display: flex;
-        align-items: center;
-        button {
-            margin-left: 0.75em;
-            span {
-                &:nth-of-type(2) {
-                    margin-left: 0.25em;
-                    color: $sky-blue;
-                }
-                svg {
-                    path {
-                        fill: $sky-blue;
-                    }
-                }
-            }
-        }
+  }
+
+  .mobileFilter {
+    display: flex;
+    padding-left: 20px !important;
+    border-left: 1px solid $light-grey !important;
+
+    @include md {
+      display: none;
     }
+  }
+  &Caption {
+    display: flex;
+    align-items: center;
+    button {
+      margin-left: 0.75em;
+      span {
+        &:nth-of-type(2) {
+          margin-left: 0.25em;
+          color: $sky-blue;
+        }
+        svg {
+          path {
+            fill: $sky-blue;
+          }
+        }
+      }
+    }
+  }
 }

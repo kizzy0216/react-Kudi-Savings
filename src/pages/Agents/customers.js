@@ -38,8 +38,8 @@ const Customers = ({ history, users }) => {
         totalSaved: formatCurrency(totalSaved),
         totalWithdrawn: formatCurrency(totalWithdrawn),
         timeCreated: timeCreated
-        ? moment(timeCreated).format('Do MMM, YYYY')
-        : 'N/A',
+          ? moment(timeCreated).format('Do MMM, YYYY')
+          : 'N/A'
         // action: (
         //   <Button
         //     icon={<Eye />}

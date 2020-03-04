@@ -12,7 +12,6 @@ const TableContainer = ({ data, column, placeholder, className }) => {
           </div>
           <div className={styles.TableBody}>
             <div>
-              
               <EmptyTable />
               <p>
                 {placeholder
@@ -23,7 +22,9 @@ const TableContainer = ({ data, column, placeholder, className }) => {
           </div>
         </div>
       )}
-      {data && data.length > 0 && <Table className={className} column={column} data={data} />}
+      {data && data.length > 0 && (
+        <Table className={className} column={column} data={data} />
+      )}
     </Fragment>
   )
 }

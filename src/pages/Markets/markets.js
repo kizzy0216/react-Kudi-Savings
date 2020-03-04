@@ -35,12 +35,12 @@ const Markets = ({ history }) => {
 
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
-      ({ city, state, lga, id, timeCreated,population, ...rest }) => ({
+      ({ city, state, lga, id, timeCreated, population, ...rest }) => ({
         ...rest,
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
           : 'N/A',
-   
+
         city: city ? city : 'N/A',
         lga: lga ? lga : 'N/A',
         state: state ? state : 'N/A',
@@ -50,7 +50,15 @@ const Markets = ({ history }) => {
             icon={<SettingsLink />}
             variant="flat"
             onClick={() => {
-              setMarket({ city, state, lga, id, timeCreated,population, ...rest })
+              setMarket({
+                city,
+                state,
+                lga,
+                id,
+                timeCreated,
+                population,
+                ...rest
+              })
               return setShow(true)
             }}
           >
@@ -142,11 +150,7 @@ const Markets = ({ history }) => {
           )}
         </Card>
         <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
-          <EditMarket
-            setShow={setShow}
-            market={market}
-            refetch={refetch}
-          />
+          <EditMarket setShow={setShow} market={market} refetch={refetch} />
         </SideSheet>
       </Content>
     </Fragment>
