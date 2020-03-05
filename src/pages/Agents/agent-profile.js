@@ -1,7 +1,7 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { SideSheet } from 'evergreen-ui'
+import { SideSheet, Dialog } from 'evergreen-ui'
 import {
   Card,
   CardBody,
@@ -10,7 +10,7 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye, ChevronLeft } from 'assets/svg'
+import { SettingsLink, Bin, Eye, ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -18,11 +18,17 @@ import Customers from './customers'
 import { getAgent, getUsers } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
-import EditAgent from './edit-agent'
+import FundWallet from './fund-wallet'
+import AuthContext from 'context/AuthContext'
 
 const ViewCashout = ({ history, match: { params, url } }) => {
+  const [auth] = useContext(AuthContext)
+  let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
-  let [showEdit, setShowEdit] = useState(false)
+  let [isShown, setIsShown] = useState(false)
+  let [showReconcile, setShowReconcile] = useState(false)
+  let [showDialog, setShowDialog] = useState(false)
+  let limit = 50
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleAgent', { id: params.id }],
     getAgent
@@ -34,11 +40,15 @@ const ViewCashout = ({ history, match: { params, url } }) => {
     fecthImage
   )
 
-  const users = useQuery(data && ['Image', { id: agent.id }], getUsers)
+  const users = useQuery(
+    data && ['Customers', { id: agent.id, page, limit }],
+    getUsers
+  )
 
   if (agent) {
     localStorage.setItem('agent', JSON.stringify(agent))
   }
+
   return (
     <Fragment>
       <Header>
@@ -89,7 +99,12 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                     <div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
-                        <span> {`${agent.lastName} ${agent.firstName}`}</span>
+                        <span>
+                          {' '}
+                          {`${agent && agent.lastName ? agent.lastName : ''} ${
+                            agent && agent.firstName ? agent.firstName : ''
+                          }`}
+                        </span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Phone number</span>
@@ -183,48 +198,89 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                   </div>
 
                   <CardBody className={styles.ProgressCardBody}>
-                    <Button type="button">Reconcile</Button>
+                    <Button onClick={() => setIsShown(true)} type="button">
+                      RECONCILE
+                    </Button>
                   </CardBody>
                 </div>
               </Card>
-              <Card>
-                <CardHeader className={styles.FirstHeader}>
-                  <h3>Zonal Head</h3>
-                  <Button variant="flat" icon={<SettingsLink />}>
-                    View Profile
-                  </Button>
-                </CardHeader>
-                <CardBody>
-                  <div className={styles.FirstBodyFlex}>
-                    <span>Full Name: </span>
-                    <span>
-                      {`${agent.manager.lastName} ${agent.manager.firstName}`}
-                    </span>
-                  </div>
-                  <div className={styles.FirstBodyFlex}>
-                    <span>Email: </span>
-                    <span>{agent.manager.email}</span>
-                  </div>
-                </CardBody>
-              </Card>
+              {auth && auth.type === 'ADMIN' && (
+                <Card>
+                  <CardHeader className={styles.FirstHeader}>
+                    <h3>Zonal Head</h3>
+                    <Button variant="flat" icon={<SettingsLink />}>
+                      View Profile
+                    </Button>
+                  </CardHeader>
+                  <CardBody>
+                    <div className={styles.FirstBodyFlex}>
+                      <span>Full Name: </span>
+                      <span>
+                        {`${agent.manager.lastName} ${agent.manager.firstName}`}
+                      </span>
+                    </div>
+                    <div className={styles.FirstBodyFlex}>
+                      <span>Email: </span>
+                      <span>{agent.manager.email}</span>
+                    </div>
+                  </CardBody>
+                </Card>
+              )}
+              {auth && auth.type === 'ZONAL' && (
+                <Card>
+                  <CardHeader className={styles.FundHeader}>
+                    <h3>TOP UP WALLET</h3>
+                  </CardHeader>
+                  <CardBody className={styles.FundBody}>
+                    <div>
+                      <Button onClick={() => setShowDialog(true)} type="button">
+                        FUND WALLET
+                      </Button>
+                    </div>
+                  </CardBody>
+                </Card>
+              )}
             </div>
             <div className={styles.Third}>
-              {show && <Customers users={users} />}
+             {show && <Customers
+                users={users}
+                limit={limit}
+                page={page}
+                setPage={setPage}
+              />}
             </div>
           </div>
         )}
-        {/* <SideSheet
-          onCloseComplete={() => setShowEdit(false)}
-          isShown={showEdit}
-          width={1200}
+        <SideSheet
+          onCloseComplete={() => setShowDialog(false)}
+          isShown={showDialog}
         >
-          <EditAgent
-            avatar={imageData ? imageData.data.medium : null}
-            idCard={identity && identity.data? identity.data.data.medium: null}
-            setShowEdit={setShowEdit}
-            agent={agent}
+          <FundWallet
+            setShowDialog={setShowDialog}
+            zonalHead={agent}
+            refetch={refetch}
           />
-        </SideSheet> */}
+        </SideSheet>
+        {isShown && (
+          <Dialog
+            isShown={isShown}
+            title="RECONCILE"
+            hasFooter={false}
+            confirmLabel="C"
+            className={styles.Dialog}
+          >
+            <Card >
+              <CardBody className={styles.DialogBody}>
+                <p>Coming soon</p>
+              </CardBody>
+              <CardFooter  className={styles.DialogFooter}>
+                <Button variant="flat" icon={<Close/>} onClick={() => setIsShown(false)}>
+                  Close
+                </Button>
+              </CardFooter>
+            </Card>
+          </Dialog>
+        )}
       </Content>
     </Fragment>
   )

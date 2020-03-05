@@ -1,10 +1,8 @@
 import React from 'react'
 import styles from './layout.module.scss'
-import { Button } from '@kudi-inc/dip'
 import { KudiLogo, Avatar, Wallet } from 'assets/svg'
 import { formatCurrency } from 'utils/function'
-const LogoSection = ({ history, user }) => {
-  console.log(user, 'hello')
+const LogoSection = ({ user }) => {
   return (
     <div className={styles.logoSection}>
       <header className={styles.logoSectionHeader}>

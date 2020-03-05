@@ -26,24 +26,29 @@ const Customers = () => {
                     key: 'phoneNumber',
                     render: 'Phone Number'
                   },
+                  {
+                    key: 'status',
+                    render: 'Status'
+                  },
+                  {
+                    key: 'dsa',
+                    render: 'DSA'
+                  },
+                  {
+                    key: 'zh',
+                    render: 'Zonal Head'
+                  },
                   { key: 'amountSaved ', render: 'Amount Saved' },
 
                   {
                     key: 'amountWithdrawn',
                     render: 'Amount Withdrawn'
                   },
-                  {
-                    key: 'walletBalance',
-                    render: 'Current Balance'
-                  },
 
-                  {
-                    key: 'status',
-                    render: 'Status'
-                  },
+                 
                   {
                     key: 'action',
-                    render: ''
+                    render: 'ACTION'
                   }
                 ]}
                 data={[]}

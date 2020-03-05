@@ -1,8 +1,32 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Table } from '@kudi-inc/dip'
 import styles from './table.module.scss'
 import { EmptyTable } from 'assets/svg'
-const TableContainer = ({ data, column, placeholder, className }) => {
+import { useInfiniteScroll } from 'react-infinite-scroll-hook'
+const TableContainer = ({
+  data,
+  column,
+  placeholder,
+  className,
+  page,
+  setPage,
+  isLoading,
+  limit
+}) => {
+  const [hasMore, setHasMore] = useState(true)
+  const handleLoadMore = () => {
+    setPage(page + 1)
+    if (data.length < limit) {
+      setHasMore(false)
+    }
+  }
+  const infiniteRef = useInfiniteScroll({
+    loading: isLoading,
+    hasNextPage: hasMore,
+    onLoadMore: handleLoadMore,
+    scrollContainer: 'window'
+  })
+
   return (
     <Fragment>
       {data && data.length === 0 && (

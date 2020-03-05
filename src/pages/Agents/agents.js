@@ -5,11 +5,9 @@ import {
   Card,
   CardBody,
   Button,
-  Table,
   CardHeader,
   ButtonGroup,
-  Badge,
-  CardFooter
+  Badge
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
@@ -17,13 +15,14 @@ import { Eye, Add, ChevronLeft } from 'assets/svg'
 import styles from './agents.module.scss'
 import { getAgents } from 'services/agents'
 import { TableLoading } from 'components/loading'
+import Table  from 'components/Table'
 import { formatCurrency } from 'utils/function'
 
 const Agents = ({ history }) => {
   let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
   const [page, setPage] = useState(1)
-  let limit = 60
+  let limit = 20
   let formattedData = []
   const { data, isLoading, error, refetch } = useQuery(
     ['Agents', { page, limit }],
@@ -140,7 +139,7 @@ const Agents = ({ history }) => {
             )}
           </CardBody>
           {data && (
-            <CardFooter>
+         
               <div className={styles.AgentTablePagination}>
                 {page > 1 && (
                   <Button
@@ -150,12 +149,12 @@ const Agents = ({ history }) => {
                   ></Button>
                 )}
                 <p> Page {page} </p>
-                <Button
+                {formattedData.length===limit &&<Button
                   variant="flat"
                   onClick={() => setPage(page + 1)}
-                ></Button>
+                ></Button>}
               </div>
-            </CardFooter>
+           
           )}
         </Card>
       </Content>

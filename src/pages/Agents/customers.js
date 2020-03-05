@@ -9,31 +9,36 @@ import {
   Badge
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
-import { Eye } from 'assets/svg'
+import { ChevronLeft } from 'assets/svg'
 import styles from './agents.module.scss'
 import { TableLoading } from 'components/loading'
 import { formatCurrency } from 'utils/function'
 
-const Customers = ({ history, users }) => {
+const Customers = ({ history, users, page, setPage, limit }) => {
   let { data, isLoading, error, refetch } = users
+  console.log(isLoading)
   let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
   let customer = []
 
   if (data && data.data) {
     customer = data.data.data.list.map(
-      ({
-        firstName,
-        lastName,
-        status,
-        totalSaved,
-        totalWithdrawn,
-        cashBalance,
-        timeCreated,
-        id,
-        ...rest
-      }) => ({
+      (
+        {
+          firstName,
+          lastName,
+          status,
+          totalSaved,
+          totalWithdrawn,
+          cashBalance,
+          timeCreated,
+          id,
+          ...rest
+        },
+        index
+      ) => ({
         ...rest,
+        sN: (page - 1) * limit + (index + 1),
         fullName: `${firstName} ${lastName}`,
         totalSaved: formatCurrency(totalSaved),
         totalWithdrawn: formatCurrency(totalWithdrawn),
@@ -89,6 +94,10 @@ const Customers = ({ history, users }) => {
             className={styles.CashoutTable}
             column={[
               {
+                key: 'sN',
+                render: 'S/N'
+              },
+              {
                 key: 'fullName',
                 render: 'Full Name'
               },
@@ -108,6 +117,22 @@ const Customers = ({ history, users }) => {
             ]}
             data={customer}
           />
+        )}
+        {!isLoading && (
+          <div className={styles.AgentTablePagination}>
+            {page > 1 && (
+              <Button
+                variant="flat"
+                onClick={() => setPage(page - 1)}
+                icon={<ChevronLeft />}
+              ></Button>
+            )}
+            <p> Page {page} </p>
+            {customer.length === limit && (
+              <Button variant="flat" onClick={() => setPage(page + 1)}></Button>
+            )}
+            {isLoading && page > 1 && <>Fetching</>}
+          </div>
         )}
       </Card>
     </div>
