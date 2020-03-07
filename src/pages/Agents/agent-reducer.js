@@ -1,4 +1,4 @@
-const AgentReducer = (agent, { type, payload }) => {
+export const AgentReducer = (agent, { type, payload }) => {
   switch (type) {
     case 'UPDATE_DETAILS':
       return {
@@ -42,4 +42,31 @@ const AgentReducer = (agent, { type, payload }) => {
       return agent
   }
 }
-export default AgentReducer
+
+export const DefaultAgent = {
+  firstName: '',
+  lastName: '',
+  bvn: '',
+  dob: '',
+  email: '',
+  gender: 'MALE',
+  address: '',
+  state: '',
+  lga: '',
+  marketId: '',
+  phoneNumber: '',
+  identificationImageId: '',
+  imageId: '',
+  guarantor: {
+    firstName: '',
+    lastName: '',
+    address: '',
+    email: '',
+    state: '',
+    lga: '',
+    phoneNumber: '',
+    gender: 'MALE'
+  },
+  avatar: {},
+  idCard: {}
+}

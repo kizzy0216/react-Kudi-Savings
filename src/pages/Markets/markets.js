@@ -23,7 +23,8 @@ import { Headers } from './data'
 const Markets = ({ history }) => {
   const [auth] = useContext(AuthContext)
   const [show, setShow] = useState(false)
-  let limit = 60
+  let limit = 20
+  let totalPage = 0
   const [page, setPage] = useState(1)
   let [active, setActive] = useState('all')
   let formattedData = []
@@ -67,6 +68,7 @@ const Markets = ({ history }) => {
         )
       })
     )
+    totalPage = Math.ceil(data.data.data.total / limit)
   }
   let headers = Headers.map(({ key, render, access }) =>
     access.includes(auth.type) ? { key, render } : []
@@ -128,7 +130,7 @@ const Markets = ({ history }) => {
               />
             )}
           </CardBody>
-          {data && formattedData.length > 20 && (
+          {data && (
             <CardFooter>
               <div className={styles.MarketTablePagination}>
                 {page > 1 && (
@@ -138,7 +140,9 @@ const Markets = ({ history }) => {
                     icon={<ChevronLeft />}
                   ></Button>
                 )}
-                <p> Page {page} </p>
+                <p>
+                  Page {page} of {totalPage}{' '}
+                </p>
                 {formattedData.length === limit && (
                   <Button
                     variant="flat"

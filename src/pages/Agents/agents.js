@@ -1,6 +1,5 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
-import moment from 'moment'
 import {
   Card,
   CardBody,
@@ -15,13 +14,14 @@ import { Eye, Add, ChevronLeft } from 'assets/svg'
 import styles from './agents.module.scss'
 import { getAgents } from 'services/agents'
 import { TableLoading } from 'components/loading'
-import Table  from 'components/Table'
+import Table from 'components/Table'
 import { formatCurrency } from 'utils/function'
 
 const Agents = ({ history }) => {
   let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
   const [page, setPage] = useState(1)
+  let totalPage = 0
   let limit = 20
   let formattedData = []
   const { data, isLoading, error, refetch } = useQuery(
@@ -55,6 +55,7 @@ const Agents = ({ history }) => {
         )
       })
     )
+    totalPage= Math.ceil(data.data.data.total / limit)
   }
   return (
     <Fragment>
@@ -139,22 +140,24 @@ const Agents = ({ history }) => {
             )}
           </CardBody>
           {data && (
-         
-              <div className={styles.AgentTablePagination}>
-                {page > 1 && (
-                  <Button
-                    variant="flat"
-                    onClick={() => setPage(page - 1)}
-                    icon={<ChevronLeft />}
-                  ></Button>
-                )}
-                <p> Page {page} </p>
-                {formattedData.length===limit &&<Button
+            <div className={styles.AgentTablePagination}>
+              {page > 1 && (
+                <Button
+                  variant="flat"
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page} of {totalPage}
+              </p>
+              {formattedData.length === limit && (
+                <Button
                   variant="flat"
                   onClick={() => setPage(page + 1)}
-                ></Button>}
-              </div>
-           
+                ></Button>
+              )}
+            </div>
           )}
         </Card>
       </Content>

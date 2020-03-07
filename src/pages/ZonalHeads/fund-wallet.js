@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { useQuery } from 'react-query'
 import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { fundWallet } from 'services/zonal-heads'
 import { toaster } from 'evergreen-ui'

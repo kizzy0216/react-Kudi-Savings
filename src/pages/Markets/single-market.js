@@ -1,7 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { SideSheet } from 'evergreen-ui'
 import { Card, CardBody, CardHeader, Button } from '@kudi-inc/dip'
 import { SettingsLink, ChevronLeft, Reassign } from 'assets/svg'
 import { Header, Content } from 'components/Layout'

@@ -26,7 +26,6 @@ const ViewCashout = ({ history, match: { params, url } }) => {
   let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
   let [isShown, setIsShown] = useState(false)
-  let [showReconcile, setShowReconcile] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
   let limit = 50
   const { data, isLoading, error, refetch } = useQuery(
@@ -242,12 +241,14 @@ const ViewCashout = ({ history, match: { params, url } }) => {
               )}
             </div>
             <div className={styles.Third}>
-             {show && <Customers
-                users={users}
-                limit={limit}
-                page={page}
-                setPage={setPage}
-              />}
+              {show && (
+                <Customers
+                  users={users}
+                  limit={limit}
+                  page={page}
+                  setPage={setPage}
+                />
+              )}
             </div>
           </div>
         )}
@@ -269,12 +270,16 @@ const ViewCashout = ({ history, match: { params, url } }) => {
             confirmLabel="C"
             className={styles.Dialog}
           >
-            <Card >
+            <Card>
               <CardBody className={styles.DialogBody}>
                 <p>Coming soon</p>
               </CardBody>
-              <CardFooter  className={styles.DialogFooter}>
-                <Button variant="flat" icon={<Close/>} onClick={() => setIsShown(false)}>
+              <CardFooter className={styles.DialogFooter}>
+                <Button
+                  variant="flat"
+                  icon={<Close />}
+                  onClick={() => setIsShown(false)}
+                >
                   Close
                 </Button>
               </CardFooter>
