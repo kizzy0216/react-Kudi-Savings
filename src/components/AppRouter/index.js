@@ -66,6 +66,7 @@ const Customers = lazy(() =>
   import(/* webpackChunkName: "Customers" */ 'pages/Customers')
 )
 const Plans = lazy(() => import(/* webpackChunkName: "Plans" */ 'pages/Plans'))
+
 const Transactions = lazy(() =>
   import(/* webpackChunkName: "Transactions" */ 'pages/Transactions')
 )
