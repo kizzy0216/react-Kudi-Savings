@@ -10,7 +10,7 @@ export const marketValidation = values => {
     errors.lga = 'Lga is required'
   }
   if (!values.city) {
-    errors.city = 'Cityis required'
+    errors.city = 'City is required'
   }
   if (!values.population) {
     errors.population = 'Market population is required'

@@ -44,7 +44,6 @@ const Plans = () => {
                     key: 'amountWithdrawn',
                     render: 'Amount Withdrawn'
                   },
-                  
 
                   {
                     key: 'status',

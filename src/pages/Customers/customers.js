@@ -45,7 +45,6 @@ const Customers = () => {
                     render: 'Amount Withdrawn'
                   },
 
-                 
                   {
                     key: 'action',
                     render: 'ACTION'

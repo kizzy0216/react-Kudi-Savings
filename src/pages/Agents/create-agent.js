@@ -8,36 +8,10 @@ import Form from './fill-info'
 import UploadId from './upload-id'
 import GUARANTOR from './guarantor'
 import AccountSetup from './account-setup'
-import AgentReducer from './agent-reducer'
+import { AgentReducer, DefaultAgent } from './agent-reducer'
 const CreateAgent = ({ history }) => {
   let [step, setStep] = useState(0)
-  const [agent, setAgent] = useReducer(AgentReducer, {
-    firstName: '',
-    lastName: '',
-    bvn: '',
-    dob: '',
-    email: '',
-    gender: 'MALE',
-    address: '',
-    state: '',
-    lga: '',
-    marketId: '',
-    phoneNumber: '',
-    identificationImageId: '',
-    imageId: '',
-    guarantor: {
-      firstName: '',
-      lastName: '',
-      address: '',
-      email: '',
-      state: '',
-      lga: '',
-      phoneNumber: '',
-      gender: 'MALE'
-    },
-    avatar: {},
-    idCard: {}
-  })
+  const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
 
   const handleAgent = ({ target }) => {
     setAgent({

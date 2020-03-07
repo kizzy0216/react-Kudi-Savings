@@ -13,7 +13,7 @@ const LogoSection = ({ user }) => {
 
         <div className={styles.logoSectionContent}>
           <p>Name</p>
-          <span>{user.firstName? user.firstName:user.username}</span>
+          <span>{user.firstName ? user.firstName : user.username}</span>
         </div>
       </div>
       <div className={styles.logoSectionFlex}>

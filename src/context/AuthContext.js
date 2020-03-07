@@ -5,13 +5,13 @@ export const AuthConsumer = AuthContext.Consumer
 
 export const getDefaultAuth = () => {
   try {
-    return JSON.parse(localStorage.getItem('auth-token'))
+    return JSON.parse(localStorage.getItem('ksavings-token'))
   } catch (e) {
     return null
   }
 }
 export const setLogout = () => {
-  localStorage.removeItem('auth-token')
+  localStorage.removeItem('ksavings-token')
   window.location.href = '/'
 }
 
@@ -21,8 +21,8 @@ export const AuthProviderContainer = ({ children, history }) => {
 
   const setAuthAndCache = (value = null) => {
     value
-      ? localStorage.setItem('auth-token', JSON.stringify(value))
-      : localStorage.removeItem('auth-token')
+      ? localStorage.setItem('ksavings-token', JSON.stringify(value))
+      : localStorage.removeItem('ksavings-token')
 
     setAuth(value)
   }

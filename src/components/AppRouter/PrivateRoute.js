@@ -9,7 +9,7 @@ const PrivateRoute = ({
   renderHeader,
   ...rest
 }) => {
-  const isAuthenticated = localStorage.getItem('auth-token') ? true : false
+  const isAuthenticated = localStorage.getItem('ksavings-token') ? true : false
 
   return (
     <Route

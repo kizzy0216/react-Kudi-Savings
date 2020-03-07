@@ -19,7 +19,7 @@ import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
 
-const EditAgent = ({ history, match: { params } }) => {
+const EditAgent = ({ history, match }) => {
   const [auth] = useContext(AuthContext)
   const [loading, setLoading] = useState(false)
   const [uploadedAvatar, setUploadedAvatar] = useState({})

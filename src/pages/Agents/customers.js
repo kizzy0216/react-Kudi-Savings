@@ -8,7 +8,6 @@ import {
   ButtonGroup,
   Badge
 } from '@kudi-inc/dip'
-import { useRouteMatch } from 'react-router-dom'
 import { ChevronLeft } from 'assets/svg'
 import styles from './agents.module.scss'
 import { TableLoading } from 'components/loading'
@@ -16,11 +15,9 @@ import { formatCurrency } from 'utils/function'
 
 const Customers = ({ history, users, page, setPage, limit }) => {
   let { data, isLoading, error, refetch } = users
-  console.log(isLoading)
-  let { url } = useRouteMatch()
   let [active, setActive] = useState('all')
   let customer = []
-
+  let totalPage = 0
   if (data && data.data) {
     customer = data.data.data.list.map(
       (
@@ -56,6 +53,7 @@ const Customers = ({ history, users, page, setPage, limit }) => {
         // )
       })
     )
+    totalPage = Math.ceil(data.data.data.total / limit)
   }
   return (
     <div>
@@ -127,7 +125,9 @@ const Customers = ({ history, users, page, setPage, limit }) => {
                 icon={<ChevronLeft />}
               ></Button>
             )}
-            <p> Page {page} </p>
+            <p>
+              Page {page} of {totalPage}
+            </p>
             {customer.length === limit && (
               <Button variant="flat" onClick={() => setPage(page + 1)}></Button>
             )}
