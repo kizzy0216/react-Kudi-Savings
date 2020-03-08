@@ -107,7 +107,7 @@ const Agents = ({ history }) => {
             )}
             {data && (
               <Table
-                className={styles.AgentTable}
+                className={styles.table}
                 column={[
                   {
                     key: 'fullName',
@@ -140,7 +140,7 @@ const Agents = ({ history }) => {
             )}
           </CardBody>
           {data && (
-            <div className={styles.AgentTablePagination}>
+            <div className="pagination">
               {page > 1 && (
                 <Button
                   variant="flat"
