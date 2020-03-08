@@ -119,13 +119,13 @@ const Settings = ({ history }) => {
               </CardBody>
             )}
           </Card>
-
+{/* 
           <Card>
             <CardHeader className={styles.SettingsHeader}>
               <h3>Your Account</h3>
             </CardHeader>
             <CardBody></CardBody>
-          </Card>
+          </Card> */}
         </div>
         <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
           <ChangePassword setShow={setShow} />
