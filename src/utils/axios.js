@@ -4,7 +4,7 @@ import { getDefaultAuth, setLogout } from '../context/AuthContext'
 //Default Request Config
 
 let Axios = axios.create({
-  baseURL: 'https://savings.kudi.ai',
+  baseURL: 'https://savings-dev.kudi.ng',
   headers: {
     'Content-Type': 'application/json'
   }
