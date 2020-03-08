@@ -49,7 +49,7 @@ const Transactions = ({ history }) => {
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
               <Table
-                className={styles.TransactionsTable}
+                className={styles.table}
                 column={[
                   { key: 'date', render: 'Date' },
                   {

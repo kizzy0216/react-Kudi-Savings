@@ -89,7 +89,7 @@ const Customers = ({ history, users, page, setPage, limit }) => {
         )}
         {data && data.data && (
           <Table
-            className={styles.CashoutTable}
+            className={styles.table}
             column={[
               {
                 key: 'sN',
@@ -117,7 +117,7 @@ const Customers = ({ history, users, page, setPage, limit }) => {
           />
         )}
         {!isLoading && (
-          <div className={styles.AgentTablePagination}>
+          <div className="pagination">
             {page > 1 && (
               <Button
                 variant="flat"

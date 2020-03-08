@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { SideSheet, Dialog } from 'evergreen-ui'
+import { Dialog } from 'evergreen-ui'
 import {
   Card,
   CardBody,
@@ -10,18 +10,17 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink, Reassign, Eye, ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
-import styles from './agent-profile.module.scss'
+import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import Customers from './customers'
-import { getAgent, getUsers } from 'services/agents'
+import { getCustomer, getUsers } from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
-import FundWallet from './fund-wallet'
 import AuthContext from 'context/AuthContext'
 
-const SingleAgent = ({ history, match: { params, url } }) => {
+const CustomerProfile = ({ history, match: { params, url } }) => {
   const [auth] = useContext(AuthContext)
   let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
@@ -29,31 +28,22 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   let [showDialog, setShowDialog] = useState(false)
   let limit = 50
   const { data, isLoading, error, refetch } = useQuery(
-    ['SingleAgent', { id: params.id }],
-    getAgent
+    ['SingleCustomer', { id: params.id }],
+    getCustomer
   )
-  let agent = data && data.data ? data.data.data : {}
+  let customer = data && data.data ? data.data.data : {}
 
   const { data: imageData } = useQuery(
-    data && ['Image', { id: agent.imageId }],
+    data && ['Image', { id: customer.pictureId }],
     fecthImage
   )
-
-  const users = useQuery(
-    data && ['Customers', { id: agent.id, page, limit }],
-    getUsers
-  )
-
-  if (agent) {
-    localStorage.setItem('agent', JSON.stringify(agent))
-  }
 
   return (
     <Fragment>
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => history.goBack()} />
-          Agent Profile
+          Customer Profile
         </p>
       </Header>
       <Content className={styles.content}>
@@ -81,8 +71,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     >
                       Edit Profile
                     </Button>
-                    <Button variant="flat" icon={<Bin />}>
-                      Suspend Agent
+                    <Button variant="flat" icon={<Reassign />}>
+                      Reassign
                     </Button>
                   </div>
                 </CardHeader>
@@ -99,29 +89,32 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
                         <span>
-                          {' '}
-                          {`${agent && agent.lastName ? agent.lastName : ''} ${
-                            agent && agent.firstName ? agent.firstName : ''
+                          {`${
+                            customer && customer.lastName
+                              ? customer.lastName
+                              : ''
+                          } ${
+                            customer && customer.firstName
+                              ? customer.firstName
+                              : ''
                           }`}
                         </span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Phone number</span>
-                        <span>{agent.phoneNumber}</span>
+                        <span>{customer.phoneNumber}</span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Gender</span>
-                        <span>{agent.gender}</span>
-                      </div>
-
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Address</span>
-                        <span>{agent.address}</span>
+                        <span>{customer.gender}</span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
-                        <span>Assigned Market: </span>
-                        <span> {agent.assignedMarket.name}</span>
+                        <span>Date Onboarded:</span>
+                        <span>
+                          {moment(customer.timeCreated).format('Do MMM, YYYY')}
+                        </span>
                       </div>
+                     
                     </div>
                   </div>
                 </CardBody>
@@ -129,34 +122,29 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
-                    <h3> SIGNUP INFORMATION</h3>
+                    <h3> SAVINGS PLAN</h3>
 
                     <Badge
                       className={styles.FirstHeaderBadge}
                       variant="success"
                     >
-                      {agent.status}
+                      {customer.status}
                     </Badge>
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
-                    <span>Date Onboarded:</span>
-                    <span>
-                      {moment(agent.timeCreated).format('Do MMM, YYYY')}
-                    </span>
+                    <span>Market</span>
+                    <span>{customer.market.name} </span>
+                  </div>
+                  
+                  <div className={styles.FirstBodyFlex}>
+                    <span> Total Saved </span>
+                    <span>{formatCurrency(customer.totalSaved)}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
-                    <span>Active Customers: </span>
-                    <span> N/A</span>
-                  </div>
-                  <div className={styles.FirstBodyFlex}>
-                    <span> Inactive Customers </span>
-                    <span>N/A</span>
-                  </div>
-                  <div className={styles.FirstBodyFlex}>
-                    <span> Total Customers </span>
-                    <span>{agent.totalCustomers}</span>
+                    <span> Total Withdrawn</span>
+                    <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
                 </CardBody>
                 <CardFooter className={styles.FirstBodyButton}>
@@ -166,7 +154,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     icon={<Eye />}
                     onClick={() => setShow(!show)}
                   >
-                    {show ? 'Hide ' : 'View '}Customers
+                    {show ? 'Hide ' : 'View '} History
                   </Button>
                 </CardFooter>
               </Card>
@@ -176,7 +164,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                 <div className={styles.Wallet}>
                   <CardBody className={styles.WalletContent}>
                     <p>Wallet Balance</p>
-                    <h2>{formatCurrency(agent.cashBalance)}</h2>
+                    <h2>{formatCurrency(customer.cashBalance)}</h2>
                     <Button variant="flat" type="button" icon={<Eye />}>
                       View History
                     </Button>
@@ -188,7 +176,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
                       <p>Amount Seeded</p>
-                      <h4>{formatCurrency(agent.amountSeeded)}</h4>
+                      <h4>{formatCurrency(customer.amountSeeded)}</h4>
                     </CardBody>
                     <CardBody>
                       <p>cash Withdrawn</p>
@@ -206,7 +194,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               {auth && auth.type === 'ADMIN' && (
                 <Card>
                   <CardHeader className={styles.FirstHeader}>
-                    <h3>Zonal Head</h3>
+                    <h3>DSA</h3>
                     <Button variant="flat" icon={<SettingsLink />}>
                       View Profile
                     </Button>
@@ -215,53 +203,21 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <div className={styles.FirstBodyFlex}>
                       <span>Full Name: </span>
                       <span>
-                        {`${agent.manager.lastName} ${agent.manager.firstName}`}
+                        {`${customer && customer.agent ?customer.agent.lastName:""} ${customer && customer.agent?customer.agent.firstName: "N/A"}`}
                       </span>
                     </div>
                     <div className={styles.FirstBodyFlex}>
                       <span>Email: </span>
-                      <span>{agent.manager.email}</span>
+                      <span>{customer && customer.agent?customer.agent.email:"N/A"}</span>
                     </div>
                   </CardBody>
                 </Card>
-              )}
-              {auth && auth.type === 'ZONAL' && (
-                <Card>
-                  <CardHeader className={styles.FundHeader}>
-                    <h3>TOP UP WALLET</h3>
-                  </CardHeader>
-                  <CardBody className={styles.FundBody}>
-                    <div>
-                      <Button onClick={() => setShowDialog(true)} type="button">
-                        FUND WALLET
-                      </Button>
-                    </div>
-                  </CardBody>
-                </Card>
-              )}
-            </div>
-            <div className={styles.Third}>
-              {show && (
-                <Customers
-                  users={users}
-                  limit={limit}
-                  page={page}
-                  setPage={setPage}
-                />
-              )}
+              )} 
+              
             </div>
           </div>
         )}
-        <SideSheet
-          onCloseComplete={() => setShowDialog(false)}
-          isShown={showDialog}
-        >
-          <FundWallet
-            setShowDialog={setShowDialog}
-            zonalHead={agent}
-            refetch={refetch}
-          />
-        </SideSheet>
+
         {isShown && (
           <Dialog
             isShown={isShown}
@@ -290,4 +246,4 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     </Fragment>
   )
 }
-export default SingleAgent
+export default CustomerProfile
