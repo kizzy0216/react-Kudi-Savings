@@ -124,33 +124,31 @@ const Markets = ({ history }) => {
 
             {data && (
               <Table
-                className={styles.MarketTable}
+                className={styles.table}
                 column={headers}
                 data={formattedData}
               />
             )}
           </CardBody>
           {data && (
-            <CardFooter>
-              <div className={styles.MarketTablePagination}>
-                {page > 1 && (
-                  <Button
-                    variant="flat"
-                    onClick={() => setPage(page - 1)}
-                    icon={<ChevronLeft />}
-                  ></Button>
-                )}
-                <p>
-                  Page {page} of {totalPage}{' '}
-                </p>
-                {formattedData.length === limit && (
-                  <Button
-                    variant="flat"
-                    onClick={() => setPage(page + 1)}
-                  ></Button>
-                )}
-              </div>
-            </CardFooter>
+            <div className="pagination">
+              {page > 1 && (
+                <Button
+                  variant="flat"
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page} of {totalPage}{' '}
+              </p>
+              {formattedData.length === limit && (
+                <Button
+                  variant="flat"
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              )}
+            </div>
           )}
         </Card>
         <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
