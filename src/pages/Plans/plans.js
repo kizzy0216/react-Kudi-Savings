@@ -24,10 +24,11 @@ const Plans = () => {
   )
   let formattedData = []
   if (data && data.data) {
-    formattedData = data.data.data.plans.map(plan => ({
+    formattedData = data.data.data.plans.map((plan, index) => ({
       title: plan.title ? plan.title : 'N/A',
-      low: plan.low ? formatCurrency(plan.low) : 'N/A',
-      high: plan.high ? formatCurrency(plan.high) : 'N/A',
+      range: `${plan.low ? formatCurrency(plan.low) : 'N/A'} - ${
+        plan.high ? formatCurrency(plan.high) : 'N/A'
+      }`,
       action: (
         <Button
           icon={<Pencil />}
@@ -39,7 +40,8 @@ const Plans = () => {
         >
           Edit Plan
         </Button>
-      )
+      ),
+      sN: (page - 1) * limit + (index + 1)
     }))
   }
 
@@ -65,14 +67,11 @@ const Plans = () => {
                 <Table
                   className={styles.PlansTable}
                   column={[
+                    { key: 'sN', render: 'S/N' },
                     { key: 'title', render: 'Title' },
                     {
-                      key: 'low',
-                      render: 'Low'
-                    },
-                    {
-                      key: 'high',
-                      render: 'high'
+                      key: 'range',
+                      render: 'Range'
                     },
 
                     {
