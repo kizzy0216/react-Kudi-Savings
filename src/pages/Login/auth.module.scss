@@ -1,0 +1,106 @@
+@import '../../styles/generic.scss';
+.form {
+  font-size: 1rem;
+  margin: 3.16em 2em 0 2em;
+
+  @include md {
+    margin: 5em 13.33em 2.2em 4.44em;
+    max-width: 400px;
+  }
+  &Signup {
+    margin: 3.16em 2em 2em 2em;
+    @include md {
+      margin: 1.75em 13.33em 2.2em 4.44em;
+    }
+  }
+  &Layout {
+    @include rwd(1441) {
+      font-size: 0.8em;
+    }
+  }
+
+  h1 {
+    font-weight: 500;
+    font-size: 1.7em;
+    line-height: 1.22em;
+    color: $white;
+    margin-bottom: 0.75em;
+
+    @include md {
+      font-size: 1.7em;
+    }
+  }
+  &Intro {
+    font-size: 2em;
+    line-height: 120%;
+    color: #8faaff;
+    margin-bottom: 1.5em;
+
+    @include md {
+      font-size: 1.39em;
+      margin-bottom: 1.2em;
+    }
+  }
+
+  :global {
+    .formInput.formInput {
+      margin-bottom: 2em;
+
+      @include md {
+        margin-bottom: 1.11em;
+      }
+
+      @include rwd(1441) {
+        font-size: 0.6em;
+        margin-bottom: 1.4em;
+      }
+    }
+  }
+
+  &Button {
+    &Group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 3em;
+
+      @include md {
+        margin-top: 1.67em;
+      }
+    }
+
+    &Submit {
+      @include rwd(1441) {
+        font-size: 0.7em;
+      }
+    }
+    &Reset {
+      color: #00e59e;
+      background: transparent;
+      font-weight: 500;
+      font-size: 1.4em;
+      line-height: 121%;
+      min-height: max-content;
+
+      @include md {
+        font-size: 0.78em;
+      }
+
+      & > span {
+        &:nth-of-type(1) {
+          height: 1.45em !important;
+        }
+        &:nth-of-type(2) {
+          font-size: 0.78em;
+          @include md {
+            font-size: 1em;
+          }
+        }
+      }
+    }
+  }
+  small {
+    color: #ff5b5b;
+    font-weight: bold;
+  }
+}

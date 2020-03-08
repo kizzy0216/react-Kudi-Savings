@@ -1,0 +1,273 @@
+@import '../../styles/variables';
+.CA {
+  font-size: 1rem;
+  min-height: 85vh;
+  &Header {
+    font-size: 0.83em;
+    height: 4em;
+    display: flex;
+    align-items: center;
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+  &Body {
+    display: grid;
+    grid-template-columns: 10em 1fr;
+    grid-column-gap: 2.94em;
+    &Overlay {
+      background-image: url('../../assets/svg/profile-pic.svg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 9.78em;
+    }
+    &Upload {
+      input[type='file'] {
+        cursor: pointer;
+        width: 100%;
+        height: 9.78em;
+        overflow: hidden;
+        color: transparent;
+        border-radius: 50%;
+        &:before {
+          width: 100%;
+          height: 9.78em;
+          content: ' ';
+          display: inline-block;
+          padding: 2.78em 0.72em;
+          text-align: center;
+          font-family: Helvetica, Arial, sans-serif;
+          background: rgba(80, 80, 80, 0.01);
+        }
+        &::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+      }
+      p {
+        color: $grey;
+        font-size: 0.83em;
+        margin-top: 1em;
+        font-weight: normal;
+      }
+      img {
+        width: 100%;
+        object-fit: cover;
+        object-position: center;
+        height: 9.78em;
+        margin-top: 1em;
+        border-radius: 50%;
+        border: 2px solid $light-grey;
+      }
+      &Flex {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1em;
+        font-weight: normal;
+        font-size: 0.83em;
+        p {
+          color: $grey;
+          span {
+            &[class='img-success'] {
+              color: $kudi-green;
+            }
+
+            color: $danger;
+          }
+        }
+        & > button {
+          margin-top: 0.83em;
+          color: $danger;
+          font-size: 0.83em;
+          cursor: pointer;
+        }
+        & > span {
+          font-size: 0.72em;
+        }
+        & > svg {
+          width: 0.72em;
+        }
+      }
+    }
+  }
+  &Form {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 4.44em;
+    &Left,
+    &Right {
+      & > div {
+        margin-bottom: 1.67em;
+      }
+    }
+    input[type='checkbox'] {
+      border: 1px solid;
+    }
+
+    &Two {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 1.11em;
+      margin-bottom: 1.67em;
+
+      &Check {
+        border: 1px solid #d2ddeb;
+        border-radius: 3px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 0.83em;
+        height: 55px;
+
+        &box {
+          width: 30px;
+          height: 30px;
+          position: relative;
+          background: #fcfff4;
+          border-radius: 50px;
+
+          label {
+            width: 28px;
+            height: 28px;
+            position: absolute;
+            top: 3px;
+            left: 4px;
+            cursor: pointer;
+            background: $grey;
+            border-radius: 50px;
+
+            &:after {
+              content: '';
+              width: 12px;
+              height: 5px;
+              position: absolute;
+              top: 10px;
+              left: 8px;
+              border: 2px solid #fcfff4;
+              border-top: none;
+              border-right: none;
+              background: transparent;
+              opacity: 0;
+              transform: rotate(-45deg);
+            }
+            &:hover::after {
+              opacity: 0.3;
+            }
+          }
+          input[type='checkbox'] {
+            visibility: hidden;
+            &:checked + label:after {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+    &Button {
+      margin-top: 3.5em;
+      float: right;
+    }
+  }
+  &ID {
+    width: 23.55em;
+    &Overlay {
+      background-image: url('../../assets/images/upload-id.png');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      height: 14.55em;
+    }
+    &Upload {
+      input[type='file'] {
+        cursor: pointer;
+        width: 100%;
+        height: 14.55em;
+        overflow: hidden;
+        color: transparent;
+        &:before {
+          width: 100%;
+          height: 14.55em;
+          content: ' ';
+          display: inline-block;
+          background: rgba(80, 80, 80, 0.5);
+          padding: 2.78em 0.72em;
+          text-align: center;
+          font-family: Helvetica, Arial, sans-serif;
+        }
+
+        &::-webkit-file-upload-button {
+          visibility: hidden;
+        }
+      }
+
+      button {
+        margin-top: 5.55em;
+      }
+      img {
+        width: 23.55em;
+        object-fit: cover;
+        object-position: center;
+        height: 14.55em;
+      }
+      &Flex {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1em;
+        font-weight: normal;
+        font-size: 0.83em;
+        p {
+          color: $grey;
+        }
+        & > button {
+          margin-top: 0;
+          color: $danger;
+          cursor: pointer;
+        }
+      }
+    }
+    &Submit {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+  &Guarantor {
+    &Form {
+      &Flex {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 4.44em;
+
+        input {
+          margin-bottom: 1.67em;
+        }
+      }
+    }
+  }
+}
+.AccountSetup {
+  padding: 1.67em 2.78em;
+  width: 25em;
+  display: flex;
+  &Body {
+    text-align: center;
+    & > svg {
+      margin-bottom: 3.88em;
+    }
+    & > h2 {
+      color: $kudi-blue;
+      font-size: 1.39em;
+      margin-bottom: 1.11em;
+      line-height: 124%;
+      font-weight: normal;
+    }
+    & > p {
+      font-weight: normal;
+      color: $grey;
+      margin-bottom: 1.68em;
+    }
+    & > button {
+      background: transparent;
+      border: 1px solid $kudi-blue;
+      margin: auto;
+    }
+  }
+}

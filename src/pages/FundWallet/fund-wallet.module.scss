@@ -1,0 +1,146 @@
+@import '../../styles/variables';
+.FundWallet {
+  font-size: 1rem;
+  min-height: 85vh;
+  &Header {
+    padding: 1.1em 2.78em;
+    &Tab {
+      display: flex;
+
+      button {
+        margin-right: 1.94em;
+        color: $grey;
+      }
+
+      &Active {
+        color: $text-darker;
+      }
+    }
+    p {
+      font-size: 0.72em;
+      color: #efa310;
+      font-weight: normal;
+      margin: 2.38em 0 0;
+    }
+  }
+  &Body {
+    padding: 1.1em 2.78em;
+    &Input {
+      width: 18.14em;
+      input {
+        margin-bottom: 0.83em;
+      }
+      margin-bottom: 1.39em;
+    }
+    &Card {
+      width: 23.16em;
+      &List {
+        display: flex;
+        justify-content: space-between;
+        border: 1px solid #d2ddeb;
+        margin-bottom: 0.83em;
+        padding: 0.83em;
+        color: $text-darker;
+        border-radius: 3px;
+        &Number {
+          font-weight: normal;
+          font-size: 0.72em;
+        }
+      }
+      &Submit {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.67em;
+      }
+    }
+    &Flex {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.83em;
+      & > div {
+        font-weight: 500;
+        font-size: 0.72em;
+        button {
+          color: $sky-blue;
+        }
+      }
+    }
+  }
+}
+.ButtonGroup {
+  padding: 0.2em 0.5em;
+  background: #e7eef7;
+  border-radius: 3px;
+  margin-bottom: 1.167em;
+  button {
+    border-radius: 3px;
+    border: none;
+    font: 0.72em;
+
+    [class$='btn-grouped-active'] {
+      background: transparent;
+      border: none;
+      span {
+        margin-left: 0.82em;
+      }
+    }
+  }
+}
+.KudiPin {
+  font-size: 1rem;
+  min-height: 85vh;
+  &Header {
+    div {
+      display: flex;
+      margin: 0.6em 1.35em;
+      font-size: 0.72em;
+      cursor: pointer;
+      svg {
+        path {
+          fill: $sky-blue;
+          color: $sky-blue;
+        }
+        margin-right: 0.61em;
+      }
+      p {
+        color: $sky-blue;
+      }
+    }
+  }
+  &Body {
+    padding: 1.67em 2.78em;
+    width: 23.16em;
+    &Success,
+    &Fail {
+      margin: auto;
+      text-align: center;
+      svg {
+        margin-bottom: 3.88em;
+      }
+      h2 {
+        color: $kudi-blue;
+        font-size: 1.39em;
+        margin-bottom: 1.11em;
+        line-height: 124%;
+        font-weight: normal;
+      }
+      p {
+        font-weight: normal;
+        color: $text-darker;
+        margin-bottom: 1.68em;
+      }
+      button {
+        background: transparent;
+        border: 1px solid $kudi-blue;
+        margin: auto;
+      }
+    }
+    &Form {
+      &Submit {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 1.67em;
+      }
+    }
+  }
+}

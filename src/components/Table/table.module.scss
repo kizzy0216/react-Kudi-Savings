@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+.Table {
+  font-size: 1rem;
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 2em 1.67em;
+    font-weight: normal;
+    text-transform: uppercase;
+    color: $text-darker;
+    font-size: 0.67em;
+  }
+  &Body {
+    justify-content: center;
+    display: flex;
+
+    & > div {
+      height: 24em;
+      text-align: center;
+      margin: auto;
+      p {
+        color: $grey;
+        font-size: 0.83em;
+        font-weight: normal;
+      }
+    }
+    svg {
+      width: 17em;
+      height: 17em;
+    }
+  }
+}

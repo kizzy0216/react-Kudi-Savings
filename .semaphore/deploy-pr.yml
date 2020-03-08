@@ -1,0 +1,24 @@
+version: v1.0
+name: Build Pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+
+blocks:
+  - name: Deploy
+    task:
+      secrets:
+        - name: gke-staging
+        - name: ssh-key
+      prologue:
+        commands:
+          - chmod 600 ~/.ssh/id
+          - chmod 600 ~/.ssh/id.pub
+          - ssh-add ~/.ssh/id
+          - bash ~/.scripts/init-gke.sh
+          - checkout
+      jobs:
+      - name: PR Environment
+        commands:
+          - bash ~/.scripts/deploy-pr.sh
