@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import debounce from '../../../node_modules/lodash/debounce'
+
 import moment from 'moment'
 import { Table, Card, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
-import { ChevronLeft, Search } from 'assets/svg'
+import { ChevronLeft, Search, Close, Eye } from 'assets/svg'
 import styles from './agents.module.scss'
 import { TableLoading } from 'components/loading'
 import { formatCurrency } from 'utils/function'
@@ -13,18 +14,17 @@ const Customers = ({
   page,
   setPage,
   limit,
-  phoneNumber,
   setPhoneNumber
 }) => {
   let { data, isLoading, error, refetch } = users
   let [active, setActive] = useState('all')
-
+  let [number, setNumber] = useState('')
   let customer = []
   let totalPage = 0
-  const handleSearch = e => {
-    console.log(e.target.value, 'value')
-    const debouncedSearch = debounce(setPhoneNumber(e.target.value), 1700)
-    debouncedSearch()
+
+  const handleSearch = ({ target: { value } }) => {
+    const debounced_doSearch = debounce(() => setPhoneNumber(value), 1000)
+    debounced_doSearch()
   }
   if (data && data.data) {
     customer = data.data.data.list.map(
@@ -49,16 +49,16 @@ const Customers = ({
         totalWithdrawn: formatCurrency(totalWithdrawn),
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
-          : 'N/A'
-        // action: (
-        //   <Button
-        //     icon={<Eye />}
-        //     variant="flat"
-        //     onClick={() => history.push(`${url}/${id}`)}
-        //   >
-        //     View
-        //   </Button>
-        // )
+          : 'N/A',
+        action: (
+          <Button
+            icon={<Eye />}
+            variant="flat"
+            onClick={() => history.push(`/customers/${id}`)}
+          >
+            View
+          </Button>
+        )
       })
     )
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -71,11 +71,24 @@ const Customers = ({
           <div className="header-search">
             <input
               placeholder="SEARCH BY PHONE NUMBER"
-              value={phoneNumber}
-              onChange={e => handleSearch(e)}
+              value={number}
+              onChange={e => {
+                setNumber(e.target.value)
+                return handleSearch(e)
+              }}
               type="text"
             />
-            <Search />
+            {number.length > 1 ? (
+              <Close
+                className="danger"
+                onClick={() => {
+                  setPhoneNumber('')
+                  return setNumber('')
+                }}
+              />
+            ) : (
+              <Search />
+            )}
           </div>
           <ButtonGroup>
             <Button active={active === 'all'} onClick={() => setActive('all')}>
@@ -127,6 +140,10 @@ const Customers = ({
               {
                 key: 'timeCreated',
                 render: 'Time Created'
+              },
+              {
+                key: 'action',
+                render: 'ACTION'
               }
             ]}
             data={customer}

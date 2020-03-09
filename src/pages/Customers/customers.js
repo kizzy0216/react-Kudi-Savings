@@ -14,7 +14,7 @@ const Customers = ({ history }) => {
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
   const [show, setShow] = useState(false)
-  let limit = 100
+  let limit = 50
   let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(

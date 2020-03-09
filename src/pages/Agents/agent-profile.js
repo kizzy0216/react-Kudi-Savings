@@ -256,6 +256,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             <div className={styles.Third}>
               {show && (
                 <Customers
+                  history={history}
                   users={users}
                   limit={limit}
                   page={page}

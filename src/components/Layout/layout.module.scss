@@ -287,11 +287,17 @@
       input {
         width: 100%;
         border: none;
-        font-size: 0.788em;
+        font-size: 0.87em;
         color: $grey;
         &:active,
         &:focus {
           outline: none;
+        }
+      }
+      svg[class='danger'] {
+        cursor: pointer;
+        path {
+          fill: $danger;
         }
       }
     }
