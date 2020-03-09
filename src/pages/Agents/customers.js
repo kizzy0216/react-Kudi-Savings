@@ -1,23 +1,31 @@
 import React, { useState } from 'react'
+import debounce from '../../../node_modules/lodash/debounce'
 import moment from 'moment'
-import {
-  Table,
-  Card,
-  CardHeader,
-  Button,
-  ButtonGroup,
-  Badge
-} from '@kudi-inc/dip'
-import { ChevronLeft } from 'assets/svg'
+import { Table, Card, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
+import { ChevronLeft, Search } from 'assets/svg'
 import styles from './agents.module.scss'
 import { TableLoading } from 'components/loading'
 import { formatCurrency } from 'utils/function'
 
-const Customers = ({ history, users, page, setPage, limit }) => {
+const Customers = ({
+  history,
+  users,
+  page,
+  setPage,
+  limit,
+  phoneNumber,
+  setPhoneNumber
+}) => {
   let { data, isLoading, error, refetch } = users
   let [active, setActive] = useState('all')
+
   let customer = []
   let totalPage = 0
+  const handleSearch = e => {
+    console.log(e.target.value, 'value')
+    const debouncedSearch = debounce(setPhoneNumber(e.target.value), 1700)
+    debouncedSearch()
+  }
   if (data && data.data) {
     customer = data.data.data.list.map(
       (
@@ -60,6 +68,15 @@ const Customers = ({ history, users, page, setPage, limit }) => {
       <Card>
         <CardHeader className={styles.Header}>
           Customers
+          <div className="header-search">
+            <input
+              placeholder="SEARCH BY PHONE NUMBER"
+              value={phoneNumber}
+              onChange={e => handleSearch(e)}
+              type="text"
+            />
+            <Search />
+          </div>
           <ButtonGroup>
             <Button active={active === 'all'} onClick={() => setActive('all')}>
               All
@@ -89,7 +106,6 @@ const Customers = ({ history, users, page, setPage, limit }) => {
         )}
         {data && data.data && (
           <Table
-            className={styles.table}
             column={[
               {
                 key: 'sN',

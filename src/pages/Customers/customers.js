@@ -43,7 +43,6 @@ const Customers = ({ history }) => {
               {isLoading && <TableLoading />}
               {data && (
                 <Table
-                  className={styles.table}
                   column={[
                     {
                       key: 'fullName',

@@ -10,8 +10,12 @@ export const getAgents = async ({ page, limit }) =>
 
 export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
 
-export const getUsers = async ({ id, page, limit }) =>
-  await Axios.get(`/users/${id}/downline?limit=${limit}&page=${page}`)
+export const getUsers = async ({ id, page, limit, phoneNumber }) =>
+  await Axios.get(
+    `/users/${id}/downline?limit=${limit}&page=${page}${
+      phoneNumber ? '&' + phoneNumber : ''
+    }`
+  )
 
 export const updateAgent = agent => {
   const { id, ...rest } = agent

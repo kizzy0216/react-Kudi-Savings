@@ -5,7 +5,7 @@ import styles from './settings.module.scss'
 import { changePassword } from 'services/auth'
 import { passwordValidation } from './validation'
 
-const ChangePassword = ({  setShow }) => {
+const ChangePassword = ({ setShow }) => {
   const [loading, setLoading] = useState(false)
   const [errors, setErrors] = useState({})
   const [password, setPassword] = useState({

@@ -28,7 +28,6 @@ const Cashout = ({ history }) => {
           <CardHeader className={styles.Header}>Cashout</CardHeader>
           <CardBody className={styles.Cashout}>
             <Table
-              className={styles.table}
               column={[
                 { key: 'date', render: 'Date' },
                 {
