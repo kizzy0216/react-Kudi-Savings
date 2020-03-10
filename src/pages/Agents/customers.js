@@ -1,23 +1,31 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
+import debounce from '../../../node_modules/lodash/debounce'
+
 import moment from 'moment'
-import {
-  Table,
-  Card,
-  CardHeader,
-  Button,
-  ButtonGroup,
-  Badge
-} from '@kudi-inc/dip'
-import { ChevronLeft } from 'assets/svg'
+import { Table, Card, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
+import { ChevronLeft, Search, Close, Eye } from 'assets/svg'
 import styles from './agents.module.scss'
 import { TableLoading } from 'components/loading'
 import { formatCurrency } from 'utils/function'
 
-const Customers = ({ history, users, page, setPage, limit }) => {
+const Customers = ({
+  history,
+  users,
+  page,
+  setPage,
+  limit,
+  setPhoneNumber
+}) => {
   let { data, isLoading, error, refetch } = users
   let [active, setActive] = useState('all')
+  let [number, setNumber] = useState('')
   let customer = []
   let totalPage = 0
+
+  const handleSearch = ({ target: { value } }) => {
+    const debounced_doSearch = debounce(() => setPhoneNumber(value), 1000)
+    debounced_doSearch()
+  }
   if (data && data.data) {
     customer = data.data.data.list.map(
       (
@@ -41,16 +49,16 @@ const Customers = ({ history, users, page, setPage, limit }) => {
         totalWithdrawn: formatCurrency(totalWithdrawn),
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
-          : 'N/A'
-        // action: (
-        //   <Button
-        //     icon={<Eye />}
-        //     variant="flat"
-        //     onClick={() => history.push(`${url}/${id}`)}
-        //   >
-        //     View
-        //   </Button>
-        // )
+          : 'N/A',
+        action: (
+          <Button
+            icon={<Eye />}
+            variant="flat"
+            onClick={() => history.push(`/customers/${id}`)}
+          >
+            View
+          </Button>
+        )
       })
     )
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -60,6 +68,28 @@ const Customers = ({ history, users, page, setPage, limit }) => {
       <Card>
         <CardHeader className={styles.Header}>
           Customers
+          <div className="header-search">
+            <input
+              placeholder="SEARCH BY PHONE NUMBER"
+              value={number}
+              onChange={e => {
+                setNumber(e.target.value)
+                return handleSearch(e)
+              }}
+              type="text"
+            />
+            {number.length > 1 ? (
+              <Close
+                className="danger"
+                onClick={() => {
+                  setPhoneNumber('')
+                  return setNumber('')
+                }}
+              />
+            ) : (
+              <Search />
+            )}
+          </div>
           <ButtonGroup>
             <Button active={active === 'all'} onClick={() => setActive('all')}>
               All
@@ -89,7 +119,6 @@ const Customers = ({ history, users, page, setPage, limit }) => {
         )}
         {data && data.data && (
           <Table
-            className={styles.table}
             column={[
               {
                 key: 'sN',
@@ -111,6 +140,10 @@ const Customers = ({ history, users, page, setPage, limit }) => {
               {
                 key: 'timeCreated',
                 render: 'Time Created'
+              },
+              {
+                key: 'action',
+                render: 'ACTION'
               }
             ]}
             data={customer}

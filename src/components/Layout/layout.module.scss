@@ -276,6 +276,35 @@
         color: $grey;
       }
     }
+    div[class='header-search'] {
+      border: 1px solid #d2ddeb;
+      border-radius: 3px;
+      padding: 0.55em 0.83em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 18em;
+      input {
+        width: 100%;
+        border: none;
+        font-size: 0.87em;
+        color: $grey;
+        &:active,
+        &:focus {
+          outline: none;
+        }
+      }
+      svg[class='danger'] {
+        cursor: pointer;
+        path {
+          fill: $danger;
+        }
+      }
+    }
+    div[class*='kudi-dip-select-options'] {
+      max-height: 16.67em;
+      overflow: scroll;
+    }
   }
 
   &Profile {
@@ -400,6 +429,4 @@
       }
     }
   }
-}
-.table {
 }

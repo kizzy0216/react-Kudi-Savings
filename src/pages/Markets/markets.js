@@ -122,13 +122,7 @@ const Markets = ({ history }) => {
               </span>
             )}
 
-            {data && (
-              <Table
-                className={styles.table}
-                column={headers}
-                data={formattedData}
-              />
-            )}
+            {data && <Table column={headers} data={formattedData} />}
           </CardBody>
           {data && (
             <div className="pagination">

@@ -55,7 +55,7 @@ const Agents = ({ history }) => {
         )
       })
     )
-    totalPage= Math.ceil(data.data.data.total / limit)
+    totalPage = Math.ceil(data.data.data.total / limit)
   }
   return (
     <Fragment>
@@ -107,7 +107,6 @@ const Agents = ({ history }) => {
             )}
             {data && (
               <Table
-                className={styles.table}
                 column={[
                   {
                     key: 'fullName',

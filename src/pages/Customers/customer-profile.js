@@ -34,7 +34,7 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
   let customer = data && data.data ? data.data.data : {}
 
   const { data: imageData } = useQuery(
-    data && ['Image', { id: customer.pictureId }],
+    data && customer.pictureId && ['Image', { id: customer.pictureId }],
     fecthImage
   )
 
@@ -62,7 +62,7 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
               <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
-                    <h3> AGENT INFORMATION</h3>
+                    <h3> CUSTOMER INFORMATION</h3>
 
                     <Button
                       variant="flat"
@@ -114,7 +114,6 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
                           {moment(customer.timeCreated).format('Do MMM, YYYY')}
                         </span>
                       </div>
-                     
                     </div>
                   </div>
                 </CardBody>
@@ -137,7 +136,7 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
                     <span>Market</span>
                     <span>{customer.market.name} </span>
                   </div>
-                  
+
                   <div className={styles.FirstBodyFlex}>
                     <span> Total Saved </span>
                     <span>{formatCurrency(customer.totalSaved)}</span>
@@ -203,17 +202,28 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
                     <div className={styles.FirstBodyFlex}>
                       <span>Full Name: </span>
                       <span>
-                        {`${customer && customer.agent ?customer.agent.lastName:""} ${customer && customer.agent?customer.agent.firstName: "N/A"}`}
+                        {`${
+                          customer && customer.agent
+                            ? customer.agent.lastName
+                            : ''
+                        } ${
+                          customer && customer.agent
+                            ? customer.agent.firstName
+                            : 'N/A'
+                        }`}
                       </span>
                     </div>
                     <div className={styles.FirstBodyFlex}>
                       <span>Email: </span>
-                      <span>{customer && customer.agent?customer.agent.email:"N/A"}</span>
+                      <span>
+                        {customer && customer.agent
+                          ? customer.agent.email
+                          : 'N/A'}
+                      </span>
                     </div>
                   </CardBody>
                 </Card>
-              )} 
-              
+              )}
             </div>
           </div>
         )}
