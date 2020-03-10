@@ -15,10 +15,11 @@ import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import Customers from './customers'
-import { getAgent, getUsers } from 'services/agents'
+import { getAgent, getUsers} from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
+import UpdateStatus from './update-status'
 import AuthContext from 'context/AuthContext'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
@@ -26,6 +27,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   const [fundAmount, setFundAmount] = useState(0)
   let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
+  let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
   let limit = 50
@@ -83,9 +85,15 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     >
                       Edit Profile
                     </Button>
-                    <Button variant="flat" icon={<Bin />}>
-                      Suspend Agent
-                    </Button>
+                    {auth && auth.type === 'ADMIN' && (
+                      <Button
+                        variant="flat"
+                        onClick={() => setShowStatus(true)}
+                        icon={<Bin />}
+                      >
+                        Update Status
+                      </Button>
+                    )}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -279,6 +287,18 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             setFundAmount={setFundAmount}
           />
         </SideSheet>
+
+        <SideSheet
+          onCloseComplete={() => setShowStatus(false)}
+          isShown={showStatus}
+        >
+          <UpdateStatus
+            setShowStatus={setShowStatus}
+            agent={agent}
+            refetch={refetch}
+          />
+        </SideSheet>
+
         {isShown && (
           <Dialog
             isShown={isShown}

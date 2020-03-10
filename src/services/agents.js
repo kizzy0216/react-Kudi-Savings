@@ -21,3 +21,6 @@ export const updateAgent = agent => {
 //fund zonal head's wallet
 export const fundWallet = (managerId, amount) =>
   Axios.post(`/topup/${managerId}/agent`, { amount })
+
+//Suspend agent by admin
+export const updateStatus = (id, status) =>Axios.put(`/agents/${id}/${status}`)

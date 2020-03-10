@@ -301,6 +301,10 @@
         }
       }
     }
+    div[class*='kudi-dip-select-options'] {
+      max-height: 16.67em;
+      overflow: scroll;
+    }
   }
 
   &Profile {

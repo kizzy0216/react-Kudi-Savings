@@ -106,7 +106,7 @@ const AppRouter = () => (
         <PrivateRoute
           path="/"
           exact
-          component={() => <Redirect to="/dashboard" />}
+          component={() => <Redirect to="/markets" />}
         />
 
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
