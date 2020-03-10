@@ -4,7 +4,13 @@ import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { fundWallet } from 'services/agents'
 import { toaster } from 'evergreen-ui'
 import styles from './fund-wallet.module.scss'
-const FundWallet = ({ managerId, setShowDialog, zonalHead, refetch }) => {
+const FundWallet = ({
+  managerId,
+  setShowDialog,
+  zonalHead,
+  refetch,
+  setFundAmount
+}) => {
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
   const handleFundWallet = async e => {
@@ -16,6 +22,7 @@ const FundWallet = ({ managerId, setShowDialog, zonalHead, refetch }) => {
       .then(({ data }) => {
         setLoading(false)
         toaster.success('Processing Top Up')
+        setFundAmount(amount)
       })
       .catch(data => {
         if (data && data.data.message) return toaster.danger(data.data.message)

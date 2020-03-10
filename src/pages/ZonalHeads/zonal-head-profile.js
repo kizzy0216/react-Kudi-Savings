@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import moment from 'moment'
 import { useQuery } from 'react-query'
 import { SideSheet } from 'evergreen-ui'
@@ -16,14 +16,18 @@ import { Header, Content } from 'components/Layout'
 import { ProfileLoading } from 'components/loading'
 import styles from './profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
+import AuthContext from 'context/AuthContext'
 import { getManager } from 'services/zonal-heads'
 import { formatCurrency } from 'utils/function'
 import FundWallet from './fund-wallet'
 import EditZH from './edit-zonal'
+import UpdateStatus from './update-status'
 
 const ViewCashout = ({ history, match: { params, url } }) => {
+  const [auth] = useContext(AuthContext)
   let [show, setShow] = useState(false)
   let [marketShow, setMarketShow] = useState(true)
+  let [showStatus, setShowStatus] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
   let [showEdit, setShowEdit] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
@@ -65,9 +69,15 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                     >
                       Edit Profile
                     </Button>
-                    <Button variant="flat" icon={<Bin />}>
-                      Suspend Agent
-                    </Button>
+                    {auth && auth.type === 'ADMIN' && (
+                      <Button
+                        variant="flat"
+                        onClick={() => setShowStatus(true)}
+                        icon={<Bin />}
+                      >
+                        Update Status
+                      </Button>
+                    )}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -248,7 +258,16 @@ const ViewCashout = ({ history, match: { params, url } }) => {
             </div>
           </div>
         )}
-
+        <SideSheet
+          onCloseComplete={() => setShowStatus(false)}
+          isShown={showStatus}
+        >
+          <UpdateStatus
+            setShowStatus={setShowStatus}
+            zonalhead={zonalHead}
+            refetch={refetch}
+          />
+        </SideSheet>
         <SideSheet
           onCloseComplete={() => setShowDialog(false)}
           isShown={showEdit}

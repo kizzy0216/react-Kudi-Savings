@@ -119,7 +119,7 @@ const Settings = ({ history }) => {
               </CardBody>
             )}
           </Card>
-{/* 
+          {/* 
           <Card>
             <CardHeader className={styles.SettingsHeader}>
               <h3>Your Account</h3>

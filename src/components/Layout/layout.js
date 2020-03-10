@@ -24,18 +24,18 @@ const Layout = ({ children, auth }) => {
 
   let history = useHistory()
   const navItems = [
-    {
-      title: 'Dashboard',
-      link: '/dashboard',
-      icon: <DashboardLink />,
-      userType: ['ADMIN']
-    },
-    {
-      title: 'Dashboard',
-      link: '/dashboard/zonal',
-      icon: <DashboardLink />,
-      userType: ['ZONAL']
-    },
+    // {
+    //   title: 'Dashboard',
+    //   link: '/dashboard',
+    //   icon: <DashboardLink />,
+    //   userType: ['ADMIN']
+    // },
+    // {
+    //   title: 'Dashboard',
+    //   link: '/dashboard/zonal',
+    //   icon: <DashboardLink />,
+    //   userType: ['ZONAL']
+    // },
     {
       title: 'Markets',
       link: '/markets',
@@ -66,12 +66,12 @@ const Layout = ({ children, auth }) => {
       icon: <CustomersLink />,
       userType: ['ADMIN', 'ZONAL']
     },
-    {
-      title: 'Customer Insights',
-      link: '/customer-insights',
-      icon: <CILink />,
-      userType: ['ADMIN', 'ZONAL']
-    },
+    // {
+    //   title: 'Customer Insights',
+    //   link: '/customer-insights',
+    //   icon: <CILink />,
+    //   userType: ['ADMIN', 'ZONAL']
+    // },
     {
       title: 'Plans',
       link: '/plans',
