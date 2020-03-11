@@ -26,6 +26,7 @@ import UpdateStatus from './update-status'
 const ViewCashout = ({ history, match: { params, url } }) => {
   const [auth] = useContext(AuthContext)
   let [show, setShow] = useState(false)
+  const [fundAmount, setFundAmount] = useState(0)
   let [marketShow, setMarketShow] = useState(true)
   let [showStatus, setShowStatus] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
@@ -173,7 +174,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                 <div className={styles.Wallet}>
                   <CardBody className={styles.WalletContent}>
                     <p>Wallet Balance</p>
-                    <h2> {formatCurrency(zonalHead.walletBalance)}</h2>
+                    <h2> {formatCurrency(zonalHead.walletBalance + Number(fundAmount))}</h2>
                     <Button variant="flat" type="button" icon={<Eye />}>
                       View History
                     </Button>
@@ -286,6 +287,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
             setShowDialog={setShowDialog}
             zonalHead={zonalHead}
             refetch={refetch}
+            setFundAmount={setFundAmount}
           />
         </SideSheet>
       </Content>
