@@ -191,7 +191,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                 <div className={styles.Wallet}>
                   <CardBody className={styles.WalletContent}>
                     <p>Wallet Balance</p>
-                    <h2>{formatCurrency(agent.cashBalance + fundAmount)}</h2>
+                    <h2>{formatCurrency(agent.cashBalance + Number(fundAmount))}</h2>
                     <Button variant="flat" type="button" icon={<Eye />}>
                       View History
                     </Button>

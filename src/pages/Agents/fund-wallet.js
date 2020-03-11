@@ -16,15 +16,15 @@ const FundWallet = ({
   const handleFundWallet = async e => {
     e.preventDefault()
     setLoading(true)
-    setShowDialog(false)
-
     await fundWallet(zonalHead.id, amount)
       .then(({ data }) => {
         setLoading(false)
+        setShowDialog(false)
         toaster.success('Processing Top Up')
         setFundAmount(amount)
       })
       .catch(data => {
+        setLoading(false)
         if (data && data.data.message) return toaster.danger(data.data.message)
         toaster.danger('Top Up Wallet Failed')
       })
