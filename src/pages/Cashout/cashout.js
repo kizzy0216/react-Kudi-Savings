@@ -18,10 +18,10 @@ const Cashout = ({ history }) => {
     <Fragment>
       <Header>
         <p> Cashout </p>
-        <ButtonGroup className={styles.ButtonGroup}>
+        {/* <ButtonGroup className={styles.ButtonGroup}>
           <Button active>Cash Out Requests</Button>
           <Button>Cash Out History</Button>
-        </ButtonGroup>
+        </ButtonGroup> */}
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>

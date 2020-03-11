@@ -89,7 +89,7 @@ const Markets = ({ history }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             All
-            <ButtonGroup>
+            {/* <ButtonGroup>
               <Button
                 active={active === 'all'}
                 onClick={() => setActive('all')}
@@ -108,7 +108,7 @@ const Markets = ({ history }) => {
               >
                 Lowest
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </CardHeader>
           <CardBody className={styles.Market}>
             {isLoading && <TableLoading />}

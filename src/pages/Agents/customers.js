@@ -90,7 +90,7 @@ const Customers = ({
               <Search />
             )}
           </div>
-          <ButtonGroup>
+          {/* <ButtonGroup>
             <Button active={active === 'all'} onClick={() => setActive('all')}>
               All
             </Button>
@@ -106,7 +106,7 @@ const Customers = ({
             >
               Lowest
             </Button>
-          </ButtonGroup>
+          </ButtonGroup> */}
         </CardHeader>
         {isLoading && <TableLoading />}
         {error && (

@@ -23,7 +23,7 @@ const Customers = ({ history }) => {
   )
   let formattedData = []
   if (data && data.data) {
-    formattedData = formatData(data.data.data.list, history, url)
+    formattedData = formatData(data.data.data.list, history, url, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
@@ -44,6 +44,7 @@ const Customers = ({ history }) => {
               {data && (
                 <Table
                   column={[
+                    { key: 'sN', render: 'S/N' },
                     {
                       key: 'fullName',
                       render: 'Full name'

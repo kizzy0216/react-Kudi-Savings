@@ -290,7 +290,11 @@ const EditAgent = ({ history, match }) => {
                           })
                         }
                         name="state"
-                        value={edited && edited.assignedMarket &&edited.assignedMarket.name}
+                        value={
+                          edited &&
+                          edited.assignedMarket &&
+                          edited.assignedMarket.name
+                        }
                         label="Reassign Market"
                         options={
                           auth && auth.markets
