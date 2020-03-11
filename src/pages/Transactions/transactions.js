@@ -1,21 +1,31 @@
 import React, { Fragment, useState } from 'react'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  ButtonGroup,
-  Button,
-  Badge
-} from '@kudi-inc/dip'
+import { useQuery } from 'react-query'
+import { Card, CardBody, CardHeader, Button } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
-import { Eye } from 'assets/svg'
+import { ChevronLeft } from 'assets/svg'
 import styles from './transactions.module.scss'
+import { getTransactions } from 'services/transactions'
+import { TableLoading } from 'components/loading'
+import { formatData } from './function'
 
 const Transactions = ({ history }) => {
   let { url } = useRouteMatch()
-  let [active, setActive] = useState('all')
+  const [page, setPage] = useState(1)
+  let limit = 50
+  let totalData = 0
+  let totalPage = 0
+  let formattedData = []
+  const { data, isLoading, error, refetch } = useQuery(
+    ['Transactions', { page, limit }],
+    getTransactions
+  )
+  if (data && data.data) {
+    formattedData = formatData(data.data.data.list, history, url, page, limit)
+    totalPage = Math.ceil(data.data.data.total / limit)
+    totalData = data.data.data.total
+  }
   return (
     <Fragment>
       <Header>
@@ -24,56 +34,60 @@ const Transactions = ({ history }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-            Transaction History
-            <ButtonGroup>
-              <Button
-                active={active === 'all'}
-                onClick={() => setActive('all')}
-              >
-                All
-              </Button>
-              <Button
-                active={active === 'wallet'}
-                onClick={() => setActive('wallet')}
-              >
-                Wallet
-              </Button>
-              <Button
-                active={active === 'bankAccount'}
-                onClick={() => setActive('bankAccount')}
-              >
-                Bank Account
-              </Button>
-            </ButtonGroup>
+            Transaction History {totalData ? ` - ${totalData.toLocaleString()}` : ''}
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
-              <Table
-                column={[
-                  { key: 'date', render: 'Date' },
-                  {
-                    key: 'type',
-                    render: 'Type'
-                  },
-                  { key: 'amount', render: 'Amount' },
-                  {
-                    key: 'walletBalance',
-                    render: 'Current Balance'
-                  },
-                  {
-                    key: 'status',
-                    render: 'Status'
-                  },
-                  {
-                    key: 'action',
-                    render: ''
-                  }
-                ]}
-                placeholder="transactions"
-                data={[]}
-              />
+              {isLoading && <TableLoading />}
+              {data && (
+                <Table
+                  column={[
+                    { key: 'sN', render: 'S/N' },
+                    {
+                      key: 'marketName',
+                      render: 'Market'
+                    },
+                    { key: 'agentName', render: 'DSA' },
+                    {
+                      key: 'plan',
+                      render: 'Plan'
+                    },
+                    {
+                      key: 'amount',
+                      render: 'Amount'
+                    },
+                    {
+                      key: 'totalAmountSaved',
+                      render: 'Total Saved'
+                    },
+                    { key: 'collectionDate', render: 'Date Collected' }
+                  ]}
+                  placeholder="transactions"
+                  data={formattedData}
+                />
+              )}
             </div>
           </CardBody>
+          {data && (
+            <div className="pagination">
+              {page > 1 && (
+                <Button
+                  variant="flat"
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page} of {totalPage}
+              </p>
+              {formattedData.length === limit && (
+                <Button
+                  variant="flat"
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              )}
+            </div>
+          )}
         </Card>
       </Content>
     </Fragment>

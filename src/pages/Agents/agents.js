@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import {
   Card,
@@ -16,9 +16,11 @@ import { getAgents } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import Table from 'components/Table'
 import { formatCurrency } from 'utils/function'
+import AuthContext from 'context/AuthContext'
 
 const Agents = ({ history }) => {
   let { url } = useRouteMatch()
+  const [auth] = useContext(AuthContext)
   let [active, setActive] = useState('all')
   const [page, setPage] = useState(1)
   let totalPage = 0
@@ -37,7 +39,15 @@ const Agents = ({ history }) => {
         cashBalance: formatCurrency(cashBalance),
         market: market ? market.name : 'N/A',
         status: status ? (
-          <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
+          <Badge
+            variant={
+              status === 'ACTIVE'
+                ? 'success'
+                : status === 'SUSPENDED'
+                ? 'danger'
+                : 'primary'
+            }
+          >
             {status}
           </Badge>
         ) : (
@@ -61,19 +71,21 @@ const Agents = ({ history }) => {
     <Fragment>
       <Header>
         <p> Agents </p>
-        <Button
-          variant="flat"
-          icon={<Add />}
-          onClick={() => history.push('/create-agent')}
-        >
-          Add new agent
-        </Button>
+        {auth && auth.type === 'ZONAL' && (
+          <Button
+            variant="flat"
+            icon={<Add />}
+            onClick={() => history.push('/create-agent')}
+          >
+            Add new agent
+          </Button>
+        )}
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             All
-            <ButtonGroup>
+            {/* <ButtonGroup>
               <Button
                 active={active === 'all'}
                 onClick={() => setActive('all')}
@@ -92,7 +104,7 @@ const Agents = ({ history }) => {
               >
                 Lowest
               </Button>
-            </ButtonGroup>
+            </ButtonGroup> */}
           </CardHeader>
           <CardBody className={styles.Agent}>
             {isLoading && <TableLoading />}

@@ -11,16 +11,15 @@ export const getAgents = async ({ page, limit }) =>
 export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
 
 export const getUsers = async ({ id, ...params }) =>
-  await Axios.get(`/users/${id}/downline`, {params})
+  await Axios.get(`/users/${id}/downline`, { params })
 
 export const updateAgent = agent => {
   const { id, ...rest } = agent
   return Axios.put(`/agents/${id}`, rest)
 }
-
 //fund zonal head's wallet
 export const fundWallet = (managerId, amount) =>
   Axios.post(`/topup/${managerId}/agent`, { amount })
 
 //Suspend agent by admin
-export const updateStatus = (id, status) =>Axios.put(`/agents/${id}/${status}`)
+export const updateStatus = (id, status) => Axios.put(`/agents/${id}/${status}`)

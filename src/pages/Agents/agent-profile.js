@@ -15,7 +15,7 @@ import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import Customers from './customers'
-import { getAgent, getUsers} from 'services/agents'
+import { getAgent, getUsers } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
@@ -191,7 +191,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                 <div className={styles.Wallet}>
                   <CardBody className={styles.WalletContent}>
                     <p>Wallet Balance</p>
-                    <h2>{formatCurrency(agent.cashBalance + Number(fundAmount))}</h2>
+                    <h2>
+                      {formatCurrency(agent.cashBalance + Number(fundAmount))}
+                    </h2>
                     <Button variant="flat" type="button" icon={<Eye />}>
                       View History
                     </Button>

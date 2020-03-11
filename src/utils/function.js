@@ -11,3 +11,5 @@ export const formatCurrency = num =>
 
 export const fecthImage = async ({ id }) =>
   await MediaService.get(`/images/${id}`)
+
+export const formatText = text => (text ? text : `N/A`)

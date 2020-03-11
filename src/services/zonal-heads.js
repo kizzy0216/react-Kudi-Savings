@@ -18,4 +18,5 @@ export const fundWallet = (managerId, amount) =>
 export const updateZH = data => Axios.put(`/managers/${data.id}/update`, data)
 
 //Suspend agent by admin
-export const updateStatus = (id, status) =>Axios.put(`/managers/${id}/${status}`)
+export const updateStatus = (id, status) =>
+  Axios.put(`/managers/${id}/${status}`)
