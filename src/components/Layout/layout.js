@@ -103,7 +103,7 @@ const Layout = ({ children, auth }) => {
                 className={styles.navSectionLinks}
                 icon={item.icon}
                 text={item.title}
-                active={window.location.pathname === item.link}
+                active={window.location.pathname.includes(item.link)}
                 onClick={() => history.push(`${item.link}`)}
               />
             ) : (
