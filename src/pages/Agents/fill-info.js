@@ -13,7 +13,7 @@ const Form = ({ step, setStep, handleAgent, agent, setAgent }) => {
   const [errors, setErrors] = useState({})
   let markets = []
   const [progressData, setProgressData] = useState(0)
-  if (auth && auth.market) {
+  if (auth && auth.markets) {
     markets = auth.markets.map(({ name, id }) => ({
       text: name,
       value: id
