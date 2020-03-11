@@ -49,7 +49,11 @@ const Form = ({ step, setStep, agent, setAgent, history }) => {
         toaster.success('Agent Created Successfully')
         history.push('/agents')
       })
-      .catch(({ response }) => {
+      .catch(data => {
+        setLoading(false)
+        if (data) {
+          return toaster.danger(String(data.data.message))
+        }
         toaster.danger('Create Agent Failed')
       })
   }
