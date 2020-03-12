@@ -14,7 +14,8 @@ export const formatData = (data, history, url, page, limit) => {
         agentName,
         id,
         amount,
-        collectionDate
+        collectionDate,
+        timeCreated
       },
       index
     ) => ({
@@ -24,7 +25,8 @@ export const formatData = (data, history, url, page, limit) => {
       agentName: formatText(agentName),
       totalAmountSaved: formatCurrency(totalAmountSaved),
       amount: formatCurrency(amount),
-      collectionDate: moment(collectionDate).format("ddd, MMM Do YYYY, h:mm:ss a")
+      collectionDate: moment(collectionDate).format('L'),
+      timeCreated: moment(timeCreated).format('L')
       //   action: (
       //     <Button
       //       icon={<Eye />}
