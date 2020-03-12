@@ -12,6 +12,7 @@ import ChangePassword from './change-password'
 const Settings = ({ history }) => {
   const [auth] = useContext(AuthContext)
   const [show, setShow] = useState(false)
+  const [showEdit, setShowEdit] = useState(false)
   return (
     <Fragment>
       <Header>
@@ -119,6 +120,7 @@ const Settings = ({ history }) => {
               </CardBody>
             )}
           </Card>
+          
           {/* 
           <Card>
             <CardHeader className={styles.SettingsHeader}>

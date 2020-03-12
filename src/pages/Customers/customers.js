@@ -45,31 +45,39 @@ const Customers = ({ history }) => {
             Total Customers{' '}
             {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             <div className="header-search">
-            <input
-              placeholder="SEARCH BY PHONE NUMBER"
-              value={number}
-              onChange={e => {
-                setNumber(e.target.value)
-                return handleSearch(e)
-              }}
-              type="text"
-            />
-            {number.length > 1 ? (
-              <Close
-                className="danger"
-                onClick={() => {
-                  setPhoneNumber('')
-                  return setNumber('')
+              <input
+                placeholder="SEARCH BY PHONE NUMBER"
+                value={number}
+                onChange={e => {
+                  setNumber(e.target.value)
+                  return handleSearch(e)
                 }}
+                type="text"
               />
-            ) : (
-              <Search />
-            )}
-          </div>
+              {number.length > 1 ? (
+                <Close
+                  className="danger"
+                  onClick={() => {
+                    setPhoneNumber('')
+                    return setNumber('')
+                  }}
+                />
+              ) : (
+                <Search />
+              )}
+            </div>
           </CardHeader>
           <CardBody className={styles.Customers}>
             <div className={styles.CustomersHeader}>
               {isLoading && <TableLoading />}
+              {error && (
+                <span>
+                  Error!
+                  <button onClick={() => refetch({ disableThrow: true })}>
+                    Retry
+                  </button>
+                </span>
+              )}
               {data && (
                 <Table
                   column={[
