@@ -1,4 +1,5 @@
 import Axios, { MediaService } from 'utils/axios'
+import clean from 'lodash-clean'
 
 export const createAgent = agent => Axios.post(`/agents/create`, agent)
 
@@ -11,7 +12,7 @@ export const getAgents = async ({ page, limit }) =>
 export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
 
 export const getUsers = async ({ id, ...params }) =>
-  await Axios.get(`/users/${id}/downline`, { params })
+  await Axios.get(`/users/${id}/downline`, clean({ params }))
 
 export const updateAgent = agent => {
   const { id, ...rest } = agent
