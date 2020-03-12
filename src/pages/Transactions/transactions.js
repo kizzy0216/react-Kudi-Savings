@@ -34,11 +34,20 @@ const Transactions = ({ history }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-            Transaction History {totalData ? ` - ${totalData.toLocaleString()}` : ''}
+            Transaction History{' '}
+            {totalData ? ` - ${totalData.toLocaleString()}` : ''}
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
               {isLoading && <TableLoading />}
+              {error && (
+                <span>
+                  Error!
+                  <button onClick={() => refetch({ disableThrow: true })}>
+                    Retry
+                  </button>
+                </span>
+              )}
               {data && (
                 <Table
                   column={[
@@ -60,7 +69,8 @@ const Transactions = ({ history }) => {
                       key: 'totalAmountSaved',
                       render: 'Total Saved'
                     },
-                    { key: 'collectionDate', render: 'Date Collected' }
+                    { key: 'collectionDate', render: 'Date Collected' },
+                    { key: 'timeCreated', render: 'Date Created' }
                   ]}
                   placeholder="transactions"
                   data={formattedData}
