@@ -243,6 +243,9 @@
 
     table {
       font-size: 1em;
+      th {
+        padding: 1.54em 0.67em;
+      }
       td {
         font-weight: 400;
         text-transform: uppercase;
@@ -251,13 +254,19 @@
         button {
           color: $sky-blue;
           span {
-            font-size: .86em;
+            font-size: 0.86em;
             line-height: 123%;
           }
         }
         div {
           span {
-            font-size: .86em;
+            font-size: 0.86em;
+          }
+          &[id='marketName'] {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 9em;
           }
         }
       }

@@ -70,9 +70,6 @@ const CustomerProfile = lazy(() =>
     /* webpackChunkName: "SingleCustomer" */ 'pages/Customers/customer-profile'
   )
 )
-const EditCustomer = lazy(() =>
-  import(/* webpackChunkName: "EditCustomer" */ 'pages/Customers/edit-customer')
-)
 const Plans = lazy(() => import(/* webpackChunkName: "Plans" */ 'pages/Plans'))
 
 const Transactions = lazy(() =>
@@ -128,7 +125,7 @@ const AppRouter = () => (
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
-        <PrivateRoute path="/customers/:id/edit" exact component={EditCustomer} />
+       
         <PrivateRoute path="/plans" exact component={Plans} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute

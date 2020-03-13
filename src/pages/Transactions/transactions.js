@@ -69,7 +69,7 @@ const Transactions = ({ history }) => {
                       key: 'totalAmountSaved',
                       render: 'Total Saved'
                     },
-                    { key: 'collectionDate', render: 'Date Collected' },
+
                     { key: 'timeCreated', render: 'Date Created' }
                   ]}
                   placeholder="transactions"

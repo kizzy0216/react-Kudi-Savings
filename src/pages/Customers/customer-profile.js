@@ -73,9 +73,9 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
                     >
                       Edit Profile
                     </Button>
-                    <Button variant="flat" icon={<Reassign />}>
+                    {/* <Button variant="flat" icon={<Reassign />}>
                       Reassign
-                    </Button>
+                    </Button> */}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -257,6 +257,7 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
         <SideSheet
           onCloseComplete={() => setShowEdit(false)}
           isShown={showEdit}
+          width={800}
         >
           <EditCustomer
             setShowEdit={setShowEdit}

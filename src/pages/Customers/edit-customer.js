@@ -1,4 +1,4 @@
-import React, { useState, useContext, Fragment } from 'react'
+import React, { useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import {
   Card,
@@ -8,20 +8,16 @@ import {
   Input,
   Select
 } from '@kudi-inc/dip'
-import { Header, Content } from 'components/Layout'
-import { ChevronLeft } from 'assets/svg'
-import { updateCustomer, uploadAvatar, getCustomer } from 'services/customers'
+import { updateCustomer, uploadAvatar } from 'services/customers'
 import { toaster } from 'evergreen-ui'
-import styles from '../Agents/agents.module.scss'
+import styles from './customer-profile.module.scss'
 import { states } from 'utils/data'
 import AuthContext from 'context/AuthContext'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
 
-const EditCustomer = ({ history, match, customer }) => {
-  console.log(customer)
-  const [auth] = useContext(AuthContext)
+const EditCustomer = ({ setShowEdit, refetch, customer }) => {
   const [loading, setLoading] = useState(false)
   const [uploadedAvatar, setUploadedAvatar] = useState({})
   const [imgUploaded, setImgUploaded] = useState(false)
@@ -96,46 +92,34 @@ const EditCustomer = ({ history, match, customer }) => {
     }
   }
 
-  const handleEditWallet = async e => {
+  const handleEditCustomer = async e => {
     e.preventDefault()
-    const errors = isValidUpdate(edited)
-
-    setErrors(errors)
-    if (Object.keys(errors).length > 0) return
-
     setLoading(true)
-    if (!edited.marketId) {
-      edited.marketId = edited.assignedMarket.id
-    }
+
     if (uploadedId && uploadedId.data) {
-      edited.identificationImageId = uploadedId.data.id
+      edited.identificationCardImageId = uploadedId.data.id
     }
     if (uploadedAvatar && uploadedAvatar.data) {
       edited.pictureId = uploadedAvatar.data.id
     }
-    let {
-      token,
-      tokenExpired,
-      tokenExpiredAt,
-      timeCreated,
-      cashBalance,
-      assignedMarket,
-      lastCollectionTime,
-      totalCustomers,
-      walletId,
-      status,
-      manager,
-      amountSeeded,
-      ...rest
-    } = edited
+    const errors = isValidUpdate(edited)
+    setErrors(errors)
+
+    if (Object.keys(errors).length > 0) {
+      setLoading(false)
+      return
+    }
+
+    let { market, ...rest } = edited
+
     try {
       await updateCustomer(rest)
       setLoading(false)
       toaster.success('Customer Details Updated')
-      history.goBack()
+      refetch({ disableThrow: true })
+      setShowEdit(false)
     } catch (e) {
       setLoading(false)
-      console.log(e)
       if (e.data.message) {
         return toaster.danger(e.data.message)
       }
@@ -144,230 +128,173 @@ const EditCustomer = ({ history, match, customer }) => {
   }
 
   return (
-    <Fragment>
-      <Header>
-        <p>
-          <ChevronLeft role="button" onClick={() => history.goBack()} />
-          Edit Agent
-        </p>
-      </Header>
-      <Content className={styles.content}>
-        <Card className={styles.EditAgent}>
-          <CardHeader className={styles.EditAgentHeader}>
-            Fill Information
-          </CardHeader>
-          <CardBody className={styles.EditAgentBody}>
-            <form onSubmit={handleEditWallet} className={styles.EditAgentForm}>
-              <div className={styles.EditAgentFormBody}>
-                <div className={styles.EditAgentFormBodyProfile}>
-                  <div className={styles.EditAgentFormBodyProfileAvatar}>
-                    {imgUploaded ? (
-                      <img src={uploadedAvatar.data.medium} alt="avatar" />
-                    ) : (
-                      <label>
-                        <input
-                          accept="image/*"
-                          type="file"
-                          onChange={handleChange}
-                        />
-                        <img
-                          src={
-                            avatar && avatar.data
-                              ? avatar.data.medium
-                              : AgentImg
-                          }
-                          alt="avatar"
-                        />
-                      </label>
-                    )}
-                    <p>
-                      {imgProgress
-                        ? ` ${
-                            imgProgress === 100 && !uploadedAvatar.data
-                              ? 99
-                              : imgProgress
-                          }%`
-                        : 'Change Avatar'}
-                    </p>
-                  </div>
-                  <div className={styles.EditAgentFormBodyProfileInfo}>
-                    <div className={styles.EditAgentFormHeader}>
-                      PERSONAL INFORMATION
-                    </div>
-                    <section>
-                      <Input
-                        type="text"
-                        label="First Name"
-                        name="firstName"
-                        value={edited.firstName}
-                        onChange={e =>
-                          setEdited({ ...edited, firstName: e.target.value })
-                        }
-                        error={errors.firstName}
-                        status={errors.firstName && 'error'}
-                      />
-                      <Input
-                        type="text"
-                        label="Last Name"
-                        name="lastName"
-                        value={edited.lastName}
-                        onChange={e =>
-                          setEdited({ ...edited, lastName: e.target.value })
-                        }
-                        error={errors.lastName}
-                        status={errors.lastName && 'error'}
-                      />
-                      <Input
-                        type="text"
-                        label="Phone Number"
-                        value={edited.phoneNumber ? edited.phoneNumber : ''}
-                        onChange={e =>
-                          setEdited({ ...edited, phoneNumber: e.target.value })
-                        }
-                        error={errors.phoneNumber}
-                        status={errors.phoneNumber && 'error'}
-                      />
-                      <Input
-                        value={edited.email}
-                        name="email"
-                        type="text"
-                        label="Email"
-                        onChange={e =>
-                          setEdited({ ...edited, email: e.target.value })
-                        }
-                        error={errors.email}
-                        status={errors.email && 'error'}
-                      />
-                      <Input
-                        type="number"
-                        label="BVN"
-                        onChange={e =>
-                          setEdited({ ...edited, bvn: e.target.value })
-                        }
-                        value={edited.bvn}
-                        error={errors.bvn}
-                        status={errors.bvn && 'error'}
-                      />
+    <Card className={styles.Edit}>
+      <CardHeader className={styles.EditHeader}>Edit Customer</CardHeader>
+      <CardBody className={styles.EditBody}>
+        <form onSubmit={handleEditCustomer} className={styles.EditForm}>
+          <div className={styles.EditFormProfile}>
+            <div className={styles.EditFormProfileAvatar}>
+              {imgUploaded ? (
+                <img src={uploadedAvatar.data.medium} alt="avatar" />
+              ) : (
+                <label>
+                  <input accept="image/*" type="file" onChange={handleChange} />
+                  <img
+                    src={avatar && avatar.data ? avatar.data.medium : AgentImg}
+                    alt="avatar"
+                  />
+                </label>
+              )}
+              <p>
+                {imgProgress ? (
+                  ` ${
+                    imgProgress === 100 && !uploadedAvatar.data
+                      ? 99
+                      : imgProgress
+                  }%`
+                ) : errors && errors.pictureId ? (
+                  <span className="danger">{errors.pictureId} </span>
+                ) : (
+                  'Change Avatar'
+                )}
+              </p>
+            </div>
 
-                      <Select
-                        onSelect={gender => setEdited({ ...edited, gender })}
-                        name="gender"
-                        value={edited.gender}
-                        label="Gender"
-                        options={[
-                          { text: 'Male', value: 'MALE' },
-                          { text: 'Female', value: 'FEMALE' }
-                        ]}
-                        autoComplete="gender"
-                        error={errors.gender}
-                        status={errors.gender && 'error'}
-                      />
-                      <Select
-                        onSelect={state =>
-                          setEdited({
-                            ...edited,
-                            state
-                          })
-                        }
-                        name="state"
-                        value={edited.state}
-                        required
-                        label="State"
-                        options={states}
-                        autoComplete="state"
-                        error={errors.state}
-                        status={errors.state && 'error'}
-                      />
-                      <Input
-                        value={edited.lga}
-                        name="lga"
-                        type="text"
-                        label="LGA"
-                        onChange={e =>
-                          setEdited({ ...edited, lga: e.target.value })
-                        }
-                        error={errors.lga}
-                        status={errors.lga && 'error'}
-                      />
-                      <Select
-                        onSelect={marketId =>
-                          setEdited({
-                            ...edited,
-                            marketId
-                          })
-                        }
-                        name="state"
-                        value={
-                          edited &&
-                          edited.assignedMarket &&
-                          edited.assignedMarket.name
-                        }
-                        label="Reassign Market"
-                        options={
-                          auth && auth.markets
-                            ? auth.markets.map(({ name, id }) => ({
-                                text: name,
-                                value: id
-                              }))
-                            : []
-                        }
-                        autoComplete="marketId"
-                        error={errors.marketId}
-                        status={errors.marketId && 'error'}
-                      />
-                    </section>
-                  </div>
-                </div>
+            <div className={styles.EditFormProfileAvatar}>
+              <div className={styles.EditFormProfileAvatar}>
+                {idUploaded ? (
+                  <img src={uploadedId.data.medium} alt="avatar" />
+                ) : (
+                  <label>
+                    <input
+                      accept="image/*"
+                      type="file"
+                      onChange={handleIdChange}
+                    />
+                    <img
+                      className="img-id"
+                      src={
+                        idCard && idCard.data ? idCard.data.medium : AgentImg
+                      }
+                      alt="id card"
+                    />
+                  </label>
+                )}
+
+                <p>
+                  {idProgress ? (
+                    `${
+                      idProgress === 100 && !uploadedId.data ? 99 : idProgress
+                    }%`
+                  ) : errors && errors.identificationCardImageId ? (
+                    <span className="danger">
+                      {errors.identificationCardImageId}
+                    </span>
+                  ) : (
+                    'Change Id'
+                  )}
+                </p>
               </div>
+            </div>
+          </div>
+          <div className={styles.EditFormContent}>
+            <Input
+              type="text"
+              label="First Name"
+              name="firstName"
+              value={edited.firstName}
+              onChange={e =>
+                setEdited({ ...edited, firstName: e.target.value })
+              }
+              error={errors.firstName}
+              status={errors.firstName && 'error'}
+            />
+            <Input
+              type="text"
+              label="Last Name"
+              name="lastName"
+              value={edited.lastName}
+              onChange={e => setEdited({ ...edited, lastName: e.target.value })}
+              error={errors.lastName}
+              status={errors.lastName && 'error'}
+            />
+            <Input
+              type="text"
+              label="Phone Number"
+              disabled
+              value={edited.phoneNumber ? edited.phoneNumber : ''}
+              onChange={e =>
+                setEdited({ ...edited, phoneNumber: e.target.value })
+              }
+              error={errors.phoneNumber}
+              status={errors.phoneNumber && 'error'}
+            />
 
-              <div className={styles.EditAgentFormBody}>
-                <div className={styles.EditAgentFormBodyProfile}>
-                  <div className={styles.EditAgentFormBodyProfileAvatar}>
-                    <div className={styles.EditAgentFormBodyProfileAvatar}>
-                      {idUploaded ? (
-                        <img src={uploadedId.data.medium} alt="avatar" />
-                      ) : (
-                        <label>
-                          <input
-                            accept="image/*"
-                            type="file"
-                            onChange={handleIdChange}
-                          />
-                          <img
-                            className="img-id"
-                            src={
-                              idCard && idCard.data
-                                ? idCard.data.medium
-                                : AgentImg
-                            }
-                            alt="id card"
-                          />
-                        </label>
-                      )}
+            <Input
+              type="businessName"
+              label="Business Name"
+              onChange={e =>
+                setEdited({ ...edited, businessName: e.target.value })
+              }
+              value={edited.businessName}
+              error={errors.businessName}
+              status={errors.businessName && 'error'}
+            />
 
-                      <p>
-                        {idProgress
-                          ? `${
-                              idProgress === 100 && !uploadedId.data
-                                ? 99
-                                : idProgress
-                            }%`
-                          : 'Change Id'}
-                      </p>
-                    </div>
-                  </div>
-                 
-                </div>
-              </div>
-
-              <Button type="submit" loading={loading}>
-                Submit
-              </Button>
-            </form>
-          </CardBody>
-        </Card>
-      </Content>
-    </Fragment>
+            <Select
+              onSelect={gender => setEdited({ ...edited, gender })}
+              name="gender"
+              value={edited.gender}
+              label="Gender"
+              options={[
+                { text: 'Male', value: 'MALE' },
+                { text: 'Female', value: 'FEMALE' }
+              ]}
+              autoComplete="gender"
+              error={errors.gender}
+              status={errors.gender && 'error'}
+            />
+            <Input
+              value={edited.address}
+              name="address"
+              type="text"
+              label="Address"
+              onChange={e => setEdited({ ...edited, address: e.target.value })}
+              error={errors.address}
+              status={errors.address && 'error'}
+            />
+            <Select
+              onSelect={state =>
+                setEdited({
+                  ...edited,
+                  state
+                })
+              }
+              name="state"
+              value={edited.state}
+              required
+              label="State"
+              options={states}
+              autoComplete="state"
+              error={errors.state}
+              status={errors.state && 'error'}
+            />
+            <Input
+              value={edited.lga}
+              name="lga"
+              type="text"
+              label="LGA"
+              onChange={e => setEdited({ ...edited, lga: e.target.value })}
+              error={errors.lga}
+              status={errors.lga && 'error'}
+            />
+          </div>
+          <Button type="submit" loading={loading}>
+            Submit
+          </Button>
+        </form>
+      </CardBody>
+    </Card>
   )
 }
 export default EditCustomer
