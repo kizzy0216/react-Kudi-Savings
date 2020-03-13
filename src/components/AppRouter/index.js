@@ -125,6 +125,7 @@ const AppRouter = () => (
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
+       
         <PrivateRoute path="/plans" exact component={Plans} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute

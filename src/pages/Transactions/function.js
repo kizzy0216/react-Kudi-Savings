@@ -1,4 +1,4 @@
-// import React from 'react'
+import React from 'react'
 import moment from 'moment'
 // import { Button, Badge } from '@kudi-inc/dip'
 import { formatCurrency, formatText } from 'utils/function'
@@ -20,7 +20,7 @@ export const formatData = (data, history, url, page, limit) => {
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
-      marketName: formatText(marketName),
+      marketName: <div id="marketName">{formatText(marketName)}</div>,
       plan: formatText(plan),
       agentName: formatText(agentName),
       totalAmountSaved: formatCurrency(totalAmountSaved),

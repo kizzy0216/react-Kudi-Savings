@@ -203,3 +203,92 @@
     font-size: 0.72em;
   }
 }
+
+.Edit {
+  font-size: 1rem;
+  &Header {
+    font-weight: normal;
+    text-transform: uppercase;
+  }
+  &Body {
+    padding: 3em 2em; 
+  }
+  &Form {
+    display: grid;
+    grid-template-columns: 10em 1fr;
+    grid-gap: 1.67em;
+    button {
+      &:last-child {
+        margin-top: 3em;
+      }
+    }
+     &Profile {
+    
+
+      &Avatar {
+        text-align: center;
+        p {
+          margin-top: 0.72em;
+          font-size: 0.72em;
+        }
+        input {
+          visibility: hidden;
+          cursor: pointer;
+        }
+
+        img[class='img-id'] {
+          border-radius: 4px;
+        }
+        img {
+          border-radius: 50%;
+          object-fit: cover;
+          object-position: center;
+          width: 7.5em;
+          height: 7.5em;
+          cursor: pointer;
+        }
+      }
+      &Info {
+        section {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-gap: 1.67em;
+        }
+      }
+    }
+    &Content {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 1.67em;
+      &> div{
+         margin-bottom:1.67em ;
+      }
+    }
+    button[class*='flx-wrap_nowrap'] {
+      height: 4.22em;
+      background: transparent;
+      background-image: none;
+      box-shadow: none;
+      border: 1px solid $border-grey;
+      &:hover,
+      &:active {
+        background: transparent;
+      }
+      &:focus {
+        outline: none;
+      }
+    }
+    button[class*='css-'] {
+      background: none;
+      box-shadow: none;
+      background-image: none;
+      color: $text-darker;
+      font-weight: 300;
+      font-size: 0.82em;
+      &:focus {
+        box-shadow: none !important;
+        background: none !important;
+      }
+    }
+  }
+}
