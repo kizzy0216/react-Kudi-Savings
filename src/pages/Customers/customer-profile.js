@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { Dialog } from 'evergreen-ui'
+import { Dialog, SideSheet } from 'evergreen-ui'
 import {
   Card,
   CardBody,
@@ -19,11 +19,13 @@ import { getCustomer, getUsers } from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
+import EditCustomer from './edit-customer'
 
 const CustomerProfile = ({ history, match: { params, url } }) => {
   const [auth] = useContext(AuthContext)
   let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
+  let [showEdit, setShowEdit] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
   let limit = 50
@@ -66,14 +68,14 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
 
                     <Button
                       variant="flat"
-                      onClick={() => history.push(`${url}/edit`)}
+                      onClick={() => setShowEdit(true)}
                       icon={<SettingsLink />}
                     >
                       Edit Profile
                     </Button>
-                    <Button variant="flat" icon={<Reassign />}>
+                    {/* <Button variant="flat" icon={<Reassign />}>
                       Reassign
-                    </Button>
+                    </Button> */}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -252,6 +254,17 @@ const CustomerProfile = ({ history, match: { params, url } }) => {
             </Card>
           </Dialog>
         )}
+        <SideSheet
+          onCloseComplete={() => setShowEdit(false)}
+          isShown={showEdit}
+          width={800}
+        >
+          <EditCustomer
+            setShowEdit={setShowEdit}
+            customer={customer}
+            refetch={refetch}
+          />
+        </SideSheet>
       </Content>
     </Fragment>
   )
