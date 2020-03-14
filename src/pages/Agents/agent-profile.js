@@ -194,7 +194,12 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <h2>
                       {formatCurrency(agent.cashBalance + Number(fundAmount))}
                     </h2>
-                    <Button variant="flat" type="button" icon={<Eye />}>
+                    <Button
+                      variant="flat"
+                      onClick={() => history.push(`${url}/wallet-history`)}
+                      type="button"
+                      icon={<Eye />}
+                    >
                       View History
                     </Button>
                   </CardBody>

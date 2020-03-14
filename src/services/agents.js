@@ -24,3 +24,7 @@ export const fundWallet = (managerId, amount) =>
 
 //Suspend agent by admin
 export const updateStatus = (id, status) => Axios.put(`/agents/${id}/${status}`)
+
+//Get wallet history details
+export const walletHistory = ({ id, params }) =>
+  Axios.get(`/agents/${id}/wallets`, { params })

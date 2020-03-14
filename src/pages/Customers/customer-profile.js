@@ -10,25 +10,21 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Reassign, Eye, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink,  Eye, ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import Customers from './customers'
-import { getCustomer, getUsers } from 'services/customers'
+import { getCustomer} from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
 import EditCustomer from './edit-customer'
 
-const CustomerProfile = ({ history, match: { params, url } }) => {
+const CustomerProfile = ({ history, match: { params } }) => {
   const [auth] = useContext(AuthContext)
-  let [page, setPage] = useState(1)
   let [show, setShow] = useState(false)
   let [showEdit, setShowEdit] = useState(false)
   let [isShown, setIsShown] = useState(false)
-  let [showDialog, setShowDialog] = useState(false)
-  let limit = 50
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
     getCustomer
