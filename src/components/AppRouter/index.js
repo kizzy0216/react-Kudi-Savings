@@ -48,6 +48,11 @@ const SingleZonalHead = lazy(() =>
     /* webpackChunkName: "SingleZonalHead" */ 'pages/ZonalHeads/zonal-head-profile'
   )
 )
+const ZonalWalletHistory = lazy(() =>
+  import(
+    /* webpackChunkName: "ZonalHeadWallet" */ 'pages/ZonalHeads/wallet-history'
+  )
+)
 const Agents = lazy(() =>
   import(/* webpackChunkName: "Agents" */ 'pages/Agents')
 )
@@ -61,7 +66,11 @@ const CreateAgent = lazy(() =>
 const SingleAgent = lazy(() =>
   import(/* webpackChunkName: "SingleAgent" */ 'pages/Agents/agent-profile')
 )
-
+const AgentWalletHistory = lazy(() =>
+  import(
+    /* webpackChunkName: "AgentWalletHistory" */ 'pages/Agents/wallet-history'
+  )
+)
 const Customers = lazy(() =>
   import(/* webpackChunkName: "Customers" */ 'pages/Customers')
 )
@@ -116,7 +125,6 @@ const AppRouter = () => (
           component={ZonalDashboard}
         />
         <PrivateRoute path="/markets" exact component={Markets} />
-
         <PrivateRoute path="/markets/:id" exact component={SingleMarket} />
         <PrivateRoute path="/create-market" exact component={CreateMarket} />
         <PrivateRoute path="/cashout" exact component={Cashout} />
@@ -125,13 +133,17 @@ const AppRouter = () => (
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
-       
         <PrivateRoute path="/plans" exact component={Plans} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute
           path="/zonal-heads/:id"
           exact
           component={SingleZonalHead}
+        />
+        <PrivateRoute
+          path="/zonal-heads/:id/wallet-history"
+          exact
+          component={ZonalWalletHistory}
         />
         <PrivateRoute
           path="/create-zonal-head"
@@ -142,6 +154,11 @@ const AppRouter = () => (
         <PrivateRoute path="/create-agent" exact component={CreateAgent} />
         <PrivateRoute path="/agents/:id" exact component={SingleAgent} />
         <PrivateRoute path="/agents/:id/edit" exact component={EditAgent} />
+        <PrivateRoute
+          path="/agents/:id/wallet-history"
+          exact
+          component={AgentWalletHistory}
+        />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />

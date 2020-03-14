@@ -14,7 +14,6 @@ import { TableLoading } from 'components/loading'
 const Customers = ({ history }) => {
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
-  const [show, setShow] = useState(false)
   let [number, setNumber] = useState('')
   let [phoneNumber, setPhoneNumber] = useState('')
   let limit = 50

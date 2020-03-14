@@ -131,7 +131,6 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                   <div className={styles.FirstBodyFlex}>
                     <span>Date Onboarded:</span>
                     <span>
-                      {' '}
                       {moment(zonalHead.timeCreated).format('Do MMM, YYYY')}
                     </span>
                   </div>
@@ -179,7 +178,12 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                         zonalHead.walletBalance + Number(fundAmount)
                       )}
                     </h2>
-                    <Button variant="flat" type="button" icon={<Eye />}>
+                    <Button
+                      variant="flat"
+                      onClick={() => history.push(`${url}/wallet-history`)}
+                      type="button"
+                      icon={<Eye />}
+                    >
                       View History
                     </Button>
                   </CardBody>
