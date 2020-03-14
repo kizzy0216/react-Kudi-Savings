@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { useQuery } from 'react-query'
 import {
   Card,
@@ -12,7 +12,6 @@ import { updateCustomer, uploadAvatar } from 'services/customers'
 import { toaster } from 'evergreen-ui'
 import styles from './customer-profile.module.scss'
 import { states } from 'utils/data'
-import AuthContext from 'context/AuthContext'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'

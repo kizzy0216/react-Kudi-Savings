@@ -211,7 +211,7 @@
     text-transform: uppercase;
   }
   &Body {
-    padding: 3em 2em; 
+    padding: 3em 2em;
   }
   &Form {
     display: grid;
@@ -222,9 +222,7 @@
         margin-top: 3em;
       }
     }
-     &Profile {
-    
-
+    &Profile {
       &Avatar {
         text-align: center;
         p {
@@ -260,8 +258,8 @@
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       grid-gap: 1.67em;
-      &> div{
-         margin-bottom:1.67em ;
+      & > div {
+        margin-bottom: 1.67em;
       }
     }
     button[class*='flx-wrap_nowrap'] {

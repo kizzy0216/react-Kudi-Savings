@@ -22,7 +22,7 @@ export const isValidUpdate = values => {
     errors.pictureId = 'Profile picture is required'
   }
   if (!values.identificationCardImageId) {
-    errors.identificationCardImageId= 'ID Card is required'
+    errors.identificationCardImageId = 'ID Card is required'
   }
   if (!values.address) {
     errors.address = 'Address is required'
