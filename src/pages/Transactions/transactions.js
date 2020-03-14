@@ -11,7 +11,7 @@ import {
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
-import { ChevronLeft } from 'assets/svg'
+import { ChevronLeft, Close } from 'assets/svg'
 import styles from './transactions.module.scss'
 import { getTransactions } from 'services/transactions'
 import { TableLoading } from 'components/loading'
@@ -20,10 +20,11 @@ import { formatData } from './function'
 const Transactions = ({ history }) => {
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
-  const [startDate, setStartDate] = useState(moment())
+  const [startDate, setStartDate] = useState('')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState(moment().add(1, 'months'))
+  const [endDate, setEndDate] = useState('')
+  const [showReset, setShowReset] = useState(false)
   const [focusedInput, setfocusedInput] = useState(null)
   let limit = 50
   let totalData = 0
@@ -43,9 +44,9 @@ const Transactions = ({ history }) => {
   const onDatesChange = ({ startDate, endDate }) => {
     setStartDate(startDate)
     setEndDate(endDate)
-    setFrom(moment(startDate).format("YYYY-MM-DD HH:mm:ss"))
-    setTo(moment(endDate).format("YYYY-MM-DD HH:mm:ss"))
-    console.log(from, to, 'from', 'to')
+    setFrom(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
+    setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+    setShowReset(true)
   }
 
   const onFocusChange = focusedInput => {
@@ -63,17 +64,29 @@ const Transactions = ({ history }) => {
               Transaction History
               {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             </h3>
-            <Filters className={styles.filters}>
-              <DateRangePicker
-                onDatesChange={onDatesChange}
-                onFocusChange={onFocusChange}
-                displayFormat="DD MMM, YY"
-                focusedInput={focusedInput}
-                startDate={startDate}
-                endDate={endDate}
-                isOutsideRange={() => false}
-              />
-            </Filters>
+            <div className="flex">
+              <Filters className={styles.filters}>
+                <DateRangePicker
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  displayFormat="DD MMM, YY"
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
+                  isOutsideRange={() => false}
+                />
+              </Filters>
+             {showReset && <Close
+                className="danger"
+                onClick={() => {
+                  setFrom('')
+                  setTo('')
+                  setStartDate('')
+                  setEndDate('')
+                  return setShowReset(false)
+                }}
+              />}
+            </div>
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>

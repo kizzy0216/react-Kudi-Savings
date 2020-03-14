@@ -109,4 +109,17 @@ h1 {
     padding-top: 1.857em;
     padding-bottom: 0.714em;
   }
+  svg[class='danger'] {
+    cursor: pointer;
+    path {
+      fill: $danger;
+    }
+  }
+  [class='danger'] {
+    color: $danger;
+  }
+  [class="flex"]{
+    display:flex;
+    align-items: center;
+  }
 }

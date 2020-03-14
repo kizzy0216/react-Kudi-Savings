@@ -48,7 +48,6 @@
   }
 
   .header,
-  .filters,
   .content {
     @include md {
       margin: 0 2.78em;
@@ -62,9 +61,7 @@
   }
   .filters {
     @include md {
- 
- 
-    }
+         }
   }
 
   .header {
@@ -170,6 +167,7 @@
         }
       }
     }
+    
   }
 
   .filters {
@@ -192,6 +190,10 @@
       .DateRangePickerInput {
         display: flex;
         align-items: center;
+        width: 19em;
+        font-size: 1.06em;
+        color: $grey;
+       
       }
 
       .DateRangePicker {
