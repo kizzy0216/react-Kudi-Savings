@@ -8,7 +8,7 @@ import AuthContext from 'context/AuthContext'
 import userImg from 'assets/svg/profile-pic.svg'
 import { SettingsLink, Pencil } from 'assets/svg'
 import ChangePassword from './change-password'
-
+import EditProfile from './edit-profile'
 const Settings = ({ history }) => {
   const [auth] = useContext(AuthContext)
   const [show, setShow] = useState(false)
@@ -31,7 +31,11 @@ const Settings = ({ history }) => {
                 >
                   Change password
                 </Button>
-                <Button variant="flat" onClick={() => null} icon={<Pencil />}>
+                <Button
+                  variant="flat"
+                  onClick={() => setShowEdit(true)}
+                  icon={<Pencil />}
+                >
                   Edit Profile
                 </Button>
               </div>
@@ -120,7 +124,7 @@ const Settings = ({ history }) => {
               </CardBody>
             )}
           </Card>
-          
+
           {/* 
           <Card>
             <CardHeader className={styles.SettingsHeader}>
@@ -131,6 +135,12 @@ const Settings = ({ history }) => {
         </div>
         <SideSheet onCloseComplete={() => setShow(false)} isShown={show}>
           <ChangePassword setShow={setShow} />
+        </SideSheet>
+        <SideSheet
+          onCloseComplete={() => setShowEdit(false)}
+          isShown={showEdit}
+        >
+          <EditProfile setShowEdit={setShowEdit} />
         </SideSheet>
       </Content>
     </Fragment>
