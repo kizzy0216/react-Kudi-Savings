@@ -1,7 +1,8 @@
 import Axios from 'utils/axios'
-
-export const getTransactions = async params =>
-  await Axios.get(`/collections`, { params })
+import clean from 'lodash-clean'
+export const getTransactions = async params =>{
+  console.log(params)
+ return await Axios.get(`/collections`, clean({ params }))}
 
 export const getTransaction = async ({ id }) =>
   await Axios.get(`/collections/${id}`)
