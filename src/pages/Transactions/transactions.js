@@ -76,16 +76,18 @@ const Transactions = ({ history }) => {
                   isOutsideRange={() => false}
                 />
               </Filters>
-             {showReset && <Close
-                className="danger"
-                onClick={() => {
-                  setFrom('')
-                  setTo('')
-                  setStartDate('')
-                  setEndDate('')
-                  return setShowReset(false)
-                }}
-              />}
+              {showReset && (
+                <Close
+                  className="danger"
+                  onClick={() => {
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
+                  }}
+                />
+              )}
             </div>
           </CardHeader>
           <CardBody className={styles.Transactions}>

@@ -9,8 +9,14 @@ export const formatWalletData = (data, page, limit) => {
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
-      credit: transaction_type === 'CREDIT' && transaction_type?transaction_type:'- - -',
-      debit: transaction_type === 'DEBIT' && transaction_type?transaction_type:'- - -' ,
+      credit:
+        transaction_type === 'CREDIT' && transaction_type
+          ? transaction_type
+          : '- - -',
+      debit:
+        transaction_type === 'DEBIT' && transaction_type
+          ? transaction_type
+          : '- - -',
       sender: meta && meta.sender ? formatText(meta.sender) : 'N/A',
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>

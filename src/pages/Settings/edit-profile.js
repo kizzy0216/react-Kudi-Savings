@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {  Card, CardHeader, CardBody } from '@kudi-inc/dip'
+import { Card, CardHeader, CardBody } from '@kudi-inc/dip'
 import { toaster } from 'evergreen-ui'
 import styles from './settings.module.scss'
 import { changePassword } from 'services/auth'

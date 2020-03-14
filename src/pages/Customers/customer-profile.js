@@ -10,11 +10,11 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink,  Eye, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink, Eye, ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import { getCustomer} from 'services/customers'
+import { getCustomer } from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
