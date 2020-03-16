@@ -66,7 +66,7 @@ const Customers = ({
     <div>
       <Card>
         <CardHeader className={styles.Header}>
-          Customers
+          Customers by Market
           <div className="header-search">
             <input
               placeholder="SEARCH BY PHONE NUMBER"
