@@ -15,7 +15,7 @@ import { ChevronLeft } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData } from './function'
+import { formatWalletData } from 'utils/function'
 
 const WalletHistory = ({ match: { params } }) => {
   const [page, setPage] = useState(1)
@@ -64,9 +64,7 @@ const WalletHistory = ({ match: { params } }) => {
                 <Table
                   column={[
                     { key: 'sN', render: 'S/N' },
-
-                    { key: 'credit', render: 'Credit' },
-                    { key: 'debit', render: 'Debit' },
+                    { key: 'transaction_type', render: 'Type' },
                     {
                       key: 'status',
                       render: 'Status'

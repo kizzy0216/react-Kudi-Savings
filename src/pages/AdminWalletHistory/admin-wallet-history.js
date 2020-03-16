@@ -8,7 +8,7 @@ import { ChevronLeft } from 'assets/svg'
 import { walletHistory } from 'services/admin'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData } from './function'
+import { formatWalletData } from 'utils/function'
 
 const WalletHistory = () => {
   const [page, setPage] = useState(1)
@@ -57,9 +57,7 @@ const WalletHistory = () => {
                 <Table
                   column={[
                     { key: 'sN', render: 'S/N' },
-
-                    { key: 'credit', render: 'Credit' },
-                    { key: 'debit', render: 'Debit' },
+                    { key: 'transaction_type', render: 'Type' },
                     {
                       key: 'status',
                       render: 'Status'
