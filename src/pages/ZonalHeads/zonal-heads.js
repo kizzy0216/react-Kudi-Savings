@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { useQuery } from 'react-query'
 import {
   Card,
@@ -6,7 +6,6 @@ import {
   Button,
   Table,
   CardHeader,
-  ButtonGroup,
   Badge
 } from '@kudi-inc/dip'
 import moment from 'moment'
@@ -20,7 +19,6 @@ import { getManagers } from 'services/zonal-heads'
 
 const ZonalHeads = ({ history }) => {
   let { url } = useRouteMatch()
-  let [active, setActive] = useState('all')
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
@@ -74,26 +72,7 @@ const ZonalHeads = ({ history }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={cx(styles.Header, styles.ZHHeader)}>
             All
-            <ButtonGroup>
-              <Button
-                active={active === 'all'}
-                onClick={() => setActive('all')}
-              >
-                All
-              </Button>
-              <Button
-                active={active === 'highest'}
-                onClick={() => setActive('highest')}
-              >
-                Highest
-              </Button>
-              <Button
-                active={active === 'highest'}
-                onClick={() => setActive('highest')}
-              >
-                Lowest
-              </Button>
-            </ButtonGroup>
+         
           </CardHeader>
           <CardBody className={styles.ZH}>
             {isLoading && <TableLoading />}
