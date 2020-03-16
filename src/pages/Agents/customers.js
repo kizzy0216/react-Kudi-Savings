@@ -17,7 +17,6 @@ const Customers = ({
   setPhoneNumber
 }) => {
   let { data, isLoading, error, refetch } = users
-  let [active, setActive] = useState('all')
   let [number, setNumber] = useState('')
   let customer = []
   let totalPage = 0
@@ -67,7 +66,7 @@ const Customers = ({
     <div>
       <Card>
         <CardHeader className={styles.Header}>
-          Customers
+          Customers by Market
           <div className="header-search">
             <input
               placeholder="SEARCH BY PHONE NUMBER"

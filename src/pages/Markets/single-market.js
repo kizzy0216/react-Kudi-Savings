@@ -7,7 +7,6 @@ import { Header, Content } from 'components/Layout'
 import { ProfileLoading } from 'components/loading'
 import styles from './markets.module.scss'
 import { getSingleMarket } from 'services/markets'
-import EditMarket from './edit-market'
 
 const SingleMarket = ({ history, match: { params } }) => {
   const [show, setShow] = useState(false)

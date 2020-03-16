@@ -1,8 +1,9 @@
 import React from 'react'
 import styles from './layout.module.scss'
+import { Button } from '@kudi-inc/dip'
 import { KudiLogo, Avatar, Wallet } from 'assets/svg'
 import { formatCurrency } from 'utils/function'
-const LogoSection = ({ user }) => {
+const LogoSection = ({ user, history }) => {
   return (
     <div className={styles.logoSection}>
       <header className={styles.logoSectionHeader}>
@@ -22,6 +23,16 @@ const LogoSection = ({ user }) => {
           <p>Wallet Balance</p>
           <span>{formatCurrency(user.walletBalance)}</span>
         </div>
+      </div>
+      <div className={styles.logoSectionFlex}>
+        <Button
+          variant="flat"
+          icon={null}
+          className={styles.logoSectionButton}
+          onClick={() => history.push('/wallet-history')}
+        >
+          WALLET HISTORY
+        </Button>
       </div>
     </div>
   )
