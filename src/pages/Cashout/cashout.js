@@ -1,9 +1,5 @@
 import React, { Fragment } from 'react'
-import {
-  Card,
-  CardBody,
-  CardHeader
-} from '@kudi-inc/dip'
+import { Card, CardBody, CardHeader } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './cashout.module.scss'

@@ -1,4 +1,3 @@
-
 import React from 'react'
 import { Badge } from '@kudi-inc/dip'
 import moment from 'moment'
@@ -18,7 +17,6 @@ export const fecthImage = async ({ id }) =>
   await MediaService.get(`/images/${id}`)
 
 export const formatText = text => (text ? text : `N/A`)
-
 
 export const formatWalletData = (data, page, limit) => {
   return data.map(
@@ -42,4 +40,3 @@ export const formatWalletData = (data, page, limit) => {
     })
   )
 }
-

@@ -10,7 +10,7 @@ import {
 } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import { ChevronLeft } from 'assets/svg'
-import { updateAgent, uploadAvatar} from 'services/agents'
+import { updateAgent, uploadAvatar } from 'services/agents'
 import { toaster } from 'evergreen-ui'
 import styles from './agents.module.scss'
 import { states } from 'utils/data'

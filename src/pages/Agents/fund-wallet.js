@@ -3,12 +3,7 @@ import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { fundWallet } from 'services/agents'
 import { toaster } from 'evergreen-ui'
 import styles from './fund-wallet.module.scss'
-const FundWallet = ({
-  setShowDialog,
-  zonalHead,
-  refetch,
-  setFundAmount
-}) => {
+const FundWallet = ({ setShowDialog, zonalHead, refetch, setFundAmount }) => {
   const [amount, setAmount] = useState(0)
   const [loading, setLoading] = useState(false)
   const handleFundWallet = async e => {
