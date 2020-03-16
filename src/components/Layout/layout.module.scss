@@ -333,7 +333,7 @@
   overflow: scroll;
   color: $white;
   display: grid;
-  grid-template-rows: 12.88em 1fr 2.78em;
+  grid-template-rows: 13.88em 1fr 2.78em;
 
   .logoSection {
     background-color: $dark-kudi-blue;
@@ -374,9 +374,15 @@
       }
     }
     &Button {
-      margin: 1.11em 0 1.67em;
-      background-color: transparent;
+      margin: 0em;
+      width: max-content;
       color: $kudi-green;
+      border-radius: 5px;
+      padding: 0.4em 0.6em;
+      background: transparentize($color: $kudi-green, $amount: 0.8);
+      span{
+        margin-left: 0;
+      }
     }
   }
 

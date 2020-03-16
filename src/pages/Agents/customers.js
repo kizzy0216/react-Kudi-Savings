@@ -17,7 +17,6 @@ const Customers = ({
   setPhoneNumber
 }) => {
   let { data, isLoading, error, refetch } = users
-  let [active, setActive] = useState('all')
   let [number, setNumber] = useState('')
   let customer = []
   let totalPage = 0

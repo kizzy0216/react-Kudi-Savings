@@ -18,7 +18,7 @@ const UpdateStatus = ({ zonalhead, refetch, setShowStatus }) => {
         setShowStatus(false)
       })
       .catch(data => {
-        console.log(data)
+  
         if (data && data.data.message) return toaster.danger(data.data.message)
         toaster.danger('Update zonal head failed')
       })

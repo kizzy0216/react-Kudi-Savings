@@ -5,9 +5,7 @@ import PropTypes from 'prop-types'
 import { useHistory } from 'react-router-dom'
 import { withAuth } from 'utils/hoc'
 import {
-  DashboardLink,
   SettingsLink,
-  CILink,
   CashoutLink,
   AgentsLink,
   TransactionsLink,

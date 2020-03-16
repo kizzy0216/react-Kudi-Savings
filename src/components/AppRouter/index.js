@@ -71,6 +71,11 @@ const AgentWalletHistory = lazy(() =>
     /* webpackChunkName: "AgentWalletHistory" */ 'pages/Agents/wallet-history'
   )
 )
+const AdminWalletHistory= lazy(() =>
+import(
+  /* webpackChunkName: "AdminWalletHistory" */ 'pages/AdminWalletHistory'
+)
+)
 const Customers = lazy(() =>
   import(/* webpackChunkName: "Customers" */ 'pages/Customers')
 )
@@ -159,6 +164,7 @@ const AppRouter = () => (
           exact
           component={AgentWalletHistory}
         />
+        <PrivateRoute path="/wallet-history" exact component={AdminWalletHistory} />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
