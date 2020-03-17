@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
-import { Card, CardBody, CardHeader, Button } from '@kudi-inc/dip'
+import { Card, CardBody, CardHeader, Button,ButtonGroup } from '@kudi-inc/dip'
 
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
@@ -12,14 +12,14 @@ import { formatWalletData } from 'utils/function'
 
 const WalletHistory = () => {
   const [page, setPage] = useState(1)
-
+  const [type, setType] = useState("")
   let limit = 50
   let totalData = 0
   let totalPage = 0
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['history', { params: { page, limit } }],
+    ['history', { params: { page, limit, type } }],
     walletHistory
   )
 
@@ -41,6 +41,26 @@ const WalletHistory = () => {
               All
               {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             </h3>
+              <ButtonGroup>
+              <Button
+                active={type === ''}
+                onClick={() => setType('')}
+              >
+                All
+              </Button>
+              <Button
+                active={type === 'DEBIT'}
+                onClick={() => setType('DEBIT')}
+              >
+                Debit
+              </Button>
+              <Button
+                active={type === 'CREDIT'}
+                onClick={() => setType('CREDIT')}
+              >
+               Credit
+              </Button>
+            </ButtonGroup> 
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>

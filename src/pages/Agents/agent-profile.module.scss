@@ -85,12 +85,20 @@
     }
     &Button {
       background: #f8fbff;
-      color: $sky-blue;
-      display: flex;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      button {
+        color: $sky-blue;
+        margin: auto;
+      }
     }
   }
+  &Container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 10em;
+  }
 }
+
 .Second {
   font-size: 1rem;
   display: block;
