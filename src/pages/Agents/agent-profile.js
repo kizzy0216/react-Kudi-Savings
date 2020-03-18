@@ -35,6 +35,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   let [showDialog, setShowDialog] = useState(false)
   let limit = 50
   let [phoneNumber, setPhoneNumber] = useState('')
+  let [mobile, setMobile] = useState('')
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleAgent', { id: params.id }],
     getAgent
@@ -50,7 +51,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     getUsers
   )
   const usersOnboarded = useQuery(
-    data && ['onboarded', { id: agent.id, page, limit, phoneNumber }],
+    data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
     getUsersOnboarded
   )
   if (agent) {
@@ -155,7 +156,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </div>
                     </CardBody>
                   </Card>
-                  <Card class={styles.FirstContainer}>
+                  <div class={styles.Container}>
                     <CardHeader>
                       <div className={styles.FirstHeader}>
                         <h3> CUSTOMERS</h3>
@@ -201,7 +202,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         View Onboarded
                       </Button>
                     </CardFooter>
-                  </Card>
+                  </div>
                 </div>
                 <div className={styles.Second}>
                   <Card>
@@ -362,8 +363,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           limit={limit}
           page={pg}
           setPage={setPg}
-          phoneNumber={phoneNumber}
-          setPhoneNumber={setPhoneNumber}
+          phoneNumber={mobile}
+          setPhoneNumber={setMobile}
           agent={agent}
           setCurrent={setCurrent}
         />

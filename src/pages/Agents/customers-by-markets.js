@@ -69,7 +69,7 @@ const Customers = ({
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => setCurrent('default')} />
-          Agent: {agent.firstName} {agent.lastName} 
+          Agent: {agent.firstName} {agent.lastName}
         </p>
       </Header>
       <Content>
@@ -98,7 +98,6 @@ const Customers = ({
                 <Search />
               )}
             </div>
-           
           </CardHeader>
           {isLoading && <TableLoading />}
           {error && (
@@ -110,39 +109,40 @@ const Customers = ({
             </span>
           )}
           {data && data.data && (
-            <CardBody><Table
-              column={[
-                {
-                  key: 'sN',
-                  render: 'S/N'
-                },
-                {
-                  key: 'fullName',
-                  render: 'Full Name'
-                },
-                { key: 'phoneNumber', render: 'Phone Number' },
-                {
-                  key: 'totalSaved',
-                  render: 'Amount Saved'
-                },
-                {
-                  key: 'totalWithdrawn',
-                  render: 'Amount Withdrawn'
-                },
-                {
-                  key: 'timeCreated',
-                  render: 'Time Created'
-                },
-                {
-                  key: 'action',
-                  render: 'ACTION'
-                }
-              ]}
-              data={customer}
-            />
+            <CardBody>
+              <Table
+                column={[
+                  {
+                    key: 'sN',
+                    render: 'S/N'
+                  },
+                  {
+                    key: 'fullName',
+                    render: 'Full Name'
+                  },
+                  { key: 'phoneNumber', render: 'Phone Number' },
+                  {
+                    key: 'totalSaved',
+                    render: 'Amount Saved'
+                  },
+                  {
+                    key: 'totalWithdrawn',
+                    render: 'Amount Withdrawn'
+                  },
+                  {
+                    key: 'timeCreated',
+                    render: 'Time Created'
+                  },
+                  {
+                    key: 'action',
+                    render: 'ACTION'
+                  }
+                ]}
+                data={customer}
+              />
             </CardBody>
           )}
-          {!isLoading && (
+          {data && totalPage > 0 && (
             <div className="pagination">
               {page > 1 && (
                 <Button
@@ -160,7 +160,6 @@ const Customers = ({
                   onClick={() => setPage(page + 1)}
                 ></Button>
               )}
-              {isLoading && page > 1 && <>Fetching</>}
             </div>
           )}
         </Card>

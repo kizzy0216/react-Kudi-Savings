@@ -142,7 +142,7 @@ const Customers = ({
             />
             </CardBody>
           )}
-          {data && (
+          {data && totalPage > 0 &&(
             <div className="pagination">
               {page > 1 && (
                 <Button

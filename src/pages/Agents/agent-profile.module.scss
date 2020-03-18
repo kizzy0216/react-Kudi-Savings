@@ -93,12 +93,15 @@
       }
     }
   }
-  &Container {
-    display: grid;
-    grid-template-rows: 1fr 1fr 10em;
-  }
+  
 }
-
+.Container {
+  display: grid;
+  background: $white;
+  grid-template-rows: auto 1fr 5em;
+  font-size: .78em;
+  border-radius: 8px;
+}
 .Second {
   font-size: 1rem;
   display: block;
