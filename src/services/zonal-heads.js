@@ -1,5 +1,5 @@
 import Axios from 'utils/axios'
-
+import clean from 'lodash-clean'
 //create a new zonal head
 export const createZH = data =>
   Axios.post(`/managers/create/${data.type}`, data)
@@ -23,4 +23,4 @@ export const updateStatus = (id, status) =>
 
 //Get wallet history details
 export const walletHistory = ({ id, params }) =>
-  Axios.get(`/managers/${id}/wallets`, { params })
+  Axios.get(`/managers/${id}/wallets`, clean({ params }))

@@ -82,13 +82,10 @@
     }
     &Button {
       background: #f8fbff;
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      button {
-        color: $sky-blue;
-        margin: auto;
-      }
-    }
+      color: $sky-blue;
+      display: flex;
+      justify-content: center;
+    } 
   }
 }
 .Second {

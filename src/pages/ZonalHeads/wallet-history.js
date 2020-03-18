@@ -6,6 +6,7 @@ import {
   CardBody,
   CardHeader,
   Button,
+  ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
 
@@ -19,7 +20,7 @@ import { formatWalletData } from 'utils/function'
 
 const WalletHistory = ({ match: { params } }) => {
   const [page, setPage] = useState(1)
-
+  const [type, setType] = useState('')
   let limit = 50
   let totalData = 0
   let totalPage = 0
@@ -27,7 +28,10 @@ const WalletHistory = ({ match: { params } }) => {
 
   const { data, isLoading, error, refetch } = useQuery(
     params &&
-      params.id && ['history', { id: params.id, params: { page, limit } }],
+      params.id && [
+        'history',
+        { id: params.id, params: { page, limit, type } }
+      ],
     walletHistory
   )
   if (data && data.data) {
@@ -48,6 +52,23 @@ const WalletHistory = ({ match: { params } }) => {
               All
               {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             </h3>
+            <ButtonGroup>
+              <Button active={type === ''} onClick={() => setType('')}>
+                All
+              </Button>
+              <Button
+                active={type === 'DEBIT'}
+                onClick={() => setType('DEBIT')}
+              >
+                Debit
+              </Button>
+              <Button
+                active={type === 'CREDIT'}
+                onClick={() => setType('CREDIT')}
+              >
+                Credit
+              </Button>
+            </ButtonGroup>
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>

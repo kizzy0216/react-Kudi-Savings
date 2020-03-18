@@ -14,6 +14,9 @@ export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
 export const getUsers = async ({ id, ...params }) =>
   await Axios.get(`/users/${id}/downline`, clean({ params }))
 
+export const getUsersOnboarded = async ({ id, ...params }) =>
+  await Axios.get(`/agents/${id}/onboarded`, clean({ params }))
+
 export const updateAgent = agent => {
   const { id, ...rest } = agent
   return Axios.put(`/agents/${id}`, rest)
@@ -27,4 +30,4 @@ export const updateStatus = (id, status) => Axios.put(`/agents/${id}/${status}`)
 
 //Get wallet history details
 export const walletHistory = ({ id, params }) =>
-  Axios.get(`/agents/${id}/wallets`, { params })
+  Axios.get(`/agents/${id}/wallets`, clean({ params }))
