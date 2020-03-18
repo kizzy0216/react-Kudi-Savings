@@ -148,14 +148,14 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                   </div>
                 </CardBody>
                 <CardFooter className={styles.FirstBodyButton}>
-                  <Button
+                  {/* <Button
                     variant="flat"
                     type="button"
                     icon={<Eye />}
                     onClick={() => setShow(!show)}
                   >
                     {show ? 'Hide ' : 'View '}Agents
-                  </Button>
+                  </Button> */}
 
                   <Button
                     variant="flat"
