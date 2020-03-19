@@ -156,7 +156,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </div>
                     </CardBody>
                   </Card>
-                  <div class={styles.Container}>
+                  <div className={styles.Container}>
                     <CardHeader>
                       <div className={styles.FirstHeader}>
                         <h3> CUSTOMERS</h3>
@@ -210,9 +210,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       <CardBody className={styles.WalletContent}>
                         <p>Wallet Balance</p>
                         <h2>
-                          {formatCurrency(
-                            agent.cashBalance + Number(fundAmount)
-                          )}
+                          {Number(fundAmount) > 0
+                            ? formatCurrency(Number(fundAmount))
+                            : formatCurrency(agent.cashBalance)}
                         </h2>
                         <Button
                           variant="flat"

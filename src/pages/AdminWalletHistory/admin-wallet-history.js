@@ -1,28 +1,28 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import { Card, CardBody, CardHeader, Button,ButtonGroup } from '@kudi-inc/dip'
-
+import { Card, CardBody, CardHeader, Button, ButtonGroup } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
 import { ChevronLeft } from 'assets/svg'
 import { walletHistory } from 'services/admin'
+import { walletHistory as zonalWalletHistory } from 'services/zonal-heads'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
 import { formatWalletData } from 'utils/function'
-
+import AuthContext from 'context/AuthContext'
 const WalletHistory = () => {
+  const [auth] = useContext(AuthContext)
   const [page, setPage] = useState(1)
-  const [type, setType] = useState("")
+  const [type, setType] = useState('')
   let limit = 50
   let totalData = 0
   let totalPage = 0
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['history', { params: { page, limit, type } }],
-    walletHistory
+    auth && ['history', { id: auth.id, params: { page, limit, type } }],
+    auth.type === 'ADMIN' ? walletHistory : zonalWalletHistory
   )
-
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -41,11 +41,8 @@ const WalletHistory = () => {
               All
               {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             </h3>
-              <ButtonGroup>
-              <Button
-                active={type === ''}
-                onClick={() => setType('')}
-              >
+            <ButtonGroup>
+              <Button active={type === ''} onClick={() => setType('')}>
                 All
               </Button>
               <Button
@@ -58,9 +55,9 @@ const WalletHistory = () => {
                 active={type === 'CREDIT'}
                 onClick={() => setType('CREDIT')}
               >
-               Credit
+                Credit
               </Button>
-            </ButtonGroup> 
+            </ButtonGroup>
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
