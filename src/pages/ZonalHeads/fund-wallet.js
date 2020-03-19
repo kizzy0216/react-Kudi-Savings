@@ -15,7 +15,7 @@ const FundWallet = ({ setShowDialog, zonalHead, setFundAmount }) => {
         setLoading(false)
         setShowDialog(false)
         toaster.success('Processing Top Up')
-        setFundAmount(amount)
+        setFundAmount(Number(data.data.balance))
       })
       .catch(data => {
         setLoading(false)

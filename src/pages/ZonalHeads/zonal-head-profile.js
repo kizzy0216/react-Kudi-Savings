@@ -174,9 +174,11 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                   <CardBody className={styles.WalletContent}>
                     <p>Wallet Balance</p>
                     <h2>
-                      {formatCurrency(
-                        zonalHead.walletBalance + Number(fundAmount)
-                      )}
+                      {Number(fundAmount) > 0
+                        ? formatCurrency(Number(fundAmount))
+                        : formatCurrency(
+                            zonalHead.walletBalance
+                          )}
                     </h2>
                     <Button
                       variant="flat"
