@@ -34,10 +34,11 @@ const Login = ({ auth, history }) => {
         history.push(`/`)
       })
       .catch(data => {
+        console.log(data)
         setIsLoading(false)
-        if (data && data.response) {
-          if (data.response) {
-            return setAuthError(data.response.data.message)
+        if (data && data.data) {
+          if (data.data) {
+            return setAuthError(data.data.message)
           }
           return setAuthError('Weird! an error occured')
         }
