@@ -42,10 +42,14 @@ const Transactions = ({ history }) => {
   }
 
   const onDatesChange = ({ startDate, endDate }) => {
-    setStartDate(startDate)
-    setEndDate(endDate)
-    setFrom(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
-    setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+    if (startDate) {
+      setStartDate(startDate)
+      setFrom(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
+    }
+    if (endDate) {
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+    }
     setShowReset(true)
   }
 

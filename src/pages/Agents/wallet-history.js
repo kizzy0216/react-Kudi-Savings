@@ -12,7 +12,7 @@ import {
 
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
-import { ChevronLeft } from 'assets/svg'
+import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
@@ -21,7 +21,12 @@ import { formatWalletData } from 'utils/function'
 const WalletHistory = ({ match: { params } }) => {
   const [page, setPage] = useState(1)
   const [type, setType] = useState('')
-
+  const [startDate, setStartDate] = useState('')
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [showReset, setShowReset] = useState(false)
+  const [focusedInput, setfocusedInput] = useState(null)
   let limit = 50
   let totalData = 0
   let totalPage = 0
@@ -31,7 +36,7 @@ const WalletHistory = ({ match: { params } }) => {
     params &&
       params.id && [
         'history',
-        { id: params.id, params: { page, limit, type } }
+        { id: params.id, params: { page, limit, type, from, to } }
       ],
     walletHistory
   )
@@ -40,7 +45,20 @@ const WalletHistory = ({ match: { params } }) => {
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
-
+  const onDatesChange = ({ startDate, endDate }) => {
+    if (startDate) {
+      setStartDate(startDate)
+      setFrom(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
+    }
+    if (endDate) {
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+    }
+    setShowReset(true)
+  }
+  const onFocusChange = focusedInput => {
+    setfocusedInput(focusedInput)
+  }
   return (
     <Fragment>
       <Header>
@@ -70,6 +88,31 @@ const WalletHistory = ({ match: { params } }) => {
                 Credit
               </Button>
             </ButtonGroup>
+            <div className="flex">
+              <Filters className={styles.filters}>
+                <DateRangePicker
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  displayFormat="DD MMM, YY"
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
+                  isOutsideRange={() => false}
+                />
+              </Filters>
+              {showReset && (
+                <Close
+                  className="danger"
+                  onClick={() => {
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
+                  }}
+                />
+              )}
+            </div>
           </CardHeader>
           <CardBody className={styles.Transactions}>
             <div className={styles.TransactionsHeader}>
