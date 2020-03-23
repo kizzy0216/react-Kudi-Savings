@@ -1,13 +1,6 @@
 import React, { Fragment } from 'react'
 import { useQuery } from 'react-query'
-import {
-  Card,
-  CardBody,
-  Button,
-  Table,
-  CardHeader,
-  Badge
-} from '@kudi-inc/dip'
+import { Card, CardBody, Button, Table, CardHeader, Badge } from '@kudi-inc/dip'
 import moment from 'moment'
 import cx from 'classnames'
 import { useRouteMatch } from 'react-router-dom'
@@ -72,7 +65,6 @@ const ZonalHeads = ({ history }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={cx(styles.Header, styles.ZHHeader)}>
             All
-         
           </CardHeader>
           <CardBody className={styles.ZH}>
             {isLoading && <TableLoading />}

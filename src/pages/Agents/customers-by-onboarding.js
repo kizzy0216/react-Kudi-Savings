@@ -69,13 +69,14 @@ const Customers = ({
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => setCurrent('default')} />
-          Agent: {agent && agent.firstName && agent.firstName} {agent && agent.lastName &&agent.lastName} 
+          Agent: {agent && agent.firstName && agent.firstName}{' '}
+          {agent && agent.lastName && agent.lastName}
         </p>
       </Header>
       <Content>
         <Card>
           <CardHeader className={styles.Header}>
-            Customers Onboarded by {agent && agent.firstName && agent.firstName} 
+            Customers Onboarded by {agent && agent.firstName && agent.firstName}
             <div className="header-search">
               <input
                 placeholder="SEARCH BY PHONE NUMBER"
@@ -98,7 +99,6 @@ const Customers = ({
                 <Search />
               )}
             </div>
-           
           </CardHeader>
           {isLoading && <TableLoading />}
           {error && (
@@ -110,39 +110,40 @@ const Customers = ({
             </span>
           )}
           {data && data.data && (
-            <CardBody><Table
-              column={[
-                {
-                  key: 'sN',
-                  render: 'S/N'
-                },
-                {
-                  key: 'fullName',
-                  render: 'Full Name'
-                },
-                { key: 'phoneNumber', render: 'Phone Number' },
-                {
-                  key: 'totalSaved',
-                  render: 'Amount Saved'
-                },
-                {
-                  key: 'totalWithdrawn',
-                  render: 'Amount Withdrawn'
-                },
-                {
-                  key: 'timeCreated',
-                  render: 'Time Created'
-                },
-                {
-                  key: 'action',
-                  render: 'ACTION'
-                }
-              ]}
-              data={customer}
-            />
+            <CardBody>
+              <Table
+                column={[
+                  {
+                    key: 'sN',
+                    render: 'S/N'
+                  },
+                  {
+                    key: 'fullName',
+                    render: 'Full Name'
+                  },
+                  { key: 'phoneNumber', render: 'Phone Number' },
+                  {
+                    key: 'totalSaved',
+                    render: 'Amount Saved'
+                  },
+                  {
+                    key: 'totalWithdrawn',
+                    render: 'Amount Withdrawn'
+                  },
+                  {
+                    key: 'timeCreated',
+                    render: 'Time Created'
+                  },
+                  {
+                    key: 'action',
+                    render: 'ACTION'
+                  }
+                ]}
+                data={customer}
+              />
             </CardBody>
           )}
-          {data && totalPage > 0 &&(
+          {data && totalPage > 0 && (
             <div className="pagination">
               {page > 1 && (
                 <Button

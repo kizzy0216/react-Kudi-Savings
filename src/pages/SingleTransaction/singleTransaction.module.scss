@@ -5,8 +5,8 @@
   display: block;
   @include md {
     display: grid;
-    grid-template-columns: 34.05em 1fr;
-    grid-column-gap: 2.167em;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-row-gap: 2.167em;
   }
 
   &Header {
@@ -34,13 +34,21 @@
     padding: 1.55em;
     &Grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr 3fr;
+
       &Profile {
-        width: 8.27em;
-        height: 8.27em;
+        width: 12.92em;
+        height: 12.92em;
         img {
           border-radius: 50%;
+          width: 12.92em;
+          height: 12.92em;
         }
+      }
+      &Container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-column-gap: 3.96em;
       }
       &Content {
         display: flex;
