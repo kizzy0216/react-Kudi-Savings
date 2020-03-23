@@ -1,8 +1,8 @@
 import React from 'react'
 import moment from 'moment'
-// import { Button, Badge } from '@kudi-inc/dip'
+import { Button } from '@kudi-inc/dip'
 import { formatCurrency, formatText } from 'utils/function'
-// import { Eye } from 'assets/svg'
+import { Eye } from 'assets/svg'
 
 export const formatData = (data, history, url, page, limit) => {
   return data.map(
@@ -26,16 +26,16 @@ export const formatData = (data, history, url, page, limit) => {
       totalAmountSaved: formatCurrency(totalAmountSaved),
       amount: formatCurrency(amount),
       collectionDate: moment(collectionDate).format('L'),
-      timeCreated: moment(timeCreated).format('L')
-      //   action: (
-      //     <Button
-      //       icon={<Eye />}
-      //       variant="flat"
-      //       onClick={() => history.push(`${url}/${id}`)}
-      //     >
-      //       View
-      //     </Button>
-      //   )
+      timeCreated: moment(timeCreated).format('L'),
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => history.push(`${url}/${id}`)}
+        >
+          View
+        </Button>
+      )
     })
   )
 }

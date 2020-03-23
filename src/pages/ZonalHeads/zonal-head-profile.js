@@ -176,9 +176,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                     <h2>
                       {Number(fundAmount) > 0
                         ? formatCurrency(Number(fundAmount))
-                        : formatCurrency(
-                            zonalHead.walletBalance
-                          )}
+                        : formatCurrency(zonalHead.walletBalance)}
                     </h2>
                     <Button
                       variant="flat"
