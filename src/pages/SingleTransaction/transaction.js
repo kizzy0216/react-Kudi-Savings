@@ -1,22 +1,15 @@
 import React, { Fragment } from 'react'
 import moment from 'moment'
 import { useQuery } from 'react-query'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-  Badge,
-  CardFooter
-} from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye } from 'assets/svg'
+import { Card, CardBody, CardHeader, Badge } from '@kudi-inc/dip'
+import { ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import { getTransaction } from 'services/transactions'
 import styles from './singleTransaction.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import { ProfileLoading } from 'components/loading'
-const Transaction = ({ match: { params } }) => {
+const Transaction = ({ history, match: { params } }) => {
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleTxn', { id: params.id }],
     getTransaction
@@ -30,7 +23,10 @@ const Transaction = ({ match: { params } }) => {
   return (
     <Fragment>
       <Header>
-        <p> Transaction Details</p>
+        <p>
+          <ChevronLeft role="button" onClick={() => history.goBack()} />
+          Transaction Details
+        </p>
       </Header>
       <Content className={styles.content}>
         {isLoading && <ProfileLoading />}
