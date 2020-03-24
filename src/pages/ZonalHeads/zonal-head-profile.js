@@ -70,7 +70,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                     >
                       Edit Profile
                     </Button>
-                    {auth && auth.type === 'ADMIN' && (
+                    {auth && auth.type.includes('ADMIN') && (
                       <Button
                         variant="flat"
                         onClick={() => setShowStatus(true)}
