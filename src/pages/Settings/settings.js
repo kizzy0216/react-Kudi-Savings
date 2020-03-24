@@ -40,7 +40,7 @@ const Settings = ({ history }) => {
                 </Button>
               </div>
             </CardHeader>
-            {auth.type === 'ADMIN' && (
+            {auth.type.includes('ADMIN') && (
               <CardBody>
                 <div className={styles.SettingsBody}>
                   <div className={styles.SettingsBodyProfile}>
