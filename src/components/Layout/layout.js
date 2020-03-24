@@ -38,31 +38,31 @@ const Layout = ({ children, auth }) => {
       title: 'Markets',
       link: '/markets',
       icon: <MarketsLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     },
     {
       title: 'Agents',
       link: '/agents',
       icon: <AgentsLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     },
     {
       title: 'Zonal Heads',
       link: '/zonal-heads',
       icon: <AgentsLink />,
-      userType: ['ADMIN']
+      userType: ['ADMIN',"SUPER_ADMIN"]
     },
     {
       title: 'Transactions',
       link: '/transactions',
       icon: <TransactionsLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     },
     {
       title: 'Customers',
       link: '/customers',
       icon: <CustomersLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     },
     // {
     //   title: 'Customer Insights',
@@ -74,19 +74,19 @@ const Layout = ({ children, auth }) => {
       title: 'Plans',
       link: '/plans',
       icon: <PlansLink />,
-      userType: ['ADMIN']
+      userType: ['ADMIN',"SUPER_ADMIN"]
     },
     {
       title: 'Cashout',
       link: '/cashout',
       icon: <CashoutLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     },
     {
       title: 'Settings',
       link: '/settings',
       icon: <SettingsLink />,
-      userType: ['ADMIN', 'ZONAL']
+      userType: ['ADMIN', 'ZONAL',"SUPER_ADMIN"]
     }
   ]
   return (

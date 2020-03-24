@@ -188,7 +188,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   </CardBody>
                 </div>
               </Card>
-              {auth && auth.type === 'ADMIN' && (
+              {auth && auth.type.includes('ADMIN') && (
                 <Card>
                   <CardHeader className={styles.FirstHeader}>
                     <h3>DSA</h3>

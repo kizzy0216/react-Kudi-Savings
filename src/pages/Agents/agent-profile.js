@@ -93,7 +93,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         >
                           Edit Profile
                         </Button>
-                        {auth && auth.type === 'ADMIN' && (
+                        {auth && auth.type.includes('ADMIN') && (
                           <Button
                             variant="flat"
                             onClick={() => setShowStatus(true)}
@@ -245,7 +245,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </CardBody>
                     </div>
                   </Card>
-                  {auth && auth.type === 'ADMIN' && (
+                  {auth && auth.type.includes('ADMIN') && (
                     <Card>
                       <CardHeader className={styles.FirstHeader}>
                         <h3>Zonal Head</h3>

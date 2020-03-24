@@ -39,7 +39,7 @@ const WalletHistory = () => {
       'history',
       { id: auth.id, params: { page, limit, type, from, to } }
     ],
-    auth.type === 'ADMIN' ? walletHistory : zonalWalletHistory
+    auth.type.includes('ADMIN') ? walletHistory : zonalWalletHistory
   )
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
