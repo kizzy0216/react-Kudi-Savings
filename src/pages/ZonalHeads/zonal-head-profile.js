@@ -203,7 +203,11 @@ const ViewCashout = ({ history, match: { params, url } }) => {
                   </div>
 
                   <CardBody className={styles.ProgressCardBody}>
-                    <Button onClick={() => setShowDialog(true)} type="button">
+                    <Button
+                      disabled={auth && auth.type !== 'ADMIN' ? true : false}
+                      onClick={() => setShowDialog(true)}
+                      type="button"
+                    >
                       Fund wallet
                     </Button>
                   </CardBody>
