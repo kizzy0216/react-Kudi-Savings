@@ -34,7 +34,7 @@ Axios.interceptors.response.use(
     return response
   },
   ({ response }) => {
-    if (response && response.status === 403) {
+    if (response && response.status === 307) {
       return setLogout()
     }
     return Promise.reject(response)
