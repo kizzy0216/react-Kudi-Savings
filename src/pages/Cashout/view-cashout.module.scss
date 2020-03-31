@@ -58,6 +58,10 @@
           }
         }
       }
+      &Container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     &Flex {
@@ -93,8 +97,12 @@
     button {
       &:last-child {
         background: transparent;
-        border: 1px solid $kudi-blue;
+        color: $danger;
       }
     }
   }
+}
+
+.Second {
+  margin-top: 1.67em;
 }
