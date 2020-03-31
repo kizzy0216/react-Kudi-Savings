@@ -24,9 +24,11 @@ const ViewCashout = ({ history, match: { params } }) => {
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
+  let [reason, setReason] = useState({ reason: '' })
   const handleWithdrawal = async status => {
     setLoading(true)
-    await processWithdrawal(params.id, status)
+    console.log(params.id, status)
+    await processWithdrawal(params.id, status, reason)
       .then(({ data }) => {
         setLoading(false)
 
@@ -162,10 +164,6 @@ const ViewCashout = ({ history, match: { params } }) => {
                   <div className={styles.FirstBodyFlex}>
                     <span>Amount</span>
                     <span>{formatCurrency(withdrawal.amount)}</span>
-                  </div>
-                  <div className={styles.FirstBodyFlex}>
-                    <span> Wallet Balance</span>
-                    <span>₦180,000</span>
                   </div>
                 </CardBody>
                 <CardFooter className={styles.FirstFooter}>
@@ -339,20 +337,16 @@ const ViewCashout = ({ history, match: { params } }) => {
             </div>
           </div>
         )}
-      </Content>
-      {isShown && (
-        <Dialog
-          isShown={isShown}
-          title={dialogContent[type].title}
-          hasFooter={false}
-          confirmLabel="C"
-          className={styles.Dialog}
-        >
-          <Card>
-            <CardBody className={styles.DialogBody}>
-              {dialogContent[type].content}
-            </CardBody>
-            <CardFooter className={styles.DialogFooter}>
+        {isShown && (
+          <Dialog
+            isShown={isShown}
+            title={dialogContent[type].title}
+            hasFooter={false}
+            confirmLabel="C"
+            className="dialog"
+          >
+            <div className="dialogBody">{dialogContent[type].content}</div>
+            <div className="dialogFooter">
               <Button
                 variant="flat"
                 icon={<Close />}
@@ -360,10 +354,13 @@ const ViewCashout = ({ history, match: { params } }) => {
               >
                 Close
               </Button>
-            </CardFooter>
-          </Card>
-        </Dialog>
-      )}
+              <Button icon={<Close />} onClick={dialogContent[type].submit}>
+                Submit
+              </Button>
+            </div>
+          </Dialog>
+        )}
+      </Content>
     </Fragment>
   )
 }

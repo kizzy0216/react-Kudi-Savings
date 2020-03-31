@@ -6,7 +6,7 @@
   display: block;
   @include md {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 4fr;
     grid-row-gap: 1.67em;
     grid-column-gap: 2.167em;
   }
@@ -106,3 +106,4 @@
 .Second {
   margin-top: 1.67em;
 }
+

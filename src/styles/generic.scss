@@ -122,4 +122,25 @@ h1 {
     display: flex;
     align-items: center;
   }
+  .dialog {
+    padding: 1.2em;
+    font-size: 1em;
+    &Footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 1em 1em;
+    }
+    &Body {
+      height: 7.5em;
+      color: $grey;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 1em;
+    }
+    h4 {
+      color: $text-darker;
+      font-size: 0.72em;
+    }
+  }
 }
