@@ -133,14 +133,17 @@ h1 {
     &Body {
       height: 7.5em;
       color: $grey;
-      display: flex;
       justify-content: center;
       align-items: center;
-      padding: 0 1em;
+      padding: 1em;
+      font-weight: 400;
+      p {
+        margin-bottom: 0.78em;
+      }
     }
-    h4 {
-      color: $text-darker;
-      font-size: 0.72em;
-    }
+    // h4 {
+    //   color: $text-darker;
+    //   font-size: 0.72em;
+    // }
   }
 }

@@ -1,38 +1,43 @@
-import React, { Fragment, useContext, useState } from 'react'
+import React, { Fragment,  useState } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { Dialog, SideSheet, toaster } from 'evergreen-ui'
+import { Dialog, toaster } from 'evergreen-ui'
 import {
+  Badge,
+  Button,
   Card,
   CardBody,
   CardHeader,
-  Button,
-  Badge,
-  CardFooter
+  CardFooter,
+  Input
 } from '@kudi-inc/dip'
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
-import { SettingsLink, Bin, Close, ChevronLeft } from 'assets/svg'
+import { Close, ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/images/agent.png'
-import AuthContext from 'context/AuthContext'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 
 const ViewCashout = ({ history, match: { params } }) => {
-  const [auth] = useContext(AuthContext)
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
   let [reason, setReason] = useState({ reason: '' })
+  const { data, isLoading, error, refetch } = useQuery(
+    ['Withdrawal', { id: params.id }],
+    getWithdrawal
+  )
+  let withdrawal = data && data.data ? data.data.data : {}
   const handleWithdrawal = async status => {
     setLoading(true)
-    console.log(params.id, status)
     await processWithdrawal(params.id, status, reason)
       .then(({ data }) => {
         setLoading(false)
-
-        toaster.success('Processing Top Up')
+        toaster.success('Cashout Request Approved')
+        refetch({ disableThrow: true })
+        setReason({ reason: '' })
+        setIsShown(false)
       })
       .catch(data => {
         setLoading(false)
@@ -43,27 +48,22 @@ const ViewCashout = ({ history, match: { params } }) => {
   let dialogContent = {
     approve: {
       title: 'Approve Request',
-      content: 'Are you sure you want to approve',
+      content: `Approve the withdrawal request of ${withdrawal &&
+        formatCurrency(withdrawal.amount)}`,
       submit: () => handleWithdrawal('APPROVED')
     },
     decline: {
       title: 'Decline Request',
-      content: 'Are you sure you want to approve',
+      content: 'Decline the withdrawal request.',
       submit: () => handleWithdrawal('DECLINED')
     }
   }
 
-  const { data, isLoading, error, refetch } = useQuery(
-    ['Withdrawal', { id: params.id }],
-    getWithdrawal
-  )
-
-  let withdrawal = data && data.data ? data.data.data : {}
   return (
     <Fragment>
       <Header>
         <p>
-          <ChevronLeft onClick={() => history.goBack()} /> Cashout Request{' '}
+          <ChevronLeft onClick={() => history.goBack()} /> Cashout Request
         </p>
       </Header>
       <Content className={styles.content}>
@@ -83,13 +83,6 @@ const ViewCashout = ({ history, match: { params } }) => {
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> USER INFORMATION</h3>
-                    {/* 
-                    <Button variant="flat" icon={<SettingsLink />}>
-                      Edit Profile
-                    </Button>
-                    <Button variant="flat" icon={<Bin />}>
-                      Suspend Agent
-                    </Button> */}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -342,10 +335,25 @@ const ViewCashout = ({ history, match: { params } }) => {
             isShown={isShown}
             title={dialogContent[type].title}
             hasFooter={false}
+            hasHeader={false}
             confirmLabel="C"
             className="dialog"
           >
-            <div className="dialogBody">{dialogContent[type].content}</div>
+            <div className="dialogBody">
+              <p>{dialogContent[type].content}</p>
+              {type === 'decline' && (
+                <Input
+                  label="Reason"
+                  placeholder=""
+                  onChange={e => setReason({ reason: e.target.value })}
+                  value={reason.reason}
+                  type="text"
+                  name="reason"
+                  id="reason"
+                  className="formInput"
+                />
+              )}
+            </div>
             <div className="dialogFooter">
               <Button
                 variant="flat"
@@ -354,7 +362,7 @@ const ViewCashout = ({ history, match: { params } }) => {
               >
                 Close
               </Button>
-              <Button icon={<Close />} onClick={dialogContent[type].submit}>
+              <Button loading={loading} onClick={dialogContent[type].submit}>
                 Submit
               </Button>
             </div>
