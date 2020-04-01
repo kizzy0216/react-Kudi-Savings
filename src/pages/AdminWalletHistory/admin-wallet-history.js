@@ -49,7 +49,7 @@ const WalletHistory = () => {
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
-      setFrom(moment(startDate).format('YYYY-MM-DD HH:mm:ss'))
+      setFrom(moment(startDate).subtract(1, "days").format('YYYY-MM-DD HH:mm:ss'))
     }
     if (endDate) {
       setEndDate(endDate)
