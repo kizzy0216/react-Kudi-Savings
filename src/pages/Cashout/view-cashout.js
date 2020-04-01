@@ -1,4 +1,4 @@
-import React, { Fragment,  useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, toaster } from 'evergreen-ui'
@@ -15,7 +15,7 @@ import { getWithdrawal, processWithdrawal } from 'services/cashout'
 import { Close, ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
-import AgentImg from 'assets/images/agent.png'
+import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 
@@ -336,11 +336,19 @@ const ViewCashout = ({ history, match: { params } }) => {
             title={dialogContent[type].title}
             hasFooter={false}
             hasHeader={false}
-            confirmLabel="C"
+            confirmLabel="Submit"
+            onConfirm={() => setIsShown(false)}
+            onCloseComplete={() => setIsShown(false)}
+            onCancel={() => setIsShown(false)}
             className="dialog"
           >
-            <div className="dialogBody">
-              <p>{dialogContent[type].content}</p>
+            <div class="dialogHeader">
+              <h4>{dialogContent[type].title}</h4>
+            </div>
+            <div className={type === 'approve' ? 'dialogFlex' : 'dialogBody'}>
+              <p >
+                {dialogContent[type].content}
+              </p>
               {type === 'decline' && (
                 <Input
                   label="Reason"

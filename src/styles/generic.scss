@@ -123,14 +123,15 @@ h1 {
     align-items: center;
   }
   .dialog {
-    padding: 1.2em;
-    font-size: 1em;
-    &Footer {
-      display: flex;
-      justify-content: space-between;
-      padding: 0 1em 1em;
+    &Header {
+      text-transform: uppercase;
+      color: $text-darker;
+      font-size: 1em;
+      font-weight: bold;
+      padding: 0.5em;
     }
-    &Body {
+    &Body,
+    &Flex {
       height: 7.5em;
       color: $grey;
       justify-content: center;
@@ -141,9 +142,14 @@ h1 {
         margin-bottom: 0.78em;
       }
     }
-    // h4 {
-    //   color: $text-darker;
-    //   font-size: 0.72em;
-    // }
+    &Footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.5em 1em;
+    }
+    &Flex {
+      display: flex;
+      align-items: center;
+    }
   }
 }
