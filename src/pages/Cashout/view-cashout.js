@@ -99,7 +99,7 @@ const ViewCashout = ({ history, match: { params } }) => {
                         <span>Name</span>
                         <span>
                           {withdrawal.user &&
-                            formatText(withdrawal.user.firstName)}
+                            formatText(withdrawal.user.firstName)}{" "}
                           {withdrawal.user &&
                             formatText(withdrawal.user.lastName)}
                         </span>
@@ -342,7 +342,7 @@ const ViewCashout = ({ history, match: { params } }) => {
             onCancel={() => setIsShown(false)}
             className="dialog"
           >
-            <div class="dialogHeader">
+            <div className="dialogHeader">
               <h4>{dialogContent[type].title}</h4>
             </div>
             <div className={type === 'approve' ? 'dialogFlex' : 'dialogBody'}>
