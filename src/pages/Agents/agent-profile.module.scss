@@ -196,20 +196,4 @@
     }
   }
 }
-.Dialog {
-  &Footer {
-    display: flex;
-    justify-content: flex-end;
-  }
-  &Body {
-    height: 7.5em;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  h4 {
-    color: $text-darker;
-    font-size: 0.72em;
-  }
-}

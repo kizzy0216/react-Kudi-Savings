@@ -122,4 +122,34 @@ h1 {
     display: flex;
     align-items: center;
   }
+  .dialog {
+    &Header {
+      text-transform: uppercase;
+      color: $text-darker;
+      font-size: 1em;
+      font-weight: bold;
+      padding: 0.5em;
+    }
+    &Body,
+    &Flex {
+      height: 7.5em;
+      color: $grey;
+      justify-content: center;
+      align-items: center;
+      padding: 1em;
+      font-weight: 400;
+      p {
+        margin-bottom: 0.78em;
+      }
+    }
+    &Footer {
+      display: flex;
+      justify-content: space-between;
+      padding: 0 0.5em 1em;
+    }
+    &Flex {
+      display: flex;
+      align-items: center;
+    }
+  }
 }

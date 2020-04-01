@@ -34,7 +34,6 @@ const Login = ({ auth, history }) => {
         history.push(`/`)
       })
       .catch(data => {
-        console.log(data)
         setIsLoading(false)
         if (data && data.data) {
           if (data.data) {

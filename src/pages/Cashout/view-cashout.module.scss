@@ -6,7 +6,7 @@
   display: block;
   @include md {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 5fr 4fr;
     grid-row-gap: 1.67em;
     grid-column-gap: 2.167em;
   }
@@ -38,10 +38,11 @@
       display: grid;
       grid-template-columns: 1fr 1fr;
       &Profile {
-        width: 8.27em;
-        height: 8.27em;
+        width: 12.92em;
+      
         img {
           border-radius: 50%;
+          width: 12.92em;
         }
       }
       &Content {
@@ -57,6 +58,10 @@
             text-align: right;
           }
         }
+      }
+      &Container {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
       }
     }
 
@@ -93,8 +98,13 @@
     button {
       &:last-child {
         background: transparent;
-        border: 1px solid $kudi-blue;
+        color: $danger;
       }
     }
   }
 }
+
+.Second {
+  margin-top: 1.67em;
+}
+
