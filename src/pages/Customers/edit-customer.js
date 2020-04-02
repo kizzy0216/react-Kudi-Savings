@@ -114,7 +114,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     try {
       await updateCustomer(rest)
       setLoading(false)
-      toaster.success('Customer Details Updated')
+      toaster.success('Edit customer details successful. Updates will reflect soon')
       refetch({ disableThrow: true })
       setShowEdit(false)
     } catch (e) {
