@@ -259,6 +259,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
             setShowEdit={setShowEdit}
             customer={customer}
             refetch={refetch}
+            auth={auth}
           />
         </SideSheet>
       </Content>

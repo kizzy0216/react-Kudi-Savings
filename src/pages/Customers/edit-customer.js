@@ -16,7 +16,7 @@ import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
 
-const EditCustomer = ({ setShowEdit, refetch, customer }) => {
+const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [loading, setLoading] = useState(false)
   const [uploadedAvatar, setUploadedAvatar] = useState({})
   const [imgUploaded, setImgUploaded] = useState(false)
@@ -114,7 +114,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer }) => {
     try {
       await updateCustomer(rest)
       setLoading(false)
-      toaster.success('Customer Details Updated')
+      toaster.success('Edit customer details successful. Updates will reflect soon')
       refetch({ disableThrow: true })
       setShowEdit(false)
     } catch (e) {
@@ -220,7 +220,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer }) => {
             <Input
               type="text"
               label="Phone Number"
-              disabled
+              disabled={!auth.type.includes('ADMIN')}
               value={edited.phoneNumber ? edited.phoneNumber : ''}
               onChange={e =>
                 setEdited({ ...edited, phoneNumber: e.target.value })
