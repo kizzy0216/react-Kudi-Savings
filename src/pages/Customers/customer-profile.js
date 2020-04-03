@@ -223,6 +223,25 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </Card>
               )}
             </div>
+            {customer &&
+              customer.previouslyChangedPhoneNumbers &&
+              customer.previouslyChangedPhoneNumbers.length > 0 && (
+                <div className={styles.Third}>
+                  <Card>
+                    <CardHeader>
+                      <div className={styles.FirstHeader}>
+                        <h3> Wallet NUMBER HISTORY</h3>
+                      </div>
+                    </CardHeader>
+                    <CardBody>
+                      <div className={styles.FirstBodyGridContent}>
+                        <span>Previous Wallet Number</span>
+                        <span>{customer.previouslyChangedPhoneNumbers}</span>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </div>
+              )}
           </div>
         )}
 
