@@ -28,7 +28,7 @@ const ZonalHeads = ({ history }) => {
           : 'N/A',
         fullName: `${firstName} ${lastName}`,
         status: status ? (
-          <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
+          <Badge variant={status === 'ACTIVE' ? 'success' : 'danger'}>
             {status}
           </Badge>
         ) : (
