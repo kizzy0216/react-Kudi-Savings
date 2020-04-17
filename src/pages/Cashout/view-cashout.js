@@ -99,7 +99,7 @@ const ViewCashout = ({ history, match: { params } }) => {
                         <span>Name</span>
                         <span>
                           {withdrawal.user &&
-                            formatText(withdrawal.user.firstName)}{" "}
+                            formatText(withdrawal.user.firstName)}{' '}
                           {withdrawal.user &&
                             formatText(withdrawal.user.lastName)}
                         </span>
@@ -159,28 +159,33 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <span>{formatCurrency(withdrawal.amount)}</span>
                   </div>
                 </CardBody>
-                <CardFooter className={styles.FirstFooter}>
-                  <Button
-                    onClick={() => {
-                      setType('approve')
-                      return setIsShown(true)
-                    }}
-                    type="button"
-                  >
-                    Approve
-                  </Button>
-                  <Button
-                    variant="flat"
-                    onClick={() => {
-                      setType('decline')
-                      return setIsShown(true)
-                    }}
-                    type="button"
-                    icon={<Close />}
-                  >
-                    Decline
-                  </Button>
-                </CardFooter>
+                {(withdrawal && withdrawal.status !== 'APPROVED') &&
+                withdrawal.status !== 'DECLINED' ? (
+                  <CardFooter className={styles.FirstFooter}>
+                    <Button
+                      onClick={() => {
+                        setType('approve')
+                        return setIsShown(true)
+                      }}
+                      type="button"
+                    >
+                      Approve
+                    </Button>
+                    <Button
+                      variant="flat"
+                      onClick={() => {
+                        setType('decline')
+                        return setIsShown(true)
+                      }}
+                      type="button"
+                      icon={<Close />}
+                    >
+                      Decline
+                    </Button>
+                  </CardFooter>
+                ) : (
+                  ''
+                )}
               </Card>
             </div>
             <div className={styles.Second}>
@@ -346,9 +351,7 @@ const ViewCashout = ({ history, match: { params } }) => {
               <h4>{dialogContent[type].title}</h4>
             </div>
             <div className={type === 'approve' ? 'dialogFlex' : 'dialogBody'}>
-              <p >
-                {dialogContent[type].content}
-              </p>
+              <p>{dialogContent[type].content}</p>
               {type === 'decline' && (
                 <Input
                   label="Reason"

@@ -93,15 +93,14 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         >
                           Edit Profile
                         </Button>
-                        {auth && auth.type.includes('ADMIN') && (
-                          <Button
-                            variant="flat"
-                            onClick={() => setShowStatus(true)}
-                            icon={<Bin />}
-                          >
-                            Update Status
-                          </Button>
-                        )}
+
+                        <Button
+                          variant="flat"
+                          onClick={() => setShowStatus(true)}
+                          icon={<Bin />}
+                        >
+                          Update Status
+                        </Button>
                       </div>
                     </CardHeader>
                     <CardBody className={styles.FirstBody}>
@@ -163,7 +162,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
 
                         <Badge
                           className={styles.FirstHeaderBadge}
-                          variant="success"
+                          variant={agent.status === 'ACTIVE' ? 'success' : 'danger'}
+                        
                         >
                           {agent.status}
                         </Badge>

@@ -26,7 +26,7 @@ export const formatData = (data, history, url, page, limit) => {
       totalSaved: formatCurrency(totalSaved),
       totalWithdrawn: formatCurrency(totalWithdrawn),
       status: status ? (
-        <Badge variant={status === 'ACTIVE' ? 'success' : 'pending'}>
+        <Badge variant={status === 'ACTIVE' ? 'success' : 'danger'}>
           {status}
         </Badge>
       ) : (
