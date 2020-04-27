@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Badge } from '@kudi-inc/dip'
-import { formatCurrency } from 'utils/function'
+import { formatCurrency, formatText } from 'utils/function'
 import { Eye } from 'assets/svg'
 export const formatData = (data, history, url, page, limit) => {
   return data.map(
@@ -37,6 +37,37 @@ export const formatData = (data, history, url, page, limit) => {
           icon={<Eye />}
           variant="flat"
           onClick={() => history.push(`${url}/${id}`)}
+        >
+          View
+        </Button>
+      )
+    })
+  )
+}
+
+export const formatPlan = (data, history, url, page, limit) => {
+  return data.map(
+    (
+      { collectionCount, dailyAmount, amountSaved, planStatus, plan, id },
+      index
+    ) => ({
+      sN: (page - 1) * limit + (index + 1),
+      plan: plan.title,
+      collectionCount: formatText(collectionCount),
+      amountSaved: formatCurrency(amountSaved),
+      dailyAmount: formatCurrency(dailyAmount),
+      planStatus: planStatus ? (
+        <Badge variant={planStatus === 'ACTIVE' ? 'success' : 'danger'}>
+          {planStatus}
+        </Badge>
+      ) : (
+        'N/A'
+      ),
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => history.push(`${url}/plan/${id}`)}
         >
           View
         </Button>
