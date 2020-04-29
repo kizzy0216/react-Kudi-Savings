@@ -12,13 +12,18 @@ export const Headers = [
   },
   { key: 'city', render: 'City', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
 
-  { key: 'state', render: 'State', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
-
   {
     key: 'lga',
     render: 'LGA',
     access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
   },
+  { key: 'state', render: 'State', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
+  {
+    key: 'totalRevenue',
+    render: 'Total Revenue',
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+  },
+
   {
     key: 'timeCreated',
     render: 'Time Created',

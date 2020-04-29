@@ -12,3 +12,7 @@ export const updateCustomer = customer => {
   const { id, ...rest } = customer
   return Axios.put(`/users/${id}`, rest)
 }
+export const getPlans = ({ id }) => Axios.get(`/plans/${id}/user`)
+
+export const getHistoryByPlan = ({ id, params }) =>
+  Axios.get(`plans/${id}/wallets`, clean({ params }))
