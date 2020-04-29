@@ -2,12 +2,7 @@ import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import { SideSheet } from 'evergreen-ui'
 import moment from 'moment'
-import {
-  Button,
-  Card,
-  CardHeader,
-  CardBody,
-} from '@kudi-inc/dip'
+import { Button, Card, CardHeader, CardBody } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
 import { SettingsLink, Add, ChevronLeft } from 'assets/svg'
@@ -17,7 +12,7 @@ import { TableLoading } from 'components/loading'
 import EditMarket from './edit-market'
 import AuthContext from 'context/AuthContext'
 import { Headers } from './data'
-import {formatCurrency} from "../../utils/function"
+import { formatCurrency } from '../../utils/function'
 
 const Markets = ({ history }) => {
   const [auth] = useContext(AuthContext)
@@ -34,16 +29,7 @@ const Markets = ({ history }) => {
 
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
-      ({
-        city,
-        state,
-        lga,
-        id,
-        timeCreated,
-        population,
-        totalRevenue,
-        ...rest
-      }) => ({
+      ({ city, state, lga, id, timeCreated, totalRevenue, ...rest }) => ({
         ...rest,
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
@@ -52,7 +38,7 @@ const Markets = ({ history }) => {
         city: city ? city : 'N/A',
         lga: lga ? lga : 'N/A',
         state: state ? state : 'N/A',
-        population: population ? population : 'N/A',
+        // population: population ? population : 'N/A',
         action: (
           <Button
             icon={<SettingsLink />}
@@ -64,7 +50,6 @@ const Markets = ({ history }) => {
                 lga,
                 id,
                 timeCreated,
-                population,
                 totalRevenue,
                 ...rest
               })

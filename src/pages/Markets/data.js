@@ -5,11 +5,11 @@ export const Headers = [
     access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
   },
 
-  {
-    key: 'population',
-    render: 'Population',
-    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
-  },
+  // {
+  //   key: 'population',
+  //   render: 'Population',
+  //   access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+  // },
   { key: 'city', render: 'City', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
 
   {

@@ -48,11 +48,19 @@ export const formatData = (data, history, url, page, limit) => {
 export const formatPlan = (data, history, url, page, limit) => {
   return data.map(
     (
-      { collectionCount, dailyAmount, amountSaved, planStatus, plan, id },
+      {
+        collectionCount,
+        dailyAmount,
+        amountSaved,
+        planStatus,
+        plan,
+        id,
+        title
+      },
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
-      plan: plan.title,
+      plan: `${title}(${plan.title})`,
       collectionCount: formatText(collectionCount),
       amountSaved: formatCurrency(amountSaved),
       dailyAmount: formatCurrency(dailyAmount),
