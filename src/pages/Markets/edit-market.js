@@ -56,14 +56,14 @@ const EditMarket = ({ market, setShow, refetch }) => {
             error={errors.name}
             status={errors.name && 'error'}
           />
-          <Input
+          {/* <Input
             name="population"
             label="Population Size"
             value={edited.population}
             onChange={handleChange}
             error={errors.population}
             status={errors.population && 'error'}
-          />
+          /> */}
           <Input
             name="city"
             label="City"

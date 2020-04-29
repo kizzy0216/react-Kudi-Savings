@@ -23,7 +23,6 @@ const CreateMarket = ({ history }) => {
     city: '',
     state: '',
     lga: '',
-    population: ''
   })
 
   const [errors, setErrors] = useState({})
@@ -111,7 +110,7 @@ const CreateMarket = ({ history }) => {
                   status={errors.lga && 'error'}
                   error={errors.lga}
                 />
-                <Input
+                {/* <Input
                   type="text"
                   autoComplete="population"
                   name="population"
@@ -120,7 +119,7 @@ const CreateMarket = ({ history }) => {
                   onChange={e => handleMarket(e)}
                   status={errors.population && 'error'}
                   error={errors.population}
-                />
+                /> */}
                 <div className={styles.CMFormSubmit}>
                   <Button
                     type="submit"
