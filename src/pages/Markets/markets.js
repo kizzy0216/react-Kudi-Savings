@@ -4,11 +4,9 @@ import { SideSheet } from 'evergreen-ui'
 import moment from 'moment'
 import {
   Button,
-  ButtonGroup,
   Card,
   CardHeader,
   CardBody,
-  CardFooter
 } from '@kudi-inc/dip'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
@@ -19,6 +17,7 @@ import { TableLoading } from 'components/loading'
 import EditMarket from './edit-market'
 import AuthContext from 'context/AuthContext'
 import { Headers } from './data'
+import {formatCurrency} from "../../utils/function"
 
 const Markets = ({ history }) => {
   const [auth] = useContext(AuthContext)
@@ -26,7 +25,6 @@ const Markets = ({ history }) => {
   let limit = 20
   let totalPage = 0
   const [page, setPage] = useState(1)
-  let [active, setActive] = useState('all')
   let formattedData = []
   const [market, setMarket] = useState({})
   const { data, isLoading, error, refetch } = useQuery(
@@ -36,12 +34,21 @@ const Markets = ({ history }) => {
 
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
-      ({ city, state, lga, id, timeCreated, population, ...rest }) => ({
+      ({
+        city,
+        state,
+        lga,
+        id,
+        timeCreated,
+        population,
+        totalRevenue,
+        ...rest
+      }) => ({
         ...rest,
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
           : 'N/A',
-
+        totalRevenue: formatCurrency(totalRevenue),
         city: city ? city : 'N/A',
         lga: lga ? lga : 'N/A',
         state: state ? state : 'N/A',
@@ -58,6 +65,7 @@ const Markets = ({ history }) => {
                 id,
                 timeCreated,
                 population,
+                totalRevenue,
                 ...rest
               })
               return setShow(true)
