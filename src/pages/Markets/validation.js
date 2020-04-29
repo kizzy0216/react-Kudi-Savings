@@ -12,9 +12,9 @@ export const marketValidation = values => {
   if (!values.city) {
     errors.city = 'City is required'
   }
-  if (!values.population) {
-    errors.population = 'Market population is required'
-  }
+  // if (!values.population) {
+  //   errors.population = 'Market population is required'
+  // }
 
   return errors
 }

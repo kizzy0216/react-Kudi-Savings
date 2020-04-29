@@ -58,10 +58,10 @@ const SingleMarket = ({ history, match: { params } }) => {
                       <span>Market Name</span>
                       <span> {market.name}</span>
                     </div>
-                    <div>
+                    {/* <div>
                       <span>Population</span>
                       <span> {market.population}</span>
-                    </div>
+                    </div> */}
                     <div>
                       <span>City</span>
                       <span> {market.city}</span>
