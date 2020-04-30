@@ -1,9 +1,10 @@
 import React, { useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import Table from 'components/Table'
-import { Card } from '@kudi-inc/dip'
+import { CardBody, Card } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
 import { formatPlan } from './function'
+import styles from './customers.module.scss'
 const UserPlans = ({ plans, history }) => {
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
@@ -20,16 +21,19 @@ const UserPlans = ({ plans, history }) => {
     )
   }
   return (
-    <div>
-      {isLoading && <TableLoading />}
-      {error && (
-        <span>
-          Error!
-          <button onClick={() => refetch({ disableThrow: true })}>Retry</button>
-        </span>
-      )}
-      {data && data.data && (
-        <Card>
+    <Card>
+    <CardBody className={styles.Customers}>
+      <div className={styles.CustomersHeader}>
+        {isLoading && <TableLoading />}
+        {error && (
+          <span>
+            Error!
+            <button onClick={() => refetch({ disableThrow: true })}>
+              Retry
+            </button>
+          </span>
+        )}
+        {data && data.data && (
           <Table
             placeholder="User Plan"
             column={[
@@ -57,9 +61,10 @@ const UserPlans = ({ plans, history }) => {
             ]}
             data={formattedData}
           />
-        </Card>
-      )}
-    </div>
+        )}
+      </div>
+    </CardBody>
+    </Card>
   )
 }
 export default UserPlans
