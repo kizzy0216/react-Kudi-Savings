@@ -129,12 +129,12 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> SAVINGS PLAN</h3>
 
-                    <Badge
+                  {customer && customer.status && <Badge
                       className={styles.FirstHeaderBadge}
                       variant="success"
                     >
                       {customer.status}
-                    </Badge>
+                    </Badge>} 
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -151,11 +151,14 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span> Total Withdrawn</span>
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
+                  <div className={styles.FirstBodyFlex}>
+                  <span> Wallet Balance</span>
+                  <span><b>{formatCurrency(walletBalance)}</b> </span>
+                  </div>
                 </CardBody>
-               
               </Card>
             </div>
-            <div className={styles.Second}>
+            {/* <div className={styles.Second}>
               <Card>
                 <div className={styles.Wallet}>
                   <CardBody className={styles.WalletContent}>
@@ -163,8 +166,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <h2>{formatCurrency(walletBalance)}</h2>
                   </CardBody>
                 </div>
-              </Card>
-              <Card>
+              </Card> */}
+              {/* <Card>
                 <div className={styles.Withdrawal}>
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
@@ -183,43 +186,42 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </Button>
                   </CardBody>
                 </div>
+              </Card> */}
+
+              {/* <Card>
+                <CardHeader className={styles.FirstHeader}>
+                  <h3>DSA</h3>
+                  <Button variant="flat" icon={<SettingsLink />}>
+                    View Profile
+                  </Button>
+                </CardHeader>
+                <CardBody>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Full Name: </span>
+                    <span>
+                      {`${
+                        customer && customer.agent
+                          ? customer.agent.lastName
+                          : ''
+                      } ${
+                        customer && customer.agent
+                          ? customer.agent.firstName
+                          : 'N/A'
+                      }`}
+                    </span>
+                  </div>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Email: </span>
+                    <span>
+                      {customer && customer.agent
+                        ? customer.agent.email
+                        : 'N/A'}
+                    </span>
+                  </div>
+                </CardBody>
               </Card>
-              {auth && auth.type.includes('ADMIN') && (
-                <Card>
-                  <CardHeader className={styles.FirstHeader}>
-                    <h3>DSA</h3>
-                    <Button variant="flat" icon={<SettingsLink />}>
-                      View Profile
-                    </Button>
-                  </CardHeader>
-                  <CardBody>
-                    <div className={styles.FirstBodyFlex}>
-                      <span>Full Name: </span>
-                      <span>
-                        {`${
-                          customer && customer.agent
-                            ? customer.agent.lastName
-                            : ''
-                        } ${
-                          customer && customer.agent
-                            ? customer.agent.firstName
-                            : 'N/A'
-                        }`}
-                      </span>
-                    </div>
-                    <div className={styles.FirstBodyFlex}>
-                      <span>Email: </span>
-                      <span>
-                        {customer && customer.agent
-                          ? customer.agent.email
-                          : 'N/A'}
-                      </span>
-                    </div>
-                  </CardBody>
-                </Card>
-              )}
-            </div>
-            <div>
+            </div> */}
+            <div className={styles.Second}>
               <UserPlans plans={userPlans} history={history} />
             </div>
             {customer &&
