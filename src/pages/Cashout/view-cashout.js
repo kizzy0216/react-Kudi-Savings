@@ -34,7 +34,7 @@ const ViewCashout = ({ history, match: { params } }) => {
     await processWithdrawal(params.id, status, reason)
       .then(({ data }) => {
         setLoading(false)
-        toaster.success('Cashout Request Approved')
+        toaster.success('Cashout Request Processed')
         refetch({ disableThrow: true })
         setReason({ reason: '' })
         setIsShown(false)
