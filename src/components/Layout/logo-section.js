@@ -17,13 +17,13 @@ const LogoSection = ({ user, history }) => {
           <span>{user.firstName ? user.firstName : user.username}</span>
         </div>
       </div>
-      <div className={styles.logoSectionFlex}>
+      {/* <div className={styles.logoSectionFlex}>
         <Wallet />
         <div className={styles.logoSectionContent}>
           <p>Wallet Balance</p>
           <span>{formatCurrency(user.walletBalance)}</span>
         </div>
-      </div>
+      </div> */}
       <div className={styles.logoSectionFlex}>
         <Button
           variant="flat"

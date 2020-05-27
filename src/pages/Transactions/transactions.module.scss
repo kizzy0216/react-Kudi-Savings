@@ -38,4 +38,18 @@
   align-items: center;
   text-transform: uppercase;
   font-weight: normal;
+  .danger {
+    color: $danger;
+    margin-left: 0.5em;
+    svg{
+      width: .8em;
+    }
+  }
+  .danger,
+  .download {
+    font-size: 0.93em;
+    margin-left: 1.5em;
+    
+  }
+  
 }
