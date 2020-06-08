@@ -5,3 +5,6 @@ export const getTransactions = async params =>
 
 export const getTransaction = async ({ id }) =>
   await Axios.get(`/collections/${id}/details`)
+
+export const downloadTransaction = async params =>
+  await Axios.get(`/collections/download`, clean({ params }))

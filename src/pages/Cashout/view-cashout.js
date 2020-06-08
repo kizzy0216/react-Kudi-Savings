@@ -41,8 +41,9 @@ const ViewCashout = ({ history, match: { params } }) => {
       })
       .catch(data => {
         setLoading(false)
+
         if (data && data.data.message) return toaster.danger(data.data.message)
-        toaster.danger('Top Up Wallet Failed')
+        toaster.danger('Withdrawal request failed')
       })
   }
   let dialogContent = {
@@ -159,7 +160,8 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <span>{formatCurrency(withdrawal.amount)}</span>
                   </div>
                 </CardBody>
-                {(withdrawal && withdrawal.status !== 'APPROVED') &&
+                {withdrawal &&
+                withdrawal.status !== 'APPROVED' &&
                 withdrawal.status !== 'DECLINED' ? (
                   <CardFooter className={styles.FirstFooter}>
                     <Button

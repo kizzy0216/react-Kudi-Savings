@@ -1,5 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
+import { toaster } from 'evergreen-ui'
+import fileDownload from 'js-file-download'
 import moment from 'moment'
 import {
   Card,
@@ -11,9 +13,9 @@ import {
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
-import { ChevronLeft, Close } from 'assets/svg'
+import { ChevronLeft, Close, DownloadIcon } from 'assets/svg'
 import styles from './transactions.module.scss'
-import { getTransactions } from 'services/transactions'
+import { getTransactions, downloadTransaction } from 'services/transactions'
 import { TableLoading } from 'components/loading'
 import { formatData } from './function'
 
@@ -35,6 +37,7 @@ const Transactions = ({ history }) => {
     ['Transactions', { page, limit, from, to }],
     getTransactions
   )
+
   if (data && data.data) {
     formattedData = formatData(data.data.data.list, history, url, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -44,7 +47,11 @@ const Transactions = ({ history }) => {
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
-      setFrom(moment(startDate).subtract(1, "days").format('YYYY-MM-DD HH:mm:ss'))
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
       setEndDate(endDate)
@@ -55,6 +62,18 @@ const Transactions = ({ history }) => {
 
   const onFocusChange = focusedInput => {
     setfocusedInput(focusedInput)
+  }
+
+  const handleDownload = async e => {
+    try {
+      e.preventDefault()
+      toaster.success('Please wait, file download in process')
+      const response = await downloadTransaction({ to, from, page, limit })
+      fileDownload(response.data, 'transactions.csv')
+    } catch (e) {
+      toaster.danger('Download failed')
+      return
+    }
   }
   return (
     <Fragment>
@@ -80,9 +99,22 @@ const Transactions = ({ history }) => {
                   isOutsideRange={() => false}
                 />
               </Filters>
+              {to && from && (
+                <Button
+                  type="button"
+                  variant="flat"
+                  className={styles.download}
+                  onClick={e => handleDownload(e)}
+                  icon={<DownloadIcon />}
+                >
+                  Download Result (Page {page})
+                </Button>
+              )}
               {showReset && (
-                <Close
-                  className="danger"
+                <Button
+                  type="button"
+                  variant="flat"
+                  className={styles.danger}
                   onClick={() => {
                     setFrom('')
                     setTo('')
@@ -90,7 +122,10 @@ const Transactions = ({ history }) => {
                     setEndDate('')
                     return setShowReset(false)
                   }}
-                />
+                  icon={<Close />}
+                >
+                  Clear
+                </Button>
               )}
             </div>
           </CardHeader>

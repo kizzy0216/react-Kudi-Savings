@@ -4,6 +4,7 @@ import { Button } from '@kudi-inc/dip'
 import { formatCurrency, formatText } from 'utils/function'
 import { Eye } from 'assets/svg'
 
+
 export const formatData = (data, history, url, page, limit) => {
   return data.map(
     (
@@ -39,3 +40,4 @@ export const formatData = (data, history, url, page, limit) => {
     })
   )
 }
+
