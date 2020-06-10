@@ -5,7 +5,6 @@ import {
   CardBody,
   Button,
   CardHeader,
-  ButtonGroup,
   Badge
 } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
@@ -21,7 +20,6 @@ import AuthContext from 'context/AuthContext'
 const Agents = ({ history }) => {
   let { url } = useRouteMatch()
   const [auth] = useContext(AuthContext)
-  let [active, setActive] = useState('all')
   const [page, setPage] = useState(1)
   let totalPage = 0
   let limit = 20
@@ -85,26 +83,6 @@ const Agents = ({ history }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             All
-            {/* <ButtonGroup>
-              <Button
-                active={active === 'all'}
-                onClick={() => setActive('all')}
-              >
-                All
-              </Button>
-              <Button
-                active={active === 'highest'}
-                onClick={() => setActive('highest')}
-              >
-                Highest
-              </Button>
-              <Button
-                active={active === 'highest'}
-                onClick={() => setActive('highest')}
-              >
-                Lowest
-              </Button>
-            </ButtonGroup> */}
           </CardHeader>
           <CardBody className={styles.Agent}>
             {isLoading && <TableLoading />}
