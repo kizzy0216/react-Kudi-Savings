@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useReducer } from 'react'
 import {
   Card,
   CardBody,
@@ -12,52 +12,79 @@ import { useQuery } from 'react-query'
 import { getWithdrawals } from 'services/cashout'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
+import Select from 'components/Select'
 import styles from './cashout.module.scss'
-import { formatData } from './function'
+import {
+  formatData,
+  ParamsReducer,
+  DefaultParams,
+  statusOptions,
+  TableColumns
+} from './function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Search } from 'assets/svg'
 const Cashout = ({ history }) => {
   let { url } = useRouteMatch()
-  const [page, setPage] = useState(1)
-  let [number, setNumber] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  let [phoneNumber, setPhoneNumber] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [showReset, setShowReset] = useState(false)
-  const [focusedInput, setfocusedInput] = useState(null)
+  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = 50
   let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
-    ['Withdrawals', { page, limit, phoneNumber, from, to }],
+    [
+      'Withdrawals',
+      {
+        page: params.page,
+        limit,
+        phoneNumber: params.phoneNumber,
+        from: params.from,
+        to: params.to,
+        status: params.status
+      }
+    ],
     getWithdrawals
   )
 
   if (data && data.data) {
-    formattedData = formatData(data.data.data.list, history, url, page, limit)
+    formattedData = formatData(
+      data.data.data.list,
+      history,
+      url,
+      params.page,
+      limit
+    )
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setStartDate(startDate)
-      setFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
-      )
+      setParams({
+        type: 'UPDATE_DATE',
+        payload: {
+          startDate: startDate,
+          from: moment(startDate)
+            .subtract(1, 'days')
+            .format('YYYY-MM-DD HH:mm:ss'),
+          showReset: true
+        }
+      })
     }
     if (endDate) {
-      setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setParams({
+        type: 'UPDATE_DATE',
+        payload: {
+          endDate: endDate,
+          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
+          showReset: true
+        }
+      })
     }
-    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setfocusedInput(focusedInput)
+    setParams({
+      type: 'UPDATE_FOCUSEDINPUT',
+      payload: focusedInput
+    })
   }
   // const handleSearch = ({ target: { value } }) => {
   //   const debounced_doSearch = debounce(() => setPhoneNumber(value), 1000)
@@ -71,31 +98,38 @@ const Cashout = ({ history }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-          Cashout Requests
-            {totalData
-              ? ` - ${totalData.toLocaleString()}`
-              : ''}
+            Cashout Requests
+            {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
-                  displayFormat="DD MMM, YY"
-                  focusedInput={focusedInput}
-                  startDate={startDate}
-                  endDate={endDate}
+                  displayFormat="DD/MM/YYYY"
+                  focusedInput={params.focusedInput}
+                  startDate={params.startDate}
+                  endDate={params.endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
-              {showReset && (
+              <Select
+                active={params.status}
+                options={statusOptions}
+                onSelect={value =>
+                  setParams({
+                    type: 'UPDATE_STATUS',
+                    payload: { status: value, showReset: true }
+                  })
+                }
+              />
+              {params.showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setFrom('')
-                    setTo('')
-                    setStartDate('')
-                    setEndDate('')
-                    return setShowReset(false)
+                    setParams({
+                      type: 'RESET'
+                    })
+                 
                   }}
                 />
               )}
@@ -113,42 +147,7 @@ const Cashout = ({ history }) => {
             )}
             {data && (
               <Table
-                column={[
-                  {
-                    key: 'name',
-                    render: 'Name'
-                  },
-                  {
-                    key: 'planTitle',
-                    render: 'Plan'
-                  },
-                  {
-                    key: 'marketName',
-                    render: 'Market Name'
-                  },
-                  {
-                    key: 'agentName',
-                    render: 'Agent Name'
-                  },
-                  {
-                    key: 'managerName',
-                    render: 'Manager Name'
-                  },
-                  { key: 'amount', render: 'Amount' },
-
-                  {
-                    key: 'status',
-                    render: 'Status'
-                  },
-                  {
-                    key: 'timeCreated',
-                    render: 'Time Requested'
-                  },
-                  {
-                    key: 'action',
-                    render: ''
-                  }
-                ]}
+                column={TableColumns}
                 placeholder="cashout"
                 data={formattedData}
               />
@@ -156,20 +155,30 @@ const Cashout = ({ history }) => {
           </CardBody>
           {data && (
             <div className="pagination">
-              {page > 1 && (
+              {params.page > 1 && (
                 <Button
                   variant="flat"
-                  onClick={() => setPage(page - 1)}
+                  onClick={() =>
+                    setParams({
+                      type: 'UPDATE_PAGE',
+                      payload: params.page - 1
+                    })
+                  }
                   icon={<ChevronLeft />}
                 ></Button>
               )}
               <p>
-                Page {page} of {totalPage}
+                Page {params.page} of {totalPage}
               </p>
               {formattedData.length === limit && (
                 <Button
                   variant="flat"
-                  onClick={() => setPage(page + 1)}
+                  onClick={() =>
+                    setParams({
+                      type: 'UPDATE_PAGE',
+                      payload: params.page + 1
+                    })
+                  }
                 ></Button>
               )}
             </div>

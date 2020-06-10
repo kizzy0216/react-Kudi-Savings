@@ -45,6 +45,10 @@ const UserPlans = ({ plans, history }) => {
                 key: 'collectionCount',
                 render: 'Collection Count'
               },
+              {
+                key: 'duration',
+                render: 'Duration'
+              },
               { key: 'dailyAmount', render: 'Daily Amount' },
 
               { key: 'amountSaved', render: 'Amount Saved' },

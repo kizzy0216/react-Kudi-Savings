@@ -10,7 +10,7 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Eye, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink, ChevronLeft, Close } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -23,7 +23,6 @@ import UserPlans from './userPlans'
 
 const CustomerProfile = ({ history, match: { params } }) => {
   const [auth] = useContext(AuthContext)
-  let [show, setShow] = useState(false)
   let [showEdit, setShowEdit] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
