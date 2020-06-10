@@ -59,60 +59,6 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
-export const DefaultParams = {
-  page: 1,
-  startDate: '',
-  endDate: '',
-  from: '',
-  to: '',
-  phoneNumber: '',
-  number: '',
-  showReset: false,
-  focusedInput: null,
-  status: ''
-}
-
-export const ParamsReducer = (params, { type, payload }) => {
-  console.log(payload, 'chiiiiiiiiiiiii')
-  switch (type) {
-    case 'UPDATE_PAGE':
-      return {
-        ...params,
-        page: payload
-      }
-    case 'UPDATE_STATUS':
-      return {
-        ...params,
-        ...payload
-      }
-    case 'UPDATE_PHONENUMBER':
-      return {
-        ...params,
-        phoneNumber: payload
-      }
-    case 'UPDATE_NUMBER':
-      return {
-        ...params,
-        number: payload
-      }
-
-    case 'UPDATE_DATE':
-      return {
-        ...params,
-        ...payload
-      }
-    case 'UPDATE_FOCUSEDINPUT':
-      return {
-        ...params,
-        focusedInput: payload
-      }
-    case 'RESET':
-      return DefaultParams
-    default:
-      return params
-  }
-}
-
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
