@@ -1,0 +1,74 @@
+ @import '../../styles/variables.scss';
+ @import '../../styles/breakpoint.scss';
+.Select {
+  height: 100%;
+  width: 100%;
+  background: $light-grey;
+  display: flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  align-items: center;
+  font-size: 1rem;
+  position: relative;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid $border-grey;
+  height: 1.56em;
+  min-width: 10em;
+  border-radius: 3px;
+
+  &Active {
+    font-size: 1.2em;
+    color: $grey;
+    display: flex;
+    display: -webkit-flex;
+    display: -moz-flex;
+    justify-content: space-between;
+    text-transform: capitalize;
+    width: 100%;
+    outline: none;
+    padding: 0 1.6em;
+    font-weight: 300;
+    @include md {
+      padding: 0 0.72em;
+      font-size: 0.88em;
+      font-size: 0.72em;
+      justify-content: space-between;
+      align-items: center;
+ 
+    }
+    svg {
+      width: 0.83em;
+    }
+  }
+  &Options {
+    position: absolute;
+    top: 2.3em;
+    background: $white;
+    width: 100%;
+    border-radius: 3px;
+    transition: all 0.5s ease;
+    outline: none;
+    z-index: 3;
+    border: $light-grey;
+    color:$grey;
+    box-shadow: 4px 6px 50px rgba(0, 0, 0, 0.04);
+    font-size: .72em;
+    .option {
+      height: 3.36em;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      text-transform: capitalize;
+      border: 1px solid #f2f2f2;
+      border-radius: 3px;
+      font-weight: 300;
+      cursor: pointer;
+      outline: none;
+      &:hover {
+        color: $white;
+        background: $focused-blue;
+      }
+    }
+  }
+}

@@ -50,6 +50,7 @@ export const formatPlan = (data, history, url, page, limit) => {
     (
       {
         collectionCount,
+        duration,
         dailyAmount,
         amountSaved,
         planStatus,
@@ -62,6 +63,7 @@ export const formatPlan = (data, history, url, page, limit) => {
       sN: (page - 1) * limit + (index + 1),
       plan: `${title}(${plan.title})`,
       collectionCount: formatText(collectionCount),
+      duration: `${formatText(duration)} days`,
       amountSaved: formatCurrency(amountSaved),
       dailyAmount: formatCurrency(dailyAmount),
       planStatus: planStatus ? (
