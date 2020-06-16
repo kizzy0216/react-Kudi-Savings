@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getDefaultAuth, setLogout } from '../context/AuthContext'
 
 let Axios = axios.create({
-  baseURL: 'https://savings-dev.kudi.ng',
+  baseURL: process.env.REACT_APP_BASEURL,
   headers: {
     'Content-Type': 'application/json'
   }
@@ -42,4 +42,4 @@ export default Axios
 
 // Media Service Request Config
 export const MediaService = axios.create()
-MediaService.defaults.baseURL = 'https://staging-media-service.herokuapp.com'
+MediaService.defaults.baseURL = process.env.REACT_APP_MEDIA
