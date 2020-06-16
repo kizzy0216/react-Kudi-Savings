@@ -4,7 +4,6 @@ import { Button } from '@kudi-inc/dip'
 import { formatCurrency, formatText } from 'utils/function'
 import { Eye } from 'assets/svg'
 
-
 export const formatData = (data, history, url, page, limit) => {
   return data.map(
     (
@@ -41,3 +40,26 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
+export const TableColumns = [
+  { key: 'sN', render: 'S/N' },
+  {
+    key: 'marketName',
+    render: 'Market'
+  },
+  { key: 'agentName', render: 'DSA' },
+  {
+    key: 'plan',
+    render: 'Plan'
+  },
+  {
+    key: 'amount',
+    render: 'Amount'
+  },
+  {
+    key: 'totalAmountSaved',
+    render: 'Total Saved'
+  },
+  { key: 'timeCreated', render: 'Date Created' },
+  { key: 'collectionDate', render: 'Collection Date' },
+  { key: 'action', render: 'action' }
+]

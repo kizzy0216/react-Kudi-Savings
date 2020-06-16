@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import { useQuery } from 'react-query'
 import {
   Card,
   CardBody,
