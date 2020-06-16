@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import moment from 'moment'
 import { SideSheet, Dialog } from 'evergreen-ui'
 import {
   Card,
