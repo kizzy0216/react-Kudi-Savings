@@ -17,7 +17,7 @@ import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
-import { formatCurrency, formatText, fecthImage } from 'utils/function'
+import { formatCurrency, formatText } from 'utils/function'
 
 const ViewCashout = ({ history, match: { params } }) => {
   let [isShown, setIsShown] = useState(false)
