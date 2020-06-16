@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useReducer } from 'react'
+import React, { Fragment, useReducer } from 'react'
 import {
   Card,
   CardBody,
@@ -14,15 +14,10 @@ import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import Select from 'components/Select'
 import styles from './cashout.module.scss'
-import {
-  formatData,
-  ParamsReducer,
-  DefaultParams,
-  statusOptions,
-  TableColumns
-} from './function'
+import { formatData, statusOptions, TableColumns } from './function'
+import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
-import { Close, ChevronLeft, Search } from 'assets/svg'
+import { Close, ChevronLeft } from 'assets/svg'
 const Cashout = ({ history }) => {
   let { url } = useRouteMatch()
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
@@ -129,7 +124,6 @@ const Cashout = ({ history }) => {
                     setParams({
                       type: 'RESET'
                     })
-                 
                   }}
                 />
               )}
