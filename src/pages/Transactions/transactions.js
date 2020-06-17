@@ -1,8 +1,10 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useReducer } from 'react'
+// import { debounce } from 'lodash'
+import moment from 'moment'
 import { useQuery } from 'react-query'
 import { toaster } from 'evergreen-ui'
 import fileDownload from 'js-file-download'
-import moment from 'moment'
+
 import {
   Card,
   CardBody,
@@ -17,64 +19,97 @@ import { ChevronLeft, Close, DownloadIcon } from 'assets/svg'
 import styles from './transactions.module.scss'
 import { getTransactions, downloadTransaction } from 'services/transactions'
 import { TableLoading } from 'components/loading'
-import { formatData } from './function'
+import { formatData, TableColumns } from './function'
+import { ParamsReducer, DefaultParams } from 'utils/function'
 
 const Transactions = ({ history }) => {
   let { url } = useRouteMatch()
-  const [page, setPage] = useState(1)
-  const [startDate, setStartDate] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [showReset, setShowReset] = useState(false)
-  const [focusedInput, setfocusedInput] = useState(null)
+  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let limit = 50
   let totalData = 0
   let totalPage = 0
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['Transactions', { page, limit, from, to }],
+    [
+      'Transactions',
+      {
+        page: params.page,
+        limit,
+        from: params.from,
+        to: params.to
+      }
+    ],
     getTransactions
   )
 
   if (data && data.data) {
-    formattedData = formatData(data.data.data.list, history, url, page, limit)
+    formattedData = formatData(
+      data.data.data.list,
+      history,
+      url,
+      params.page,
+      limit
+    )
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setStartDate(startDate)
-      setFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
-      )
+      setParams({
+        type: 'UPDATE_DATE',
+        payload: {
+          startDate: startDate,
+          from: moment(startDate)
+            .subtract(1, 'days')
+            .format('YYYY-MM-DD HH:mm:ss'),
+          showReset: true
+        }
+      })
     }
     if (endDate) {
-      setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setParams({
+        type: 'UPDATE_DATE',
+        payload: {
+          endDate: endDate,
+          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
+          showReset: true
+        }
+      })
     }
-    setShowReset(true)
   }
 
   const onFocusChange = focusedInput => {
-    setfocusedInput(focusedInput)
+    setParams({
+      type: 'UPDATE_FOCUSEDINPUT',
+      payload: focusedInput
+    })
   }
 
   const handleDownload = async e => {
     try {
       e.preventDefault()
       toaster.success('Please wait, file download in process')
-      const response = await downloadTransaction({ to, from, page, limit })
+      const response = await downloadTransaction({
+        to: params.to,
+        from: params.from,
+        page: params.page,
+        limit
+      })
       fileDownload(response.data, 'transactions.csv')
     } catch (e) {
       toaster.danger('Download failed')
       return
     }
   }
+  // const handleSearch = ({ target: { value } }) => {
+  //   const debounced_doSearch = debounce(
+  //     () => setParams({ type: 'UPDATE_PHONENUMBER', payload: value }),
+  //     1000
+  //   )
+  //   debounced_doSearch()
+  // }
   return (
     <Fragment>
       <Header>
@@ -88,18 +123,29 @@ const Transactions = ({ history }) => {
               {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             </h3>
             <div className="flex">
+              {/* <input
+                value={params.phoneNumber}
+                name="phoneNumber"
+                placeholder="Search by number"
+                onChange={e =>
+                  setParams({
+                    type: 'UPDATE_PHONENUMBER',
+                    payload: e.target.value
+                  })
+                }
+              /> */}
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
-                  displayFormat="DD MMM, YY"
-                  focusedInput={focusedInput}
-                  startDate={startDate}
-                  endDate={endDate}
+                  displayFormat="DD/MM/YYYY"
+                  focusedInput={params.focusedInput}
+                  startDate={params.startDate}
+                  endDate={params.endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
-              {to && from && (
+              {params.to && params.from && (
                 <Button
                   type="button"
                   variant="flat"
@@ -107,21 +153,19 @@ const Transactions = ({ history }) => {
                   onClick={e => handleDownload(e)}
                   icon={<DownloadIcon />}
                 >
-                  Download Result (Page {page})
+                  Download Result (Page {params.page})
                 </Button>
               )}
-              {showReset && (
+              {params.showReset && (
                 <Button
                   type="button"
                   variant="flat"
                   className={styles.danger}
-                  onClick={() => {
-                    setFrom('')
-                    setTo('')
-                    setStartDate('')
-                    setEndDate('')
-                    return setShowReset(false)
-                  }}
+                  onClick={() =>
+                    setParams({
+                      type: 'RESET'
+                    })
+                  }
                   icon={<Close />}
                 >
                   Clear
@@ -142,29 +186,7 @@ const Transactions = ({ history }) => {
               )}
               {data && (
                 <Table
-                  column={[
-                    { key: 'sN', render: 'S/N' },
-                    {
-                      key: 'marketName',
-                      render: 'Market'
-                    },
-                    { key: 'agentName', render: 'DSA' },
-                    {
-                      key: 'plan',
-                      render: 'Plan'
-                    },
-                    {
-                      key: 'amount',
-                      render: 'Amount'
-                    },
-                    {
-                      key: 'totalAmountSaved',
-                      render: 'Total Saved'
-                    },
-                    { key: 'timeCreated', render: 'Date Created' },
-                    { key: 'collectionDate', render: 'Collection Date' },
-                    { key: 'action', render: 'action' }
-                  ]}
+                  column={TableColumns}
                   placeholder="transactions"
                   data={formattedData}
                 />
@@ -173,20 +195,30 @@ const Transactions = ({ history }) => {
           </CardBody>
           {data && (
             <div className="pagination">
-              {page > 1 && (
+              {params.page > 1 && (
                 <Button
                   variant="flat"
-                  onClick={() => setPage(page - 1)}
+                  onClick={() =>
+                    setParams({
+                      type: 'UPDATE_PAGE',
+                      payload: params.page - 1
+                    })
+                  }
                   icon={<ChevronLeft />}
                 ></Button>
               )}
               <p>
-                Page {page} of {totalPage}
+                Page {params.page} of {totalPage}
               </p>
               {formattedData.length === limit && (
                 <Button
                   variant="flat"
-                  onClick={() => setPage(page + 1)}
+                  onClick={() =>
+                    setParams({
+                      type: 'UPDATE_PAGE',
+                      payload: params.page + 1
+                    })
+                  }
                 ></Button>
               )}
             </div>

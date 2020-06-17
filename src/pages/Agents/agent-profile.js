@@ -1,6 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
-import moment from 'moment'
 import { SideSheet, Dialog } from 'evergreen-ui'
 import {
   Card,
@@ -29,7 +28,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   const [fundAmount, setFundAmount] = useState(0)
   let [page, setPage] = useState(1)
   let [pg, setPg] = useState(1)
-  let [show, setShow] = useState(false)
+  // let [show, setShow] = useState(false)
   let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
