@@ -1,5 +1,5 @@
 import React, { Fragment, useReducer } from 'react'
-// import { debounce } from 'lodash'
+import { debounce } from 'lodash'
 import moment from 'moment'
 import { useQuery } from 'react-query'
 import { toaster } from 'evergreen-ui'
@@ -15,7 +15,7 @@ import {
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
-import { ChevronLeft, Close, DownloadIcon } from 'assets/svg'
+import { ChevronLeft, Close, DownloadIcon, Search } from 'assets/svg'
 import styles from './transactions.module.scss'
 import { getTransactions, downloadTransaction } from 'services/transactions'
 import { TableLoading } from 'components/loading'
@@ -37,7 +37,8 @@ const Transactions = ({ history }) => {
         page: params.page,
         limit,
         from: params.from,
-        to: params.to
+        to: params.to,
+        phoneNumber: params.phoneNumber
       }
     ],
     getTransactions
@@ -103,13 +104,13 @@ const Transactions = ({ history }) => {
       return
     }
   }
-  // const handleSearch = ({ target: { value } }) => {
-  //   const debounced_doSearch = debounce(
-  //     () => setParams({ type: 'UPDATE_PHONENUMBER', payload: value }),
-  //     1000
-  //   )
-  //   debounced_doSearch()
-  // }
+  const handleSearch = ({ target: { value } }) => {
+    const debounced_doSearch = debounce(
+      () => setParams({ type: 'UPDATE_PHONENUMBER', payload: value }),
+      1000
+    )
+    debounced_doSearch()
+  }
   return (
     <Fragment>
       <Header>
@@ -127,13 +128,26 @@ const Transactions = ({ history }) => {
                 value={params.phoneNumber}
                 name="phoneNumber"
                 placeholder="Search by number"
-                onChange={e =>
-                  setParams({
-                    type: 'UPDATE_PHONENUMBER',
-                    payload: e.target.value
-                  })
-                }
+                onChange={e => handleSearch(e)}
               /> */}
+              <div className={[styles.marginSearch,"header-search"].join("")}>
+                <input
+                  value={params.phoneNumber}
+                  name="phoneNumber"
+                  placeholder="Search by Phone number"
+                  onChange={e => handleSearch(e)}
+                />
+                {params.phoneNumber.length > 1 ? (
+                  <Close
+                    className="danger"
+                    onClick={() => {
+                      setParams({ type: 'UPDATE_PHONENUMBER', payload: '' })
+                    }}
+                  />
+                ) : (
+                  <Search />
+                )}
+              </div>
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}

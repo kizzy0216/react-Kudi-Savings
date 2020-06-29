@@ -182,6 +182,7 @@
       background: initial;
       padding: 0;
       box-shadow: none;
+      margin-left: 0.5em;
     }
 
     :global {
@@ -304,6 +305,7 @@
       align-items: center;
       justify-content: space-between;
       width: 18em;
+      height: 2em;
       input {
         width: 100%;
         border: none;
@@ -315,13 +317,16 @@
         }
       }
       svg[class='danger'] {
-       
         cursor: pointer;
         path {
           fill: $danger;
         }
       }
+      & + .marginSearch {
+        margin-right: 0.5em;
+      }
     }
+
     div[class*='kudi-dip-select-options'] {
       max-height: 16.67em;
       overflow: scroll;
