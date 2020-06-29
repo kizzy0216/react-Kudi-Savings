@@ -1,7 +1,7 @@
 import React, { Fragment, useState } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { Dialog, toaster } from 'evergreen-ui'
+import { Dialog, toaster, SideSheet } from 'evergreen-ui'
 import {
   Badge,
   Button,
@@ -12,18 +12,20 @@ import {
   Input
 } from '@kudi-inc/dip'
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
-import { Close, ChevronLeft } from 'assets/svg'
+import { Close, ChevronLeft, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText } from 'utils/function'
+import Kyc from './kyc'
 
 const ViewCashout = ({ history, match: { params } }) => {
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
   let [reason, setReason] = useState({ reason: '' })
+  let [showKyc, setShowKyc] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
     ['Withdrawal', { id: params.id }],
     getWithdrawal
@@ -83,7 +85,7 @@ const ViewCashout = ({ history, match: { params } }) => {
               <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
-                    <h3> USER INFORMATION</h3>
+                    <h3> USER INFORMATION </h3>
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -188,6 +190,16 @@ const ViewCashout = ({ history, match: { params } }) => {
                 ) : (
                   ''
                 )}
+                <div className={styles.Kyc}>
+                  <Button
+                    type="button"
+                    variant="flat"
+                    icon={<Eye />}
+                    onClick={() => setShowKyc(true)}
+                  >
+                    View KYC
+                  </Button>
+                </div>
               </Card>
             </div>
             <div className={styles.Second}>
@@ -324,7 +336,7 @@ const ViewCashout = ({ history, match: { params } }) => {
                       </span>
                     </div>
                     <div className={styles.FirstBodyFlex}>
-                      <span> Zonal Phone Number</span>
+                      <span> Zonal Phone Number </span>
                       <span>
                         {withdrawal.agent &&
                           withdrawal.agent.manager &&
@@ -337,6 +349,7 @@ const ViewCashout = ({ history, match: { params } }) => {
             </div>
           </div>
         )}
+
         {isShown && (
           <Dialog
             isShown={isShown}
@@ -380,6 +393,12 @@ const ViewCashout = ({ history, match: { params } }) => {
               </Button>
             </div>
           </Dialog>
+        )}
+
+        {showKyc && (
+          <SideSheet isShown={showKyc} onCloseComplete={setShowKyc}>
+            <Kyc setShow={setShowKyc} withdrawal={withdrawal} />
+          </SideSheet>
         )}
       </Content>
     </Fragment>

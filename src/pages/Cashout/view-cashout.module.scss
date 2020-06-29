@@ -39,7 +39,7 @@
       grid-template-columns: 1fr 1fr;
       &Profile {
         width: 12.92em;
-      
+
         img {
           border-radius: 50%;
           width: 12.92em;
@@ -101,10 +101,71 @@
         color: $danger;
       }
     }
+    border: 0;
+  }
+  .Kyc {
+    background: #f8fbff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $sky-blue;
+    height: 2.5em;
+    border-top: 1px solid #f0f4f9;
+    margin-top: 1em;
+    font-weight: 500;
+    button {
+      color: inherit;
+    }
+    svg {
+      path {
+        fill: $sky-blue;
+      }
+    }
   }
 }
 
 .Second {
   margin-top: 1.67em;
 }
+.verifyImage {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background: #f8fbff;
+  width: 25em;
+  height: 25em;
+  margin: auto;
+  p {
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 0.72em;
+    &:last-child {
+      margin-bottom: 1.11em;
+    }
+  }
 
+  img {
+    object-fit: cover;
+    object-position: center;
+    width: 21em;
+    height: 21em;
+    margin: auto;
+  }
+}
+.Edit {
+  &Header {
+    font-weight: normal;
+    color: $text-darker;
+    text-transform: uppercase;
+  }
+  &Body {
+    padding: 2.5em 3em;
+    div {
+      margin-bottom: 1.67em;
+    }
+    button {
+      margin-top: 4em;
+    }
+  }
+}

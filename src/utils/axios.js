@@ -31,11 +31,15 @@ Axios.interceptors.response.use(
   response => {
     return response
   },
-  ({ response }) => {
-    if (response && response.status === 307) {
+  e => {
+    if (e?.response && e?.response?.status === 307) {
       return setLogout()
     }
-    return Promise.reject(response)
+    if (e?.message && e.message === 'Network Error') {
+      return setLogout()
+    }
+
+    return Promise.reject(e?.response)
   }
 )
 export default Axios
