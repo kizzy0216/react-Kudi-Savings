@@ -70,6 +70,7 @@ const Login = ({ auth, history }) => {
 
         <Input
           id="password"
+          placeholder="******"
           onChange={handleChange}
           value={values.password}
           name="password"

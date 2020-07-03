@@ -45,7 +45,7 @@ const Customers = ({ history }) => {
             {totalData ? ` - ${totalData.toLocaleString()}` : ''}
             <div className="header-search">
               <input
-                placeholder="SEARCH BY PHONE NUMBER"
+                placeholder="Search by Phone Number"
                 value={number}
                 onChange={e => {
                   setNumber(e.target.value)
