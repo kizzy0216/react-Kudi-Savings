@@ -27,13 +27,15 @@ Dashboard
 
 ## Technologies Used
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/)create-react-app]. React is a JavaScript library for creating user interfaces. React makes it painless to build interactive UI. 
+This project was bootstrapped with [Create React App](https://github.com/facebook/). React is a JavaScript library for creating user interfaces. React makes it painless to build interactive UI. 
 
-[React Query](https://github.com/tannerlinsley/react-query) to handle all asynchronous data request 
+[React Query](https://github.com/tannerlinsley/react-query) to handle all asynchronous data request, version 0.4.3 was used. 
 
+Staging Login Details
+
+``username: admin@kudi.com password: kudi@2090``
 
 ## Deployment
-
 
 A push to the feature branch deploys in the PR environement
 
@@ -45,8 +47,6 @@ Creating a PR from release branch (which mirrors the develop branch) into master
 
 This project's components are feature based, there are several features and they are as follows;
 
-
-### Resuable UI Components
 
 ### Services
 Http requests were also organized according to each feature, they include
@@ -71,6 +71,7 @@ The Authenticated User details are made available at every level using React Con
 To use this simply do the following below;
 
 ```   const [auth] = useContext(AuthContext) ``
+The ``withAuth`` hoc in the utils folder can be used instead.
 
 ## Get Started
 
@@ -83,7 +84,7 @@ Here the default Axios headers are set
 
 - Function
 
-Conatins all Reusable functions required by different components, 
+Contains all Reusable functions required by different components, 
 The ``ParamsReducer`` and ``Default Reducer`` are used across managing pagination and dynamic params
 
 ``FormatWalletData``- function formats all wallet history details, for admin, zonal head and agent wallet history
@@ -91,6 +92,7 @@ The ``ParamsReducer`` and ``Default Reducer`` are used across managing paginatio
 ``formatCurrency``- function formats all amount values
 
 ``fetchImage``- function handles fetching any user image
+
 
 
 
