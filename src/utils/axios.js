@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getDefaultAuth, setLogout } from '../context/AuthContext'
 
 let Axios = axios.create({
-  baseURL: 'https://savings-dev.kudi.ng',
+  baseURL: 'https://savings.kudi.ai',
   headers: {
     'Content-Type': 'application/json'
   }

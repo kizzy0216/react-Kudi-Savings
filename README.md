@@ -27,9 +27,9 @@ Dashboard
 
 ## Technologies Used
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/)create-react-app]. React is a JavaScript library for creating user interfaces. React makes it painless to build interactive UI. 
+This project was bootstrapped with [Create React App](https://github.com/facebook/). React is a JavaScript library for creating user interfaces. React makes it painless to build interactive UI. 
 
-[React Query](https://github.com/tannerlinsley/react-query) to handle all asynchronous data request 
+[React Query](https://github.com/tannerlinsley/react-query) to handle all asynchronous data request, version 0.4.3 was used. 
 
 
 ## Deployment
@@ -93,4 +93,7 @@ The ``ParamsReducer`` and ``Default Reducer`` are used across managing paginatio
 ``fetchImage``- function handles fetching any user image
 
 
+Staging Login Details
+
+``username: admin@kudi.com password: kudi@2090``
 
