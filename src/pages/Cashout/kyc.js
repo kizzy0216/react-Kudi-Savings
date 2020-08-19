@@ -5,10 +5,7 @@ import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import styles from './view-cashout.module.scss'
 const Kyc = ({ showKyc, withdrawal }) => {
-  const { data } = useQuery(
-    ['Image', { id: withdrawal.agent.imageId }],
-    fecthImage
-  )
+  const { data } = useQuery(['Image', { id: withdrawal.imageId }], fecthImage)
   return (
     <Card className={styles.Edit}>
       <CardHeader className={styles.EditHeader}>View KYC</CardHeader>
@@ -19,9 +16,7 @@ const Kyc = ({ showKyc, withdrawal }) => {
               {withdrawal.user && withdrawal.user.firstName}{' '}
               {withdrawal.user && withdrawal.user.lastName}
             </p>
-            <p>
-              {withdrawal.user && withdrawal.user.phoneNumber}
-            </p>
+            <p>{withdrawal.user && withdrawal.user.phoneNumber}</p>
             <img src={data ? data.data.medium : AgentImg} alt="view biodata" />
           </div>
         </div>

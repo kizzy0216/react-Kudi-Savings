@@ -17,7 +17,7 @@ import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
-import { formatCurrency, formatText } from 'utils/function'
+import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 
 const ViewCashout = ({ history, match: { params } }) => {
@@ -30,7 +30,14 @@ const ViewCashout = ({ history, match: { params } }) => {
     ['Withdrawal', { id: params.id }],
     getWithdrawal
   )
-  let withdrawal = data && data.data ? data.data.data : {}
+
+  let withdrawal = data?.data?.data || {}
+
+  const { data: imageData } = useQuery(
+    ['Image', { id: withdrawal?.user?.pictureId }],
+    fecthImage
+  )
+
   const handleWithdrawal = async status => {
     setLoading(true)
     await processWithdrawal(params.id, status, reason)
@@ -93,7 +100,7 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <div className={styles.FirstBodyGridProfile}>
                       <img
                         className={styles.FirstBodyGridProfileImg}
-                        src={AgentImg}
+                        src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
                     </div>
