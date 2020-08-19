@@ -170,43 +170,44 @@ const ViewCashout = ({ history, match: { params } }) => {
                   </div>
                 </CardBody>
                 {withdrawal &&
-                withdrawal.status !== 'APPROVED' &&
-                withdrawal.status !== 'DECLINED' ? (
-                  <CardFooter className={styles.FirstFooter}>
-                    <Button
-                      onClick={() => {
-                        setType('approve')
-                        return setIsShown(true)
-                      }}
-                      type="button"
-                    >
-                      Approve
-                    </Button>
-                    <Button
-                      variant="flat"
-                      onClick={() => {
-                        setType('decline')
-                        return setIsShown(true)
-                      }}
-                      type="button"
-                      icon={<Close />}
-                    >
-                      Decline
-                    </Button>
-                  </CardFooter>
-                ) : (
-                  ''
-                )}
-                <div className={styles.Kyc}>
-                  <Button
-                    type="button"
-                    variant="flat"
-                    icon={<Eye />}
-                    onClick={() => setShowKyc(true)}
-                  >
-                    View KYC
-                  </Button>
-                </div>
+                  withdrawal.status !== 'APPROVED' &&
+                  withdrawal.status !== 'DECLINED' && (
+                    <CardFooter className={styles.FirstFooter}>
+                      <Button
+                        onClick={() => {
+                          setType('approve')
+                          return setIsShown(true)
+                        }}
+                        type="button"
+                      >
+                        Approve
+                      </Button>
+                      <Button
+                        variant="flat"
+                        onClick={() => {
+                          setType('decline')
+                          return setIsShown(true)
+                        }}
+                        type="button"
+                        icon={<Close />}
+                      >
+                        Decline
+                      </Button>
+                    </CardFooter>
+                  )}
+                {withdrawal.status !== 'APPROVED' &&
+                  withdrawal.status !== 'DECLINED' && (
+                    <div className={styles.Kyc}>
+                      <Button
+                        type="button"
+                        variant="flat"
+                        icon={<Eye />}
+                        onClick={() => setShowKyc(true)}
+                      >
+                        View KYC
+                      </Button>
+                    </div>
+                  )}
               </Card>
             </div>
             <div className={styles.Second}>
@@ -403,7 +404,10 @@ const ViewCashout = ({ history, match: { params } }) => {
         )}
 
         {showKyc && (
-          <SideSheet isShown={showKyc} onCloseComplete={setShowKyc}>
+          <SideSheet
+            isShown={showKyc}
+            onCloseComplete={() => setShowKyc(false)}
+          >
             <Kyc setShow={setShowKyc} withdrawal={withdrawal} />
           </SideSheet>
         )}
