@@ -226,7 +226,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
             {customer &&
               customer.previouslyChangedPhoneNumbers &&
               customer.previouslyChangedPhoneNumbers.length > 0 && (
-                <div className={styles.Third}>
+                <div className={styles.DivContent}>
                   <Card>
                     <CardHeader>
                       <div className={styles.FirstHeader}>

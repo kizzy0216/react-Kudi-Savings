@@ -111,6 +111,15 @@ const KudiPin = lazy(() =>
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
 )
+const Collections = lazy(() =>
+  import(/* webpackChunkName: "Collections" */ 'pages/Agents/view-all-collections')
+)
+const WalletTopUps = lazy(() =>
+import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-wallet-topup')
+) 
+const CashoutLog = lazy(() =>
+import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-cashout-logs')
+) 
 const AppRouter = () => (
   <Router history={history}>
     <Suspense fallback={<AppLoading />}>
@@ -174,6 +183,21 @@ const AppRouter = () => (
           path="/wallet-history"
           exact
           component={AdminWalletHistory}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections"
+          exact
+          component={Collections}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-wallet-topup"
+          exact
+          component={WalletTopUps}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-cashout-logs"
+          exact
+          component={CashoutLog}
         />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />

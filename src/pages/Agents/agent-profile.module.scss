@@ -146,6 +146,11 @@
     }
   }
 }
+.DivContent{
+  font-size: 1rem;
+  display: block;
+  margin: 1.67em 0;
+}
 
 .Withdrawal {
   display: grid;
@@ -197,3 +202,19 @@
   }
 }
 
+.WalletFooter{
+
+&Debit {
+  Button {
+    color: $kudi-green;
+    margin: auto;
+  }
+}
+}
+
+.WalletHeader{
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-top: 2rem;
+}

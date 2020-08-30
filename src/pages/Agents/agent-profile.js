@@ -9,7 +9,14 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye, ChevronLeft, Close } from 'assets/svg'
+import {
+  SettingsLink,
+  Bin,
+  Eye,
+  ChevronLeft,
+  Close,
+  Reassign
+} from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -21,6 +28,9 @@ import UpdateStatus from './update-status'
 import CustomersByMarkets from './customers-by-markets'
 import CustomersOnboarded from './customers-by-onboarding'
 import AuthContext from 'context/AuthContext'
+import Collections from './recent-collections'
+import WalletTopUp from './wallet-topUp'
+import Cashout from './cashout'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
   const [current, setCurrent] = useState('default')
@@ -98,7 +108,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           onClick={() => setShowStatus(true)}
                           icon={<Bin />}
                         >
-                          Update Status
+                          {agent.status !== 'ACTIVE'
+                            ? 'Update Status'
+                            : 'Suspend Account'}
                         </Button>
                       </div>
                     </CardHeader>
@@ -161,8 +173,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
 
                         <Badge
                           className={styles.FirstHeaderBadge}
-                          variant={agent.status === 'ACTIVE' ? 'success' : 'danger'}
-                        
+                          variant={
+                            agent.status === 'ACTIVE' ? 'success' : 'danger'
+                          }
                         >
                           {agent.status}
                         </Badge>
@@ -204,15 +217,21 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                   </div>
                 </div>
                 <div className={styles.Second}>
-                  <Card>
+                  <Card className={styles.Card}>
+                    <div className={styles.WalletHeader}>
+                      <h3>Wallet Balance</h3>
+                    </div>
                     <div className={styles.Wallet}>
                       <CardBody className={styles.WalletContent}>
-                        <p>Wallet Balance</p>
                         <h2>
                           {Number(fundAmount) > 0
                             ? formatCurrency(Number(fundAmount))
                             : formatCurrency(agent.cashBalance)}
                         </h2>
+                      </CardBody>
+                    </div>
+                    <div className={styles.WalletFooter}>
+                      <CardFooter className={styles.FirstBodyButton}>
                         <Button
                           variant="flat"
                           onClick={() => history.push(`${url}/wallet-history`)}
@@ -221,7 +240,12 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         >
                           View History
                         </Button>
-                      </CardBody>
+                        <div className={styles.WalletFooterDebit}>
+                          <Button variant="flat" icon={<Reassign />}>
+                            Debit Wallet
+                          </Button>
+                        </div>
+                      </CardFooter>
                     </div>
                   </Card>
                   <Card>
@@ -340,6 +364,15 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               </Dialog>
             )}
           </Content>
+          <div className={styles.DivContent}>
+            <Collections minimized />
+          </div>
+          <div className={styles.DivContent}>
+            <WalletTopUp minimized id={agent.id} />
+          </div>
+          <div className={styles.DivContent}>
+            <Cashout minimized />
+          </div>
         </Fragment>
       )}
       {current === 'Markets' && (

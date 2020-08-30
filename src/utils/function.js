@@ -51,7 +51,8 @@ export const DefaultParams = {
   number: '',
   showReset: false,
   focusedInput: null,
-  status: ''
+  status: '',
+  transactionType: 'CREDIT'
 }
 
 export const ParamsReducer = (params, { type, payload }) => {
@@ -82,6 +83,13 @@ export const ParamsReducer = (params, { type, payload }) => {
         ...params,
         ...payload
       }
+
+    case 'TRANSACTION_TYPE':
+      return {
+        ...params,
+        transactionType: payload
+      }
+
     case 'UPDATE_FOCUSEDINPUT':
       return {
         ...params,
