@@ -97,8 +97,7 @@
   margin: 1.67em 0;
   @include md {
     display: grid;
-    grid-template-columns: 100%
-
+    grid-template-columns: 100%;
   }
   &Header {
     h3 {
@@ -290,7 +289,8 @@
     }
   }
 }
-.DivContent{
+.DivContent {
+  font-size: 1rem;
   display: block;
-  
+  margin: 1.67em 0;
 }

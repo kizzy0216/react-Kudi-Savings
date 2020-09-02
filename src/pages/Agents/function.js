@@ -40,6 +40,51 @@ export const formatData = (history, url, page, limit, data) => {
   )
 }
 
+export const formatP2P = (page, limit, data) => {
+  return data.map(
+    ({ timeUpdated, amount, agentName, dsaPhone, status }, index) => ({
+      SN: (page - 1) * limit + (index + 1),
+      timeUpdated: timeUpdated
+        ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
+        : 'N/A',
+      amount: formatCurrency(amount),
+      agentName: formatCurrency(agentName),
+      amountCollected: amount ? formatCurrency(amount) : 'N/A',
+      dsaPhone: dsaPhone ? dsaPhone : 'N?A',
+      status: status ? (
+        <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
+          {status}
+        </Badge>
+      ) : (
+        'N/A'
+      )
+    })
+  )
+}
+
+export const P2PTableColumns = [
+  {
+    key: 'timeUpdated',
+    render: 'DATE'
+  },
+  {
+    key: 'amount',
+    render: 'AMOUNT'
+  },
+  {
+    key: 'agentName',
+    render: 'KUDI AGENT'
+  },
+  {
+    key: 'dsaphone',
+    render: 'PHONE NUMBER'
+  },
+  {
+    key: 'status',
+    render: 'STATUS'
+  }
+]
+
 export const CollectionsTableColumns = [
   {
     key: 'collectionDate',
@@ -88,27 +133,27 @@ export const WalletTopUpTableColumns = [
 
 export const CashoutTableColumns = [
   {
-    key:'timeCreated',
-    render:'DATE'
+    key: 'timeCreated',
+    render: 'DATE'
   },
   {
-    key:'amount',
-    render:'AMOUNT'
+    key: 'amount',
+    render: 'AMOUNT'
   },
   {
-    key:'type',
-    render:'TYPE'
+    key: 'type',
+    render: 'TYPE'
   },
   {
-    key:'status',
-    render:'STATUS'
+    key: 'status',
+    render: 'STATUS'
   },
   {
-    key:'agentName',
-    render:'AGENT'
+    key: 'agentName',
+    render: 'AGENT'
   },
   {
-    key:'action',
-    render:''
+    key: 'action',
+    render: ''
   }
 ]

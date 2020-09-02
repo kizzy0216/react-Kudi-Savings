@@ -1,57 +1,44 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
+import { useQuery } from 'react-query'
+import moment from 'moment'
 import {
   Card,
   CardBody,
   CardHeader,
   Button,
+  ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
-import moment from 'moment'
-import { useRouteMatch, useHistory } from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { getWithdrawals } from 'services/cashout'
-import { Header, Content, Filters } from 'components/Layout'
+import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
-import styles from './recent-collections.module.scss'
-import Select from 'components/Select'
-import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from './function'
+import { ChevronLeft, Eye, Close, Reassign } from 'assets/svg'
+import { useHistory, useRouteMatch } from 'react-router-dom'
+import { getHistoryByPlan } from 'services/customers'
 import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
-import { Close, ChevronLeft, Eye } from 'assets/svg'
+import styles from './customers.module.scss'
+import { formatWalletHistory } from './function'
 
-const Cashout = props => {
+const WalletHistory = props => {
+  let { minimized, id } = props
   let history = useHistory()
   let { url } = useRouteMatch()
+  const [type, setType] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
+  let limit = minimized ? 3 : 30
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
-  let totalData = 0
   let totalPage = 0
+
   const { data, isLoading, error, refetch } = useQuery(
-    [
-      'Withdrawals',
-      {
-        page: params.page,
-        limit,
-        from: params.from,
-        to: params.to,
-        status: params.status
-      }
-    ],
-    getWithdrawals
+    ['history', { id: id, params: { type } }],
+    getHistoryByPlan
   )
+
   if (data && data.data) {
-    formattedData = formatData(
-      data.data.data.list,
-      history,
-      url,
-      params.page,
-      limit
-    )
+    formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setParams({
@@ -86,19 +73,34 @@ const Cashout = props => {
   return (
     <Content className={styles.content}>
       <Card className={styles.contentCard}>
-        <CardHeader className={styles.Header}>
-          <h3>CASHOUT LOG</h3>
+        <CardHeader className={styles.ViewAll}>
+          <h3>WALLET HISTORY</h3>
 
           {props.minimized ? (
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-cashout-logs`)}
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/customer-wallet-history`,
+                  state: props.id
+                })
+              }
             >
               View All
             </Button>
           ) : (
             <div className="flex">
+              <div className={styles.Credit}>
+                <Button variant="flat" icon={<Reassign />}>
+                  Credit Plan
+                </Button>
+              </div>
+              <div className={styles.Debit}>
+                <Button variant="flat" icon={<Reassign />}>
+                  Debit Plan
+                </Button>
+              </div>
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
@@ -109,17 +111,24 @@ const Cashout = props => {
                   endDate={params.endDate}
                   isOutsideRange={() => false}
                 />
+                <ButtonGroup>
+                  <Button active={type === ''} onClick={() => setType('')}>
+                    All
+                  </Button>
+                  <Button
+                    active={type === 'DEBIT'}
+                    onClick={() => setType('DEBIT')}
+                  >
+                    Debit
+                  </Button>
+                  <Button
+                    active={type === 'CREDIT'}
+                    onClick={() => setType('CREDIT')}
+                  >
+                    Credit
+                  </Button>
+                </ButtonGroup>
               </Filters>
-              <Select
-                active={params.status}
-                options={statusOptions}
-                onSelect={value =>
-                  setParams({
-                    type: 'UPDATE_STATUS',
-                    payload: { status: value, showReset: true }
-                  })
-                }
-              />
               {params.showReset && (
                 <Close
                   className="danger"
@@ -133,8 +142,8 @@ const Cashout = props => {
             </div>
           )}
         </CardHeader>
-        <CardBody className={styles.Transactions}>
-          <div className={styles.TransactionsHeader}>
+        <CardBody className={styles.Customers}>
+          <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
               <span>
@@ -144,10 +153,35 @@ const Cashout = props => {
                 </button>
               </span>
             )}
-            {data && (
+            {data && data.data && (
               <Table
-                column={CashoutTableColumns}
-                placeholder="cashout"
+                placeholder="Wallet History"
+                column={[
+                  {
+                    key: `time_updated`,
+                    render: 'DATE'
+                  },
+                  {
+                    key: 'transaction_type',
+                    render: 'TYPE'
+                  },
+                  {
+                    key: 'amount',
+                    render: 'AMOUNT'
+                  },
+                  {
+                    key: 'source',
+                    render: 'SOURCE'
+                  },
+                  {
+                    key: 'wallet_balance',
+                    render: 'BALANCE'
+                  },
+                  {
+                    key: 'status',
+                    render: 'STATUS'
+                  }
+                ]}
                 data={formattedData}
               />
             )}
@@ -192,4 +226,4 @@ const Cashout = props => {
   )
 }
 
-export default Cashout
+export default WalletHistory

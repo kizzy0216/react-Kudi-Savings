@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { Fragment, useReducer } from 'react'
 import {
   Card,
   CardBody,
@@ -9,23 +9,24 @@ import {
 import moment from 'moment'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { getWithdrawals } from 'services/cashout'
-import { Header, Content, Filters } from 'components/Layout'
-import Table from 'components/Table'
-import styles from './recent-collections.module.scss'
 import Select from 'components/Select'
-import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from './function'
+import { getWithdrawals } from 'services/cashout'
+import { Filters, Content } from 'components/Layout'
+import Table from 'components/Table'
+import styles from './customers.module.scss'
+import { formatCashoutLog } from './function'
+import { statusOptions } from '../Cashout/function'
 import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
 
-const Cashout = props => {
-  let history = useHistory()
+const CashoutLog = props => {
   let { url } = useRouteMatch()
+  let { minimized } = props
+  let history = useHistory()
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
+  let limit = minimized ? 3 : 50
   let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
@@ -34,6 +35,7 @@ const Cashout = props => {
       {
         page: params.page,
         limit,
+        phoneNumber: params.phoneNumber,
         from: params.from,
         to: params.to,
         status: params.status
@@ -41,8 +43,9 @@ const Cashout = props => {
     ],
     getWithdrawals
   )
+
   if (data && data.data) {
-    formattedData = formatData(
+    formattedData = formatCashoutLog(
       data.data.data.list,
       history,
       url,
@@ -52,6 +55,7 @@ const Cashout = props => {
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setParams({
@@ -86,14 +90,14 @@ const Cashout = props => {
   return (
     <Content className={styles.content}>
       <Card className={styles.contentCard}>
-        <CardHeader className={styles.Header}>
+        <CardHeader className={styles.ViewAll}>
           <h3>CASHOUT LOG</h3>
 
           {props.minimized ? (
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-cashout-logs`)}
+              onClick={() => history.push(`${url}/customer-cashout-log`)}
             >
               View All
             </Button>
@@ -133,8 +137,8 @@ const Cashout = props => {
             </div>
           )}
         </CardHeader>
-        <CardBody className={styles.Transactions}>
-          <div className={styles.TransactionsHeader}>
+        <CardBody className={styles.Customers}>
+          <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
               <span>
@@ -146,8 +150,29 @@ const Cashout = props => {
             )}
             {data && (
               <Table
-                column={CashoutTableColumns}
-                placeholder="cashout"
+                column={[
+                  {
+                    key: `timeCreated`,
+                    render: 'DATE'
+                  },
+                  {
+                    key: 'amount',
+                    render: 'AMOUNT'
+                  },
+                  {
+                    key: 'type',
+                    render: 'TYPE'
+                  },
+                  {
+                    key: 'status',
+                    render: 'STATUS'
+                  },
+                  {
+                    key: 'agentName',
+                    render: 'AGENT'
+                  }
+                ]}
+                placeholder="Cashout Logs"
                 data={formattedData}
               />
             )}
@@ -192,4 +217,4 @@ const Cashout = props => {
   )
 }
 
-export default Cashout
+export default CashoutLog

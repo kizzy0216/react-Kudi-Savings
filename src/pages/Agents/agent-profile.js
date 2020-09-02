@@ -31,6 +31,7 @@ import AuthContext from 'context/AuthContext'
 import Collections from './recent-collections'
 import WalletTopUp from './wallet-topUp'
 import Cashout from './cashout'
+import Transaction from './p2p'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
   const [current, setCurrent] = useState('default')
@@ -50,6 +51,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     getAgent
   )
   let agent = data && data.data ? data.data.data : {}
+
+  //console.log( JSON.stringify(agent))
 
   const { data: imageData } = useQuery(
     data && ['Image', { id: agent.imageId }],
@@ -367,6 +370,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           <div className={styles.DivContent}>
             <Collections minimized />
           </div>
+          {/* <div className={styles.DivContent}>
+            <Transaction minimized id={agent.id}/>
+          </div> */}
           <div className={styles.DivContent}>
             <WalletTopUp minimized id={agent.id} />
           </div>

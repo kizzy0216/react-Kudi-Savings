@@ -9,7 +9,6 @@ import {
   ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
-
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import { ChevronLeft, Close } from 'assets/svg'
@@ -40,6 +39,9 @@ const WalletHistory = ({ match: { params } }) => {
       ],
     walletHistory
   )
+  let agent = data && data.data ? data.data.data : {}
+
+  console.log(JSON.stringify(agent))
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -48,7 +50,11 @@ const WalletHistory = ({ match: { params } }) => {
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
-      setFrom(moment(startDate).subtract(1, "days").format('YYYY-MM-DD HH:mm:ss'))
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
       setEndDate(endDate)

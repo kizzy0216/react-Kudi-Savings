@@ -1,27 +1,26 @@
 import React, { Fragment } from 'react'
-import { Header, Content } from 'components/Layout'
-import { ChevronLeft } from 'assets/svg'
-import styles from './agent-profile.module.scss'
-import WalletTopUp from './wallet-topUp'
 import { useHistory } from 'react-router-dom'
+import { ChevronLeft } from 'assets/svg'
+import { Header, Content } from 'components/Layout'
+import styles from '../Agents/agent-profile.module.scss'
+import Collection from './plan-collections'
 
-const TopUps = props => {
-  let id = props.location.state
-
+const ViewPlanCollection = props => {
   let history = useHistory()
+
   return (
     <Fragment>
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => history.goBack()} />
-          Wallet Top Up
+          Collections
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <WalletTopUp minimized={false} id={id} />
+        <Collection minimized={false} />
       </div>
     </Fragment>
   )
 }
 
-export default TopUps
+export default ViewPlanCollection

@@ -46,6 +46,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
   ) {
     walletBalance = userPlans.data.data.data.walletBalance
   }
+  console.log(JSON.stringify(userPlans))
   return (
     <Fragment>
       <Header>
@@ -128,12 +129,14 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> SAVINGS PLAN</h3>
 
-                  {customer && customer.status && <Badge
-                      className={styles.FirstHeaderBadge}
-                      variant="success"
-                    >
-                      {customer.status}
-                    </Badge>} 
+                    {customer && customer.status && (
+                      <Badge
+                        className={styles.FirstHeaderBadge}
+                        variant="success"
+                      >
+                        {customer.status}
+                      </Badge>
+                    )}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -151,8 +154,10 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
-                  <span> Wallet Balance</span>
-                  <span><b>{formatCurrency(walletBalance)}</b> </span>
+                    <span> Wallet Balance</span>
+                    <span>
+                      <b>{formatCurrency(walletBalance)}</b>{' '}
+                    </span>
                   </div>
                 </CardBody>
               </Card>
@@ -166,7 +171,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   </CardBody>
                 </div>
               </Card> */}
-              {/* <Card>
+            {/* <Card>
                 <div className={styles.Withdrawal}>
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
@@ -187,7 +192,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </div>
               </Card> */}
 
-              {/* <Card>
+            {/* <Card>
                 <CardHeader className={styles.FirstHeader}>
                   <h3>DSA</h3>
                   <Button variant="flat" icon={<SettingsLink />}>

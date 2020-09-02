@@ -1,56 +1,57 @@
 import React, { useReducer } from 'react'
+import Table from 'components/Table'
 import {
-  Card,
   CardBody,
+  Card,
   CardHeader,
   Button,
   DateRangePicker
 } from '@kudi-inc/dip'
-import moment from 'moment'
-import { useRouteMatch, useHistory } from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { getWithdrawals } from 'services/cashout'
-import { Header, Content, Filters } from 'components/Layout'
-import Table from 'components/Table'
-import styles from './recent-collections.module.scss'
-import Select from 'components/Select'
-import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from './function'
-import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
-import { Close, ChevronLeft, Eye } from 'assets/svg'
+import { getCollections } from 'services/collections'
+import { ParamsReducer, DefaultParams } from 'utils/function'
+import { formatCollections } from './function'
+import styles from './customers.module.scss'
+import { useHistory, useRouteMatch } from 'react-router-dom'
+import { ChevronLeft, Eye, Close } from 'assets/svg'
+import { useQuery } from 'react-query'
+import { Content, Filters } from 'components/Layout'
+import moment from 'moment'
 
-const Cashout = props => {
-  let history = useHistory()
+const PlanCollections = props => {
   let { url } = useRouteMatch()
+  let history = useHistory()
+  let { minimized } = props
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
+  let limit = minimized ? 3 : 30
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
-  let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
-      'Withdrawals',
+      'Collections',
+
       {
         page: params.page,
         limit,
         from: params.from,
-        to: params.to,
-        status: params.status
+        to: params.to
       }
     ],
-    getWithdrawals
+    getCollections
   )
+
+  let collection = data && data.data ? data.data.data : {}
+
+  console.log(JSON.stringify(collection))
   if (data && data.data) {
-    formattedData = formatData(
-      data.data.data.list,
+    formattedData = formatCollections(
       history,
       url,
       params.page,
-      limit
+      limit,
+      data.data.data.list
     )
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -86,14 +87,14 @@ const Cashout = props => {
   return (
     <Content className={styles.content}>
       <Card className={styles.contentCard}>
-        <CardHeader className={styles.Header}>
-          <h3>CASHOUT LOG</h3>
+        <CardHeader className={styles.ViewAll}>
+          <h3>PLAN COLLECTIONS</h3>
 
           {props.minimized ? (
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-cashout-logs`)}
+              onClick={() => history.push(`${url}/customer-plan-collection`)}
             >
               View All
             </Button>
@@ -110,16 +111,6 @@ const Cashout = props => {
                   isOutsideRange={() => false}
                 />
               </Filters>
-              <Select
-                active={params.status}
-                options={statusOptions}
-                onSelect={value =>
-                  setParams({
-                    type: 'UPDATE_STATUS',
-                    payload: { status: value, showReset: true }
-                  })
-                }
-              />
               {params.showReset && (
                 <Close
                   className="danger"
@@ -133,8 +124,8 @@ const Cashout = props => {
             </div>
           )}
         </CardHeader>
-        <CardBody className={styles.Transactions}>
-          <div className={styles.TransactionsHeader}>
+        <CardBody className={styles.Customers}>
+          <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
               <span>
@@ -144,10 +135,32 @@ const Cashout = props => {
                 </button>
               </span>
             )}
-            {data && (
+            {data && data.data && (
               <Table
-                column={CashoutTableColumns}
-                placeholder="cashout"
+                placeholder="Plan Collections"
+                column={[
+                  {
+                    key: `collectionDate`,
+                    render: 'COLLECTION DATE'
+                  },
+                  {
+                    key: 'timeCreated',
+                    render: 'TIME CREATED'
+                  },
+                  {
+                    key: 'totalAmountSaved',
+                    render: 'AMOUNT COLLECTED'
+                  },
+                  {
+                    key: 'balance',
+                    render: 'BALANCE'
+                  },
+
+                  {
+                    key: 'agentName',
+                    render: 'AGENT'
+                  }
+                ]}
                 data={formattedData}
               />
             )}
@@ -192,4 +205,4 @@ const Cashout = props => {
   )
 }
 
-export default Cashout
+export default PlanCollections

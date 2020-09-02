@@ -1,57 +1,54 @@
 import React, { useReducer } from 'react'
+import { Content, Filters } from 'components/Layout'
+import moment from 'moment'
 import {
   Card,
-  CardBody,
   CardHeader,
   Button,
+  CardBody,
   DateRangePicker
 } from '@kudi-inc/dip'
-import moment from 'moment'
-import { useRouteMatch, useHistory } from 'react-router-dom'
-import { useQuery } from 'react-query'
-import { getWithdrawals } from 'services/cashout'
-import { Header, Content, Filters } from 'components/Layout'
-import Table from 'components/Table'
 import styles from './recent-collections.module.scss'
-import Select from 'components/Select'
-import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from './function'
-import { ParamsReducer, DefaultParams } from 'utils/function'
+import Table from 'components/Table'
+import { getTransaction } from 'services/p2p'
+import { useRouteMatch } from 'react-router-dom'
+import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
-import { Close, ChevronLeft, Eye } from 'assets/svg'
+import { formatP2P, P2PTableColumns } from './function'
+import { ParamsReducer, DefaultParams } from 'utils/function'
+import { ChevronLeft, Eye, Close } from 'assets/svg'
+import { useHistory } from 'react-router-dom'
 
-const Cashout = props => {
+const P2P = props => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
-  let totalData = 0
+  let limit = props.minimized ? 3 : 50
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
-      'Withdrawals',
+      'P2P',
+
       {
+        id: props.id,
         page: params.page,
         limit,
         from: params.from,
-        to: params.to,
-        status: params.status
+        to: params.to
       }
     ],
-    getWithdrawals
+    getTransaction
   )
+  let agent = data && data.data ? data.data.data : {}
+
+  console.log(JSON.stringify(agent))
+
   if (data && data.data) {
-    formattedData = formatData(
-      data.data.data.list,
-      history,
-      url,
-      params.page,
-      limit
-    )
+    formattedData = formatP2P(params.page, limit, data.data.data.list)
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setParams({
@@ -87,13 +84,13 @@ const Cashout = props => {
     <Content className={styles.content}>
       <Card className={styles.contentCard}>
         <CardHeader className={styles.Header}>
-          <h3>CASHOUT LOG</h3>
+          <h3>P2P</h3>
 
           {props.minimized ? (
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-cashout-logs`)}
+              onClick={() => history.push(`${url}/view-all-p2p`)}
             >
               View All
             </Button>
@@ -110,16 +107,6 @@ const Cashout = props => {
                   isOutsideRange={() => false}
                 />
               </Filters>
-              <Select
-                active={params.status}
-                options={statusOptions}
-                onSelect={value =>
-                  setParams({
-                    type: 'UPDATE_STATUS',
-                    payload: { status: value, showReset: true }
-                  })
-                }
-              />
               {params.showReset && (
                 <Close
                   className="danger"
@@ -146,8 +133,8 @@ const Cashout = props => {
             )}
             {data && (
               <Table
-                column={CashoutTableColumns}
-                placeholder="cashout"
+                column={P2PTableColumns}
+                placeholder="collection"
                 data={formattedData}
               />
             )}
@@ -192,4 +179,4 @@ const Cashout = props => {
   )
 }
 
-export default Cashout
+export default P2P

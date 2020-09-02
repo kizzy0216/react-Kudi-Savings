@@ -89,6 +89,21 @@ const CustomerHistory= lazy(() =>
     /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-history'
   )
 )
+const CustomerPlanCollection= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerPlanCollection" */ 'pages/Customers/customer-plan-collection'
+  )
+)
+const CustomerCashoutLog= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerCashoutLog" */ 'pages/Customers/customer-cashout-log'
+  )
+)
+const CustomerWalletHistory= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerWalletHistory" */ 'pages/Customers/customer-wallet-history'
+  )
+)
 const Plans = lazy(() => import(/* webpackChunkName: "Plans" */ 'pages/Plans'))
 
 const Transactions = lazy(() =>
@@ -154,6 +169,9 @@ const AppRouter = () => (
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
         <PrivateRoute path="/customers/:id/plan/:planId" exact component={CustomerHistory} />
         <PrivateRoute path="/plans" exact component={Plans} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-plan-collection" exact component={CustomerPlanCollection} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-cashout-log" exact component={CustomerCashoutLog} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-wallet-history" exact component={CustomerWalletHistory} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute
           path="/zonal-heads/:id"

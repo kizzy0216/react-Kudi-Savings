@@ -16,6 +16,7 @@ const Transaction = ({ history, match: { params } }) => {
   )
 
   let txn = data && data.data ? data.data.data : {}
+
   const { data: imageData } = useQuery(
     data && txn && ['Image', { id: txn.user.pictureId }],
     fecthImage

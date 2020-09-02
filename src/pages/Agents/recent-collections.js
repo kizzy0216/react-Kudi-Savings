@@ -1,4 +1,4 @@
-import React, {  useReducer } from 'react'
+import React, { useReducer } from 'react'
 import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 import {
@@ -19,8 +19,8 @@ import { ParamsReducer, DefaultParams } from 'utils/function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
-const Collections = (props) => {
-  let history  = useHistory()
+const Collections = props => {
+  let history = useHistory()
   let { url } = useRouteMatch()
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
@@ -39,6 +39,9 @@ const Collections = (props) => {
     ],
     getCollections
   )
+  // let collection = data && data.data ? data.data.data : {}
+
+  // console.log(JSON.stringify(collection))
 
   if (data && data.data) {
     formattedData = formatData(
@@ -96,7 +99,7 @@ const Collections = (props) => {
               View All
             </Button>
           ) : (
-            <div>
+            <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
@@ -121,8 +124,8 @@ const Collections = (props) => {
             </div>
           )}
         </CardHeader>
-          <CardBody className={styles.Transactions}>
-            <div className={styles.TransactionsHeader}>
+        <CardBody className={styles.Transactions}>
+          <div className={styles.TransactionsHeader}>
             {isLoading && <TableLoading />}
             {error && (
               <span>

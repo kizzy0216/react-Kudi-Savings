@@ -16,7 +16,7 @@ import { TableLoading } from 'components/loading'
 import { formatWalletData } from 'utils/function'
 import { WalletTopUpTableColumns } from './function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
-import { useRouteMatch,useHistory } from 'react-router-dom'
+import { useRouteMatch, useHistory } from 'react-router-dom'
 
 const WalletTopUp = props => {
   let history = useHistory()
@@ -81,7 +81,7 @@ const WalletTopUp = props => {
               View All
             </Button>
           ) : (
-            <div>
+            <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
