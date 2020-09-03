@@ -11,12 +11,11 @@ import {
   ButtonGroup
 } from '@kudi-inc/dip'
 import { ProfileLoading } from 'components/loading'
-import { Header, Content, Filters } from 'components/Layout'
-import Table from 'components/Table'
+import { Header, Content } from 'components/Layout'
 import { ChevronLeft, Close } from 'assets/svg'
 import styles from './customer-profile.module.scss'
 import { getPlan } from 'services/plans'
-import { formatWalletData } from 'utils/function'
+import { formatCurrency, } from 'utils/function'
 import PlanCollections from './plan-collections'
 import PlanRevenueLog from './plan-revenue-log'
 import CashoutLog from './cashout-log'
@@ -140,19 +139,19 @@ const CustomerHistory = ({ history, match: { params } }) => {
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>DAILY AMOUNT</span>
-                    <span>{plan.dailyAmount} </span>
+                    <span>{formatCurrency(plan.dailyAmount)} </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> AMOUNT SAVED </span>
-                    <span>{plan.amountSaved}</span>
+                    <span>{formatCurrency(plan.amountSaved)}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> TOTAL WITHDRAWN</span>
-                    <span>{plan.totalWithdrawnAmount} Days</span>
+                    <span>{formatCurrency(plan.totalWithdrawnAmount)}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> PLAN BALANCE </span>
-                    <span>{plan.collectionBalance}</span>
+                    <span>{formatCurrency(plan.collectionBalance)}</span>
                   </div>
                 </CardBody>
               </Card>
