@@ -1,9 +1,8 @@
-import React, { Fragment, useReducer } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Content, Filters, Header } from '../../../components/Layout'
 import { ChevronLeft } from '../../../assets/svg'
 
 import './repayments.scss'
-import { DefaultParams, ParamsReducer } from '../../../utils/function'
 import { formatTableData, tableColumns, tableData } from './utils'
 import moment from 'moment'
 import { useRouteMatch } from 'react-router-dom'
@@ -13,39 +12,32 @@ import Table from '../../../components/Table/table'
 export default ({ history }) => {
 
   const { url } = useRouteMatch()
-  const [tableParams, setTableParams] = useReducer(ParamsReducer, DefaultParams)
+  const [tableStartDate, setTableStartDate] = useState('')
+  const [tableEndDate, setTableEndDate] = useState('')
+  const [tableFrom, setTableFrom] = useState(null)
+  const [tableTo, setTableTo] = useState(null)
+  const [type, setType] = useState('')
+  const [tableFocusedInput, setTableFocusedInput] = useState(null)
+
+  const filterParams = {from: tableFrom, to: tableTo, type}
+  console.log('Repayment History Filters:', filterParams)
 
   const formattedTableData = formatTableData(tableData, history, url, 0, 10)
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableStartDate(startDate)
+      setTableFrom(moment(startDate)
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD HH:mm:ss'))
     }
     if (endDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableEndDate(endDate)
+      setTableTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
   }
   const onTableFocusChange = focusedInput => {
-    setTableParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setTableFocusedInput(focusedInput)
   }
 
   return (
@@ -62,18 +54,27 @@ export default ({ history }) => {
               <span className={'table-heading'}>Loan Repayment History</span>
               <div className={'flex'}>
                 <ButtonGroup>
-                  <Button active>All</Button>
-                  <Button>Cash</Button>
-                  <Button>Transfer</Button>
+                  <Button
+                    active={type === ''}
+                    onClick={() => setType('')}
+                  >All</Button>
+                  <Button
+                    active={type === 'CASH'}
+                    onClick={() => setType('CASH')}
+                  >Cash</Button>
+                  <Button
+                    active={type === 'TRANSFER'}
+                    onClick={() => setType('TRANSFER')}
+                  >Transfer</Button>
                 </ButtonGroup>
                 <Filters className={'Filter'}>
                   <DateRangePicker
                     onDatesChange={onTableDateChange}
                     onFocusChange={onTableFocusChange}
                     displayFormat="DD/MM/YYYY"
-                    focusedInput={tableParams.focusedInput}
-                    startDate={tableParams.startDate}
-                    endDate={tableParams.endDate}
+                    focusedInput={tableFocusedInput}
+                    startDate={tableStartDate}
+                    endDate={tableEndDate}
                     isOutsideRange={() => false}
                   />
                 </Filters>

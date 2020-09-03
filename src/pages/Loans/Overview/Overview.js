@@ -1,85 +1,73 @@
-import React, { Fragment, useReducer, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { Content, Filters, Header } from '../../../components/Layout'
 import Table from '../../../components/Table'
 import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
 import './overview.scss'
 import moment from 'moment'
-import { DefaultParams, ParamsReducer } from '../../../utils/function'
 import Select from '../../../components/Select'
 import { DownloadIcon, Eye, Reassign } from '../../../assets/svg'
-import { initialMarkets, loanStatuses, tableColumns, tableData, formatTableData } from '../utils'
+import { formatTableData, initialMarkets, loanStatuses, tableColumns, tableData } from '../utils'
 
-
+const initialStartDate = moment().subtract(31, 'days')
+const initialEndDate = moment().add(1, 'days')
+const initialFrom = initialStartDate.format('YYYY-MM-DD')
+const initialTo = initialEndDate.format('YYYY-MM-DD')
 
 export default ({ history }) => {
-  const { url } = useRouteMatch();
-  const [overviewParams, setOverviewParams] = useReducer(ParamsReducer, DefaultParams)
-  const [tableParams, setTableParams] = useReducer(ParamsReducer, DefaultParams)
+  const { url } = useRouteMatch()
   const [markets, setMarkets] = useState(initialMarkets)
 
-  const formattedTableData = formatTableData(tableData, history, url, 0, 10);
+  const [overviewStartDate, setOverviewStartDate] = useState(initialStartDate)
+  const [overviewEndDate, setOverviewEndDate] = useState(initialEndDate)
+  const [overviewFrom, setOverviewFrom] = useState(initialFrom)
+  const [overviewTo, setOverviewTo] = useState(initialTo)
+  const [marketId, setMarketId] = useState('')
+  const [overviewFocusedInput, setOverviewFocusedInput] = useState(null)
+
+  const [tableStartDate, setTableStartDate] = useState(initialStartDate)
+  const [tableEndDate, setTableEndDate] = useState(initialEndDate)
+  const [tableFrom, setTableFrom] = useState(initialFrom)
+  const [tableTo, setTableTo] = useState(initialTo)
+  const [status, setStatus] = useState('')
+  const [tableFocusedInput, setTableFocusedInput] = useState(null)
+
+  const formattedTableData = formatTableData(tableData, history, url, 0, 10)
+
+  const overviewParams = { from: overviewFrom, to: overviewTo, marketId }
+  console.log('Overview Request Params:', overviewParams)
+  const tableParams = {from: tableFrom || overviewFrom, to: tableTo || overviewTo, status }
+  console.log('Table Request Params:', tableParams)
+
 
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setOverviewParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setOverviewStartDate(startDate)
+      setOverviewFrom(moment(startDate).subtract(1, 'days').format('YYYY-MM-DD'))
     }
     if (endDate) {
-      setOverviewParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setOverviewEndDate(endDate)
+      setOverviewTo(moment(endDate).format('YYYY-MM-DD'))
     }
   }
   const onOverviewFocusChange = focusedInput => {
-    setOverviewParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setOverviewFocusedInput(focusedInput)
   }
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableStartDate(startDate)
+      setTableFrom(moment(startDate)
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD'))
     }
     if (endDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableEndDate(endDate)
+      setTableTo(moment(endDate).format('YYYY-MM-DD'))
     }
   }
   const onTableFocusChange = focusedInput => {
-    setTableParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setTableFocusedInput(focusedInput)
   }
 
   return (
@@ -96,21 +84,18 @@ export default ({ history }) => {
             onDatesChange={onOverviewDateChange}
             onFocusChange={onOverviewFocusChange}
             displayFormat="DD/MM/YYYY"
-            focusedInput={overviewParams.focusedInput}
-            startDate={overviewParams.startDate}
-            endDate={overviewParams.endDate}
+            focusedInput={overviewFocusedInput}
+            startDate={overviewStartDate}
+            endDate={overviewEndDate}
             isOutsideRange={() => false}
           />
         </Filters>
         <div className="Select">
           <Select
-            active={overviewParams.status}
+            active={marketId}
             options={markets}
             onSelect={value =>
-              setOverviewParams({
-                type: 'UPDATE_STATUS',
-                payload: { status: value, showReset: true }
-              })
+              setMarketId(value)
             }
           />
         </div>
@@ -172,21 +157,18 @@ export default ({ history }) => {
                   onDatesChange={onTableDateChange}
                   onFocusChange={onTableFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={tableParams.focusedInput}
-                  startDate={tableParams.startDate}
-                  endDate={tableParams.endDate}
+                  focusedInput={tableFocusedInput}
+                  startDate={tableStartDate}
+                  endDate={tableEndDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
               <div className="Select">
                 <Select
-                  active={tableParams.status}
+                  active={status}
                   options={loanStatuses}
                   onSelect={value =>
-                    setTableParams({
-                      type: 'UPDATE_STATUS',
-                      payload: { status: value, showReset: true }
-                    })
+                    setStatus(value)
                   }
                 />
               </div>

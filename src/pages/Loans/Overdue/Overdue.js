@@ -13,40 +13,34 @@ import { useRouteMatch } from 'react-router-dom'
 export default ({ history }) => {
   const { url } = useRouteMatch();
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [tableParams, setTableParams] = useReducer(ParamsReducer, DefaultParams)
   const [markets, setMarkets] = useState(initialMarkets)
+
+  const [tableStartDate, setTableStartDate] = useState('')
+  const [tableEndDate, setTableEndDate] = useState('')
+  const [tableFrom, setTableFrom] = useState(null)
+  const [tableTo, setTableTo] = useState(null)
+  const [marketId, setMarketId] = useState('')
+  const [tableFocusedInput, setTableFocusedInput] = useState(null)
 
   const formattedTableData = formatTableData(tableData, history, url, 0, 10);
 
+  const filterParams = {phoneNumber, from: tableFrom, to: tableTo, marketId}
+  console.log('Overdue Filter Params:', filterParams)
+
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableStartDate(startDate)
+      setTableFrom(moment(startDate)
+        .subtract(1, 'days')
+        .format('YYYY-MM-DD HH:mm:ss'))
     }
     if (endDate) {
-      setTableParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setTableEndDate(endDate)
+      setTableTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
   }
   const onTableFocusChange = focusedInput => {
-    setTableParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setTableFocusedInput(focusedInput)
   }
 
   return (
@@ -87,13 +81,10 @@ export default ({ history }) => {
             <div className={'flex'}>
               <div className="Select">
                 <Select
-                  active={tableParams.status}
-                  options={initialMarkets}
+                  active={marketId}
+                  options={markets}
                   onSelect={value =>
-                    setTableParams({
-                      type: 'UPDATE_STATUS',
-                      payload: { status: value, showReset: true }
-                    })
+                    setMarketId(value)
                   }
                 />
               </div>
@@ -102,9 +93,9 @@ export default ({ history }) => {
                   onDatesChange={onTableDateChange}
                   onFocusChange={onTableFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={tableParams.focusedInput}
-                  startDate={tableParams.startDate}
-                  endDate={tableParams.endDate}
+                  focusedInput={tableFocusedInput}
+                  startDate={tableStartDate}
+                  endDate={tableEndDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
