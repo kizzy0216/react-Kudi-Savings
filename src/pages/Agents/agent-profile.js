@@ -38,7 +38,6 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   const [auth] = useContext(AuthContext)
   const [fundAmount, setFundAmount] = useState(0)
   let [page, setPage] = useState(1)
-  let [pg, setPg] = useState(1)
   // let [show, setShow] = useState(false)
   let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
@@ -399,8 +398,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           history={history}
           usersOnboarded={usersOnboarded}
           limit={limit}
-          page={pg}
-          setPage={setPg}
+          page={page}
+          setPage={setPage}
           phoneNumber={mobile}
           setPhoneNumber={setMobile}
           agent={agent}
