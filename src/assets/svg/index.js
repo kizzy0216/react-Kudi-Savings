@@ -48,3 +48,4 @@ export { ReactComponent as Rolling } from './rolling.svg'
 export { ReactComponent as Pencil } from './pencil.svg'
 export { ReactComponent as Search } from './search.svg'
 export { ReactComponent as DropDown } from './dropdown.svg'
+export { ReactComponent as LoanIcon } from './loan-icon.svg';

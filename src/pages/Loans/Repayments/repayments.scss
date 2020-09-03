@@ -1,0 +1,22 @@
+.Header {
+  font-weight: normal;
+  height: 4.88em;
+  margin-bottom: 23px;
+}
+
+.Card-Table {
+
+  .Table-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-heading {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+  }
+}
