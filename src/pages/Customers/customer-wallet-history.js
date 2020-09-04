@@ -12,7 +12,6 @@ const ViewWalletHistory = props => {
   let [showCreditDialog, setShowCreditDialog] = useState(false)
   let [showDebitDialog, setShowDebitDialog] = useState(false)
 
-  console.log(id)
   return (
     <Fragment>
       <Header>
