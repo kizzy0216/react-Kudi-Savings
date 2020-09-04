@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import {
   Card,
   CardBody,
@@ -15,7 +15,7 @@ import Table from 'components/Table'
 import styles from './recent-collections.module.scss'
 import Select from 'components/Select'
 import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from './function'
+import { CashoutTableColumns } from 'utils/function'
 import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
@@ -23,6 +23,12 @@ import { Close, ChevronLeft, Eye } from 'assets/svg'
 const Cashout = props => {
   let history = useHistory()
   let { url } = useRouteMatch()
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = props.minimized ? 5 : 50
@@ -34,8 +40,7 @@ const Cashout = props => {
       {
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to,
+        params:{from, to},
         status: params.status
       }
     ],
@@ -54,33 +59,21 @@ const Cashout = props => {
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   return (
@@ -104,9 +97,9 @@ const Cashout = props => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
@@ -120,13 +113,15 @@ const Cashout = props => {
                   })
                 }
               />
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}

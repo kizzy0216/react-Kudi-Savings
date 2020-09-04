@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import Table from 'components/Table'
 import {
   CardBody,
@@ -9,8 +9,12 @@ import {
 } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
 import { getCollections } from 'services/collections'
-import { ParamsReducer, DefaultParams } from 'utils/function'
-import { formatCollections } from './function'
+import {
+  ParamsReducer,
+  DefaultParams,
+  formatCollections,
+  PlanCollectionTableColumn
+} from 'utils/function'
 import styles from './customers.module.scss'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
@@ -22,6 +26,12 @@ const PlanCollections = props => {
   let { url } = useRouteMatch()
   let history = useHistory()
   let { minimized } = props
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let limit = minimized ? 3 : 30
   let formattedData = []
@@ -33,16 +43,12 @@ const PlanCollections = props => {
       {
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to
+        params:{from, to},
       }
     ],
     getCollections
   )
 
-  let collection = data && data.data ? data.data.data : {}
-
-  console.log(JSON.stringify(collection))
   if (data && data.data) {
     formattedData = formatCollections(
       history,
@@ -55,33 +61,21 @@ const PlanCollections = props => {
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   return (
@@ -105,19 +99,21 @@ const PlanCollections = props => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}
@@ -138,29 +134,7 @@ const PlanCollections = props => {
             {data && data.data && (
               <Table
                 placeholder="Plan Collections"
-                column={[
-                  {
-                    key: `collectionDate`,
-                    render: 'COLLECTION DATE'
-                  },
-                  {
-                    key: 'timeCreated',
-                    render: 'TIME CREATED'
-                  },
-                  {
-                    key: 'totalAmountSaved',
-                    render: 'AMOUNT COLLECTED'
-                  },
-                  {
-                    key: 'balance',
-                    render: 'BALANCE'
-                  },
-
-                  {
-                    key: 'agentName',
-                    render: 'AGENT'
-                  }
-                ]}
+                column={PlanCollectionTableColumn}
                 data={formattedData}
               />
             )}

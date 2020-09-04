@@ -14,15 +14,25 @@ import Table from 'components/Table'
 import { ChevronLeft, Eye, Close, Reassign } from 'assets/svg'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { getHistoryByPlan } from 'services/customers'
-import { ParamsReducer, DefaultParams } from 'utils/function'
+import {
+  ParamsReducer,
+  DefaultParams,
+  formatWalletHistory,
+  PlanWalletHistoryTableColumn
+} from 'utils/function'
 import { TableLoading } from 'components/loading'
 import styles from './customers.module.scss'
-import { formatWalletHistory } from './function'
 
 const WalletHistory = props => {
   let { minimized, id } = props
   let history = useHistory()
   let { url } = useRouteMatch()
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [type, setType] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let limit = minimized ? 3 : 30
@@ -30,7 +40,7 @@ const WalletHistory = props => {
   let totalPage = 0
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['history', { id: id, params: { type } }],
+    ['history', { id: id, params: { type, from, to } }],
     getHistoryByPlan
   )
 
@@ -41,33 +51,21 @@ const WalletHistory = props => {
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   return (
@@ -106,9 +104,9 @@ const WalletHistory = props => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
                 <ButtonGroup>
@@ -129,13 +127,15 @@ const WalletHistory = props => {
                   </Button>
                 </ButtonGroup>
               </Filters>
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}
@@ -156,32 +156,7 @@ const WalletHistory = props => {
             {data && data.data && (
               <Table
                 placeholder="Wallet History"
-                column={[
-                  {
-                    key: `time_updated`,
-                    render: 'DATE'
-                  },
-                  {
-                    key: 'transaction_type',
-                    render: 'TYPE'
-                  },
-                  {
-                    key: 'amount',
-                    render: 'AMOUNT'
-                  },
-                  {
-                    key: 'source',
-                    render: 'SOURCE'
-                  },
-                  {
-                    key: 'wallet_balance',
-                    render: 'BALANCE'
-                  },
-                  {
-                    key: 'status',
-                    render: 'STATUS'
-                  }
-                ]}
+                column={PlanWalletHistoryTableColumn}
                 data={formattedData}
               />
             )}

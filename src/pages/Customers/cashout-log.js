@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer } from 'react'
+import React, { Fragment, useReducer, useState } from 'react'
 import {
   Card,
   CardBody,
@@ -14,9 +14,8 @@ import { getWithdrawals } from 'services/cashout'
 import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './customers.module.scss'
-import { formatCashoutLog } from './function'
 import { statusOptions } from '../Cashout/function'
-import { ParamsReducer, DefaultParams } from 'utils/function'
+import { ParamsReducer, DefaultParams, formatCashoutLog, CashoutLogTableColumn } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
 
@@ -24,6 +23,12 @@ const CashoutLog = props => {
   let { url } = useRouteMatch()
   let { minimized } = props
   let history = useHistory()
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = minimized ? 3 : 50
@@ -36,8 +41,7 @@ const CashoutLog = props => {
         page: params.page,
         limit,
         phoneNumber: params.phoneNumber,
-        from: params.from,
-        to: params.to,
+        params:{from, to},
         status: params.status
       }
     ],
@@ -58,33 +62,21 @@ const CashoutLog = props => {
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   return (
@@ -108,9 +100,9 @@ const CashoutLog = props => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
@@ -124,13 +116,15 @@ const CashoutLog = props => {
                   })
                 }
               />
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}
@@ -150,28 +144,7 @@ const CashoutLog = props => {
             )}
             {data && (
               <Table
-                column={[
-                  {
-                    key: `timeCreated`,
-                    render: 'DATE'
-                  },
-                  {
-                    key: 'amount',
-                    render: 'AMOUNT'
-                  },
-                  {
-                    key: 'type',
-                    render: 'TYPE'
-                  },
-                  {
-                    key: 'status',
-                    render: 'STATUS'
-                  },
-                  {
-                    key: 'agentName',
-                    render: 'AGENT'
-                  }
-                ]}
+                column={CashoutLogTableColumn}
                 placeholder="Cashout Logs"
                 data={formattedData}
               />

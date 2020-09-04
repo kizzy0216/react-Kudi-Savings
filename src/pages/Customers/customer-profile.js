@@ -32,21 +32,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
   )
   const userPlans = useQuery(['Plans', { id: params.id }], getPlans)
 
-  let customer = data && data.data ? data.data.data : {}
+  let customer = data?.data?.data ?? {}
 
   const { data: imageData } = useQuery(
     data && customer.pictureId && ['Image', { id: customer.pictureId }],
     fecthImage
   )
-  if (
-    userPlans &&
-    userPlans.data &&
-    userPlans.data.data &&
-    userPlans.data.data.data.walletBalance
-  ) {
-    walletBalance = userPlans.data.data.data.walletBalance
-  }
-  console.log(JSON.stringify(userPlans))
+  walletBalance = userPlans?.data?.data?.data?.walletBalance
   return (
     <Fragment>
       <Header>
@@ -87,7 +79,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <div className={styles.FirstBodyGridProfile}>
                       <img
                         className={styles.FirstBodyGridProfileImg}
-                        src={imageData ? imageData.data.medium : AgentImg}
+                        src={imageData?.data.medium ?? AgentImg}
                         alt="agent"
                       />
                     </div>
@@ -95,15 +87,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
                         <span>
-                          {`${
-                            customer && customer.lastName
-                              ? customer.lastName
-                              : ''
-                          } ${
-                            customer && customer.firstName
-                              ? customer.firstName
-                              : ''
-                          }`}
+                          {`${customer?.lastName ?? ''} ${customer?.firstName ??
+                            ''}`}
                         </span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
@@ -129,7 +114,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> SAVINGS PLAN</h3>
 
-                    {customer && customer.status && (
+                    {customer?.status && (
                       <Badge
                         className={styles.FirstHeaderBadge}
                         variant="success"
@@ -204,20 +189,18 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span>Full Name: </span>
                     <span>
                       {`${
-                        customer && customer.agent
-                          ? customer.agent.lastName
-                          : ''
+                        customer?.agent
+                          ?? ''
                       } ${
-                        customer && customer.agent
-                          ? customer.agent.firstName
-                          : 'N/A'
+                       customer?.agent
+                          ?? 'N/A'
                       }`}
                     </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Email: </span>
                     <span>
-                      {customer && customer.agent
+                      {customer?.agent
                         ? customer.agent.email
                         : 'N/A'}
                     </span>
@@ -228,25 +211,23 @@ const CustomerProfile = ({ history, match: { params } }) => {
             <div className={styles.Second}>
               <UserPlans plans={userPlans} history={history} />
             </div>
-            {customer &&
-              customer.previouslyChangedPhoneNumbers &&
-              customer.previouslyChangedPhoneNumbers.length > 0 && (
-                <div className={styles.DivContent}>
-                  <Card>
-                    <CardHeader>
-                      <div className={styles.FirstHeader}>
-                        <h3> Wallet Number History</h3>
-                      </div>
-                    </CardHeader>
-                    <CardBody>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Previous Wallet Number</span>
-                        <span>{customer.previouslyChangedPhoneNumbers}</span>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </div>
-              )}
+            {customer?.previouslyChangedPhoneNumbers?.[0] && (
+              <div className={styles.DivContent}>
+                <Card>
+                  <CardHeader>
+                    <div className={styles.FirstHeader}>
+                      <h3> Wallet Number History</h3>
+                    </div>
+                  </CardHeader>
+                  <CardBody>
+                    <div className={styles.FirstBodyGridContent}>
+                      <span>Previous Wallet Number</span>
+                      <span>{customer.previouslyChangedPhoneNumbers}</span>
+                    </div>
+                  </CardBody>
+                </Card>
+              </div>
+            )}
           </div>
         )}
 

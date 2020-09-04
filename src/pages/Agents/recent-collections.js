@@ -1,4 +1,4 @@
-import React, { useReducer } from 'react'
+import React, { useReducer, useState } from 'react'
 import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 import {
@@ -14,14 +14,19 @@ import { getCollections } from 'services/collections'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
-import { formatData, CollectionsTableColumns } from './function'
-import { ParamsReducer, DefaultParams } from 'utils/function'
+import { formatData, CollectionsTableColumns, ParamsReducer, DefaultParams } from 'utils/function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
 const Collections = props => {
   let history = useHistory()
   let { url } = useRouteMatch()
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
+  const [from, setFrom] = useState('')
+  const [to, setTo] = useState('')
+  const [endDate, setEndDate] = useState('')
+  const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = props.minimized ? 3 : 50
@@ -33,15 +38,11 @@ const Collections = props => {
       {
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to
-      }
+        params:{from, to},
+        }
     ],
     getCollections
   )
-  // let collection = data && data.data ? data.data.data : {}
-
-  // console.log(JSON.stringify(collection))
 
   if (data && data.data) {
     formattedData = formatData(
@@ -55,33 +56,21 @@ const Collections = props => {
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   return (
@@ -105,19 +94,21 @@ const Collections = props => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}

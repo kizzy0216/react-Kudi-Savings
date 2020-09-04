@@ -6,11 +6,8 @@ import { useHistory, useRouteMatch } from 'react-router-dom'
 import styles from './customers.module.scss'
 import { ChevronLeft, Eye } from 'assets/svg'
 import { useQuery } from 'react-query'
-import { ParamsReducer, DefaultParams } from 'utils/function'
+import { ParamsReducer, DefaultParams, formatPlanRevenueLog, PlanRevenueLogTableColumn } from 'utils/function'
 import { Content } from 'components/Layout'
-import moment from 'moment'
-import { getPlan } from 'services/plans'
-import { formatPlanRevenueLog } from './function'
 
 const PlanRevenueLog = props => {
   let { plan, minimized } = props
@@ -22,7 +19,6 @@ const PlanRevenueLog = props => {
   let totalPage = 0
   let { data, isLoading, error, refetch } = plan
 
-  //console.log(JSON.stringify(plan))
   if (data && data.data && data.data.data) {
     formattedData = formatPlanRevenueLog(
       data.data.data.plan,

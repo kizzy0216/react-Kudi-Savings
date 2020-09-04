@@ -49,9 +49,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     ['SingleAgent', { id: params.id }],
     getAgent
   )
-  let agent = data && data.data ? data.data.data : {}
 
-  //console.log( JSON.stringify(agent))
+  let agent = data?.data?.data ?? {}
 
   const { data: imageData } = useQuery(
     data && ['Image', { id: agent.imageId }],
@@ -121,7 +120,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         <div className={styles.FirstBodyGridProfile}>
                           <img
                             className={styles.FirstBodyGridProfileImg}
-                            src={imageData ? imageData.data.medium : AgentImg}
+                            src={imageData?.data?.medium ?? AgentImg}
                             alt="agent"
                           />
                         </div>
@@ -130,9 +129,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                             <span>Name</span>
                             <span>
                               {`${
-                                agent && agent.lastName ? agent.lastName : ''
+                                agent?.lastName ?? ''
                               } ${
-                                agent && agent.firstName ? agent.firstName : ''
+                                agent?.firstName ?? ''
                               }`}
                             </span>
                           </div>
@@ -159,9 +158,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           <div className={styles.FirstBodyGridContent}>
                             <span>Assigned Market: </span>
                             <span>
-                              {agent && agent.assignedMarket
-                                ? agent.assignedMarket.name
-                                : 'N/A'}
+                              {agent?.assignedMarket?.name
+                                ?? 'N/A'}
                             </span>
                           </div>
                         </div>

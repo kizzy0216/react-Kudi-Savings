@@ -3,7 +3,7 @@ import { useRouteMatch } from 'react-router-dom'
 import Table from 'components/Table'
 import { CardBody, Card } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
-import { formatPlan } from './function'
+import { formatPlan, UserPlanTableColumn } from 'utils/function'
 import styles from './customers.module.scss'
 const UserPlans = ({ plans, history }) => {
   let { url } = useRouteMatch()
@@ -36,33 +36,7 @@ const UserPlans = ({ plans, history }) => {
         {data && data.data && (
           <Table
             placeholder="User Plan"
-            column={[
-              {
-                key: `plan`,
-                render: 'Plan'
-              },
-              {
-                key: 'collectionCount',
-                render: 'Collection Count'
-              },
-              {
-                key: 'duration',
-                render: 'Duration'
-              },
-              { key: 'dailyAmount', render: 'Daily Amount' },
-
-              { key: 'amountSaved', render: 'Amount Saved' },
-
-              {
-                key: 'planStatus',
-                render: 'Plan Status'
-              },
-
-              {
-                key: 'action',
-                render: 'VIEW HISTORY'
-              }
-            ]}
+            column={UserPlanTableColumn}
             data={formattedData}
           />
         )}

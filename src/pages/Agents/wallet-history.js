@@ -15,7 +15,7 @@ import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData } from 'utils/function'
+import { formatWalletData, WalletHistoryTableColumns } from 'utils/function'
 
 const WalletHistory = ({ match: { params } }) => {
   const [page, setPage] = useState(1)
@@ -39,9 +39,6 @@ const WalletHistory = ({ match: { params } }) => {
       ],
     walletHistory
   )
-  let agent = data && data.data ? data.data.data : {}
-
-  console.log(JSON.stringify(agent))
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
@@ -133,23 +130,7 @@ const WalletHistory = ({ match: { params } }) => {
               )}
               {data && (
                 <Table
-                  column={[
-                    { key: 'sN', render: 'S/N' },
-                    { key: 'transaction_type', render: 'Type' },
-                    {
-                      key: 'status',
-                      render: 'Status'
-                    },
-                    {
-                      key: 'amount',
-                      render: 'Amount'
-                    },
-                    {
-                      key: 'wallet_balance',
-                      render: 'Balance'
-                    },
-                    { key: 'time', render: 'Date' }
-                  ]}
+                  column={WalletHistoryTableColumns}
                   placeholder="transactions"
                   data={formattedData}
                 />
