@@ -133,8 +133,11 @@ const WalletTopUps = lazy(() =>
 import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-wallet-topup')
 ) 
 const CashoutLog = lazy(() =>
-import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-cashout-logs')
+import(/* webpackChunkName: "CashoutLog" */ 'pages/Agents/view-all-cashout-logs')
 ) 
+const ViewAgentCashout = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentCashout" */ 'pages/Agents/view-cashout')
+)
 const AppRouter = () => (
   <Router history={history}>
     <Suspense fallback={<AppLoading />}>
@@ -217,6 +220,7 @@ const AppRouter = () => (
           exact
           component={CashoutLog}
         />
+        <PrivateRoute path="/agents/:id/:id" exact component={ViewAgentCashout} />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />

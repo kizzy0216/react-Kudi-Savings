@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button,Badge } from '@kudi-inc/dip'
+import { Button, Badge } from '@kudi-inc/dip'
 import moment from 'moment'
 import { Eye } from 'assets/svg'
 import { MediaService } from 'utils/axios'
@@ -132,7 +132,9 @@ export const formatData = (history, url, page, limit, data) => {
           icon={<Eye />}
           variant="flat"
           onClick={() => console.log('view clicked')}
-        />
+        >
+          View
+        </Button>
       )
     })
   )
@@ -192,18 +194,18 @@ export const CollectionsTableColumns = [
     key: 'timeCreated',
     render: 'TIME CREATED'
   },
-  // {
-  //   key: 'name',
-  //   render: "CUSTOMER'S NAME"
-  // },
+  {
+    key: 'name',
+    render: "CUSTOMER'S NAME"
+  },
   {
     key: 'amountCollected',
     render: 'AMOUNT COLLECTED'
   },
-  // {
-  //   key: 'walletBalance',
-  //   render: 'BALANCE'
-  // },
+  {
+    key: 'walletBalance',
+    render: 'BALANCE'
+  },
   {
     key: 'totalAmountSaved',
     render: 'TOTAL SAVED'
@@ -492,28 +494,28 @@ export const formatWalletHistory = (data, page, limit) => {
 }
 
 export const CustomerTableColumn = [
-    { key: 'sN', render: 'S/N' },
-    {
-      key: 'fullName',
-      render: 'Full name'
-    },
-    {
-      key: 'phoneNumber',
-      render: 'Phone Number'
-    },
+  { key: 'sN', render: 'S/N' },
+  {
+    key: 'fullName',
+    render: 'Full name'
+  },
+  {
+    key: 'phoneNumber',
+    render: 'Phone Number'
+  },
 
-    { key: 'totalSaved', render: 'Amount Saved' },
+  { key: 'totalSaved', render: 'Amount Saved' },
 
-    {
-      key: 'totalWithdrawn',
-      render: 'Amount Withdrawn'
-    },
+  {
+    key: 'totalWithdrawn',
+    render: 'Amount Withdrawn'
+  },
 
-    {
-      key: 'action',
-      render: 'ACTION'
-    }
-  ]
+  {
+    key: 'action',
+    render: 'ACTION'
+  }
+]
 
 export const PlanCollectionTableColumn = [
   {
@@ -611,4 +613,71 @@ export const PlanWalletHistoryTableColumn = [
     key: 'status',
     render: 'STATUS'
   }
+]
+export const formatCashoutData = (data, history, url, page, limit) => {
+  return data.map(
+    (
+      {
+        marketName,
+        managerName,
+        name,
+        agentName,
+        cashBalance,
+        status,
+        phoneNumber,
+        amount,
+        id,
+        timeCreated,
+        planTitle,
+        type
+      },
+      index
+    ) => ({
+      sN: (page - 1) * limit + (index + 1),
+      name: `${name}`,
+      phoneNumber: formatText(phoneNumber),
+      cashBalance: formatCurrency(cashBalance),
+      marketName: <div id="marketName">{formatText(marketName)}</div>,
+      agentName: formatText(agentName),
+      managerName: formatText(managerName),
+      amount: formatCurrency(amount),
+      type: formatText(type),
+      planTitle: formatText(planTitle),
+      status: status ? (
+        <Badge
+          variant={
+            status === 'APPROVED'
+              ? 'success'
+              : status === 'DECLINED'
+              ? 'danger'
+              : 'warning'
+          }
+        >
+          {status}
+        </Badge>
+      ) : (
+        'N/A'
+      ),
+      timeCreated: moment(timeCreated).format('DD/MM/YY'),
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => history.push(`${url}/${id}`)}
+        >
+          View
+        </Button>
+      )
+    })
+  )
+}
+
+export const statusOptions = [
+  { text: 'Select Status', value: '' },
+  { text: 'Approved', value: 'APPROVED' },
+  { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
+  { text: 'Declined', value: 'DECLINED' },
+  { text: 'Pending', value: 'PENDING' },
+  { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
+  { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]

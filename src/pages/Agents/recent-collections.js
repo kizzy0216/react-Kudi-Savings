@@ -44,6 +44,9 @@ const Collections = props => {
     getCollections
   )
 
+  let collection = data?.data?.data || {}
+  console.log(JSON.stringify(collection))
+
   if (data && data.data) {
     formattedData = formatData(
       history,

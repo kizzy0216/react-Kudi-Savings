@@ -14,8 +14,7 @@ import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './recent-collections.module.scss'
 import Select from 'components/Select'
-import { formatData, statusOptions } from '../Cashout/function'
-import { CashoutTableColumns } from 'utils/function'
+import { CashoutTableColumns, formatCashoutData, statusOptions } from 'utils/function'
 import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
@@ -47,7 +46,7 @@ const Cashout = props => {
     getWithdrawals
   )
   if (data && data.data) {
-    formattedData = formatData(
+    formattedData = formatCashoutData(
       data.data.data.list,
       history,
       url,
