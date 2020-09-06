@@ -11,10 +11,11 @@ import {
 import { updateCustomer, uploadAvatar } from 'services/customers'
 import { toaster } from 'evergreen-ui'
 import styles from './customer-profile.module.scss'
-import { states } from 'utils/data'
+import { states, markets } from 'utils/data'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
+import Markets from 'pages/Markets'
 
 const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [loading, setLoading] = useState(false)
@@ -262,6 +263,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               error={errors.address}
               status={errors.address && 'error'}
             />
+          
             <Select
               onSelect={state =>
                 setEdited({
@@ -286,6 +288,23 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               onChange={e => setEdited({ ...edited, lga: e.target.value })}
               error={errors.lga}
               status={errors.lga && 'error'}
+            />
+            
+            <Select
+              onSelect={state =>
+                setEdited({
+                  ...edited,
+                  state
+                })
+              }
+              name="market"
+              value={edited?.market?.name}
+              required
+              label="Market"
+              options={markets}
+              autoComplete="market"
+              error={errors?.market?.name}
+              status={errors?.market?.name && 'error'}
             />
           </div>
           <Button type="submit" loading={loading}>
