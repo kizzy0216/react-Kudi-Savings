@@ -30,12 +30,13 @@ const CustomerHistory = ({ history, match: { params } }) => {
   )
 
   let plan = data?.data?.data ?? {}
+
   return (
     <Fragment>
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => history.goBack()} />
-          {plan && plan.plan && plan.plan.title} - Plan Overview
+          {plan?.plan?.title} - Plan Overview
         </p>
       </Header>
       <Content className={styles.content}>
@@ -127,7 +128,7 @@ const CustomerHistory = ({ history, match: { params } }) => {
         <CashoutLog minimized />
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory minimized id={params.planId} />
+        <WalletHistory minimized id={params.planId}/>
       </div>
     </Fragment>
   )

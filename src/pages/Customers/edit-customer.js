@@ -15,7 +15,6 @@ import { states, markets } from 'utils/data'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
-import Markets from 'pages/Markets'
 
 const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [loading, setLoading] = useState(false)
@@ -303,8 +302,8 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               label="Market"
               options={markets}
               autoComplete="market"
-              error={errors?.market?.name}
-              status={errors?.market?.name && 'error'}
+              error={errors.marketName}
+              status={errors.marketName && 'error'}
             />
           </div>
           <Button type="submit" loading={loading}>

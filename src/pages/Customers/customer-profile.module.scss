@@ -288,7 +288,20 @@
       }
     }
   }
+  &PlanForm{
+    & > div {
+      margin-bottom: 1.67em;
+    }
+    button {
+      margin-top: 3em;
+    }
+    input[class*='module_kudi-dip-input'] {
+      padding-top: 1.857em;
+      padding-bottom: 0.714em;
+    } 
 }
+}
+
 .DivContent {
   font-size: 1rem;
   display: block;

@@ -77,6 +77,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               <ChevronLeft role="button" onClick={() => history.goBack()} />
               Agent Profile
             </p>
+            <Button  type="button" icon={<Reassign />}>
+              View New Referrals
+            </Button>
           </Header>
           <Content className={styles.content}>
             {isLoading && <ProfileLoading />}
@@ -128,11 +131,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           <div className={styles.FirstBodyGridContent}>
                             <span>Name</span>
                             <span>
-                              {`${
-                                agent?.lastName ?? ''
-                              } ${
-                                agent?.firstName ?? ''
-                              }`}
+                              {`${agent?.lastName ?? ''} ${agent?.firstName ??
+                                ''}`}
                             </span>
                           </div>
                           <div className={styles.FirstBodyGridContent}>
@@ -157,10 +157,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </div> */}
                           <div className={styles.FirstBodyGridContent}>
                             <span>Assigned Market: </span>
-                            <span>
-                              {agent?.assignedMarket?.name
-                                ?? 'N/A'}
-                            </span>
+                            <span>{agent?.assignedMarket?.name ?? 'N/A'}</span>
                           </div>
                         </div>
                       </div>

@@ -469,7 +469,7 @@ export const formatWalletHistory = (data, page, limit) => {
       {
         time_updated,
         transaction_type,
-        source,
+        meta,
         wallet_balance,
         amount,
         status
@@ -480,7 +480,7 @@ export const formatWalletHistory = (data, page, limit) => {
       time_updated: moment(time_updated).format('Do MMM, YYYY hh:mm a'),
       transaction_type: formatText(transaction_type),
       amount: formatCurrency(amount),
-      source: formatText(source),
+      source: formatText(meta.source),
       wallet_balance: formatCurrency(wallet_balance),
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
@@ -601,10 +601,10 @@ export const PlanWalletHistoryTableColumn = [
     key: 'amount',
     render: 'AMOUNT'
   },
-  // {
-  //   key: 'source',
-  //   render: 'SOURCE'
-  // },
+  {
+    key: 'source',
+    render: 'SOURCE'
+  },
   {
     key: 'wallet_balance',
     render: 'BALANCE'

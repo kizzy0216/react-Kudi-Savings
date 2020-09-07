@@ -11,6 +11,7 @@ import {
 } from '@kudi-inc/dip'
 import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
+import { SideSheet } from 'evergreen-ui'
 import { ChevronLeft, Eye, Close, Reassign } from 'assets/svg'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { getHistoryByPlan } from 'services/customers'
@@ -22,6 +23,10 @@ import {
 } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import styles from './customers.module.scss'
+import DebitPlan from './debit-plan'
+import CreditPlan from './credit-plan'
+
+import { getPlan } from 'services/plans'
 
 const WalletHistory = props => {
   let { minimized, id } = props
@@ -31,6 +36,8 @@ const WalletHistory = props => {
   const [showReset, setShowReset] = useState(false)
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
+  const [showDebit, setShowDebit] = useState(false)
+  const [showCredit, setShowCredit] = useState(false)
   const [endDate, setEndDate] = useState('')
   const [startDate, setStartDate] = useState('')
   const [type, setType] = useState('')
@@ -43,6 +50,7 @@ const WalletHistory = props => {
     ['history', { id: id, params: { type, from, to } }],
     getHistoryByPlan
   )
+
 
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
@@ -81,7 +89,7 @@ const WalletHistory = props => {
               onClick={() =>
                 history.push({
                   pathname: `${url}/customer-wallet-history`,
-                  state: props.id
+                  state: id
                 })
               }
             >
@@ -90,20 +98,28 @@ const WalletHistory = props => {
           ) : (
             <div className="flex">
               <div className={styles.Credit}>
-                <Button variant="flat" icon={<Reassign />}>
+                <Button
+                  variant="flat"
+                  icon={<Reassign />}
+                  onClick={() => setShowCredit(true)}
+                >
                   Credit Plan
                 </Button>
               </div>
               <div className={styles.Debit}>
-                <Button variant="flat" icon={<Reassign />}>
+                <Button
+                  variant="flat"
+                  icon={<Reassign />}
+                  onClick={() => setShowDebit(true)}
+                >
                   Debit Plan
                 </Button>
               </div>
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
-                  onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
+                  onFocusChange={onFocusChange}
                   focusedInput={focusedInput}
                   startDate={startDate}
                   endDate={endDate}
@@ -197,6 +213,20 @@ const WalletHistory = props => {
             </div>
           ))}
       </Card>
+      <SideSheet
+        onCloseComplete={() => setShowDebit(false)}
+        isShown={showDebit}
+        width={800}
+      >
+        <DebitPlan setShowDebit={setShowDebit} id={id} />
+      </SideSheet>
+      <SideSheet
+        onCloseComplete={() => setShowCredit(false)}
+        isShown={showCredit}
+        width={800}
+      >
+        <CreditPlan setShowCredit={setShowCredit} id={id} />
+      </SideSheet>
     </Content>
   )
 }
