@@ -21,74 +21,74 @@ import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 
 const ViewAgentCashout = ({ history, match: { params } }) => {
-    let [isShown, setIsShown] = useState(false)
-    let [loading, setLoading] = useState(false)
-    let [type, setType] = useState('')
-    let [reason, setReason] = useState({ reason: '' })
-    let [showKyc, setShowKyc] = useState(false)
-    const { data, isLoading, error, refetch } = useQuery(
-      ['Withdrawal', { id: params.id }],
-      getWithdrawal
-    )
-  
-    let withdrawal = data?.data?.data || {}
+  let [isShown, setIsShown] = useState(false)
+  let [loading, setLoading] = useState(false)
+  let [type, setType] = useState('')
+  let [reason, setReason] = useState({ reason: '' })
+  let [showKyc, setShowKyc] = useState(false)
+  const { data, isLoading, error, refetch } = useQuery(
+    ['Withdrawal', { id: params.id }],
+    getWithdrawal
+  )
 
-    const { data: imageData } = useQuery(
-      ['Image', { id: withdrawal?.user?.pictureId }],
-      fecthImage
-    )
-  
-    const handleWithdrawal = async status => {
-      setLoading(true)
-      await processWithdrawal(params.id, status, reason)
-        .then(({ data }) => {
-          setLoading(false)
-          toaster.success('Cashout Request Processed')
-          refetch({ disableThrow: true })
-          setReason({ reason: '' })
-          setIsShown(false)
-        })
-        .catch(data => {
-          setLoading(false)
-  
-          if (data && data.data.message) return toaster.danger(data.data.message)
-          toaster.danger('Withdrawal request failed')
-        })
+  let withdrawal = data?.data?.data || {}
+
+  const { data: imageData } = useQuery(
+    ['Image', { id: withdrawal?.user?.pictureId }],
+    fecthImage
+  )
+
+  const handleWithdrawal = async status => {
+    setLoading(true)
+    await processWithdrawal(params.id, status, reason)
+      .then(({ data }) => {
+        setLoading(false)
+        toaster.success('Cashout Request Processed')
+        refetch({ disableThrow: true })
+        setReason({ reason: '' })
+        setIsShown(false)
+      })
+      .catch(data => {
+        setLoading(false)
+
+        if (data && data.data.message) return toaster.danger(data.data.message)
+        toaster.danger('Withdrawal request failed')
+      })
+  }
+  let dialogContent = {
+    approve: {
+      title: 'Approve Request',
+      content: `Approve the withdrawal request of ${withdrawal &&
+        formatCurrency(withdrawal.amount)}`,
+      submit: () => handleWithdrawal('APPROVED')
+    },
+    decline: {
+      title: 'Decline Request',
+      content: 'Decline the withdrawal request.',
+      submit: () => handleWithdrawal('DECLINED')
     }
-    let dialogContent = {
-      approve: {
-        title: 'Approve Request',
-        content: `Approve the withdrawal request of ${withdrawal &&
-          formatCurrency(withdrawal.amount)}`,
-        submit: () => handleWithdrawal('APPROVED')
-      },
-      decline: {
-        title: 'Decline Request',
-        content: 'Decline the withdrawal request.',
-        submit: () => handleWithdrawal('DECLINED')
-      }
-    }
-    return (
-        <Fragment>
-          <Header>
-            <p>
-              <ChevronLeft onClick={() => history.goBack()} /> Cashout Request
-            </p>
-          </Header>
-          <Content className={styles.content}>
-            {isLoading && <ProfileLoading />}
-            {error && (
-              <div>
-                Error!
-                <Button onClick={() => refetch({ disableThrow: true })}>
-                  Retry
-                </Button>
-              </div>
-            )}
-       {data && (
+  }
+  return (
+    <Fragment>
+      <Header>
+        <p>
+          <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
+        </p>
+      </Header>
+      <Content className={styles.content}>
+        {isLoading && <ProfileLoading />}
+        {error && (
+          <div>
+            Error!
+            <Button onClick={() => refetch({ disableThrow: true })}>
+              Retry
+            </Button>
+          </div>
+        )}
+        {data && (
           <div className={styles.contentCard}>
             <div className={styles.First}>
-            <Card>
+              <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> AGENT INFORMATION </h3>
@@ -130,20 +130,23 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
 
                       <div className={styles.FirstBodyGridContent}>
                         <span>Address</span>
-                        
+
                         <span>
-                          {withdrawal.agent && formatText(withdrawal.agent.address)}
-                       </span>  
-                       <span>
-                          {withdrawal.agent && formatText(withdrawal.agent.lga)}/
-                          {withdrawal.agent && formatText(withdrawal.agent.state)}
+                          {withdrawal.agent &&
+                            formatText(withdrawal.agent.address)}
                         </span>
-                        
+                        <span>
+                          {withdrawal.agent && formatText(withdrawal.agent.lga)}
+                          /
+                          {withdrawal.agent &&
+                            formatText(withdrawal.agent.state)}
+                        </span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Assigned Market</span>
                         <span>
-                          {withdrawal.agent && withdrawal.agent.assignedMarket &&
+                          {withdrawal.agent &&
+                            withdrawal.agent.assignedMarket &&
                             formatText(withdrawal.agent.assignedMarket.name)}
                         </span>
                       </div>
@@ -152,7 +155,7 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
               <Card>
-              <CardHeader>
+                <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> CASH OUT</h3>
 
@@ -177,7 +180,10 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Customer:</span>
-                    <span> {withdrawal?.user?.firstName}{" "}{withdrawal?.user?.lastName}</span>
+                    <span>
+                      {' '}
+                      {withdrawal?.user?.firstName} {withdrawal?.user?.lastName}
+                    </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Amount</span>
@@ -210,8 +216,7 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                       </Button>
                     </CardFooter>
                   )}
-                {withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
+                {withdrawal.status === 'PENDING_IMAGE_VALIDATION' && (
                     <div className={styles.Kyc}>
                       <Button
                         type="button"
@@ -224,8 +229,8 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                     </div>
                   )}
               </Card>
-              </div>
-              <div className={styles.Second}>
+            </div>
+            <div className={styles.Second}>
               <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
@@ -312,9 +317,9 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                 </div>
               </Card>
             </div>
-              </div>
-       )}
-       {isShown && (
+          </div>
+        )}
+        {isShown && (
           <Dialog
             isShown={isShown}
             title={dialogContent[type].title}
@@ -359,7 +364,7 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
           </Dialog>
         )}
 
-       {showKyc && (
+        {showKyc && (
           <SideSheet
             isShown={showKyc}
             onCloseComplete={() => setShowKyc(false)}
@@ -367,10 +372,9 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
             <Kyc setShow={setShowKyc} withdrawal={withdrawal} />
           </SideSheet>
         )}
-
-              </Content>
-              </Fragment>
-    )
+      </Content>
+    </Fragment>
+  )
 }
 
 export default ViewAgentCashout

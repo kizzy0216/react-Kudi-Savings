@@ -16,7 +16,7 @@ import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
 
-const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
+const EditCustomer = ({ setShowEdit, refetch, customer, auth, agent,setAgent }) => {
   const [loading, setLoading] = useState(false)
   const [uploadedAvatar, setUploadedAvatar] = useState({})
   const [imgUploaded, setImgUploaded] = useState(false)
@@ -26,6 +26,13 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [errors, setErrors] = useState({})
   const [imgProgress, setImgProcess] = useState(0)
   const [idProgress, setIdProcess] = useState(0)
+  let markets = []
+  if (auth && auth.markets) {
+    markets = auth.markets.map(({ name, id }) => ({
+      text: name,
+      value: id
+    }))
+  }
   let { data: avatar } = useQuery(
     edited && edited.pictureId && ['Image', { id: edited.pictureId }],
     fecthImage
@@ -297,13 +304,19 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
                 })
               }
               name="market"
-              value={edited?.market?.name}
+              value={agent.marketId}
               required
               label="Market"
               options={markets}
-              autoComplete="market"
+              autoComplete="markets"
               error={errors.marketName}
               status={errors.marketName && 'error'}
+              onSelect={marketId =>
+                setAgent({
+                  type: 'UPDATE_DETAILS',
+                  payload: { marketId }
+                })
+              }
             />
           </div>
           <Button type="submit" loading={loading}>

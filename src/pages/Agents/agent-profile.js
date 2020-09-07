@@ -20,10 +20,11 @@ import {
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import { getAgent, getUsers, getUsersOnboarded } from 'services/agents'
+import { getAgent, getUsers, getUsersOnboarded, getActivityLog } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
+import DebitWallet from './debit-wallet'
 import UpdateStatus from './update-status'
 import CustomersByMarkets from './customers-by-markets'
 import CustomersOnboarded from './customers-by-onboarding'
@@ -42,6 +43,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
+  let [ showDebitWallet, setShowDebitWallet ] = useState(false)
+  let [ deductAmount, setDeductionAmount] = useState(0)
   let limit = 50
   let [phoneNumber, setPhoneNumber] = useState('')
   let [mobile, setMobile] = useState('')
@@ -60,6 +63,13 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     data && ['Customers', { id: agent.id, page, limit, phoneNumber }],
     getUsers
   )
+
+  const {data: log} = useQuery(
+    data && ['ActivityLog', {id: params.id}, getActivityLog]
+  )
+
+  console.log(JSON.stringify(log))
+
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
     getUsersOnboarded
@@ -238,7 +248,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           View History
                         </Button>
                         <div className={styles.WalletFooterDebit}>
-                          <Button variant="flat" icon={<Reassign />}>
+                          <Button variant="flat" icon={<Reassign />} onClick={()=> setShowDebitWallet(true)}>
                             Debit Wallet
                           </Button>
                         </div>
@@ -322,6 +332,18 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                 zonalHead={agent}
                 refetch={refetch}
                 setFundAmount={setFundAmount}
+              />
+            </SideSheet>
+
+            <SideSheet
+              onCloseComplete={() => setShowDebitWallet(false)}
+              isShown={showDebitWallet}
+            >
+              <DebitWallet
+                setShowDebitWallet={setShowDebitWallet}
+                zonalHead={agent}
+                refetch={refetch}
+                setDeductionAmount={setDeductionAmount}
               />
             </SideSheet>
 

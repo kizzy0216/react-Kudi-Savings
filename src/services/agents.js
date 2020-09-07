@@ -17,6 +17,10 @@ export const getUsers = async ({ id, ...params }) =>
 export const getUsersOnboarded = async ({ id, ...params }) =>
   await Axios.get(`/agents/${id}/onboarded`, clean({ params }))
 
+  export const getActivityLog = async({params}) => {
+    await Axios.get(`/savings/log`, clean({params}))
+  }
+
 export const updateAgent = agent => {
   const { id, ...rest } = agent
   return Axios.put(`/agents/${id}`, rest)

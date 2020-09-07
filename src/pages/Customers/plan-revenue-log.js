@@ -8,26 +8,28 @@ import { ChevronLeft, Eye } from 'assets/svg'
 import { useQuery } from 'react-query'
 import { ParamsReducer, DefaultParams, formatPlanRevenueLog, PlanRevenueLogTableColumn } from 'utils/function'
 import { Content } from 'components/Layout'
+import { getPlan } from 'services/plans'
 
 const PlanRevenueLog = props => {
-  let { plan, minimized } = props
+  let { id, minimized } = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
-  let { data, isLoading, error, refetch } = plan
+  let { data, isLoading, error, refetch } = useQuery(['Plan', { id: id }], getPlan)
 
-  if (data && data.data && data.data.data) {
-    formattedData = formatPlanRevenueLog(
-      data.data.data.plan,
-      history,
-      params.page,
-      limit
-    )
-    totalPage = Math.ceil(data.data.data.total / limit)
-  }
+  let vals = data?.data?.data ?? {}
+  
+  // if (data?.data?.data) {
+  //   formattedData = formatPlanRevenueLog(
+  //     data.data.data,
+  //     params.page,
+  //     limit
+  //   )
+  //   totalPage = Math.ceil(data.data.data.total / limit)
+  // }
 
   return (
     <Content className={styles.content}>
@@ -61,24 +63,7 @@ const PlanRevenueLog = props => {
             {data && data.data && (
               <Table
                 placeholder="Plan Revenue Log"
-                column={[
-                  {
-                    key: `expectedDeductionDate`,
-                    render: 'EXPECTED DEDUCTION DATE'
-                  },
-                  {
-                    key: 'actualDeductionDate',
-                    render: 'ACTUAL DEDUCTION DATE'
-                  },
-                  {
-                    key: 'amount',
-                    render: 'AMOUNT'
-                  },
-                  {
-                    key: 'planStatus',
-                    render: 'STATUS'
-                  }
-                ]}
+                column={PlanRevenueLogTableColumn}
                 data={formattedData}
               />
             )}

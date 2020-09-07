@@ -122,7 +122,7 @@ const CustomerHistory = ({ history, match: { params } }) => {
         <PlanCollections minimized />
       </div>
       <div className={styles.DivContent}>
-        <PlanRevenueLog minimized plan={plan} />
+        <PlanRevenueLog minimized id={params.planId} />
       </div>
       <div className={styles.DivContent}>
         <CashoutLog minimized />

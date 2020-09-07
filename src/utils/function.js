@@ -106,7 +106,7 @@ export const formatData = (history, url, page, limit, data) => {
   return data.map(
     (
       {
-        name,
+        customerName,
         walletBalance,
         totalAmountSaved,
         timeCreated,
@@ -117,7 +117,7 @@ export const formatData = (history, url, page, limit, data) => {
       index
     ) => ({
       SN: (page - 1) * limit + (index + 1),
-      name: `${name}`,
+      name: `${customerName}`,
       collectionDate: collectionDate
         ? moment(collectionDate).format('DD/MM/YY')
         : 'N/A',
@@ -131,7 +131,7 @@ export const formatData = (history, url, page, limit, data) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => console.log('view clicked')}
+          onClick={() => history.push(`${url}/${id}`)}
         >
           View
         </Button>
@@ -210,10 +210,10 @@ export const CollectionsTableColumns = [
     key: 'totalAmountSaved',
     render: 'TOTAL SAVED'
   },
-  {
-    key: 'action',
-    render: ''
-  }
+  // {
+  //   key: 'action',
+  //   render: ''
+  // }
 ]
 
 export const WalletTopUpTableColumns = [
@@ -391,7 +391,7 @@ export const formatPlan = (data, history, url, page, limit) => {
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
     (
-      { agentName, balance, timeCreated, collectionDate, totalAmountSaved },
+      { agentName, balance, timeCreated, collectionDate, totalAmountSaved, },
       index
     ) => ({
       SN: (page - 1) * limit + (index + 1),
@@ -410,7 +410,7 @@ export const formatCollections = (history, url, page, limit, data) => {
   )
 }
 
-export const formatPlanRevenueLog = (data, history, page, limit) => {
+export const formatPlanRevenueLog = (data, page, limit) => {
   return data.map(
     (
       { expectedDeductionDate, actualDeductionDate, amount, planStatus },

@@ -138,6 +138,9 @@ import(/* webpackChunkName: "CashoutLog" */ 'pages/Agents/view-all-cashout-logs'
 const ViewAgentCashout = lazy(() =>
   import(/* webpackChunkName: "ViewAgentCashout" */ 'pages/Agents/view-cashout')
 )
+const ViewAgentTransaction = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentTransaction" */ 'pages/Agents/transaction-details')
+)
 const AppRouter = () => (
   <Router history={history}>
     <Suspense fallback={<AppLoading />}>
@@ -220,7 +223,9 @@ const AppRouter = () => (
           exact
           component={CashoutLog}
         />
+        <PrivateRoute path="/agents/:id/view-all-cashout-logs/:id" exact component={ViewAgentCashout} />
         <PrivateRoute path="/agents/:id/:id" exact component={ViewAgentCashout} />
+        <PrivateRoute path="/agents/:id/view-all-collections/:id" exact component={ViewAgentTransaction} />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />

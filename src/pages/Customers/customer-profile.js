@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, useReducer } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, SideSheet } from 'evergreen-ui'
@@ -10,7 +10,7 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink, ChevronLeft, Close, Reassign } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -20,17 +20,23 @@ import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
 import EditCustomer from './edit-customer'
 import UserPlans from './userPlans'
+import { AgentReducer, DefaultAgent } from '../Agents/agent-reducer'
 
 const CustomerProfile = ({ history, match: { params } }) => {
   const [auth] = useContext(AuthContext)
   let [showEdit, setShowEdit] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
+  const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
+  
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
     getCustomer
   )
   const userPlans = useQuery(['Plans', { id: params.id }], getPlans)
+
+  console.log(JSON.stringify(userPlans))
+  
 
   let customer = data?.data?.data ?? {}
 
@@ -64,6 +70,14 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
+
+                    <Button
+                      variant="flat"
+                      onClick={() => setShowEdit(true)}
+                      icon={<Reassign />}
+                    >
+                      My Referrals
+                    </Button>
 
                     <Button
                       variant="flat"
@@ -265,6 +279,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
             customer={customer}
             refetch={refetch}
             auth={auth}
+            agent={agent}
+            setAgent={setAgent}
           />
         </SideSheet>
       </Content>
