@@ -26,9 +26,6 @@ const Markets = ({ history }) => {
     ['Markets', { page, limit }],
     getMarkets
   )
-
-  let mark = data?.data?.data ?? {}
-  console.log(JSON.stringify(mark))
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
       ({ city, state, lga, id, timeCreated, totalRevenue, ...rest }) => ({

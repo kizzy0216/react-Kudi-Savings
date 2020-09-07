@@ -68,8 +68,6 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     data && ['ActivityLog', {id: params.id}, getActivityLog]
   )
 
-  console.log(JSON.stringify(log))
-
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
     getUsersOnboarded

@@ -34,8 +34,6 @@ const CustomerProfile = ({ history, match: { params } }) => {
     getCustomer
   )
   const userPlans = useQuery(['Plans', { id: params.id }], getPlans)
-
-  console.log(JSON.stringify(userPlans))
   
 
   let customer = data?.data?.data ?? {}

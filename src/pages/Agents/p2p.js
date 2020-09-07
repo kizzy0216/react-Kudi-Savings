@@ -44,8 +44,6 @@ const P2P = props => {
     ],
     getTransaction
   )
-  let d = data?.data?.data ?? {}
-  console.log(JSON.stringify(d))
 
   if (data && data.data) {
     formattedData = formatP2P(params.page, limit, data.data.data.list)

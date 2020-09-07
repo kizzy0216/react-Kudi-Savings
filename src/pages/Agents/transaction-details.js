@@ -29,7 +29,6 @@ const TransactionDetails = ({ history, match: { params } }) =>
       )
     
       let collection = data?.data?.data || {}
-      console.log(JSON.stringify(collection))
   
       const { data: imageData } = useQuery(
         ['Image', { id: collection?.user?.pictureId }],

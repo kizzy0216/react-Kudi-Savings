@@ -17,7 +17,6 @@ const DebitPlan = ({ setShowDebit, id }) => {
   const { data, refetch } = useQuery(['Plan', { id: id }], getPlan)
 
   let plan = data?.data?.data ?? {}
-  console.log(JSON.stringify(plan))
 
   const [amount, setAmount] = useState(0)
   const [reason, setReason] = useState('')
