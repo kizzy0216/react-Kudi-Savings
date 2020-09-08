@@ -132,7 +132,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         <div className={styles.FirstBodyGridProfile}>
                           <img
                             className={styles.FirstBodyGridProfileImg}
-                            src={imageData?.data?.medium ?? AgentImg}
+                            src={imageData?.data?.medium || AgentImg}
                             alt="agent"
                           />
                         </div>

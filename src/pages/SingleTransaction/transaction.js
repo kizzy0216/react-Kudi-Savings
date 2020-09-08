@@ -60,7 +60,7 @@ const Transaction = ({ history, match: { params } }) => {
                     <div className={styles.STBodyGridProfile}>
                       <img
                         className={styles.FirstBodyGridProfileImg}
-                        src={imageData ? imageData.data.medium : AgentImg}
+                        src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
                     </div>
