@@ -13,10 +13,11 @@ import styles from './debit-plan.module.scss'
 import { isValidUpdate } from './validation'
 import { getPlan } from 'services/plans'
 
-const DebitPlan = ({ setShowDebit, id }) => {
+const DebitPlan = ({ setShowDebit, id , phoneNumber}) => {
   const { data, refetch } = useQuery(['Plan', { id: id }], getPlan)
 
   let plan = data?.data?.data ?? {}
+  
 
   const [amount, setAmount] = useState(0)
   const [reason, setReason] = useState('')
@@ -38,7 +39,7 @@ const DebitPlan = ({ setShowDebit, id }) => {
             type="text"
             label="Wallet Number"
             placeholder=""
-            value={plan?.plan?.walletNumber ?? 'N/A'}
+            value={phoneNumber}
             disabled
           />
           <Input

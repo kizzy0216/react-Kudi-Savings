@@ -221,7 +221,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
               </Card>
             </div> */}
             <div className={styles.Second}>
-              <UserPlans plans={userPlans} history={history} />
+              <UserPlans plans={userPlans} history={history}  phoneNumber={customer.phoneNumber}/>
             </div>
             {customer?.previouslyChangedPhoneNumbers?.[0] && (
               <div className={styles.DivContent}>

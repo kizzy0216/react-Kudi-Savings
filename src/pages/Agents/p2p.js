@@ -45,8 +45,8 @@ const P2P = props => {
     getTransaction
   )
 
-  if (data && data.data) {
-    formattedData = formatP2P(params.page, limit, data.data.data.list)
+  if (data?.data) {
+    formattedData = formatP2P(params.page, limit, data.data.data)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
 

@@ -29,7 +29,7 @@ import CreditPlan from './credit-plan'
 import { getPlan } from 'services/plans'
 
 const WalletHistory = props => {
-  let { minimized, id } = props
+  let { minimized, id ,phone} = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -218,14 +218,14 @@ const WalletHistory = props => {
         isShown={showDebit}
         width={800}
       >
-        <DebitPlan setShowDebit={setShowDebit} id={id} />
+        <DebitPlan setShowDebit={setShowDebit} id={id} phoneNumber={phone} />
       </SideSheet>
       <SideSheet
         onCloseComplete={() => setShowCredit(false)}
         isShown={showCredit}
         width={800}
       >
-        <CreditPlan setShowCredit={setShowCredit} id={id} />
+        <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone}/>
       </SideSheet>
     </Content>
   )

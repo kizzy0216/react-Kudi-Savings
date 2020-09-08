@@ -20,7 +20,7 @@ import {
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import { getAgent, getUsers, getUsersOnboarded, getActivityLog } from 'services/agents'
+import { getAgent, getUsers, getUsersOnboarded, getAgentActivity } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
@@ -65,8 +65,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   )
 
   const {data: log} = useQuery(
-    data && ['ActivityLog', {id: params.id}, getActivityLog]
+    data && ['AgentActivity', {}, getAgentActivity]
   )
+
 
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
@@ -190,11 +191,11 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <CardBody className={styles.FirstBody}>
                       <div className={styles.FirstBodyFlex}>
                         <span>Active Customers: </span>
-                        <span> N/A</span>
+                        <span>{log?.data.activeCustomers}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Inactive Customers </span>
-                        <span>N/A</span>
+                        <span>{log?.data?.activeCustomers}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Total Customers </span>

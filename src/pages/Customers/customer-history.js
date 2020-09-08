@@ -18,12 +18,14 @@ import PlanRevenueLog from './plan-revenue-log'
 import CashoutLog from './cashout-log'
 import WalletHistory from './wallet-history'
 
-const CustomerHistory = ({ history, match: { params } }) => {
+const CustomerHistory = ( { location, history, match: { params } }) => {
   let limit = 50
   let totalData = 0
   let totalPage = 0
   let formattedData = []
 
+  let phoneNumber = location.state
+  
   let { data, isLoading, error, refetch } = useQuery(
     ['Plan', { id: params.planId }],
     getPlan
@@ -121,14 +123,14 @@ const CustomerHistory = ({ history, match: { params } }) => {
       <div className={styles.DivContent}>
         <PlanCollections minimized />
       </div>
-      <div className={styles.DivContent}>
+      {/* <div className={styles.DivContent}>
         <PlanRevenueLog minimized id={params.planId} />
-      </div>
+      </div> */}
       <div className={styles.DivContent}>
         <CashoutLog minimized />
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory minimized id={params.planId}/>
+        <WalletHistory minimized id={params.planId} phone={phoneNumber}/>
       </div>
     </Fragment>
   )

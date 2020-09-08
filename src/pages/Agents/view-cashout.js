@@ -135,12 +135,12 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
                           {withdrawal.agent &&
                             formatText(withdrawal.agent.address)}
                         </span>
-                        <span>
+                        {/* <span>
                           {withdrawal.agent && formatText(withdrawal.agent.lga)}
                           /
                           {withdrawal.agent &&
                             formatText(withdrawal.agent.state)}
-                        </span>
+                        </span> */}
                       </div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Assigned Market</span>
