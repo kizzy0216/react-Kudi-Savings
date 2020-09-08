@@ -89,6 +89,21 @@ const CustomerHistory= lazy(() =>
     /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-history'
   )
 )
+const CustomerPlanCollection= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerPlanCollection" */ 'pages/Customers/customer-plan-collection'
+  )
+)
+const CustomerCashoutLog= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerCashoutLog" */ 'pages/Customers/customer-cashout-log'
+  )
+)
+const CustomerWalletHistory= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerWalletHistory" */ 'pages/Customers/customer-wallet-history'
+  )
+)
 const Plans = lazy(() => import(/* webpackChunkName: "Plans" */ 'pages/Plans'))
 
 const Transactions = lazy(() =>
@@ -110,6 +125,21 @@ const KudiPin = lazy(() =>
 )
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
+)
+const Collections = lazy(() =>
+  import(/* webpackChunkName: "Collections" */ 'pages/Agents/view-all-collections')
+)
+const WalletTopUps = lazy(() =>
+import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-wallet-topup')
+) 
+const CashoutLog = lazy(() =>
+import(/* webpackChunkName: "CashoutLog" */ 'pages/Agents/view-all-cashout-logs')
+) 
+const ViewAgentCashout = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentCashout" */ 'pages/Agents/view-cashout')
+)
+const ViewAgentTransaction = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentTransaction" */ 'pages/Agents/transaction-details')
 )
 const AppRouter = () => (
   <Router history={history}>
@@ -145,6 +175,9 @@ const AppRouter = () => (
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
         <PrivateRoute path="/customers/:id/plan/:planId" exact component={CustomerHistory} />
         <PrivateRoute path="/plans" exact component={Plans} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-plan-collection" exact component={CustomerPlanCollection} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-cashout-log" exact component={CustomerCashoutLog} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-wallet-history" exact component={CustomerWalletHistory} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
         <PrivateRoute
           path="/zonal-heads/:id"
@@ -175,6 +208,24 @@ const AppRouter = () => (
           exact
           component={AdminWalletHistory}
         />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections"
+          exact
+          component={Collections}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-wallet-topup"
+          exact
+          component={WalletTopUps}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-cashout-logs"
+          exact
+          component={CashoutLog}
+        />
+        <PrivateRoute path="/agents/:id/view-all-cashout-logs/:id" exact component={ViewAgentCashout} />
+        <PrivateRoute path="/agents/:id/:id" exact component={ViewAgentCashout} />
+        <PrivateRoute path="/agents/:id/view-all-collections/:id" exact component={ViewAgentTransaction} />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />

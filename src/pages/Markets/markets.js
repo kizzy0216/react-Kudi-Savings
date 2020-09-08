@@ -26,7 +26,6 @@ const Markets = ({ history }) => {
     ['Markets', { page, limit }],
     getMarkets
   )
-
   if (data && data.data && data.data.data && data.data.data.list) {
     formattedData = data.data.data.list.map(
       ({ city, state, lga, id, timeCreated, totalRevenue, ...rest }) => ({

@@ -1,46 +1,44 @@
-import React, { Fragment, useState } from 'react'
-import { useQuery } from 'react-query'
+import React, { useState } from 'react'
+import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 import {
   Card,
-  CardBody,
   CardHeader,
   Button,
-  ButtonGroup,
+  CardBody,
   DateRangePicker
 } from '@kudi-inc/dip'
-import { Header, Content, Filters } from 'components/Layout'
+import styles from './recent-collections.module.scss'
 import Table from 'components/Table'
-import { ChevronLeft, Close } from 'assets/svg'
+import { useQuery } from 'react-query'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
-import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData, WalletHistoryTableColumns } from 'utils/function'
+import { formatWalletData, WalletTopUpTableColumns } from 'utils/function'
+import { ChevronLeft, Eye, Close } from 'assets/svg'
+import { useRouteMatch, useHistory } from 'react-router-dom'
 
-const WalletHistory = ({ match: { params } }) => {
+const WalletTopUp = props => {
+  let history = useHistory()
+  let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
-  const [type, setType] = useState('')
   const [startDate, setStartDate] = useState('')
   const [from, setFrom] = useState('')
   const [to, setTo] = useState('')
   const [endDate, setEndDate] = useState('')
   const [showReset, setShowReset] = useState(false)
   const [focusedInput, setfocusedInput] = useState(null)
-  let limit = 50
+  let limit = props.minimized ? 3 : 50
   let totalData = 0
   let totalPage = 0
   let formattedData = []
-
+  let type = 'CREDIT'
   const { data, isLoading, error, refetch } = useQuery(
-    params &&
-      params.id && [
-        'history',
-        { id: params.id, params: { page, limit, type, from, to } }
-      ],
+    ['topUp', { id: props.id, params: { page, limit, type, from, to } }],
     walletHistory
   )
+
   if (data && data.data) {
-    formattedData = formatWalletData(data.data.data.list, page, limit)
+    formattedData = formatWalletData(data.data.data.list, limit, page)
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
@@ -63,34 +61,25 @@ const WalletHistory = ({ match: { params } }) => {
     setfocusedInput(focusedInput)
   }
   return (
-    <Fragment>
-      <Header>
-        <p> Wallet History </p>
-      </Header>
-      <Content className={styles.content}>
-        <Card className={styles.contentCard}>
-          <CardHeader className={styles.Header}>
-            <h3>
-              All
-              {totalData ? ` - ${totalData.toLocaleString()}` : ''}
-            </h3>
-            <ButtonGroup>
-              <Button active={type === ''} onClick={() => setType('')}>
-                All
-              </Button>
-              <Button
-                active={type === 'DEBIT'}
-                onClick={() => setType('DEBIT')}
-              >
-                Debit
-              </Button>
-              <Button
-                active={type === 'CREDIT'}
-                onClick={() => setType('CREDIT')}
-              >
-                Credit
-              </Button>
-            </ButtonGroup>
+    <Content className={styles.content}>
+      <Card className={styles.contentCard}>
+        <CardHeader className={styles.Header}>
+          <h3>WALLET TOP UP</h3>
+
+          {props.minimized ? (
+            <Button
+              icon={<Eye />}
+              variant="flat"
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/view-all-wallet-topup`,
+                  state: props.id
+                })
+              }
+            >
+              View All
+            </Button>
+          ) : (
             <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker
@@ -116,29 +105,32 @@ const WalletHistory = ({ match: { params } }) => {
                 />
               )}
             </div>
-          </CardHeader>
-          <CardBody className={styles.Transactions}>
-            <div className={styles.TransactionsHeader}>
-              {isLoading && <TableLoading />}
-              {error && (
-                <span>
-                  Error!
-                  <button onClick={() => refetch({ disableThrow: true })}>
-                    Retry
-                  </button>
-                </span>
-              )}
-              {data && (
-                <Table
-                  column={WalletHistoryTableColumns}
-                  placeholder="transactions"
-                  data={formattedData}
-                />
-              )}
-            </div>
-          </CardBody>
-
-          {data && (
+          )}
+        </CardHeader>
+        <CardBody className={styles.Transactions}>
+          <div className={styles.TransactionsHeader}>
+            {isLoading && <TableLoading />}
+            {error && (
+              <span>
+                Error!
+                <button onClick={() => refetch({ disableThrow: true })}>
+                  Retry
+                </button>
+              </span>
+            )}
+            {data && (
+              <Table
+                column={WalletTopUpTableColumns}
+                placeholder="wallet topUp"
+                data={formattedData}
+              />
+            )}
+          </div>
+        </CardBody>
+        {data &&
+          (props.minimized ? (
+            <></>
+          ) : (
             <div className="pagination">
               {page > 1 && (
                 <Button
@@ -157,11 +149,10 @@ const WalletHistory = ({ match: { params } }) => {
                 ></Button>
               )}
             </div>
-          )}
-        </Card>
-      </Content>
-    </Fragment>
+          ))}
+      </Card>
+    </Content>
   )
 }
 
-export default WalletHistory
+export default WalletTopUp

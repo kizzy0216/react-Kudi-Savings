@@ -24,7 +24,7 @@
     "react-infinite-scroll-hook": "^2.0.1",
     "react-query": "^0.4.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "3.3.0"
+    "react-scripts": "^3.4.3"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -24,9 +24,7 @@
     }
     button {
       font-size: 0.93em;
-      &:nth-of-type(2) {
-        color: $danger;
-      }
+      color: $sky-blue
     }
     &Badge {
       font-size: 0.93em;
@@ -97,8 +95,7 @@
   margin: 1.67em 0;
   @include md {
     display: grid;
-    grid-template-columns: 100%
-
+    grid-template-columns: 100%;
   }
   &Header {
     h3 {
@@ -290,7 +287,9 @@
     }
   }
 }
-.Third{
+
+.DivContent {
+  font-size: 1rem;
   display: block;
-  
+  margin: 1.67em 0;
 }
