@@ -32,7 +32,7 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
   )
 
   let plan = data?.data?.data ?? {}
-
+console.log(JSON.stringify(plan))
   return (
     <Fragment>
       <Header>

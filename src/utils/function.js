@@ -439,7 +439,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
   return data.map(
     ({ timeCreated, amount, type, status, agentName }, index) => ({
       SN: (page - 1) * limit + (index + 1),
-      timeCreated: moment(timeCreated).format('DD/MM/YY'),
+      timeCreated: moment(timeCreated).format('Do MMM YY'),
       amount: formatCurrency(amount),
       type: formatText(type),
       agentName: formatText(agentName),
@@ -458,7 +458,6 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
       ) : (
         'N/A'
       ),
-      timeCreated: moment(timeCreated).format('DD/MM/YY')
     })
   )
 }
