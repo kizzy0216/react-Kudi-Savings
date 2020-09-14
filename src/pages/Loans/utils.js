@@ -31,7 +31,7 @@ export const tableColumns = [
   { key: 'action', render: '' }
 ]
 
-export const tableData = [
+const sampleTableData = [
   {
     id: 1,
     name: 'Favour',
@@ -123,11 +123,10 @@ export const formatTableData = (data, history, url, page, limit) => {
         'N/A'
       ),
       action: (
-        <Link to={`/loans/${id}`}>
+        <Link to={`/loans/details/${id}`}>
           <Button
             icon={<Eye/>}
             variant="flat"
-            onClick={() => history.push(`${url}/${id}`)}
           >
             View
           </Button>

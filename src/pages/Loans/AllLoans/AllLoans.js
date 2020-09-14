@@ -1,33 +1,52 @@
-import React, { Fragment, useReducer, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
-import { DefaultParams, ParamsReducer } from '../../../utils/function'
-import { formatTableData, loanStatuses, tableColumns, tableData } from '../utils'
+import { formatTableData, loanStatuses, tableColumns } from '../utils'
 import moment from 'moment'
 import { Content, Filters, Header } from '../../../components/Layout'
 import { ChevronLeft, Close, Search } from '../../../assets/svg'
-import { Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
+import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
 import Select from '../../../components/Select'
 import Table from '../../../components/Table/table'
 
 import './all-loans.scss'
+import { useQuery } from 'react-query'
+import { filterLoans } from '../../../services/loans'
+import { TableLoading } from '../../../components/loading'
 
-
+const initialStartDate = moment().subtract(31, 'days')
+const initialEndDate = moment().add(1, 'days')
+const initialFrom = initialStartDate.format('YYYY-MM-DD')
+const initialTo = initialEndDate.format('YYYY-MM-DD')
 
 export default ({ history }) => {
-  const { url } = useRouteMatch();
+  const { url } = useRouteMatch()
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [tableStartDate, setTableStartDate] = useState('')
-  const [tableEndDate, setTableEndDate] = useState('')
-  const [tableFrom, setTableFrom] = useState(null)
-  const [tableTo, setTableTo] = useState(null)
+  const [tableStartDate, setTableStartDate] = useState(initialStartDate)
+  const [tableEndDate, setTableEndDate] = useState(initialEndDate)
+  const [tableFrom, setTableFrom] = useState(initialFrom)
+  const [tableTo, setTableTo] = useState(initialTo)
   const [status, setStatus] = useState('')
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
 
-  const filterParams = {phoneNumber, from: tableFrom, to: tableTo, status}
+  const [page, setPage] = useState(0)
+  const limit = 20
+
+  const filterParams = { phoneNumber, from: tableFrom, to: tableTo, status, page, limit }
   console.log('AllLoans Filter Params:', filterParams)
 
-
-  const formattedTableData = formatTableData(tableData, history, url, 0, 10);
+  const { data: res, isLoading, error, refetch } = useQuery(['AllLoans', filterParams], filterLoans);
+  let tableData = []
+  let totalTablePage = 0
+  if (res && res.data) {
+    tableData = formatTableData(
+      res.data.data.list,
+      history,
+      url,
+      page,
+      limit
+    )
+    totalTablePage = Math.ceil(res.data.data.total/limit);
+  }
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -104,12 +123,28 @@ export default ({ history }) => {
             </div>
           </CardHeader>
           <CardBody>
-            <Table
+            {isLoading && <TableLoading/>}
+            {error && (
+              <span>
+                Error! {error.message}
+                <button onClick={() => refetch({ disableThrow: true })}>Retry</button>
+              </span>
+            )}
+            {res && <Table
               column={tableColumns}
               placeholder={'Loans'}
-              data={formattedTableData}
-            />
+              data={tableData}
+            />}
           </CardBody>
+          <div className={'pagination'}>
+            {page > 0 && (
+              <Button variant={'flat'} onClick={() => setPage(page - 1)} icon={<ChevronLeft/>}></Button>
+            )}
+            <p>Page {page + 1} of {totalTablePage}</p>
+            {tableData.length === limit && (
+              <Button variant={'flat'} onClick={() => setPage(page + 1)}></Button>
+            )}
+          </div>
         </Card>
       </Content>
     </Fragment>

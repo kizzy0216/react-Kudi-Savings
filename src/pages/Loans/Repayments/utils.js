@@ -8,7 +8,7 @@ export const tableColumns = [
   { key: 'balance', render: 'BALANCE' }
 ]
 
-export const tableData = [
+const tableData = [
   { repaymentDate: new Date(), timeCreated: new Date(), amountPaid: 1000, modeOfPayment: 'CASH', balance: 100000 },
   { repaymentDate: new Date(), timeCreated: new Date(), amountPaid: 1000, modeOfPayment: 'TRANSFER', balance: 100000 },
   { repaymentDate: new Date(), timeCreated: new Date(), amountPaid: 1000, modeOfPayment: 'CASH', balance: 100000 },

@@ -1,19 +1,26 @@
-import React, { Fragment, useReducer, useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import { Content, Filters, Header } from '../../../components/Layout'
-import { ChevronLeft, Close, Eye, Search } from '../../../assets/svg'
-import './overdue.scss';
-import { DefaultParams, ParamsReducer } from '../../../utils/function'
-import { formatTableData, initialMarkets, tableColumns, tableData } from './utils'
+import { ChevronLeft, Close, Search } from '../../../assets/svg'
+import './overdue.scss'
+import { formatTableData, tableColumns } from './utils'
 import moment from 'moment'
-import { Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
+import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
 import Select from '../../../components/Select'
 import Table from '../../../components/Table/table'
 import { useRouteMatch } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { getMarkets } from '../../../services/markets'
+import { getOverdueLoans } from '../../../services/loans'
+import { TableLoading } from '../../../components/loading'
 
 export default ({ history }) => {
-  const { url } = useRouteMatch();
+  const { url } = useRouteMatch()
   const [phoneNumber, setPhoneNumber] = useState('')
-  const [markets, setMarkets] = useState(initialMarkets)
+  const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
+  let markets = []
+  if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
+    markets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
+  }
 
   const [tableStartDate, setTableStartDate] = useState('')
   const [tableEndDate, setTableEndDate] = useState('')
@@ -22,10 +29,24 @@ export default ({ history }) => {
   const [marketId, setMarketId] = useState('')
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
 
-  const formattedTableData = formatTableData(tableData, history, url, 0, 10);
+  const [page, setPage] = useState(0)
+  const limit = 20
 
-  const filterParams = {phoneNumber, from: tableFrom, to: tableTo, marketId}
+  const filterParams = { phoneNumber, from: tableFrom, to: tableTo, marketId, page, limit }
   console.log('Overdue Filter Params:', filterParams)
+  const { data: res, isLoading, error, refetch } = useQuery(['OverdueLoans', filterParams], getOverdueLoans)
+  let tableData = []
+  let totalTablePage = 0
+  if (res && res.data) {
+    tableData = formatTableData(
+      res.data.data.list,
+      history,
+      url,
+      page,
+      limit
+    )
+    totalTablePage = Math.ceil(res.data.data.total / limit)
+  }
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -102,12 +123,28 @@ export default ({ history }) => {
             </div>
           </CardHeader>
           <CardBody>
-            <Table
+            {isLoading && <TableLoading/>}
+            {error && (
+              <span>
+                Error! {error.message}
+                <button onClick={() => refetch({ disableThrow: true })}>Retry</button>
+              </span>
+            )}
+            {res && <Table
               column={tableColumns}
               placeholder={'Loans'}
-              data={formattedTableData}
-            />
+              data={tableData}
+            />}
           </CardBody>
+          <div className={'pagination'}>
+            {page > 0 && (
+              <Button variant={'flat'} onClick={() => setPage(page - 1)} icon={<ChevronLeft/>}></Button>
+            )}
+            <p>Page {page + 1} of {totalTablePage}</p>
+            {tableData.length === limit && (
+              <Button variant={'flat'} onClick={() => setPage(page + 1)}></Button>
+            )}
+          </div>
         </Card>
       </Content>
     </Fragment>

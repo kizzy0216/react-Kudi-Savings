@@ -148,8 +148,8 @@ const AppRouter = () => (
         <PrivateRoute path="/loans" exact component={LoansOverview}/>
         <PrivateRoute path="/loans/overdue" component={OverdueLoans}/>
         <PrivateRoute path="/loans/all" component={AllLoans}/>
-        <PrivateRoute path="/loans/repayments" component={LoanRepayments}/>
-        <PrivateRoute path="/loans/:id" component={LoanDetail}/>
+        <PrivateRoute path="/loans/repayments/:id" component={LoanRepayments}/>
+        <PrivateRoute path="/loans/details/:id" component={LoanDetail}/>
         <PrivateRoute exact path="/fund-wallet" component={FundWallet}/>
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin}/>
         <PrivateRoute path="/customers" exact component={Customers}/>

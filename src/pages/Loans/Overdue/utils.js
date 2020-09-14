@@ -4,7 +4,7 @@ import { Badge, Button } from '@kudi-inc/dip'
 import { Eye } from '../../../assets/svg'
 import React from 'react'
 
-export const initialMarkets = [
+const initialMarkets = [
   { text: 'All Markets', value: '' },
   { text: 'Alimosho', value: 'alimosho-id' }
 ]
@@ -20,7 +20,7 @@ export const tableColumns = [
   { key: 'action', render: '' }
 ]
 
-export const tableData = [
+const tableData = [
   {
     id: 1,
     name: 'Favour',
