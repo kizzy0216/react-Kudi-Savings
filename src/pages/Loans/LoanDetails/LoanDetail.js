@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { approveLoan, declineLoan, getLoanDetails } from '../../../services/loans'
 import { fecthImage } from '../../../utils/function'
-import ProfileLoading from '../../../components/loading/profile-loading'
+import { ProfileLoading } from '../../../components/loading'
 
 export default ({ history, match: { params } }) => {
   let { id: loanId } = params
@@ -31,6 +31,7 @@ export default ({ history, match: { params } }) => {
   console.log('repayment', loan.repayment, 'isweekly', isWeekly, 'tenure', tenure)
 
   let intervalAmount = loan.repayment / isWeekly ? tenure.weeks : tenure.days
+  console.log('Customer Info', customer)
 
   const handleApproveClick = () => {
     approveLoan({ loanId }).then(res => {
@@ -72,7 +73,7 @@ export default ({ history, match: { params } }) => {
               <CardBody className={'first-card'}>
                 <div className="Customer-Info-Header">
                   <span className={'heading'}>Customer Information</span>
-                  <p className={'view-profile'}><CustomersLink/> <span>View Profile</span></p>
+                  <p className={'view-profile'}><CustomersLink/> <span> <Link to={`/customers/${customer.id}`}>View Profile</Link> </span></p>
                 </div>
                 <div className="second-section">
                   <div className="Customer-Picture">

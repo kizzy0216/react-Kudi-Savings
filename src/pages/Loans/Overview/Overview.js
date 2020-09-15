@@ -24,7 +24,7 @@ export default ({ history }) => {
   let markets = initialMarkets;
   if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
     let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
-    console.log(newmarkets)
+    markets = [ ...initialMarkets, ...newmarkets];
   }
 
   const [overviewStartDate, setOverviewStartDate] = useState(initialStartDate)

@@ -5,6 +5,7 @@ import React from 'react'
 import './guarantors.scss'
 import { useQuery } from 'react-query'
 import { fecthImage } from '../../../utils/function'
+import { Link } from 'react-router-dom'
 
 export default ({ loan }) => {
   const guarantor1 = loan && loan.guarantor1 ? loan.guarantor1 : {}
@@ -32,7 +33,7 @@ export default ({ loan }) => {
           </div>
           <div className="Info">
             <p className="name">{guarantor1.firstName} {guarantor1.lastName}</p>
-            <p className="profile"> View Profile</p>
+            <p className="profile"> <Link to={`/customers/${guarantor1.id}`}>View Profile</Link></p>
           </div>
         </div>
         <div className="Guarantor-2">
@@ -41,7 +42,7 @@ export default ({ loan }) => {
           </div>
           <div className="Info">
             <p className="name">{guarantor2.firstName} {guarantor2.lastName}</p>
-            <p className="profile"> View Profile</p>
+            <p className="profile"> <Link to={`/customers/${guarantor2.id}`}>View Profile</Link></p>
           </div>
         </div>
       </div>

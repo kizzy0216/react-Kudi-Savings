@@ -12,14 +12,16 @@ import { useQuery } from 'react-query'
 import { getMarkets } from '../../../services/markets'
 import { getOverdueLoans } from '../../../services/loans'
 import { TableLoading } from '../../../components/loading'
+import { initialMarkets } from '../utils'
 
 export default ({ history }) => {
   const { url } = useRouteMatch()
   const [phoneNumber, setPhoneNumber] = useState('')
   const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
-  let markets = []
+  let markets = initialMarkets;
   if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
-    markets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
+    let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
+    markets = [ ...initialMarkets, ...newmarkets];
   }
 
   const [tableStartDate, setTableStartDate] = useState('')

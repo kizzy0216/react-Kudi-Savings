@@ -6,8 +6,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 export const initialMarkets = [
-  { text: 'All Markets', value: '' },
-  { text: 'Alimosho', value: 'alimosho-id' }
+  { text: 'All Markets', value: '' }
 ]
 
 export const loanStatuses = [
