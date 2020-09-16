@@ -1,0 +1,25 @@
+.DebitPlan {
+    font-size: 1rem;
+    height: 100vh;
+    &Header {
+      font-size: 1em;
+      text-transform: uppercase;
+      font-weight: normal;
+    }
+    &Body {
+      padding: 4em;
+    }
+    &Form {
+      & > div {
+        margin-bottom: 1.67em;
+      }
+      button {
+        margin-top: 3em;
+      }
+      input[class*='module_kudi-dip-input'] {
+        padding-top: 1.857em;
+        padding-bottom: 0.714em;
+      }
+    }
+  }
+  

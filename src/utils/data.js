@@ -37,3 +37,7 @@ export const states = [
   { text: 'YOBE', value: 'yobe' },
   { text: 'ZAMFARA', value: 'zamfara' }
 ]
+
+export const markets = [
+  { text: 'TOLU INTL', value: "Tolu int'l" }
+]

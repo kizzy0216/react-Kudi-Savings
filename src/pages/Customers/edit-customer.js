@@ -11,12 +11,12 @@ import {
 import { updateCustomer, uploadAvatar } from 'services/customers'
 import { toaster } from 'evergreen-ui'
 import styles from './customer-profile.module.scss'
-import { states } from 'utils/data'
+import { states, markets } from 'utils/data'
 import { fecthImage } from 'utils/function'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { isValidUpdate } from './validation'
 
-const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
+const EditCustomer = ({ setShowEdit, refetch, customer, auth, agent,setAgent }) => {
   const [loading, setLoading] = useState(false)
   const [uploadedAvatar, setUploadedAvatar] = useState({})
   const [imgUploaded, setImgUploaded] = useState(false)
@@ -26,6 +26,13 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [errors, setErrors] = useState({})
   const [imgProgress, setImgProcess] = useState(0)
   const [idProgress, setIdProcess] = useState(0)
+  let markets = []
+  if (auth && auth.markets) {
+    markets = auth.markets.map(({ name, id }) => ({
+      text: name,
+      value: id
+    }))
+  }
   let { data: avatar } = useQuery(
     edited && edited.pictureId && ['Image', { id: edited.pictureId }],
     fecthImage
@@ -262,6 +269,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               error={errors.address}
               status={errors.address && 'error'}
             />
+          
             <Select
               onSelect={state =>
                 setEdited({
@@ -286,6 +294,29 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               onChange={e => setEdited({ ...edited, lga: e.target.value })}
               error={errors.lga}
               status={errors.lga && 'error'}
+            />
+            
+            <Select
+              onSelect={state =>
+                setEdited({
+                  ...edited,
+                  state
+                })
+              }
+              name="market"
+              value={agent.marketId}
+              required
+              label="Market"
+              options={markets}
+              autoComplete="markets"
+              error={errors.marketName}
+              status={errors.marketName && 'error'}
+              onSelect={marketId =>
+                setAgent({
+                  type: 'UPDATE_DETAILS',
+                  payload: { marketId }
+                })
+              }
             />
           </div>
           <Button type="submit" loading={loading}>

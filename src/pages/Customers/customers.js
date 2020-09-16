@@ -8,7 +8,7 @@ import Table from 'components/Table'
 import styles from './customers.module.scss'
 import { getCustomers } from 'services/customers'
 import { Close, ChevronLeft, Search } from 'assets/svg'
-import { formatData } from './function'
+import { formatCustomerData, CustomerTableColumn } from 'utils/function'
 import { TableLoading } from 'components/loading'
 
 const Customers = ({ history }) => {
@@ -25,7 +25,13 @@ const Customers = ({ history }) => {
   )
   let formattedData = []
   if (data && data.data) {
-    formattedData = formatData(data.data.data.list, history, url, page, limit)
+    formattedData = formatCustomerData(
+      data.data.data.list,
+      history,
+      url,
+      page,
+      limit
+    )
     totalPage = Math.ceil(data.data.data.total / limit)
     totalData = data.data.data.total
   }
@@ -78,32 +84,7 @@ const Customers = ({ history }) => {
                 </span>
               )}
               {data && (
-                <Table
-                  column={[
-                    { key: 'sN', render: 'S/N' },
-                    {
-                      key: 'fullName',
-                      render: 'Full name'
-                    },
-                    {
-                      key: 'phoneNumber',
-                      render: 'Phone Number'
-                    },
-
-                    { key: 'totalSaved', render: 'Amount Saved' },
-
-                    {
-                      key: 'totalWithdrawn',
-                      render: 'Amount Withdrawn'
-                    },
-
-                    {
-                      key: 'action',
-                      render: 'ACTION'
-                    }
-                  ]}
-                  data={formattedData}
-                />
+                <Table column={CustomerTableColumn} data={formattedData} placeholder="Customers"/>
               )}
             </div>
           </CardBody>

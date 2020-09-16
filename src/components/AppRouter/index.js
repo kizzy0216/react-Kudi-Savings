@@ -24,7 +24,7 @@ const CreateMarket = lazy(() =>
 const ZonalDashboard = lazy(() =>
   import(
     /* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal'
-    )
+  )
 )
 const Cashout = lazy(() =>
   import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
@@ -47,17 +47,17 @@ const ZonalHeads = lazy(() =>
 const CreateZonalHead = lazy(() =>
   import(
     /* webpackChunkName: "CreateZonalHead" */ 'pages/ZonalHeads/create-zonal-head'
-    )
+  )
 )
 const SingleZonalHead = lazy(() =>
   import(
     /* webpackChunkName: "SingleZonalHead" */ 'pages/ZonalHeads/zonal-head-profile'
-    )
+  )
 )
 const ZonalWalletHistory = lazy(() =>
   import(
     /* webpackChunkName: "ZonalHeadWallet" */ 'pages/ZonalHeads/wallet-history'
-    )
+  )
 )
 const Agents = lazy(() =>
   import(/* webpackChunkName: "Agents" */ 'pages/Agents')
@@ -75,12 +75,12 @@ const SingleAgent = lazy(() =>
 const AgentWalletHistory = lazy(() =>
   import(
     /* webpackChunkName: "AgentWalletHistory" */ 'pages/Agents/wallet-history'
-    )
+  )
 )
 const AdminWalletHistory = lazy(() =>
   import(
     /* webpackChunkName: "AdminWalletHistory" */ 'pages/AdminWalletHistory'
-    )
+  )
 )
 const Customers = lazy(() =>
   import(/* webpackChunkName: "Customers" */ 'pages/Customers')
@@ -88,12 +88,27 @@ const Customers = lazy(() =>
 const CustomerProfile = lazy(() =>
   import(
     /* webpackChunkName: "SingleCustomer" */ 'pages/Customers/customer-profile'
-    )
+  )
 )
-const CustomerHistory = lazy(() =>
+const CustomerHistory= lazy(() =>
   import(
     /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-history'
-    )
+  )
+)
+const CustomerPlanCollection= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerPlanCollection" */ 'pages/Customers/customer-plan-collection'
+  )
+)
+const CustomerCashoutLog= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerCashoutLog" */ 'pages/Customers/customer-cashout-log'
+  )
+)
+const CustomerWalletHistory= lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerWalletHistory" */ 'pages/Customers/customer-wallet-history'
+  )
 )
 const Plans = lazy(() => import(/* webpackChunkName: "Plans" */ 'pages/Plans'))
 
@@ -117,11 +132,26 @@ const KudiPin = lazy(() =>
 const NotFound = lazy(() =>
   import(/* webpackChunkName: "NotFound" */ 'pages/NotFound')
 )
+const Collections = lazy(() =>
+  import(/* webpackChunkName: "Collections" */ 'pages/Agents/view-all-collections')
+)
+const WalletTopUps = lazy(() =>
+import(/* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-wallet-topup')
+)
+const CashoutLog = lazy(() =>
+import(/* webpackChunkName: "CashoutLog" */ 'pages/Agents/view-all-cashout-logs')
+)
+const ViewAgentCashout = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentCashout" */ 'pages/Agents/view-cashout')
+)
+const ViewAgentTransaction = lazy(() =>
+  import(/* webpackChunkName: "ViewAgentTransaction" */ 'pages/Agents/transaction-details')
+)
 const AppRouter = () => (
   <Router history={history}>
-    <Suspense fallback={<AppLoading/>}>
+    <Suspense fallback={<AppLoading />}>
       <Switch>
-        <Route path="/login" component={Login}/>
+        <Route path="/login" component={Login} />
         <Route
           path="/forgot-password"
           component={() => {
@@ -131,10 +161,10 @@ const AppRouter = () => (
         <PrivateRoute
           path="/"
           exact
-          component={() => <Redirect to="/markets"/>}
+          component={() => <Redirect to="/markets" />}
         />
 
-        <PrivateRoute path="/dashboard" exact component={Dashboard}/>
+        <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <PrivateRoute
           path="/dashboard/zonal"
           exact
@@ -156,6 +186,9 @@ const AppRouter = () => (
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile}/>
         <PrivateRoute path="/customers/:id/plan/:planId" exact component={CustomerHistory}/>
         <PrivateRoute path="/plans" exact component={Plans}/>
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-plan-collection" exact component={CustomerPlanCollection} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-cashout-log" exact component={CustomerCashoutLog} />
+        <PrivateRoute path="/customers/:id/plan/:planId/customer-wallet-history" exact component={CustomerWalletHistory} />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads}/>
         <PrivateRoute
           path="/zonal-heads/:id"
@@ -172,10 +205,10 @@ const AppRouter = () => (
           exact
           component={CreateZonalHead}
         />
-        <PrivateRoute path="/agents" exact component={Agents}/>
-        <PrivateRoute path="/create-agent" exact component={CreateAgent}/>
-        <PrivateRoute path="/agents/:id" exact component={SingleAgent}/>
-        <PrivateRoute path="/agents/:id/edit" exact component={EditAgent}/>
+        <PrivateRoute path="/agents" exact component={Agents} />
+        <PrivateRoute path="/create-agent" exact component={CreateAgent} />
+        <PrivateRoute path="/agents/:id" exact component={SingleAgent} />
+        <PrivateRoute path="/agents/:id/edit" exact component={EditAgent} />
         <PrivateRoute
           path="/agents/:id/wallet-history"
           exact
@@ -186,14 +219,32 @@ const AppRouter = () => (
           exact
           component={AdminWalletHistory}
         />
-        <PrivateRoute path="/settings" exact component={Settings}/>
-        <PrivateRoute path="/transactions" exact component={Transactions}/>
-        <PrivateRoute path="/transactions/:id" component={SingleTransaction}/>
-        <PrivateRoute path="/customer-insights" component={CustomerInsights}/>
-        <PrivateRoute component={NotFound}/>
+        <PrivateRoute
+          path="/agents/:id/view-all-collections"
+          exact
+          component={Collections}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-wallet-topup"
+          exact
+          component={WalletTopUps}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-cashout-logs"
+          exact
+          component={CashoutLog}
+        />
+        <PrivateRoute path="/agents/:id/view-all-cashout-logs/:id" exact component={ViewAgentCashout} />
+        <PrivateRoute path="/agents/:id/:id" exact component={ViewAgentCashout} />
+        <PrivateRoute path="/agents/:id/view-all-collections/:id" exact component={ViewAgentTransaction} />
+        <PrivateRoute path="/settings" exact component={Settings} />
+        <PrivateRoute path="/transactions" exact component={Transactions} />
+        <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
+        <PrivateRoute path="/customer-insights" component={CustomerInsights} />
+        <PrivateRoute component={NotFound} />
         <Route
           render={() => {
-            return <Redirect to="/"/>
+            return <Redirect to="/" />
           }}
         />
       </Switch>
