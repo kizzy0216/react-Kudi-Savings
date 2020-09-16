@@ -1,0 +1,124 @@
+@import '../../../styles/variables';
+
+.Header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: normal;
+  height: 4.88em;
+
+  a {
+    margin-top: auto;
+    margin-right: 2em;
+  }
+}
+
+.Actions {
+  display: flex;
+  align-items: center;
+  margin-left: 2.78em;
+  margin-top: 37px;
+  margin-bottom: 31px;
+}
+
+.Select {
+  height: auto;
+  width: auto;
+  margin-right: 1.5em;
+}
+
+.Filter {
+  margin-left: 0 !important;
+}
+
+.Download-Report {
+  color: #0F8CFF;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.03em;
+}
+
+.Overview {
+  margin-left: 2.78em;
+  margin-right: 2em;
+  margin-bottom: 30px;
+
+  .first-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+
+    .Overview-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      text-align: center;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      flex-basis: 24%;
+      height: 106px;
+      padding-top: 20px;
+
+      .p1 {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+      }
+
+      .p2 {
+        font-size: 23px;
+        font-weight: 500;
+        line-height: 37px;
+      }
+    }
+  }
+
+  .second-row {
+    display: flex;
+    justify-content: space-between;
+
+    .Overview-card {
+      flex-basis: 49%;
+      display: flex;
+      flex-direction: column;
+      padding-left: 44px;
+      padding-right: 44px;
+
+      div {
+        display: flex;
+        justify-content: space-between;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        align-items: center;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+        color: #223856;
+        padding-top: 24px;
+        padding-bottom: 24px;
+      }
+      .add-border-bottom {
+        border-bottom: 1px solid #F0F4F9;
+      }
+    }
+  }
+}
+
+.Card-Table {
+
+  .Table-Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-heading {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 16px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+  }
+}

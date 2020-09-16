@@ -12,7 +12,8 @@ import {
   LogoutIcon,
   MarketsLink,
   CustomersLink,
-  PlansLink
+  PlansLink,
+  LoanIcon
 } from 'assets/svg'
 import LogoSection from './logo-section'
 import styles from './layout.module.scss'
@@ -81,6 +82,12 @@ const Layout = ({ children, auth }) => {
       link: '/cashout',
       icon: <CashoutLink />,
       userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN']
+    },
+    {
+      title: 'Loans',
+      link: '/loans',
+      icon: <LoanIcon />,
+      userType: ['ADMIN', 'SUPER_ADMIN']
     },
     {
       title: 'Settings',
