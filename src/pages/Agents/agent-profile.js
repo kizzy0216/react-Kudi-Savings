@@ -33,6 +33,7 @@ import Collections from './recent-collections'
 import WalletTopUp from './wallet-topUp'
 import Cashout from './cashout'
 import Transaction from './p2p'
+import CustomerPlanDetails from '../Agents/transaction-details'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
   const [current, setCurrent] = useState('default')
@@ -63,6 +64,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     data && ['Customers', { id: agent.id, page, limit, phoneNumber }],
     getUsers
   )
+
+  console.log(JSON)
 
   const {data: log} = useQuery(
     data && ['AgentActivity', {}, getAgentActivity]
@@ -191,7 +194,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <CardBody className={styles.FirstBody}>
                       <div className={styles.FirstBodyFlex}>
                         <span>Active Customers: </span>
-                        <span>{log?.data.activeCustomers}</span>
+                        <span>{users.isActive}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Inactive Customers </span>
@@ -383,7 +386,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             )}
           </Content>
           <div className={styles.DivContent}>
-            <Collections minimized />
+            <Collections minimized/>
           </div>
           {/* <div className={styles.DivContent}>
             <Transaction minimized id={agent.id}/>
@@ -422,6 +425,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           setCurrent={setCurrent}
         />
       )}
+      
     </div>
   )
 }

@@ -8,6 +8,7 @@ import { SideSheet } from 'evergreen-ui'
 
 const ViewWalletHistory = props => {
   let id = props.location.state
+  let phone = '07052143654'
   let history = useHistory()
   let [showCreditDialog, setShowCreditDialog] = useState(false)
   let [showDebitDialog, setShowDebitDialog] = useState(false)
@@ -21,7 +22,7 @@ const ViewWalletHistory = props => {
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <WalletHistory minimized={false} id={id} />
+        <WalletHistory minimized={false} id={id} phoneNumber={phone}/>
       </div>
       <Content>
         <SideSheet

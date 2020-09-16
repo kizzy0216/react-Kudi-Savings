@@ -225,7 +225,7 @@ const WalletHistory = props => {
         isShown={showCredit}
         width={800}
       >
-        <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone}/>
+        <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone} />
       </SideSheet>
     </Content>
   )

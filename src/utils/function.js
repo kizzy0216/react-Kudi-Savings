@@ -127,15 +127,16 @@ export const formatData = (history, url, page, limit, data) => {
       walletBalance: formatCurrency(walletBalance),
       totalAmountSaved: formatCurrency(totalAmountSaved),
       amountCollected: amount ? formatCurrency(amount) : 'N/A',
-      action: (
-        <Button
-          icon={<Eye />}
-          variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
-        >
-          View
-        </Button>
-      )
+      action: <Button
+    icon={<Eye />}
+    variant="flat"
+    onClick={() => history.push({
+      pathname: `${url}/customer-plan`,
+      state: id
+    })}
+  >
+    View
+  </Button>
     })
   )
 }
@@ -210,10 +211,10 @@ export const CollectionsTableColumns = [
     key: 'totalAmountSaved',
     render: 'TOTAL SAVED'
   },
-  // {
-  //   key: 'action',
-  //   render: ''
-  // }
+  {
+    key: 'action',
+    render: ''
+  }
 ]
 
 export const WalletTopUpTableColumns = [
@@ -391,7 +392,7 @@ export const formatPlan = (data, history, url, page, limit) => {
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
     (
-      { agentName, balance, timeCreated, collectionDate, totalAmountSaved, },
+      { agentName, balance, timeCreated, collectionDate, amount, },
       index
     ) => ({
       SN: (page - 1) * limit + (index + 1),
@@ -403,9 +404,9 @@ export const formatCollections = (history, url, page, limit, data) => {
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
       balance: formatCurrency(balance),
-      totalAmountSaved: totalAmountSaved
-        ? formatCurrency(totalAmountSaved)
-        : 'N/A'
+      amount: amount
+        ? formatCurrency(amount)
+        : '-'
     })
   )
 }
@@ -526,13 +527,13 @@ export const PlanCollectionTableColumn = [
     render: 'TIME CREATED'
   },
   {
-    key: 'totalAmountSaved',
+    key: 'amount',
     render: 'AMOUNT COLLECTED'
   },
-  // {
-  //   key: 'balance',
-  //   render: 'BALANCE'
-  // },
+  {
+    key: 'balance',
+    render: 'BALANCE'
+  },
 
   {
     key: 'agentName',
@@ -662,7 +663,10 @@ export const formatCashoutData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
+          onClick={() => history.push({
+            pathname: `${url}/cashout-details`,
+            state: id
+          })}
         >
           View
         </Button>

@@ -39,7 +39,7 @@ const DebitPlan = ({ setShowDebit, id , phoneNumber}) => {
             type="text"
             label="Wallet Number"
             placeholder=""
-            value={phoneNumber}
+            value={'07052143654'}
             disabled
           />
           <Input

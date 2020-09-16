@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+`import React, { Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
 import { ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'

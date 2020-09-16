@@ -72,7 +72,7 @@ const Customers = ({
         setPhoneNumber('')
         return setNumber('')
       }} />
-          Agent1: {agent.firstName} {agent.lastName}
+          Agent: {agent.firstName} {agent.lastName}
         </p>
       </Header>
       <Content>

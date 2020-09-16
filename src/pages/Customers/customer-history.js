@@ -19,10 +19,6 @@ import CashoutLog from './cashout-log'
 import WalletHistory from './wallet-history'
 
 const CustomerHistory = ( { location, history, match: { params } }) => {
-  let limit = 50
-  let totalData = 0
-  let totalPage = 0
-  let formattedData = []
 
   let phoneNumber = location.state
   
@@ -32,7 +28,7 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
   )
 
   let plan = data?.data?.data ?? {}
-console.log(JSON.stringify(plan))
+
   return (
     <Fragment>
       <Header>
@@ -120,9 +116,9 @@ console.log(JSON.stringify(plan))
           </div>
         )}
       </Content>
-      <div className={styles.DivContent}>
-        <PlanCollections minimized />
-      </div>
+      {/* <div className={styles.DivContent}>
+        <PlanCollections minimized id={params.planId}/>
+      </div> */}
       {/* <div className={styles.DivContent}>
         <PlanRevenueLog minimized id={params.planId} />
       </div> */}

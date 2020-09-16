@@ -8,7 +8,7 @@ import {
   DateRangePicker
 } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
-import { getCollections } from 'services/collections'
+import { getCollectionsByPlan } from 'services/collections'
 import {
   ParamsReducer,
   DefaultParams,
@@ -23,6 +23,7 @@ import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 
 const PlanCollections = props => {
+  let { id } = props
   let { url } = useRouteMatch()
   let history = useHistory()
   let { minimized } = props
@@ -38,25 +39,28 @@ const PlanCollections = props => {
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
-      'Collections',
+      'CollectionsByPlan',
 
       {
+        planId: id,
         page: params.page,
         limit,
         params:{from, to},
       }
     ],
-    getCollections
+    getCollectionsByPlan
   )
 
-  if (data && data.data) {
+
+  if (data?.data?.data?.collections) {
     formattedData = formatCollections(
       history,
       url,
       params.page,
       limit,
-      data.data.data.list
+      data.data.data.collections.list
     )
+
     totalPage = Math.ceil(data.data.data.total / limit)
   }
   const onDatesChange = ({ startDate, endDate }) => {

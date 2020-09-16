@@ -1,147 +1,134 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import { Dialog, toaster, SideSheet } from 'evergreen-ui'
+import { useHistory } from 'react-router-dom'
 import {
   Badge,
-  Button,
   Card,
   CardBody,
   CardHeader,
-  CardFooter,
-  Input
 } from '@kudi-inc/dip'
-import { getCollection } from 'services/collections'
-import { Close, ChevronLeft, Eye } from 'assets/svg'
+import { ChevronLeft } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from '../Cashout/view-cashout.module.scss'
-import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
-import { formatCurrency, formatText, fecthImage } from 'utils/function'
+import { formatCurrency } from 'utils/function'
+import { getPlan } from 'services/plans'
+import CashoutLog from '../Customers/cashout-log'
+import WalletHistory from '../Customers/wallet-history'
+import PlanCollections from '../Customers/plan-collections'
 
 
-const TransactionDetails = ({ history, match: { params } }) =>
+
+const TransactionDetails = ({ location}) =>
 {
-
-    const { data, isLoading, error, refetch } = useQuery(
-        ['Collection', { id: params.id }],
-        getCollection
-      )
-    
-      let collection = data?.data?.data || {}
+  let history = useHistory()
+  let planId = location.state
   
-      const { data: imageData } = useQuery(
-        ['Image', { id: collection?.user?.pictureId }],
-        fecthImage
+      let { data, isLoading, error, refetch } = useQuery(
+        ['Plan', { id: planId }],
+        getPlan
       )
+  
+      let plan = data?.data?.data ?? {} 
 
-      return(
+      return (
         <Fragment>
           <Header>
             <p>
-              <ChevronLeft onClick={() => history.goBack()} /> Transaction Details
+              <ChevronLeft role="button" onClick={() => history.goBack()} />
+              {plan?.plan?.title} - Plan Overview
             </p>
           </Header>
           <Content className={styles.content}>
             {isLoading && <ProfileLoading />}
             {error && (
-              <div>
+              <span>
                 Error!
-                <Button onClick={() => refetch({ disableThrow: true })}>
+                <button onClick={() => refetch({ disableThrow: true })}>
                   Retry
-                </Button>
+                </button>
+              </span>
+            )}
+            {data && data.data && (
+              <div className={styles.contentCard}>
+                <div className={styles.First}>
+                  <Card>
+                    <CardHeader>
+                      <div className={styles.FirstHeader}>
+                        <h3> PLAN OVERVIEW</h3>
+                      </div>
+                    </CardHeader>
+                    <CardBody className={styles.FirstBody}>
+                      <div className={styles.FirstBodyFlex}>
+                        <span>PLAN TITLE</span>
+                        <span>{plan.title} </span>
+                      </div>
+    
+                      <div className={styles.FirstBodyFlex}>
+                        <span> COLLECTION COUNT </span>
+                        <span>{plan.collectionCount}</span>
+                      </div>
+                      <div className={styles.FirstBodyFlex}>
+                        <span> DURATION</span>
+                        <span>{plan.duration} Days</span>
+                      </div>
+                      <div className={styles.FirstBodyFlex}>
+                        <span> DATE CREATED</span>
+                        <span>
+                          {moment(plan.timeCreated).format('Do MMM, YYYY ')}
+                        </span>
+                      </div>
+                    </CardBody>
+                  </Card>
+                  <Card>
+                    <CardHeader>
+                      <div className={styles.FirstHeader}>
+                        <h3> STATUS</h3>
+    
+                        {plan && plan.planStatus && (
+                          <Badge
+                            className={styles.FirstHeaderBadge}
+                            variant="success"
+                          >
+                            {plan.planStatus}
+                          </Badge>
+                        )}
+                      </div>
+                    </CardHeader>
+                    <CardBody className={styles.FirstBody}>
+                      <div className={styles.FirstBodyFlex}>
+                        <span>DAILY AMOUNT</span>
+                        <span>{formatCurrency(plan.dailyAmount)} </span>
+                      </div>
+                      <div className={styles.FirstBodyFlex}>
+                        <span> AMOUNT SAVED </span>
+                        <span>{formatCurrency(plan.amountSaved)}</span>
+                      </div>
+                      <div className={styles.FirstBodyFlex}>
+                        <span> TOTAL WITHDRAWN</span>
+                        <span>{formatCurrency(plan.totalWithdrawnAmount)}</span>
+                      </div>
+                      <div className={styles.FirstBodyFlex}>
+                        <span> PLAN BALANCE </span>
+                        <span>{formatCurrency(plan.collectionBalance)}</span>
+                      </div>
+                    </CardBody>
+                  </Card>
+                </div>
               </div>
             )}
-       {data && (
-          <div className={styles.contentCard}>
-            <div className={styles.First}>
-            <Card>
-                <CardHeader>
-                  <div className={styles.FirstHeader}>
-                    <h3> AGENT INFORMATION </h3>
-                  </div>
-                </CardHeader>
-                <CardBody className={styles.FirstBody}>
-                  <div className={styles.FirstBodyGrid}>
-                    <div className={styles.FirstBodyGridProfile}>
-                      <img
-                        className={styles.FirstBodyGridProfileImg}
-                        src={imageData?.data?.medium || AgentImg}
-                        alt="agent"
-                      />
-                    </div>
-                    <div>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Name</span>
-                        <span>
-                          {collection.agent &&
-                            formatText(collection.agent.firstName)}{' '}
-                          {collection.user &&
-                            formatText(collection.agent.lastName)}
-                        </span>
-                      </div>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Phone number</span>
-                        <span>
-                          {collection.agent &&
-                            formatText(collection.agent.phoneNumber)}
-                        </span>
-                      </div>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Gender</span>
-                        <span>
-                          {collection.agent &&
-                            formatText(collection.agent.gender)}
-                        </span>
-                      </div>
-
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Address</span>
-                        
-                        <span>
-                          {collection.agent && formatText(collection.agent.address)}
-                       </span>  
-                       <span>
-                          {collection.agent && formatText(collection.agent.lga)}/
-                          {collection.agent && formatText(collection.agent.state)}
-                        </span>
-                        
-                      </div>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Assigned Market</span>
-                        <span>
-                          {collection.agent && collection.agent.assignedMarket &&
-                            formatText(collection.agent.assignedMarket.name)}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-              <Card>
-                <CardHeader>
-                  <div className={styles.FirstHeader}>
-                    <h3> SAVINGS</h3>
-
-                    <Badge
-                      className={styles.FirstHeaderBadge}
-                      variant={
-                        collection &&
-                        collection.userPlan &&
-                        collection.userPlan.planStatus === 'ACTIVE'
-                          ? 'success'
-                          : 'danger'
-                      }
-                    >
-                      {formatText(collection.userPlan.planStatus)}
-                    </Badge>
-                  </div>
-                </CardHeader>
-                </Card>
-          </div>
-          </div>)}
           </Content>
-        </Fragment>  
+          {/* <div className={styles.DivContent}>
+            <PlanCollections minimized />
+          </div> */}
+          <div className={styles.DivContent}>
+            <CashoutLog minimized />
+          </div>
+          <div className={styles.DivContent}>
+            <WalletHistory minimized id={planId}/>
+          </div>
+        </Fragment>
       )
     
 }

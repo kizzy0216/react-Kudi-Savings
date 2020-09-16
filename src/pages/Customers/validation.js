@@ -41,7 +41,7 @@ export const isValidUpdate = values => {
     errors.plan = 'Amount is required'
   }
   if (!values.reason) {
-    errors.address = 'Reason for credit is required'
+    errors.reason = 'Reason for credit is required'
   }
   return errors
 }
