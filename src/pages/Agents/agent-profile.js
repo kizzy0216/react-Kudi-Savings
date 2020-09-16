@@ -47,6 +47,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   let [ showDebitWallet, setShowDebitWallet ] = useState(false)
   let [ deductAmount, setDeductionAmount] = useState(0)
   let limit = 50
+  let isActive = true
   let [phoneNumber, setPhoneNumber] = useState('')
   let [mobile, setMobile] = useState('')
   const { data, isLoading, error, refetch } = useQuery(
@@ -65,7 +66,20 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     getUsers
   )
 
-  console.log(JSON)
+  let customersLimit = agent.totalCustomers
+  const { data: isActiveUsers} = useQuery(
+    ['Customers', { id: agent.id, isActive, page, limit: customersLimit, phoneNumber }],
+    getUsers
+  )
+  
+  let isActiveCount = isActiveUsers?.data?.data.list.length ?? '0'
+
+  const { data: isInActiveUsers} = useQuery(
+    data && ['Customers', { id: agent.id, isActive : !isActive, page, limit: customersLimit, phoneNumber }],
+    getUsers
+  )
+
+  let isInActiveCount = isInActiveUsers?.data?.data.list.length ?? '0'
 
   const {data: log} = useQuery(
     data && ['AgentActivity', {}, getAgentActivity]
@@ -194,11 +208,11 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <CardBody className={styles.FirstBody}>
                       <div className={styles.FirstBodyFlex}>
                         <span>Active Customers: </span>
-                        <span>{users.isActive}</span>
+                        <span>{isActiveCount}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Inactive Customers </span>
-                        <span>{log?.data?.activeCustomers}</span>
+                        <span>{isInActiveCount}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Total Customers </span>
