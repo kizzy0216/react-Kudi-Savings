@@ -9,7 +9,7 @@ import Guarantors from './Guarantors'
 import PaymentOverview from './PaymentOverview'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { approveLoan, declineLoan, getLoanDetails } from '../../../services/loans'
+import { approveLoan, declineLoan, fetchWalletBalance, getLoanDetails } from '../../../services/loans'
 import { fecthImage } from '../../../utils/function'
 import { ProfileLoading } from '../../../components/loading'
 
@@ -25,6 +25,8 @@ export default ({ history, match: { params } }) => {
   const { data: imageData } = useQuery(
     customer && customer.pictureId && ['CustomerImage', { id: customer.pictureId }],
     fecthImage)
+  const { data: walletRes } = useQuery(customer && customer.id && ['CustomerWalletBalance', { customerId: customer.id }], fetchWalletBalance)
+  const walletBalance = walletRes ? walletRes.data ? walletRes.data.data : 0 : 0
   let loanStatus = loan.status
   let badgeType = ['ACTIVE', 'PAID'].includes(loanStatus) ? 'success' : loanStatus === 'DECLINED' ? 'danger' : 'warning'
   let isWeekly = loan.modeOfRepayment === 'WEEKLY'
@@ -73,7 +75,8 @@ export default ({ history, match: { params } }) => {
               <CardBody className={'first-card'}>
                 <div className="Customer-Info-Header">
                   <span className={'heading'}>Customer Information</span>
-                  <p className={'view-profile'}><CustomersLink/> <span> <Link to={`/customers/${customer.id}`}>View Profile</Link> </span></p>
+                  <p className={'view-profile'}><CustomersLink/> <span> <Link to={`/customers/${customer.id}`}>View Profile</Link> </span>
+                  </p>
                 </div>
                 <div className="second-section">
                   <div className="Customer-Picture">
@@ -91,7 +94,8 @@ export default ({ history, match: { params } }) => {
                     </p>
                     <p><span className={'key'}>DSA Phone Number:</span> <span
                       className={'value'}>{agent.phoneNumber}</span></p>
-                    <p><span className={'key'}>Wallet Balance:</span> <span className={'value'}>TBD</span></p>
+                    <p><span className={'key'}>Wallet Balance:</span> <span className={'value'}>{walletBalance}</span>
+                    </p>
                   </div>
                 </div>
               </CardBody>
