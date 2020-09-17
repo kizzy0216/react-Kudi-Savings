@@ -14,8 +14,14 @@ export const getLoanDetails = async params => await Axios.get('/loans/detail', c
 
 export const getOverdueLoans = async params => await Axios.get('/loans/overdue', clean({ params }))
 
-export const getRepaymentHistory = async params => await Axios.get('/loans/repayment-history', clean({ params }))
+export const getRepaymentHistory = async params => await Axios.get('/loans/repayments', clean({ params }))
 
 export const approveLoan = async params => await Axios.put('/loans/approve', null, clean({ params }))
 
 export const declineLoan = async params => await Axios.put('/loans/decline', null, clean({ params }))
+
+export const fetchWalletBalance = async params => await Axios.get('/collections/balance', clean({ params }))
+
+export const nextPaymentData = async params => await Axios.get('/loans/next-payment', clean({ params }))
+
+export const getPaymentsOverview = async params => await Axios.get('/loans/payments-overview', clean({ params }))
