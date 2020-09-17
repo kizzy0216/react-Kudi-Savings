@@ -21,3 +21,7 @@ export const approveLoan = async params => await Axios.put('/loans/approve', nul
 export const declineLoan = async params => await Axios.put('/loans/decline', null, clean({ params }))
 
 export const fetchWalletBalance = async params => await Axios.get('/collections/balance', clean({ params }))
+
+export const nextPaymentData = async params => await Axios.get('/loans/next-payment', clean({ params }))
+
+export const getPaymentsOverview = async params => await Axios.get('/loans/payments-overview', clean({ params }))

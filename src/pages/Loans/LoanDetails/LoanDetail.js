@@ -9,7 +9,7 @@ import Guarantors from './Guarantors'
 import PaymentOverview from './PaymentOverview'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { approveLoan, declineLoan, fetchWalletBalance, getLoanDetails } from '../../../services/loans'
+import { approveLoan, declineLoan, fetchWalletBalance, getLoanDetails, nextPaymentData } from '../../../services/loans'
 import { fecthImage } from '../../../utils/function'
 import { ProfileLoading } from '../../../components/loading'
 
@@ -30,9 +30,10 @@ export default ({ history, match: { params } }) => {
   let loanStatus = loan.status
   let badgeType = ['ACTIVE', 'PAID'].includes(loanStatus) ? 'success' : loanStatus === 'DECLINED' ? 'danger' : 'warning'
   let isWeekly = loan.modeOfRepayment === 'WEEKLY'
+
   console.log('repayment', loan.repayment, 'isweekly', isWeekly, 'tenure', tenure)
 
-  let intervalAmount = loan.repayment / isWeekly ? tenure.weeks : tenure.days
+  let intervalAmount = loan.repayment / (isWeekly ? tenure.weeks : tenure.days)
   console.log('Customer Info', customer)
 
   const handleApproveClick = () => {
