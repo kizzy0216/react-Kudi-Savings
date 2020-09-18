@@ -47,7 +47,7 @@ const WalletHistory = props => {
   let totalPage = 0
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['history', { id: id, params: { type, from, to } }],
+    ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
   )
 

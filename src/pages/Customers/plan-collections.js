@@ -13,6 +13,7 @@ import {
   ParamsReducer,
   DefaultParams,
   formatCollections,
+  formatCurrency,
   PlanCollectionTableColumn
 } from 'utils/function'
 import styles from './customers.module.scss'
@@ -42,27 +43,47 @@ const PlanCollections = props => {
       'CollectionsByPlan',
 
       {
-        planId: id,
-        page: params.page,
-        limit,
-        params:{from, to},
+        id: id,
+        // page: params.page,
+        // limit,
+        // params: { from, to }
       }
     ],
     getCollectionsByPlan
   )
+console.log(JSON.stringify(id))
+  // if (data?.data?.data) {
+    // formattedData = data.data.data.collections.list.map(
+    //   ({
+    //     agentName,
+    //     balance,
+    //     timeCreated,
+    //     collectionDate,
+    //     amount,
+    //     ...rest
+    //   }) => ({
+    //     ...rest,
+    //     agentName: `${agentName}`,
+    //     collectionDate: collectionDate
+    //       ? moment(collectionDate).format('Do MMM YY')
+    //       : 'N/A',
+    //     timeCreated: timeCreated
+    //       ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
+    //       : 'N/A',
+    //     balance: formatCurrency(balance),
+    //     amount: amount ? formatCurrency(amount) : '-'
+    //   })
+    // )
+    // formattedData = formatCollections(
+    //   history,
+    //   url,
+    //   params.page,
+    //   limit,
+    //   data.data.data.collections.list
+    // )
 
-
-  if (data?.data?.data?.collections) {
-    formattedData = formatCollections(
-      history,
-      url,
-      params.page,
-      limit,
-      data.data.data.collections.list
-    )
-
-    totalPage = Math.ceil(data.data.data.total / limit)
-  }
+  //   totalPage = Math.ceil(data.data.data.total / limit)
+  // }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -124,7 +145,7 @@ const PlanCollections = props => {
             </div>
           )}
         </CardHeader>
-        <CardBody className={styles.Customers}>
+        {/* <CardBody className={styles.Customers}>
           <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
@@ -177,7 +198,7 @@ const PlanCollections = props => {
                 ></Button>
               )}
             </div>
-          ))}
+          ))} */}
       </Card>
     </Content>
   )

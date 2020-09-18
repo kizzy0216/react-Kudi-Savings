@@ -89,17 +89,22 @@ const CustomerProfile = lazy(() =>
 )
 const CustomerHistory = lazy(() =>
   import(
-    /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-history'
+    /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-plan-details'
   )
 )
 const CustomerPlanCollection = lazy(() =>
   import(
-    /* webpackChunkName: "CustomerPlanCollection" */ 'pages/Customers/customer-plan-collection'
+    /* webpackChunkName: "CustomerPlanCollection" */ 'pages/Customers/view-all-plan-collection'
   )
 )
 const CustomerCashoutLog = lazy(() =>
   import(
-    /* webpackChunkName: "CustomerCashoutLog" */ 'pages/Customers/customer-cashout-log'
+    /* webpackChunkName: "CustomerCashoutLog" */ 'pages/Customers/view-all-cashout-log'
+  )
+)
+const CustomerRevenuePlanLog = lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerRevenuePlanLog" */ 'pages/Customers/view-all-plan-revenue-log'
   )
 )
 const CustomerWalletHistory = lazy(() =>
@@ -199,6 +204,11 @@ const AppRouter = () => (
           path="/customers/:id/plan/:planId/customer-cashout-log"
           exact
           component={CustomerCashoutLog}
+        />
+        <PrivateRoute
+          path="/customers/:id/plan/:planId/view-all-plan-revenue-log"
+          exact
+          component={CustomerRevenuePlanLog}
         />
         <PrivateRoute
           path="/customers/:id/plan/:planId/customer-wallet-history"

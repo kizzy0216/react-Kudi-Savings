@@ -18,7 +18,7 @@ import PlanRevenueLog from './plan-revenue-log'
 import CashoutLog from './cashout-log'
 import WalletHistory from './wallet-history'
 
-const CustomerHistory = ( { location, history, match: { params } }) => {
+const CustomerPlanDetails = ( { location, history, match: { params } }) => {
 
   let phoneNumber = location.state
   
@@ -27,6 +27,7 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
     getPlan
   )
 
+  console.log(params.planId)
   let plan = data?.data?.data ?? {}
 
   return (
@@ -119,9 +120,9 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
       {/* <div className={styles.DivContent}>
         <PlanCollections minimized id={params.planId}/>
       </div> */}
-      {/* <div className={styles.DivContent}>
+      <div className={styles.DivContent}>
         <PlanRevenueLog minimized id={params.planId} />
-      </div> */}
+      </div>
       <div className={styles.DivContent}>
         <CashoutLog minimized />
       </div>
@@ -131,4 +132,4 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
     </Fragment>
   )
 }
-export default CustomerHistory
+export default CustomerPlanDetails

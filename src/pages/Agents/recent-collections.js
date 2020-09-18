@@ -45,7 +45,7 @@ const Collections = ( {minimized} ) => {
     getCollections
   )
 let collect = data?.data?.data ?? {}
-
+console.log(JSON.stringify(collect))
 if (data && data.data) {
   formattedData = formatData(
     history,

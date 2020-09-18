@@ -37,7 +37,8 @@ export const formatWalletData = (data, page, limit) => {
       ),
       amount: formatCurrency(amount),
       wallet_balance: formatCurrency(wallet_balance),
-      time: moment(time_updated).format('llll')
+      time: moment(time_updated).format('llll'),
+      source: formatText(meta.source)
     })
   )
 }
@@ -112,7 +113,7 @@ export const formatData = (history, url, page, limit, data) => {
         timeCreated,
         collectionDate,
         amount,
-        id
+        userPlanId
       },
       index
     ) => ({
@@ -124,15 +125,15 @@ export const formatData = (history, url, page, limit, data) => {
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
-      walletBalance: formatCurrency(walletBalance),
+      walletBalance: walletBalance === '-' ? walletBalance :  formatCurrency(parseFloat(walletBalance)),
       totalAmountSaved: formatCurrency(totalAmountSaved),
-      amountCollected: amount ? formatCurrency(amount) : 'N/A',
+      amountCollected:formatCurrency(amount),
       action: <Button
     icon={<Eye />}
     variant="flat"
     onClick={() => history.push({
       pathname: `${url}/customer-plan`,
-      state: id
+      state: userPlanId
     })}
   >
     View
@@ -260,11 +261,12 @@ export const CashoutTableColumns = [
 ]
 
 export const WalletHistoryTableColumns = [
-  { key: 'sN', render: 'S/N' },
+
+  { key: 'time', render: 'Date' },
   { key: 'transaction_type', render: 'Type' },
   {
-    key: 'status',
-    render: 'Status'
+    key: 'source',
+    render: 'Source'
   },
   {
     key: 'amount',
@@ -274,7 +276,10 @@ export const WalletHistoryTableColumns = [
     key: 'wallet_balance',
     render: 'Balance'
   },
-  { key: 'time', render: 'Date' }
+  {
+    key: 'status',
+    render: 'Status'
+  }
 ]
 
 export const CashoutLogTableColumn = [
@@ -414,23 +419,25 @@ export const formatCollections = (history, url, page, limit, data) => {
 export const formatPlanRevenueLog = (data, page, limit) => {
   return data.map(
     (
-      { expectedDeductionDate, actualDeductionDate, amount, planStatus },
+      { expectedDeductionDate, deductionDate, revenue, isRevenueDeducted },
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
       expectedDeductionDate: expectedDeductionDate
         ? moment(expectedDeductionDate).format('Do MMM YY')
         : 'N/A',
-      actualDeductionDate: actualDeductionDate
-        ? moment(actualDeductionDate).format('Do MMM YY')
+      actualDeductionDate: deductionDate
+        ? moment(deductionDate).format('Do MMM YY')
         : 'N/A',
-      amount: formatCurrency(amount),
-      planStatus: planStatus ? (
-        <Badge variant={planStatus === 'ACTIVE' ? 'success' : 'danger'}>
-          {planStatus}
+      amount: formatCurrency(revenue),
+      planStatus: isRevenueDeducted ? (
+        <Badge variant={'success'}>
+          Success
         </Badge>
       ) : (
-        'N/A'
+        <Badge variant={'warning'}>
+          Pending
+        </Badge>
       )
     })
   )

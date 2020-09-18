@@ -39,6 +39,8 @@ const WalletHistory = ({ match: { params } }) => {
       ],
     walletHistory
   )
+  let history = data?.data?.data ?? {}
+  console.log(JSON.stringify(history))
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)

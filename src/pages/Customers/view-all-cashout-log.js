@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { useHistory } from 'react-router-dom'
 import { ChevronLeft } from 'assets/svg'
-import { Header, Content } from 'components/Layout'
+import { Header } from 'components/Layout'
 import styles from '../Agents/agent-profile.module.scss'
 import CashoutLog from './cashout-log'
 

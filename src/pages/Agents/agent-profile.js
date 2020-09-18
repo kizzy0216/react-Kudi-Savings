@@ -33,7 +33,6 @@ import Collections from './recent-collections'
 import WalletTopUp from './wallet-topUp'
 import Cashout from './cashout'
 import Transaction from './p2p'
-import CustomerPlanDetails from '../Agents/transaction-details'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
   const [current, setCurrent] = useState('default')
