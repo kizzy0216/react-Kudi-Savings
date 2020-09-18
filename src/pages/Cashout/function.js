@@ -71,6 +71,8 @@ export const statusOptions = [
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]
+
+
 export const TableColumns = [
   {
     key: 'name',

@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useReducers } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import {
@@ -9,13 +9,14 @@ import {
   ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
+import Select from 'components/Select'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData, WalletHistoryTableColumns } from 'utils/function'
+import { formatWalletData, WalletHistoryTableColumns, sourceOptions } from 'utils/function'
 
 const WalletHistory = ({ match: { params } }) => {
   const [page, setPage] = useState(1)
@@ -73,8 +74,7 @@ const WalletHistory = ({ match: { params } }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             <h3>
-              All
-              {totalData ? ` - ${totalData.toLocaleString()}` : ''}
+              All History
             </h3>
             <ButtonGroup>
               <Button active={type === ''} onClick={() => setType('')}>

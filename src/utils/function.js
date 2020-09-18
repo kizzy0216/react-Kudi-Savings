@@ -43,6 +43,15 @@ export const formatWalletData = (data, page, limit) => {
   )
 }
 
+export const sourceOptions = [
+  { text: 'Filter By', value: '' },
+  { text: 'Loans', value: 'LOANS' },
+  { text: 'Collections', value: 'COLLECTIONS' },
+  { text: 'P2P', value: 'P2P' },
+  { text: 'Wallet Top-Up', value: 'WALLET_TOP_UP' },
+  { text: 'Contribution', value: 'CONTRIBUTION' }
+]
+
 export const DefaultParams = {
   page: 1,
   startDate: '',
@@ -56,6 +65,7 @@ export const DefaultParams = {
   status: '',
   transactionType: 'CREDIT'
 }
+
 
 export const ParamsReducer = (params, { type, payload }) => {
   switch (type) {
