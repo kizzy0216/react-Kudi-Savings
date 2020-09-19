@@ -10,24 +10,44 @@ import {
 } from '@kudi-inc/dip'
 import { toaster } from 'evergreen-ui'
 import styles from './debit-plan.module.scss'
-import { isValidUpdate } from './validation'
 import { getPlan } from 'services/plans'
+import { processTransaction } from 'services/markets'
 
-const DebitPlan = ({ setShowDebit, id , phoneNumber}) => {
+const DebitPlan = ({ setShowDebit, id, phoneNumber }) => {
   const { data, refetch } = useQuery(['Plan', { id: id }], getPlan)
 
   let plan = data?.data?.data ?? {}
-  
 
   const [amount, setAmount] = useState(0)
   const [reason, setReason] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const type = 'DEBIT'
+
+  const handleTransaction = async e => {
+    e.preventDefault()
+    setLoading(true)
+    await processTransaction(plan.id, amount, type, reason)
+      .then(({ data }) => {
+        setLoading(false)
+        toaster.success('Debit Plan Processed')
+        refetch({ disableThrow: true })
+        setReason({ reason })
+        setShowDebit(false)
+      })
+      .catch(data => {
+        setLoading(false)
+
+        if (data?.data?.message) return toaster.danger(data.data.message)
+        toaster.danger('Credit Plan Failed')
+      })
+  }
+
   return (
     <Card className={styles.DebitPlan}>
       <CardHeader className={styles.DebitPlanHeader}>Debit Plan</CardHeader>
       <CardBody className={styles.DebitPlanBody}>
-        <form className={styles.DebitPlanForm}>
+        <form className={styles.DebitPlanForm} onSubmit={handleTransaction}>
           <Input
             type="text"
             label="Plan"
@@ -45,6 +65,7 @@ const DebitPlan = ({ setShowDebit, id , phoneNumber}) => {
           <Input
             value={amount}
             onChange={e => setAmount(e.target.value)}
+            required
             name="amount"
             type="number"
             label="Amount"

@@ -32,6 +32,7 @@ const ViewCashout = ({ history, match: { params } }) => {
   )
 
   let withdrawal = data?.data?.data || {}
+  console.log(JSON.stringify(withdrawal.id))
 
   const { data: imageData } = useQuery(
     ['Image', { id: withdrawal?.user?.pictureId }],
