@@ -6,4 +6,6 @@ export const getCollections = async params =>
 export const getCollection = async ({ id }) =>
   await Axios.get(`/collections/${id}/details`)
 
-export const getCollectionsByPlan = async ({ id }) =>  await Axios.get(`/collections/${id}`)
+export const getCollectionsByPlan = async ({ id }) =>
+  await Axios.get(`/collections/${id}`)
+  

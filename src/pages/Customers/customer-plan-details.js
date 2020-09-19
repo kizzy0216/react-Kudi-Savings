@@ -11,6 +11,7 @@ import { formatCurrency } from 'utils/function'
 import PlanRevenueLog from './plan-revenue-log'
 import CashoutLog from './cashout-log'
 import WalletHistory from './wallet-history'
+import PlanCollections from './plan-collections'
 
 const CustomerPlanDetails = ({ location, history, match: { params } }) => {
   let phoneNumber = location.state
@@ -109,9 +110,9 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
           </div>
         )}
       </Content>
-      {/* <div className={styles.DivContent}>
-        <PlanCollections minimized id={params.planId}/>
-      </div> */}
+      <div className={styles.DivContent}>
+        <PlanCollections minimized id={params.planId} />
+      </div>
       <div className={styles.DivContent}>
         <PlanRevenueLog minimized id={params.planId} />
       </div>

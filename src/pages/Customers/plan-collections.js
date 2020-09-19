@@ -28,6 +28,7 @@ const PlanCollections = props => {
   let { url } = useRouteMatch()
   let history = useHistory()
   let { minimized } = props
+  const [page, setPage] = useState(1)
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
   const [from, setFrom] = useState('')
@@ -38,19 +39,14 @@ const PlanCollections = props => {
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
-  const { data, isLoading, error, refetch } = useQuery(
-    [
-      'CollectionsByPlan',
-
-      {
-        id: id
-        // page: params.page,
-        // limit,
-        // params: { from, to }
-      }
-    ],
-    getCollectionsByPlan
-  )
+  
+  // const { data, isLoading, error, refetch } = useQuery(
+  //   id &&
+  //   ['CollectionsByPlanId',{  id: props.id, params: { page, limit, from, to }}],
+  //   getCollectionsByPlan
+  // )
+ 
+  
   // if (data?.data?.data) {
   // formattedData = data.data.data.collections.list.map(
   //   ({
