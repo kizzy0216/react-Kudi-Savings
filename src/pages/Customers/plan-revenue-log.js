@@ -28,8 +28,6 @@ const PlanRevenueLog = props => {
   let { data, isLoading, error, refetch } = useQuery(
     ['PlanRevenueLog', { userPlanId: id, limit, params:{from, to} }], getRevenue)
 
-    let plano = data?.data?.data ?? {}
-    console.log(JSON.stringify(plano))
   
   if (data?.data?.data) {
     formattedData = formatPlanRevenueLog(

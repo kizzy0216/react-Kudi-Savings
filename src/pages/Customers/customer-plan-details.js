@@ -27,7 +27,6 @@ const CustomerPlanDetails = ( { location, history, match: { params } }) => {
     getPlan
   )
 
-  console.log(params.planId)
   let plan = data?.data?.data ?? {}
 
   return (

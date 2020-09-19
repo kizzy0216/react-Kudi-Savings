@@ -51,7 +51,6 @@ const PlanCollections = props => {
     ],
     getCollectionsByPlan
   )
-console.log(JSON.stringify(id))
   // if (data?.data?.data) {
     // formattedData = data.data.data.collections.list.map(
     //   ({
