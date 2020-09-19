@@ -144,6 +144,11 @@ const WalletTopUps = lazy(() =>
     /* webpackChunkName: "WalletTopUps" */ 'pages/Agents/view-all-wallet-topup'
   )
 )
+const P2PLog = lazy(() =>
+  import(
+    /* webpackChunkName: "P2PLog" */ 'pages/Agents/view-all-p2p'
+  )
+)
 const CashoutLog = lazy(() =>
   import(
     /* webpackChunkName: "CashoutLog" */ 'pages/Agents/view-all-cashout-logs'
@@ -254,6 +259,11 @@ const AppRouter = () => (
           path="/agents/:id/view-all-wallet-topup"
           exact
           component={WalletTopUps}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-p2p"
+          exact
+          component={P2PLog}
         />
         <PrivateRoute
           path="/agents/:id/view-all-cashout-logs"

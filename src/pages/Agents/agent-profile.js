@@ -20,7 +20,12 @@ import {
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import { getAgent, getUsers, getUsersOnboarded, getAgentActivity } from 'services/agents'
+import {
+  getAgent,
+  getUsers,
+  getUsersOnboarded,
+  getAgentActivity
+} from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
@@ -43,8 +48,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
-  let [ showDebitWallet, setShowDebitWallet ] = useState(false)
-  let [ deductAmount, setDeductionAmount] = useState(0)
+  let [showDebitWallet, setShowDebitWallet] = useState(false)
+  let [deductAmount, setDeductionAmount] = useState(0)
   let limit = 50
   let isActive = true
   let [phoneNumber, setPhoneNumber] = useState('')
@@ -66,24 +71,35 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   )
 
   let customersLimit = agent.totalCustomers
-  const { data: isActiveUsers} = useQuery(
-    ['Customers', { id: agent.id, isActive, page, limit: customersLimit, phoneNumber }],
+  const { data: isActiveUsers } = useQuery(
+    [
+      'Customers',
+      { id: agent.id, isActive, page, limit: customersLimit, phoneNumber }
+    ],
     getUsers
   )
-  
+
   let isActiveCount = isActiveUsers?.data?.data.list.length ?? '0'
 
-  const { data: isInActiveUsers} = useQuery(
-    data && ['Customers', { id: agent.id, isActive : !isActive, page, limit: customersLimit, phoneNumber }],
+  const { data: isInActiveUsers } = useQuery(
+    data && [
+      'Customers',
+      {
+        id: agent.id,
+        isActive: !isActive,
+        page,
+        limit: customersLimit,
+        phoneNumber
+      }
+    ],
     getUsers
   )
 
   let isInActiveCount = isInActiveUsers?.data?.data.list.length ?? '0'
 
-  const {data: log} = useQuery(
+  const { data: log } = useQuery(
     data && ['AgentActivity', {}, getAgentActivity]
   )
-
 
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
@@ -102,7 +118,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               <ChevronLeft role="button" onClick={() => history.goBack()} />
               Agent Profile
             </p>
-            <Button  type="button" icon={<Reassign />}>
+            <Button type="button" icon={<Reassign />}>
               View New Referrals
             </Button>
           </Header>
@@ -256,14 +272,23 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       <CardFooter className={styles.FirstBodyButton}>
                         <Button
                           variant="flat"
-                          onClick={() => history.push(`${url}/wallet-history`)}
+                          onClick={() =>
+                            history.push({
+                              pathname: `${url}/wallet-history`,
+                              state: agent.id
+                            })
+                          }
                           type="button"
                           icon={<Eye />}
                         >
                           View History
                         </Button>
                         <div className={styles.WalletFooterDebit}>
-                          <Button variant="flat" icon={<Reassign />} onClick={()=> setShowDebitWallet(true)}>
+                          <Button
+                            variant="flat"
+                            icon={<Reassign />}
+                            onClick={() => setShowDebitWallet(true)}
+                          >
                             Debit Wallet
                           </Button>
                         </div>
@@ -399,11 +424,11 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             )}
           </Content>
           <div className={styles.DivContent}>
-            <Collections minimized/>
+            <Collections minimized />
           </div>
-          {/* <div className={styles.DivContent}>
+          <div className={styles.DivContent}>
             <Transaction minimized id={agent.id}/>
-          </div> */}
+          </div>
           <div className={styles.DivContent}>
             <WalletTopUp minimized id={agent.id} />
           </div>
@@ -438,7 +463,6 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           setCurrent={setCurrent}
         />
       )}
-      
     </div>
   )
 }

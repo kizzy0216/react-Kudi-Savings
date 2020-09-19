@@ -50,7 +50,7 @@ const WalletHistory = props => {
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
   )
-
+  console.log("phone " + phone)
 
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
@@ -89,6 +89,7 @@ const WalletHistory = props => {
               onClick={() =>
                 history.push({
                   pathname: `${url}/customer-wallet-history`,
+                  phone: phone,
                   state: id
                 })
               }

@@ -63,9 +63,9 @@ export const DefaultParams = {
   showReset: false,
   focusedInput: null,
   status: '',
+  source: '',
   transactionType: 'CREDIT'
 }
-
 
 export const ParamsReducer = (params, { type, payload }) => {
   switch (type) {
@@ -75,6 +75,11 @@ export const ParamsReducer = (params, { type, payload }) => {
         page: payload
       }
     case 'UPDATE_STATUS':
+      return {
+        ...params,
+        ...payload
+      }
+    case 'FILTER_SOURCE':
       return {
         ...params,
         ...payload
@@ -135,19 +140,26 @@ export const formatData = (history, url, page, limit, data) => {
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
-      walletBalance: walletBalance === '-' ? walletBalance :  formatCurrency(parseFloat(walletBalance)),
+      walletBalance:
+        walletBalance === '-'
+          ? walletBalance
+          : formatCurrency(parseFloat(walletBalance)),
       totalAmountSaved: formatCurrency(totalAmountSaved),
-      amountCollected:formatCurrency(amount),
-      action: <Button
-    icon={<Eye />}
-    variant="flat"
-    onClick={() => history.push({
-      pathname: `${url}/customer-plan`,
-      state: userPlanId
-    })}
-  >
-    View
-  </Button>
+      amountCollected: formatCurrency(amount),
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() =>
+            history.push({
+              pathname: `${url}/customer-plan`,
+              state: userPlanId
+            })
+          }
+        >
+          View
+        </Button>
+      )
     })
   )
 }
@@ -271,7 +283,6 @@ export const CashoutTableColumns = [
 ]
 
 export const WalletHistoryTableColumns = [
-
   { key: 'time', render: 'Date' },
   { key: 'transaction_type', render: 'Type' },
   {
@@ -406,10 +417,7 @@ export const formatPlan = (data, history, url, page, limit) => {
 
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
-    (
-      { agentName, balance, timeCreated, collectionDate, amount, },
-      index
-    ) => ({
+    ({ agentName, balance, timeCreated, collectionDate, amount }, index) => ({
       SN: (page - 1) * limit + (index + 1),
       agentName: `${agentName}`,
       collectionDate: collectionDate
@@ -419,9 +427,7 @@ export const formatCollections = (history, url, page, limit, data) => {
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
       balance: formatCurrency(balance),
-      amount: amount
-        ? formatCurrency(amount)
-        : '-'
+      amount: amount ? formatCurrency(amount) : '-'
     })
   )
 }
@@ -441,13 +447,9 @@ export const formatPlanRevenueLog = (data, page, limit) => {
         : 'N/A',
       amount: formatCurrency(revenue),
       planStatus: isRevenueDeducted ? (
-        <Badge variant={'success'}>
-          Success
-        </Badge>
+        <Badge variant={'success'}>Success</Badge>
       ) : (
-        <Badge variant={'warning'}>
-          Pending
-        </Badge>
+        <Badge variant={'warning'}>Pending</Badge>
       )
     })
   )
@@ -475,7 +477,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
         </Badge>
       ) : (
         'N/A'
-      ),
+      )
     })
   )
 }
@@ -483,14 +485,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
 export const formatWalletHistory = (data, page, limit) => {
   return data.map(
     (
-      {
-        time_updated,
-        transaction_type,
-        meta,
-        wallet_balance,
-        amount,
-        status
-      },
+      { time_updated, transaction_type, meta, wallet_balance, amount, status },
       index
     ) => ({
       SN: (page - 1) * limit + (index + 1),
@@ -680,10 +675,12 @@ export const formatCashoutData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push({
-            pathname: `${url}/cashout-details`,
-            state: id
-          })}
+          onClick={() =>
+            history.push({
+              pathname: `${url}/cashout-details`,
+              state: id
+            })
+          }
         >
           View
         </Button>

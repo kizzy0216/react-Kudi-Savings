@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useReducers } from 'react'
+import React, { Fragment, useState, useReducer } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import {
@@ -16,9 +16,10 @@ import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData, WalletHistoryTableColumns, sourceOptions } from 'utils/function'
+import { formatWalletData, WalletHistoryTableColumns, sourceOptions, ParamsReducer, DefaultParams } from 'utils/function'
 
-const WalletHistory = ({ match: { params } }) => {
+const WalletHistory = ({ location }) => {
+  let id = location.state
   const [page, setPage] = useState(1)
   const [type, setType] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -26,6 +27,7 @@ const WalletHistory = ({ match: { params } }) => {
   const [to, setTo] = useState('')
   const [endDate, setEndDate] = useState('')
   const [showReset, setShowReset] = useState(false)
+  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [focusedInput, setfocusedInput] = useState(null)
   let limit = 50
   let totalData = 0
@@ -33,10 +35,9 @@ const WalletHistory = ({ match: { params } }) => {
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    params &&
-      params.id && [
+    [
         'history',
-        { id: params.id, params: { page, limit, type, from, to } }
+        { id: id, params: { page, limit, type, from, to } }
       ],
     walletHistory
   )
@@ -105,6 +106,16 @@ const WalletHistory = ({ match: { params } }) => {
                   isOutsideRange={() => false}
                 />
               </Filters>
+              <Select
+                active={params.source}
+                options={sourceOptions}
+                onSelect={value =>
+                  setParams({
+                    type: 'FILTER_SOURCE',
+                    payload: { source: value, showReset: true }
+                  })
+                }
+              />
               {showReset && (
                 <Close
                   className="danger"

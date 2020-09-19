@@ -314,8 +314,8 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               label="Market"
               options={markets}
               autoComplete="markets"
-              error={errors.marketName}
-              status={errors.marketName && 'error'}
+              // error={errors.marketName}
+              // status={errors.marketName && 'error'}
             />
           </div>
           <Button type="submit" loading={loading}>
