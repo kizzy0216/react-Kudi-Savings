@@ -100,7 +100,16 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
 
   const handleEditCustomer = async e => {
     e.preventDefault()
+    const errors = isValidUpdate(edited)
+    setErrors(errors)
+
+    if (Object.keys(errors).length > 0) return
+
     setLoading(true)
+
+    if(!edited.marketName){
+      edited.marketName = edited.market.name
+    }
 
     if (uploadedId && uploadedId.data) {
       edited.identificationCardImageId = uploadedId.data.id
@@ -108,13 +117,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     if (uploadedAvatar && uploadedAvatar.data) {
       edited.pictureId = uploadedAvatar.data.id
     }
-    const errors = isValidUpdate(edited)
-    setErrors(errors)
-
-    if (Object.keys(errors).length > 0) {
-      setLoading(false)
-      return
-    }
+    
 
     let { ...rest } = edited
 
@@ -299,23 +302,20 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
             />
 
             <Select
-              onSelect={name =>
+              onSelect={marketName =>
                 setEdited({
                   ...edited,
-                  market:{
-                    ...edited.market,
-                    name
-                  }
+                  marketName
                 })
               }
               name="market"
-              value={edited.market.name}
+              value={edited?.market?.name}
               required
               label="Market"
               options={markets}
               autoComplete="markets"
-              // error={errors.marketName}
-              // status={errors.marketName && 'error'}
+              error={errors.marketName}
+              status={errors.marketName && 'error'}
             />
           </div>
           <Button type="submit" loading={loading}>

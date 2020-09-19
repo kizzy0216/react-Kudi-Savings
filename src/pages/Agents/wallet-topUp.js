@@ -28,7 +28,7 @@ const WalletTopUp = props => {
   const [showReset, setShowReset] = useState(false)
   const [focusedInput, setfocusedInput] = useState(null)
   let limit = props.minimized ? 3 : 50
-  let totalData = 0
+
   let totalPage = 0
   let formattedData = []
   let type = 'CREDIT'
@@ -40,7 +40,6 @@ const WalletTopUp = props => {
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, limit, page)
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {

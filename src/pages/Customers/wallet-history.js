@@ -26,10 +26,8 @@ import styles from './customers.module.scss'
 import DebitPlan from './debit-plan'
 import CreditPlan from './credit-plan'
 
-import { getPlan } from 'services/plans'
-
 const WalletHistory = props => {
-  let { minimized, id ,phone} = props
+  let { minimized, id, phone } = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -50,7 +48,6 @@ const WalletHistory = props => {
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
   )
-  
 
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)

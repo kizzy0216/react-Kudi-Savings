@@ -43,7 +43,7 @@ const PlanCollections = props => {
       'CollectionsByPlan',
 
       {
-        id: id,
+        id: id
         // page: params.page,
         // limit,
         // params: { from, to }
@@ -52,34 +52,34 @@ const PlanCollections = props => {
     getCollectionsByPlan
   )
   // if (data?.data?.data) {
-    // formattedData = data.data.data.collections.list.map(
-    //   ({
-    //     agentName,
-    //     balance,
-    //     timeCreated,
-    //     collectionDate,
-    //     amount,
-    //     ...rest
-    //   }) => ({
-    //     ...rest,
-    //     agentName: `${agentName}`,
-    //     collectionDate: collectionDate
-    //       ? moment(collectionDate).format('Do MMM YY')
-    //       : 'N/A',
-    //     timeCreated: timeCreated
-    //       ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
-    //       : 'N/A',
-    //     balance: formatCurrency(balance),
-    //     amount: amount ? formatCurrency(amount) : '-'
-    //   })
-    // )
-    // formattedData = formatCollections(
-    //   history,
-    //   url,
-    //   params.page,
-    //   limit,
-    //   data.data.data.collections.list
-    // )
+  // formattedData = data.data.data.collections.list.map(
+  //   ({
+  //     agentName,
+  //     balance,
+  //     timeCreated,
+  //     collectionDate,
+  //     amount,
+  //     ...rest
+  //   }) => ({
+  //     ...rest,
+  //     agentName: `${agentName}`,
+  //     collectionDate: collectionDate
+  //       ? moment(collectionDate).format('Do MMM YY')
+  //       : 'N/A',
+  //     timeCreated: timeCreated
+  //       ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
+  //       : 'N/A',
+  //     balance: formatCurrency(balance),
+  //     amount: amount ? formatCurrency(amount) : '-'
+  //   })
+  // )
+  // formattedData = formatCollections(
+  //   history,
+  //   url,
+  //   params.page,
+  //   limit,
+  //   data.data.data.collections.list
+  // )
 
   //   totalPage = Math.ceil(data.data.data.total / limit)
   // }

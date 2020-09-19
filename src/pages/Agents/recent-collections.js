@@ -44,7 +44,7 @@ const Collections = ( {minimized} ) => {
     ],
     getCollections
   )
-let collect = data?.data?.data ?? {}
+  
 if (data && data.data) {
   formattedData = formatData(
     history,

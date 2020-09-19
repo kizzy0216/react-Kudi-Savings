@@ -20,12 +20,7 @@ import {
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
-import {
-  getAgent,
-  getUsers,
-  getUsersOnboarded,
-  getAgentActivity
-} from 'services/agents'
+import { getAgent, getUsers, getUsersOnboarded } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
@@ -96,10 +91,6 @@ const SingleAgent = ({ history, match: { params, url } }) => {
   )
 
   let isInActiveCount = isInActiveUsers?.data?.data.list.length ?? '0'
-
-  const { data: log } = useQuery(
-    data && ['AgentActivity', {}, getAgentActivity]
-  )
 
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
@@ -427,7 +418,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             <Collections minimized />
           </div>
           <div className={styles.DivContent}>
-            <Transaction minimized id={agent.id}/>
+            <Transaction minimized id={agent.id} />
           </div>
           <div className={styles.DivContent}>
             <WalletTopUp minimized id={agent.id} />

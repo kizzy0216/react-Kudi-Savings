@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react'
-import { Header, Content } from 'components/Layout'
+import { Header } from 'components/Layout'
 import { ChevronLeft } from 'assets/svg'
 import styles from './agent-profile.module.scss'
 import WalletTopUp from './wallet-topUp'

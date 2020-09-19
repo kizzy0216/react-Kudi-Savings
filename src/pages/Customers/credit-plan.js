@@ -1,13 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-  Input,
-  Select
-} from '@kudi-inc/dip'
+import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { toaster } from 'evergreen-ui'
 import styles from './debit-plan.module.scss'
 import { getPlan } from 'services/plans'

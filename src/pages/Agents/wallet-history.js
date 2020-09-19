@@ -16,7 +16,13 @@ import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData, WalletHistoryTableColumns, sourceOptions, ParamsReducer, DefaultParams } from 'utils/function'
+import {
+  formatWalletData,
+  WalletHistoryTableColumns,
+  sourceOptions,
+  ParamsReducer,
+  DefaultParams
+} from 'utils/function'
 
 const WalletHistory = ({ location }) => {
   let id = location.state
@@ -30,22 +36,17 @@ const WalletHistory = ({ location }) => {
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [focusedInput, setfocusedInput] = useState(null)
   let limit = 50
-  let totalData = 0
   let totalPage = 0
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    [
-        'history',
-        { id: id, params: { page, limit, type, from, to } }
-      ],
+    ['history', { id: id, params: { page, limit, type, from, to } }],
     walletHistory
   )
-  let history = data?.data?.data ?? {}
+
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -73,9 +74,7 @@ const WalletHistory = ({ location }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-            <h3>
-              All History
-            </h3>
+            <h3>All History</h3>
             <ButtonGroup>
               <Button active={type === ''} onClick={() => setType('')}>
                 All
