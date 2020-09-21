@@ -38,7 +38,7 @@ export const formatWalletData = (data, page, limit) => {
       amount: formatCurrency(amount),
       wallet_balance: formatCurrency(wallet_balance),
       time: moment(time_updated).format('llll'),
-      source: formatText(meta.source)
+      source: formatText(meta.source === 'contribution' ? 'collections' : meta.source)
     })
   )
 }

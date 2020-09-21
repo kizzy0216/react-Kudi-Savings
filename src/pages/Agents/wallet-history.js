@@ -19,7 +19,6 @@ import styles from '../Transactions/transactions.module.scss'
 import {
   formatWalletData,
   WalletHistoryTableColumns,
-  sourceOptions,
   ParamsReducer,
   DefaultParams
 } from 'utils/function'
@@ -48,6 +47,7 @@ const WalletHistory = ({ location }) => {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
+  
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -75,7 +75,20 @@ const WalletHistory = ({ location }) => {
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             <h3>All History</h3>
-            <ButtonGroup>
+            
+            <div className="flex">
+              <Filters className={styles.filters}>
+                <DateRangePicker
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  displayFormat="DD MMM, YY"
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
+                  isOutsideRange={() => false}
+                />
+              </Filters>
+              <ButtonGroup>
               <Button active={type === ''} onClick={() => setType('')}>
                 All
               </Button>
@@ -92,28 +105,6 @@ const WalletHistory = ({ location }) => {
                 Credit
               </Button>
             </ButtonGroup>
-            <div className="flex">
-              <Filters className={styles.filters}>
-                <DateRangePicker
-                  onDatesChange={onDatesChange}
-                  onFocusChange={onFocusChange}
-                  displayFormat="DD MMM, YY"
-                  focusedInput={focusedInput}
-                  startDate={startDate}
-                  endDate={endDate}
-                  isOutsideRange={() => false}
-                />
-              </Filters>
-              <Select
-                active={params.source}
-                options={sourceOptions}
-                onSelect={value =>
-                  setParams({
-                    type: 'FILTER_SOURCE',
-                    payload: { source: value, showReset: true }
-                  })
-                }
-              />
               {showReset && (
                 <Close
                   className="danger"
