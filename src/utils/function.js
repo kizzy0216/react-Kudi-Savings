@@ -37,10 +37,20 @@ export const formatWalletData = (data, page, limit) => {
       ),
       amount: formatCurrency(amount),
       wallet_balance: formatCurrency(wallet_balance),
-      time: moment(time_updated).format('llll')
+      time: moment(time_updated).format('llll'),
+      source: formatText(meta.source === 'contribution' ? 'collections' : meta.source)
     })
   )
 }
+
+export const sourceOptions = [
+  { text: 'Filter By', value: '' },
+  { text: 'Loans', value: 'LOANS' },
+  { text: 'Collections', value: 'COLLECTIONS' },
+  { text: 'P2P', value: 'P2P' },
+  { text: 'Wallet Top-Up', value: 'WALLET_TOP_UP' },
+  { text: 'Contribution', value: 'CONTRIBUTION' }
+]
 
 export const DefaultParams = {
   page: 1,
@@ -53,6 +63,7 @@ export const DefaultParams = {
   showReset: false,
   focusedInput: null,
   status: '',
+  source: '',
   transactionType: 'CREDIT'
 }
 
@@ -64,6 +75,11 @@ export const ParamsReducer = (params, { type, payload }) => {
         page: payload
       }
     case 'UPDATE_STATUS':
+      return {
+        ...params,
+        ...payload
+      }
+    case 'FILTER_SOURCE':
       return {
         ...params,
         ...payload
@@ -112,7 +128,7 @@ export const formatData = (history, url, page, limit, data) => {
         timeCreated,
         collectionDate,
         amount,
-        id
+        userPlanId
       },
       index
     ) => ({
@@ -124,14 +140,22 @@ export const formatData = (history, url, page, limit, data) => {
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
-      walletBalance: formatCurrency(walletBalance),
+      walletBalance:
+        walletBalance === '-'
+          ? walletBalance
+          : formatCurrency(parseFloat(walletBalance)),
       totalAmountSaved: formatCurrency(totalAmountSaved),
-      amountCollected: amount ? formatCurrency(amount) : 'N/A',
+      amountCollected: formatCurrency(amount),
       action: (
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
+          onClick={() =>
+            history.push({
+              pathname: `${url}/customer-plan`,
+              state: userPlanId
+            })
+          }
         >
           View
         </Button>
@@ -210,10 +234,10 @@ export const CollectionsTableColumns = [
     key: 'totalAmountSaved',
     render: 'TOTAL SAVED'
   },
-  // {
-  //   key: 'action',
-  //   render: ''
-  // }
+  {
+    key: 'action',
+    render: ''
+  }
 ]
 
 export const WalletTopUpTableColumns = [
@@ -259,11 +283,11 @@ export const CashoutTableColumns = [
 ]
 
 export const WalletHistoryTableColumns = [
-  { key: 'sN', render: 'S/N' },
+  { key: 'time', render: 'Date' },
   { key: 'transaction_type', render: 'Type' },
   {
-    key: 'status',
-    render: 'Status'
+    key: 'source',
+    render: 'Source'
   },
   {
     key: 'amount',
@@ -273,7 +297,10 @@ export const WalletHistoryTableColumns = [
     key: 'wallet_balance',
     render: 'Balance'
   },
-  { key: 'time', render: 'Date' }
+  {
+    key: 'status',
+    render: 'Status'
+  }
 ]
 
 export const CashoutLogTableColumn = [
@@ -390,10 +417,7 @@ export const formatPlan = (data, history, url, page, limit) => {
 
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
-    (
-      { agentName, balance, timeCreated, collectionDate, totalAmountSaved, },
-      index
-    ) => ({
+    ({ agentName, balance, timeCreated, collectionDate, amount }, index) => ({
       SN: (page - 1) * limit + (index + 1),
       agentName: `${agentName}`,
       collectionDate: collectionDate
@@ -403,9 +427,7 @@ export const formatCollections = (history, url, page, limit, data) => {
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
       balance: formatCurrency(balance),
-      totalAmountSaved: totalAmountSaved
-        ? formatCurrency(totalAmountSaved)
-        : 'N/A'
+      amount: amount ? formatCurrency(amount) : '-'
     })
   )
 }
@@ -413,23 +435,21 @@ export const formatCollections = (history, url, page, limit, data) => {
 export const formatPlanRevenueLog = (data, page, limit) => {
   return data.map(
     (
-      { expectedDeductionDate, actualDeductionDate, amount, planStatus },
+      { expectedDeductionDate, deductionDate, revenue, isRevenueDeducted },
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
       expectedDeductionDate: expectedDeductionDate
         ? moment(expectedDeductionDate).format('Do MMM YY')
         : 'N/A',
-      actualDeductionDate: actualDeductionDate
-        ? moment(actualDeductionDate).format('Do MMM YY')
+      actualDeductionDate: deductionDate
+        ? moment(deductionDate).format('Do MMM YY')
         : 'N/A',
-      amount: formatCurrency(amount),
-      planStatus: planStatus ? (
-        <Badge variant={planStatus === 'ACTIVE' ? 'success' : 'danger'}>
-          {planStatus}
-        </Badge>
+      amount: formatCurrency(revenue),
+      planStatus: isRevenueDeducted ? (
+        <Badge variant={'success'}>Success</Badge>
       ) : (
-        'N/A'
+        <Badge variant={'warning'}>Pending</Badge>
       )
     })
   )
@@ -439,7 +459,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
   return data.map(
     ({ timeCreated, amount, type, status, agentName }, index) => ({
       SN: (page - 1) * limit + (index + 1),
-      timeCreated: moment(timeCreated).format('DD/MM/YY'),
+      timeCreated: moment(timeCreated).format('Do MMM YY'),
       amount: formatCurrency(amount),
       type: formatText(type),
       agentName: formatText(agentName),
@@ -457,8 +477,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
         </Badge>
       ) : (
         'N/A'
-      ),
-      timeCreated: moment(timeCreated).format('DD/MM/YY')
+      )
     })
   )
 }
@@ -466,14 +485,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
 export const formatWalletHistory = (data, page, limit) => {
   return data.map(
     (
-      {
-        time_updated,
-        transaction_type,
-        meta,
-        wallet_balance,
-        amount,
-        status
-      },
+      { time_updated, transaction_type, meta, wallet_balance, amount, status },
       index
     ) => ({
       SN: (page - 1) * limit + (index + 1),
@@ -527,13 +539,13 @@ export const PlanCollectionTableColumn = [
     render: 'TIME CREATED'
   },
   {
-    key: 'totalAmountSaved',
+    key: 'amount',
     render: 'AMOUNT COLLECTED'
   },
-  // {
-  //   key: 'balance',
-  //   render: 'BALANCE'
-  // },
+  {
+    key: 'balance',
+    render: 'BALANCE'
+  },
 
   {
     key: 'agentName',
@@ -663,7 +675,12 @@ export const formatCashoutData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
+          onClick={() =>
+            history.push({
+              pathname: `${url}/cashout-details`,
+              state: id
+            })
+          }
         >
           View
         </Button>

@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
-import {
-  Card,
-  CardBody,
-  CardHeader,
-  Button,
-  Input,
-  Select
-} from '@kudi-inc/dip'
+import { Card, CardBody, CardHeader, Button, Input } from '@kudi-inc/dip'
 import { toaster } from 'evergreen-ui'
 import styles from './debit-plan.module.scss'
-import { isValidUpdate } from './validation'
 import { getPlan } from 'services/plans'
+import { processTransaction } from 'services/markets'
 
 const DebitPlan = ({ setShowCredit, id, phoneNumber }) => {
   const { data, refetch } = useQuery(['Plan', { id: id }], getPlan)
@@ -21,12 +14,32 @@ const DebitPlan = ({ setShowCredit, id, phoneNumber }) => {
   const [amount, setAmount] = useState(0)
   const [reason, setReason] = useState('')
   const [loading, setLoading] = useState(false)
+  const type = 'CREDIT'
+
+  const handleTransaction = async e => {
+    e.preventDefault()
+    setLoading(true)
+    await processTransaction(plan.id, amount, type, reason)
+      .then(({ data }) => {
+        setLoading(false)
+        toaster.success('Credit Plan Processed')
+        refetch({ disableThrow: true })
+        setReason({ reason })
+        setShowCredit(false)
+      })
+      .catch(data => {
+        setLoading(false)
+
+        if (data?.data?.message) return toaster.danger(data.data.message)
+        toaster.danger('Credit Plan Failed')
+      })
+  }
 
   return (
     <Card className={styles.DebitPlan}>
       <CardHeader className={styles.DebitPlanHeader}>Credit Plan</CardHeader>
       <CardBody className={styles.DebitPlanBody}>
-        <form className={styles.DebitPlanForm}>
+        <form className={styles.DebitPlanForm} onSubmit={handleTransaction}>
           <Input
             type="text"
             label="Plan"
@@ -44,6 +57,7 @@ const DebitPlan = ({ setShowCredit, id, phoneNumber }) => {
           <Input
             value={amount}
             onChange={e => setAmount(e.target.value)}
+            required
             name="amount"
             type="number"
             label="Amount"

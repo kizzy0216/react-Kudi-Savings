@@ -26,10 +26,8 @@ import styles from './customers.module.scss'
 import DebitPlan from './debit-plan'
 import CreditPlan from './credit-plan'
 
-import { getPlan } from 'services/plans'
-
 const WalletHistory = props => {
-  let { minimized, id ,phone} = props
+  let { minimized, id, phone } = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -47,10 +45,9 @@ const WalletHistory = props => {
   let totalPage = 0
 
   const { data, isLoading, error, refetch } = useQuery(
-    ['history', { id: id, params: { type, from, to } }],
+    ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
   )
-
 
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
@@ -89,6 +86,7 @@ const WalletHistory = props => {
               onClick={() =>
                 history.push({
                   pathname: `${url}/customer-wallet-history`,
+                  phone: phone,
                   state: id
                 })
               }
@@ -225,7 +223,7 @@ const WalletHistory = props => {
         isShown={showCredit}
         width={800}
       >
-        <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone}/>
+        <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone} />
       </SideSheet>
     </Content>
   )

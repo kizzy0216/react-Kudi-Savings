@@ -11,3 +11,9 @@ export const getAllMarkets = async () => await Axios.get(`/markets`)
 
 export const getSingleMarket = async ({ id }) =>
   await Axios.get(`/markets/${id}`)
+
+export const processTransaction = async (id, amount, type, reason) =>
+  await Axios.put(
+    `/markets/transaction?amount=${amount}&planId=${id}&type=${type}`,
+    reason
+  )

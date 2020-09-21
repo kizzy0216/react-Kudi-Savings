@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useReducer } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import {
@@ -9,15 +9,22 @@ import {
   ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
+import Select from 'components/Select'
 import { Header, Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import { ChevronLeft, Close } from 'assets/svg'
 import { walletHistory } from 'services/agents'
 import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
-import { formatWalletData, WalletHistoryTableColumns } from 'utils/function'
+import {
+  formatWalletData,
+  WalletHistoryTableColumns,
+  ParamsReducer,
+  DefaultParams
+} from 'utils/function'
 
-const WalletHistory = ({ match: { params } }) => {
+const WalletHistory = ({ location }) => {
+  let id = location.state
   const [page, setPage] = useState(1)
   const [type, setType] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -25,25 +32,22 @@ const WalletHistory = ({ match: { params } }) => {
   const [to, setTo] = useState('')
   const [endDate, setEndDate] = useState('')
   const [showReset, setShowReset] = useState(false)
+  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [focusedInput, setfocusedInput] = useState(null)
   let limit = 50
-  let totalData = 0
   let totalPage = 0
   let formattedData = []
 
   const { data, isLoading, error, refetch } = useQuery(
-    params &&
-      params.id && [
-        'history',
-        { id: params.id, params: { page, limit, type, from, to } }
-      ],
+    ['history', { id: id, params: { page, limit, type, from, to } }],
     walletHistory
   )
+
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
+  
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -70,11 +74,21 @@ const WalletHistory = ({ match: { params } }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-            <h3>
-              All
-              {totalData ? ` - ${totalData.toLocaleString()}` : ''}
-            </h3>
-            <ButtonGroup>
+            <h3>All History</h3>
+            
+            <div className="flex">
+              <Filters className={styles.filters}>
+                <DateRangePicker
+                  onDatesChange={onDatesChange}
+                  onFocusChange={onFocusChange}
+                  displayFormat="DD MMM, YY"
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
+                  isOutsideRange={() => false}
+                />
+              </Filters>
+              <ButtonGroup>
               <Button active={type === ''} onClick={() => setType('')}>
                 All
               </Button>
@@ -91,18 +105,6 @@ const WalletHistory = ({ match: { params } }) => {
                 Credit
               </Button>
             </ButtonGroup>
-            <div className="flex">
-              <Filters className={styles.filters}>
-                <DateRangePicker
-                  onDatesChange={onDatesChange}
-                  onFocusChange={onFocusChange}
-                  displayFormat="DD MMM, YY"
-                  focusedInput={focusedInput}
-                  startDate={startDate}
-                  endDate={endDate}
-                  isOutsideRange={() => false}
-                />
-              </Filters>
               {showReset && (
                 <Close
                   className="danger"
