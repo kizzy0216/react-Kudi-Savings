@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { withAuth } from 'utils/hoc'
 import PrivateRoute from './PrivateRoute'
-import { Router, Route, Switch, Redirect } from 'react-router-dom'
+import { Redirect, Route, Router, Switch } from 'react-router-dom'
 import { createBrowserHistory } from 'history'
 import { AppLoading } from '../loading'
 
@@ -32,6 +32,12 @@ const Cashout = lazy(() =>
 const ViewCashout = lazy(() =>
   import(/* webpackChunkName: "Transaction" */ 'pages/Cashout/view-cashout')
 )
+const LoansOverview = lazy(() => import('../../pages/Loans/Overview/Overview'))
+const OverdueLoans = lazy(() => import('../../pages/Loans/Overdue/Overdue'))
+const AllLoans = lazy(() => import('../../pages/Loans/AllLoans/AllLoans'))
+const LoanDetail = lazy(() => import('../../pages/Loans/LoanDetails/LoanDetail'))
+const LoanRepayments = lazy(() => import('../../pages/Loans/Repayments/LoanRepayments'))
+
 const Settings = lazy(() =>
   import(/* webpackChunkName: "Settings" */ 'pages/Settings')
 )
@@ -190,8 +196,13 @@ const AppRouter = () => (
         <PrivateRoute path="/create-market" exact component={CreateMarket} />
         <PrivateRoute path="/cashout" exact component={Cashout} />
         <PrivateRoute path="/cashout/:id" component={ViewCashout} />
-        <PrivateRoute exact path="/fund-wallet" component={FundWallet} />
-        <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
+        <PrivateRoute path="/loans" exact component={LoansOverview}/>
+        <PrivateRoute path="/loans/overdue" component={OverdueLoans}/>
+        <PrivateRoute path="/loans/all" component={AllLoans}/>
+        <PrivateRoute path="/loans/repayments/:id" component={LoanRepayments}/>
+        <PrivateRoute path="/loans/details/:id" component={LoanDetail}/>
+        <PrivateRoute exact path="/fund-wallet" component={FundWallet}/>
+        <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin}/>
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
         <PrivateRoute
@@ -221,6 +232,7 @@ const AppRouter = () => (
           component={CustomerWalletHistory}
         />
         <PrivateRoute path="/zonal-heads" exact component={ZonalHeads} />
+
         <PrivateRoute
           path="/zonal-heads/:id"
           exact
