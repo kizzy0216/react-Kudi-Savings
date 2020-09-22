@@ -49,6 +49,10 @@ const WalletHistory = props => {
     getHistoryByPlan
   )
 
+  console.log("limit : " + limit)
+
+  let wallet  = data?.data?.data ?? {}
+   console.log(JSON.stringify(wallet))
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)

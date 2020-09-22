@@ -492,7 +492,7 @@ export const formatWalletHistory = (data, page, limit) => {
       time_updated: moment(time_updated).format('Do MMM, YYYY hh:mm a'),
       transaction_type: formatText(transaction_type),
       amount: formatCurrency(amount),
-      source: formatText(meta.source),
+      source: formatText(meta.source === 'withdrawal' ? 'earnings' : meta.sou),
       wallet_balance: formatCurrency(wallet_balance),
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
