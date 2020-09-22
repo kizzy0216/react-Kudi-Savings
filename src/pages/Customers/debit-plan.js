@@ -15,12 +15,12 @@ const DebitPlan = ({ setShowDebit, id, phoneNumber }) => {
   const [reason, setReason] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const type = 'DEBIT'
+  const transaction_type = 'DEBIT'
 
   const handleTransaction = async e => {
     e.preventDefault()
     setLoading(true)
-    await processTransaction(plan.id, amount, type, reason)
+    await processTransaction(plan.id, amount, transaction_type, reason)
       .then(({ data }) => {
         setLoading(false)
         toaster.success('Debit Plan Processed')

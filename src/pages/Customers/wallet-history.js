@@ -53,7 +53,7 @@ const WalletHistory = props => {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
-
+  
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
