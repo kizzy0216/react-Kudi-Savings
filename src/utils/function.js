@@ -38,7 +38,9 @@ export const formatWalletData = (data, page, limit) => {
       amount: formatCurrency(amount),
       wallet_balance: formatCurrency(wallet_balance),
       time: moment(time_updated).format('llll'),
-      source: formatText(meta.source === 'contribution' ? 'collections' : meta.source)
+      source: formatText(
+        meta.source === 'contribution' ? 'collections' : meta.source
+      )
     })
   )
 }
@@ -283,6 +285,10 @@ export const CashoutTableColumns = [
 ]
 
 export const WalletHistoryTableColumns = [
+  {
+    key: 'sN',
+    render: 'SN'
+  },
   { key: 'time', render: 'Date' },
   { key: 'transaction_type', render: 'Type' },
   {
@@ -435,7 +441,7 @@ export const formatCollections = (history, url, page, limit, data) => {
 export const formatPlanRevenueLog = (data, page, limit) => {
   return data.map(
     (
-      { expectedDeductionDate, deductionDate, revenue, isRevenueDeducted },
+      { expectedDeductionDate, deductionDate, revenue, revenueDeducted },
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
@@ -446,7 +452,7 @@ export const formatPlanRevenueLog = (data, page, limit) => {
         ? moment(deductionDate).format('Do MMM YY')
         : 'N/A',
       amount: formatCurrency(revenue),
-      planStatus: isRevenueDeducted ? (
+      planStatus: revenueDeducted ? (
         <Badge variant={'success'}>Success</Badge>
       ) : (
         <Badge variant={'warning'}>Pending</Badge>
@@ -482,6 +488,35 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
   )
 }
 
+const formatReason = meta => {
+  if (
+    meta.source &&
+    meta.source === 'withdrawal' &&
+    meta.withdrawal_id &&
+    !meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
+  ) {
+    return formatText('cashout')
+  } else if (meta.source && meta.source === 'commission') {
+    return formatText('revenue')
+  } else if (
+    meta.source &&
+    meta.source === 'withdrawal' &&
+    meta.withdrawal_id &&
+    meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
+  ) {
+    return formatText('reversal')
+  } else if (
+    meta.transaction_id &&
+    meta.transaction_id.includes('MARKET_MANUAL_CREDIT')
+  ) {
+    return formatText('refund')
+  } else if (meta.deposit_id) {
+    return formatText('collection')
+  } else {
+    return formatText('n/a')
+  }
+}
+
 export const formatWalletHistory = (data, page, limit) => {
   return data.map(
     (
@@ -492,7 +527,16 @@ export const formatWalletHistory = (data, page, limit) => {
       time_updated: moment(time_updated).format('Do MMM, YYYY hh:mm a'),
       transaction_type: formatText(transaction_type),
       amount: formatCurrency(amount),
-      source: formatText(meta.source === 'withdrawal' ? 'earnings' : meta.sou),
+      source: formatReason(meta),
+      // source: formatText(
+      //   meta.source === 'withdrawal'
+      //     ? 'cashout'
+      //     : meta.source === 'commission'
+      //     ? 'revenue'
+      //     : meta.source === 'collections'
+      //     ? 'collection'
+      //     : meta.source
+      //),
       wallet_balance: formatCurrency(wallet_balance),
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
@@ -615,7 +659,7 @@ export const PlanWalletHistoryTableColumn = [
   },
   {
     key: 'source',
-    render: 'SOURCE'
+    render: 'REASON'
   },
   {
     key: 'wallet_balance',

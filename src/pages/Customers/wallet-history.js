@@ -49,15 +49,13 @@ const WalletHistory = props => {
     getHistoryByPlan
   )
 
-  console.log("limit : " + limit)
-
-  let wallet  = data?.data?.data ?? {}
-   console.log(JSON.stringify(wallet))
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
-
+  let finalFormattedData = formattedData.slice(0, limit)
+  
+  
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -175,7 +173,7 @@ const WalletHistory = props => {
               <Table
                 placeholder="Wallet History"
                 column={PlanWalletHistoryTableColumn}
-                data={formattedData}
+                data={finalFormattedData}
               />
             )}
           </div>

@@ -15,7 +15,7 @@ const DebitPlan = ({ setShowDebit, id, phoneNumber }) => {
   const [reason, setReason] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const transaction_type = 'CREDIT'
+  const transaction_type = 'DEBIT'
 
   const handleTransaction = async e => {
     e.preventDefault()

@@ -48,6 +48,7 @@ const WalletHistory = ({ location }) => {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
+
   
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
