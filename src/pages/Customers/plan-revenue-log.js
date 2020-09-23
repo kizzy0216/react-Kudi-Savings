@@ -25,8 +25,10 @@ const PlanRevenueLog = props => {
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
+
   let { data, isLoading, error, refetch } = useQuery(
-    ['PlanRevenueLog', { userPlanId: id, limit, params:{from, to} }], getRevenue)
+    ['PlanRevenueLog', { userPlanId: id, limit, 
+      params:{from, to} }], getRevenue)
 
   
   if (data?.data?.data) {
