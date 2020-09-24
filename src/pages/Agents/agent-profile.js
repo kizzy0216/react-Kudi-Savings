@@ -260,7 +260,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </CardBody>
                     </div>
                     {/* <div className={styles.WalletFooter}> */}
-                      <CardFooter className={styles.FirstBodyButton1}>
+                      <CardFooter className={styles.FirstBodyFooterButton}>
                         <Button
                           variant="flat"
                           onClick={() =>
