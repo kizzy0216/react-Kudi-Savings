@@ -7,7 +7,7 @@ import './overview.scss'
 import moment from 'moment'
 import Select from '../../../components/Select'
 import { ChevronLeft, DownloadIcon, Eye, Reassign } from '../../../assets/svg'
-import { formatTableData, initialMarkets, loanStatuses, tableColumns } from '../utils'
+import { amountWithCommas, formatTableData, initialMarkets, loanStatuses, tableColumns } from '../utils'
 import { useQuery } from 'react-query'
 import { dashboardOverview, filterLoans } from '../../../services/loans'
 import { DashboardLoading, TableLoading } from '../../../components/loading'
@@ -149,15 +149,15 @@ export default ({ history }) => {
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Loan Amount Disbursed</p>
-            <p className={'p2'}>N{overviewData.amountDisbursed}</p>
+            <p className={'p2'}>N{amountWithCommas(overviewData.amountDisbursed)}</p>
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Interest Earnings</p>
-            <p className={'p2'}>N{overviewData.interestEarned}</p>
+            <p className={'p2'}>N{amountWithCommas(overviewData.interestEarned)}</p>
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Loan Amount Recovered</p>
-            <p className={'p2'}>N{overviewData.amountRecovered}</p>
+            <p className={'p2'}>N{amountWithCommas(overviewData.amountRecovered)}</p>
           </Card>
         </div>
         <div className="second-row">
@@ -166,7 +166,7 @@ export default ({ history }) => {
               <span>Initial Loan Purse Amount</span> <span>Fixed Amount</span>
             </div>
             <div className={'add-border-bottom'}>
-              <span>Overdue Amount</span> <span>N{overviewData.overdueAmount}</span>
+              <span>Overdue Amount</span> <span>N{amountWithCommas(overviewData.overdueAmount)}</span>
             </div>
             <div className={'add-border-bottom'}>
               <span>Total Borrowers</span> <span>{overviewData.borrowers}</span>
