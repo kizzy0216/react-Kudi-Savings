@@ -432,7 +432,7 @@ export const formatCollections = (history, url, page, limit, data) => {
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : 'N/A',
-      balance: formatCurrency(balance),
+      balance: balance ? formatCurrency(balance) : '-',
       amount: amount ? formatCurrency(amount) : '-'
     })
   )

@@ -5,8 +5,9 @@ import { Header, Content } from 'components/Layout'
 import styles from '../Agents/agent-profile.module.scss'
 import Collection from './plan-collections'
 
-const ViewPlanCollection = props => {
+const ViewPlanCollection = ({location}) => {
   let history = useHistory()
+  let planId = location.state
 
   return (
     <Fragment>
@@ -17,7 +18,7 @@ const ViewPlanCollection = props => {
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <Collection minimized={false} />
+        <Collection minimized={false} id={planId}/>
       </div>
     </Fragment>
   )

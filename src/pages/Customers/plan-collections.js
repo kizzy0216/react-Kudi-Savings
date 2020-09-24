@@ -49,27 +49,7 @@ const PlanCollections = props => {
   )
 
   if (data?.data?.data) {
-    formattedData = data.data.data.collections.list.map(
-      ({
-        agentName,
-        balance,
-        timeCreated,
-        collectionDate,
-        amount,
-        ...rest
-      }) => ({
-        ...rest,
-        agentName: `${agentName}`,
-        collectionDate: collectionDate
-          ? moment(collectionDate).format('Do MMM YY')
-          : 'N/A',
-        timeCreated: timeCreated
-          ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
-          : 'N/A',
-        balance: formatCurrency(balance),
-        amount: amount ? formatCurrency(amount) : '-'
-      })
-    )
+    
     formattedData = formatCollections(
       history,
       url,
@@ -78,8 +58,10 @@ const PlanCollections = props => {
       data.data.data.collections.list
     )
 
-    totalPage = Math.ceil(data.data.data.total / limit)
+    totalPage = Math.ceil(data.data.data.collections.total / limit)
   }
+  let finalFormattedData = formattedData.slice(0, limit)
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -109,7 +91,13 @@ const PlanCollections = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/customer-plan-collection`)}
+              onClick={() => history.push(
+                { pathname: `${url}/customer-plan-collection`,
+                state: id
+              }
+                )
+
+              }
             >
               View All
             </Button>
@@ -156,7 +144,7 @@ const PlanCollections = props => {
               <Table
                 placeholder="Plan Collections"
                 column={PlanCollectionTableColumn}
-                data={formattedData}
+                data={finalFormattedData}
               />
             )}
           </div>
