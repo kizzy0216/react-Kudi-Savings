@@ -16,7 +16,6 @@ import { initialMarkets } from '../utils'
 
 export default ({ history }) => {
   const { url } = useRouteMatch()
-  const [phoneNumber, setPhoneNumber] = useState('')
   const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
   let markets = initialMarkets;
   if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
@@ -34,7 +33,7 @@ export default ({ history }) => {
   const [page, setPage] = useState(0)
   const limit = 20
 
-  const filterParams = { phoneNumber, from: tableFrom, to: tableTo, marketId, page, limit }
+  const filterParams = { from: tableFrom, to: tableTo, marketId, page, limit }
   console.log('Overdue Filter Params:', filterParams)
   const { data: res, isLoading, error, refetch } = useQuery(['OverdueLoans', filterParams], getOverdueLoans)
   let tableData = []
@@ -74,28 +73,6 @@ export default ({ history }) => {
             <ChevronLeft role="button" onClick={() => history.goBack()}/> Loans
           </p>
         </Header>
-        <div className="header-search">
-          <input
-            placeholder="Search by Phone Number"
-            value={phoneNumber}
-            onChange={e => setPhoneNumber(e.target.value)}
-            type="text"
-          />
-          <div className={'search-icon'}>
-            {phoneNumber.length > 1 ? (
-              <Close
-                className="danger"
-                onClick={() => {
-                  setPhoneNumber('')
-                  return setPhoneNumber('')
-                }}
-              />
-            ) : (
-              <Search/>
-            )}
-          </div>
-
-        </div>
       </div>
       <Content>
         <Card className={'Card-Table'}>
