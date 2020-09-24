@@ -8,11 +8,12 @@ import {
   DateRangePicker
 } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
-import { getCollections } from 'services/collections'
+import { getCollectionsByPlan } from 'services/collections'
 import {
   ParamsReducer,
   DefaultParams,
   formatCollections,
+  formatCurrency,
   PlanCollectionTableColumn
 } from 'utils/function'
 import styles from './customers.module.scss'
@@ -23,9 +24,11 @@ import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 
 const PlanCollections = props => {
+  let { id } = props
   let { url } = useRouteMatch()
   let history = useHistory()
   let { minimized } = props
+  const [page, setPage] = useState(1)
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
   const [from, setFrom] = useState('')
@@ -36,29 +39,46 @@ const PlanCollections = props => {
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
-  const { data, isLoading, error, refetch } = useQuery(
-    [
-      'Collections',
+  
+  // const { data, isLoading, error, refetch } = useQuery(
+  //   id &&
+  //   ['CollectionsByPlanId',{  id: props.id, params: { page, limit, from, to }}],
+  //   getCollectionsByPlan
+  // )
+ 
+  
+  // if (data?.data?.data) {
+  // formattedData = data.data.data.collections.list.map(
+  //   ({
+  //     agentName,
+  //     balance,
+  //     timeCreated,
+  //     collectionDate,
+  //     amount,
+  //     ...rest
+  //   }) => ({
+  //     ...rest,
+  //     agentName: `${agentName}`,
+  //     collectionDate: collectionDate
+  //       ? moment(collectionDate).format('Do MMM YY')
+  //       : 'N/A',
+  //     timeCreated: timeCreated
+  //       ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
+  //       : 'N/A',
+  //     balance: formatCurrency(balance),
+  //     amount: amount ? formatCurrency(amount) : '-'
+  //   })
+  // )
+  // formattedData = formatCollections(
+  //   history,
+  //   url,
+  //   params.page,
+  //   limit,
+  //   data.data.data.collections.list
+  // )
 
-      {
-        page: params.page,
-        limit,
-        params:{from, to},
-      }
-    ],
-    getCollections
-  )
-
-  if (data && data.data) {
-    formattedData = formatCollections(
-      history,
-      url,
-      params.page,
-      limit,
-      data.data.data.list
-    )
-    totalPage = Math.ceil(data.data.data.total / limit)
-  }
+  //   totalPage = Math.ceil(data.data.data.total / limit)
+  // }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -120,7 +140,7 @@ const PlanCollections = props => {
             </div>
           )}
         </CardHeader>
-        <CardBody className={styles.Customers}>
+        {/* <CardBody className={styles.Customers}>
           <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
@@ -173,7 +193,7 @@ const PlanCollections = props => {
                 ></Button>
               )}
             </div>
-          ))}
+          ))} */}
       </Card>
     </Content>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Card, CardHeader, CardBody } from '@kudi-inc/dip'
 import { useQuery } from 'react-query'
 import { fecthImage } from 'utils/function'

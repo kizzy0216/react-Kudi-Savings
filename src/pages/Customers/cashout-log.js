@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer, useState } from 'react'
+import React, { useReducer, useState } from 'react'
 import {
   Card,
   CardBody,
@@ -15,7 +15,12 @@ import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './customers.module.scss'
 import { statusOptions } from '../Cashout/function'
-import { ParamsReducer, DefaultParams, formatCashoutLog, CashoutLogTableColumn } from 'utils/function'
+import {
+  ParamsReducer,
+  DefaultParams,
+  formatCashoutLog,
+  CashoutLogTableColumn
+} from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
 
@@ -32,7 +37,6 @@ const CashoutLog = props => {
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = minimized ? 3 : 50
-  let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
@@ -41,7 +45,7 @@ const CashoutLog = props => {
         page: params.page,
         limit,
         phoneNumber: params.phoneNumber,
-        params:{from, to},
+        params: { from, to },
         status: params.status
       }
     ],
@@ -57,8 +61,7 @@ const CashoutLog = props => {
       limit
     )
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
-  }
+      }
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {

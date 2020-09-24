@@ -10,11 +10,15 @@ import moment from 'moment'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { getWithdrawals } from 'services/cashout'
-import { Header, Content, Filters } from 'components/Layout'
+import { Content, Filters } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './recent-collections.module.scss'
 import Select from 'components/Select'
-import { CashoutTableColumns, formatCashoutData, statusOptions } from 'utils/function'
+import {
+  CashoutTableColumns,
+  formatCashoutData,
+  statusOptions
+} from 'utils/function'
 import { ParamsReducer, DefaultParams } from 'utils/function'
 import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
@@ -31,7 +35,6 @@ const Cashout = props => {
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = props.minimized ? 5 : 50
-  let totalData = 0
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
@@ -39,7 +42,7 @@ const Cashout = props => {
       {
         page: params.page,
         limit,
-        params:{from, to},
+        params: { from, to },
         status: params.status
       }
     ],
@@ -54,7 +57,6 @@ const Cashout = props => {
       limit
     )
     totalPage = Math.ceil(data.data.data.total / limit)
-    totalData = data.data.data.total
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {

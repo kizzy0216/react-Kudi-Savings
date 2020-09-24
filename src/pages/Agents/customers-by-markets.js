@@ -68,7 +68,10 @@ const Customers = ({
     <Fragment>
       <Header>
         <p>
-          <ChevronLeft role="button" onClick={() => setCurrent('default')} />
+          <ChevronLeft role="button" onClick={() => {setCurrent('default')
+        setPhoneNumber('')
+        return setNumber('')
+      }} />
           Agent: {agent.firstName} {agent.lastName}
         </p>
       </Header>

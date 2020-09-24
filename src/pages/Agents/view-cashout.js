@@ -20,14 +20,15 @@ import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 
-const ViewAgentCashout = ({ history, match: { params } }) => {
+const ViewAgentCashout = ({ history, location }) => {
+  let id = location.state
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
   let [reason, setReason] = useState({ reason: '' })
   let [showKyc, setShowKyc] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
-    ['Withdrawal', { id: params.id }],
+    ['Withdrawal', { id: id }],
     getWithdrawal
   )
 
@@ -40,7 +41,7 @@ const ViewAgentCashout = ({ history, match: { params } }) => {
 
   const handleWithdrawal = async status => {
     setLoading(true)
-    await processWithdrawal(params.id, status, reason)
+    await processWithdrawal(id, status, reason)
       .then(({ data }) => {
         setLoading(false)
         toaster.success('Cashout Request Processed')

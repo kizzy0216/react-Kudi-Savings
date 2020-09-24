@@ -14,11 +14,12 @@ import { getCollections } from 'services/collections'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
-import { formatData, CollectionsTableColumns, ParamsReducer, DefaultParams } from 'utils/function'
+import {  CollectionsTableColumns, formatData, ParamsReducer, DefaultParams } from 'utils/function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
-const Collections = props => {
+
+const Collections = ( {minimized} ) => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -29,7 +30,7 @@ const Collections = props => {
   const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
-  let limit = props.minimized ? 3 : 50
+  let limit = minimized ? 3 : 50
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
@@ -43,18 +44,17 @@ const Collections = props => {
     ],
     getCollections
   )
-
-
-  if (data && data.data) {
-    formattedData = formatData(
-      history,
-      url,
-      params.page,
-      limit,
-      data.data.data.list
-    )
-    totalPage = Math.ceil(data.data.data.total / limit)
-  }
+  
+if (data && data.data) {
+  formattedData = formatData(
+    history,
+    url,
+    params.page,
+    limit,
+    data.data.data.list
+  )
+  totalPage = Math.ceil(data.data.data.total / limit)
+}
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -80,7 +80,7 @@ const Collections = props => {
         <CardHeader className={styles.Header}>
           <h3>RECENT COLLECTIONS</h3>
 
-          {props.minimized ? (
+          {minimized ? (
             <Button
               icon={<Eye />}
               variant="flat"
@@ -137,7 +137,7 @@ const Collections = props => {
           </div>
         </CardBody>
         {data &&
-          (props.minimized ? (
+          (minimized ? (
             <></>
           ) : (
             <div className="pagination">

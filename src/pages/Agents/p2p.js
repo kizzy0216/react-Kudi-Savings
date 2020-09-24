@@ -14,7 +14,12 @@ import { getTransaction } from 'services/p2p'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
-import { formatP2P, P2PTableColumns, ParamsReducer, DefaultParams } from 'utils/function'
+import {
+  formatP2P,
+  P2PTableColumns,
+  ParamsReducer,
+  DefaultParams
+} from 'utils/function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
@@ -36,16 +41,17 @@ const P2P = props => {
       'P2P',
 
       {
-        id: props.id,
+        agentId: props.id,
         page: params.page,
         limit,
-        params:{from, to},
-        }
+        from,
+        to
+      }
     ],
     getTransaction
   )
 
-  if (data?.data) {
+  if (data?.data?.data) {
     formattedData = formatP2P(params.page, limit, data.data.data)
     totalPage = Math.ceil(data.data.data.total / limit)
   }
@@ -56,12 +62,12 @@ const P2P = props => {
       setFrom(
         moment(startDate)
           .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(moment(endDate).format('YYYY-MM-DD'))
     }
     setShowReset(true)
   }
@@ -79,7 +85,12 @@ const P2P = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-p2p`)}
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/view-all-p2p`,
+                  state: props.id
+                })
+              }
             >
               View All
             </Button>
@@ -125,7 +136,7 @@ const P2P = props => {
             {data && (
               <Table
                 column={P2PTableColumns}
-                placeholder="collection"
+                placeholder="P2P"
                 data={formattedData}
               />
             )}
@@ -148,10 +159,12 @@ const P2P = props => {
                   icon={<ChevronLeft />}
                 ></Button>
               )}
-              <p>
-                {' '}
-                Page {params.page} of {totalPage}
-              </p>
+              {totalPage ? (
+                <p>
+                  {' '}
+                  Page {params.page} of {totalPage}
+                </p>
+              ): <></>}
               {formattedData.length === limit && (
                 <Button
                   variant="flat"

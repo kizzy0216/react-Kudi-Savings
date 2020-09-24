@@ -94,7 +94,6 @@ const CustomerProfile = ({ history, match: { params } }) => {
                         src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
-                      {console.log(JSON.stringify(imageData?.data))}
                     </div>
                     <div>
                       <div className={styles.FirstBodyGridContent}>

@@ -1,31 +1,21 @@
 import React, { Fragment } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Badge
-} from '@kudi-inc/dip'
+import { Card, CardHeader, CardBody, Badge } from '@kudi-inc/dip'
 import { ProfileLoading } from 'components/loading'
 import { Header, Content } from 'components/Layout'
-import { ChevronLeft, Close } from 'assets/svg'
+import { ChevronLeft } from 'assets/svg'
 import styles from './customer-profile.module.scss'
 import { getPlan } from 'services/plans'
 import { formatCurrency } from 'utils/function'
-import PlanCollections from './plan-collections'
 import PlanRevenueLog from './plan-revenue-log'
 import CashoutLog from './cashout-log'
 import WalletHistory from './wallet-history'
+import PlanCollections from './plan-collections'
 
-const CustomerHistory = ( { location, history, match: { params } }) => {
-  let limit = 50
-  let totalData = 0
-  let totalPage = 0
-  let formattedData = []
-
+const CustomerPlanDetails = ({ location, history, match: { params } }) => {
   let phoneNumber = location.state
-  
+
   let { data, isLoading, error, refetch } = useQuery(
     ['Plan', { id: params.planId }],
     getPlan
@@ -121,18 +111,18 @@ const CustomerHistory = ( { location, history, match: { params } }) => {
         )}
       </Content>
       <div className={styles.DivContent}>
-        <PlanCollections minimized />
+        <PlanCollections minimized id={params.planId} />
       </div>
-      {/* <div className={styles.DivContent}>
+      <div className={styles.DivContent}>
         <PlanRevenueLog minimized id={params.planId} />
-      </div> */}
+      </div>
       <div className={styles.DivContent}>
         <CashoutLog minimized />
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory minimized id={params.planId} phone={phoneNumber}/>
+        <WalletHistory minimized id={params.planId} phone={phoneNumber} />
       </div>
     </Fragment>
   )
 }
-export default CustomerHistory
+export default CustomerPlanDetails

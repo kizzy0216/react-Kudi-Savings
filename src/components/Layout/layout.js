@@ -13,6 +13,7 @@ import {
   MarketsLink,
   CustomersLink,
   PlansLink,
+  ReferralLink,
   LoanIcon
 } from 'assets/svg'
 import LogoSection from './logo-section'
@@ -81,6 +82,12 @@ const Layout = ({ children, auth }) => {
       title: 'Cashout',
       link: '/cashout',
       icon: <CashoutLink />,
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN']
+    },
+    {
+      title: 'Referrals',
+      link: '/referrals',
+      icon: <ReferralLink />,
       userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN']
     },
     {
