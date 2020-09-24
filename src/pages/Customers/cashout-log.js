@@ -10,7 +10,7 @@ import moment from 'moment'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import Select from 'components/Select'
-import { getWithdrawals, getWithdrawalsDownline } from 'services/cashout'
+import { getWithdrawals } from 'services/cashout'
 import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './customers.module.scss'
@@ -38,20 +38,18 @@ const CashoutLog = props => {
   let formattedData = []
   let limit = minimized ? 3 : 50
   let totalPage = 0
-  let authenticated = true
   const { data, isLoading, error, refetch } = useQuery(
     [
       'Withdrawals',
       {
         page: params.page,
         limit,
-        authenticated,
         phoneNumber: params.phoneNumber,
         params: { from, to },
         status: params.status
       }
     ],
-    getWithdrawalsDownline
+    getWithdrawals
   )
 
   if (data && data.data) {
