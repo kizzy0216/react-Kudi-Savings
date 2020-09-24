@@ -43,6 +43,7 @@ const WalletHistory = ({ location }) => {
     walletHistory
   )
 
+  console.log(JSON.stringify(data?.data?.data))
 
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)

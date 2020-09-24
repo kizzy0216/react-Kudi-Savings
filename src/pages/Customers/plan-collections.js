@@ -48,6 +48,9 @@ const PlanCollections = props => {
     getCollectionsByPlan
   )
 
+
+  console.log(JSON.stringify(data?.data?.data.collections))
+
   if (data?.data?.data) {
     
     formattedData = formatCollections(

@@ -45,7 +45,7 @@ export const formatData = (data, history, url, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       timeCreated: moment(timeCreated).format('DD/MM/YY'),
       action: (

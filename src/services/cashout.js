@@ -7,3 +7,5 @@ export const getWithdrawal = async ({ id }) =>
   await Axios.get(`/withdrawal/${id}`)
 export const processWithdrawal = async (id, status, reason) =>
   await Axios.put(`/withdrawal/${id}/${status}/validate`, reason)
+export const getWithdrawalsDownline = async params => 
+await Axios.get(`/withdrawal/downline`, clean({params}))
