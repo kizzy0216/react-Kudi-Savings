@@ -83,6 +83,13 @@
         }
       }
     }
+    &FooterButton {
+      background: #f8fbff;
+      button {
+        color: $sky-blue;
+        margin: auto;
+      }
+    }
     &Button {
       background: #f8fbff;
       display: grid;

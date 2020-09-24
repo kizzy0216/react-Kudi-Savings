@@ -100,16 +100,11 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
 
   const handleEditCustomer = async e => {
     e.preventDefault()
-    const errors = isValidUpdate(edited)
-    setErrors(errors)
-
-    if (Object.keys(errors).length > 0) return
-
     setLoading(true)
 
-    if(!edited.marketName){
-      edited.marketName = edited.market.name
-    }
+    // if(!edited.marketName){
+    //   edited.marketName = edited.market.name
+    // }
 
     if (uploadedId && uploadedId.data) {
       edited.identificationCardImageId = uploadedId.data.id
@@ -117,7 +112,11 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     if (uploadedAvatar && uploadedAvatar.data) {
       edited.pictureId = uploadedAvatar.data.id
     }
-    
+    const errors = isValidUpdate(edited)
+    setErrors(errors)
+
+    console.log(Object.keys(errors))
+    if (Object.keys(errors).length > 0) return
 
     let { ...rest } = edited
 
@@ -301,7 +300,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               status={errors.lga && 'error'}
             />
 
-            <Select
+            {/* <Select
               onSelect={marketName =>
                 setEdited({
                   ...edited,
@@ -316,7 +315,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               autoComplete="markets"
               error={errors.marketName}
               status={errors.marketName && 'error'}
-            />
+            /> */}
           </div>
           <Button type="submit" loading={loading}>
             Submit

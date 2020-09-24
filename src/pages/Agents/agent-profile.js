@@ -259,8 +259,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         </h2>
                       </CardBody>
                     </div>
-                    <div className={styles.WalletFooter}>
-                      <CardFooter className={styles.FirstBodyButton}>
+                    {/* <div className={styles.WalletFooter}> */}
+                      <CardFooter className={styles.FirstBodyFooterButton}>
                         <Button
                           variant="flat"
                           onClick={() =>
@@ -274,7 +274,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         >
                           View History
                         </Button>
-                        <div className={styles.WalletFooterDebit}>
+                        {/* <div className={styles.WalletFooterDebit}>
                           <Button
                             variant="flat"
                             icon={<Reassign />}
@@ -282,9 +282,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           >
                             Debit Wallet
                           </Button>
-                        </div>
+                        </div> */}
                       </CardFooter>
-                    </div>
+                    {/* </div> */}
                   </Card>
                   <Card>
                     <div className={styles.Withdrawal}>

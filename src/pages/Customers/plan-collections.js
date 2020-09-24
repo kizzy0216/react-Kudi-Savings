@@ -39,46 +39,29 @@ const PlanCollections = props => {
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
-  
-  // const { data, isLoading, error, refetch } = useQuery(
-  //   id &&
-  //   ['CollectionsByPlanId',{  id: props.id, params: { page, limit, from, to }}],
-  //   getCollectionsByPlan
-  // )
- 
-  
-  // if (data?.data?.data) {
-  // formattedData = data.data.data.collections.list.map(
-  //   ({
-  //     agentName,
-  //     balance,
-  //     timeCreated,
-  //     collectionDate,
-  //     amount,
-  //     ...rest
-  //   }) => ({
-  //     ...rest,
-  //     agentName: `${agentName}`,
-  //     collectionDate: collectionDate
-  //       ? moment(collectionDate).format('Do MMM YY')
-  //       : 'N/A',
-  //     timeCreated: timeCreated
-  //       ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
-  //       : 'N/A',
-  //     balance: formatCurrency(balance),
-  //     amount: amount ? formatCurrency(amount) : '-'
-  //   })
-  // )
-  // formattedData = formatCollections(
-  //   history,
-  //   url,
-  //   params.page,
-  //   limit,
-  //   data.data.data.collections.list
-  // )
 
-  //   totalPage = Math.ceil(data.data.data.total / limit)
-  // }
+  const { data, isLoading, error, refetch } = useQuery(
+    id && [
+      'CollectionsByPlanId',
+      { planId: id, params: { page, limit, from, to } }
+    ],
+    getCollectionsByPlan
+  )
+
+  if (data?.data?.data) {
+    
+    formattedData = formatCollections(
+      history,
+      url,
+      params.page,
+      limit,
+      data.data.data.collections.list
+    )
+
+    totalPage = Math.ceil(data.data.data.collections.total / limit)
+  }
+  let finalFormattedData = formattedData.slice(0, limit)
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -108,7 +91,13 @@ const PlanCollections = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/customer-plan-collection`)}
+              onClick={() => history.push(
+                { pathname: `${url}/customer-plan-collection`,
+                state: id
+              }
+                )
+
+              }
             >
               View All
             </Button>
@@ -140,7 +129,7 @@ const PlanCollections = props => {
             </div>
           )}
         </CardHeader>
-        {/* <CardBody className={styles.Customers}>
+        <CardBody className={styles.Customers}>
           <div className={styles.CustomersHeader}>
             {isLoading && <TableLoading />}
             {error && (
@@ -155,7 +144,7 @@ const PlanCollections = props => {
               <Table
                 placeholder="Plan Collections"
                 column={PlanCollectionTableColumn}
-                data={formattedData}
+                data={finalFormattedData}
               />
             )}
           </div>
@@ -193,7 +182,7 @@ const PlanCollections = props => {
                 ></Button>
               )}
             </div>
-          ))} */}
+          ))}
       </Card>
     </Content>
   )

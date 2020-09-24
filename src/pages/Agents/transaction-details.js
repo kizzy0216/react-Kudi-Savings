@@ -11,6 +11,8 @@ import { formatCurrency } from 'utils/function'
 import { getPlan } from 'services/plans'
 import CashoutLog from '../Customers/cashout-log'
 import WalletHistory from '../Customers/wallet-history'
+import PlanRevenueLog from '../Customers/plan-revenue-log'
+import PlanCollections from  '../Customers/plan-collections'
 
 const TransactionDetails = ({ location }) => {
   let history = useHistory()
@@ -110,9 +112,12 @@ const TransactionDetails = ({ location }) => {
           </div>
         )}
       </Content>
-      {/* <div className={styles.DivContent}>
-            <PlanCollections minimized />
-          </div> */}
+          <div className={styles.DivContent}>
+        <PlanCollections minimized id={planId} />
+      </div>
+      <div className={styles.DivContent}>
+        <PlanRevenueLog minimized id={planId} />
+      </div>
       <div className={styles.DivContent}>
         <CashoutLog minimized />
       </div>
