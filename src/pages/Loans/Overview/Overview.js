@@ -12,13 +12,16 @@ import { useQuery } from 'react-query'
 import { dashboardOverview, filterLoans } from '../../../services/loans'
 import { DashboardLoading, TableLoading } from '../../../components/loading'
 import { getMarkets } from '../../../services/markets'
+import FundLoan from '../FundLoanPurse/fund-loan-purse'
+import { SideSheet } from 'evergreen-ui'
+import LoanDetail from '../LoanDetails/LoanDetail'
 
 const initialStartDate = moment().subtract(31, 'days')
 const initialEndDate = moment().add(1, 'days')
 const initialFrom = initialStartDate.format('YYYY-MM-DD')
 const initialTo = initialEndDate.format('YYYY-MM-DD')
 
-export default ({ history }) => {
+export default ({ history}) => {
   let { url } = useRouteMatch()
   const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
   let markets = initialMarkets;
@@ -242,6 +245,7 @@ export default ({ history }) => {
             )}
           </div>
         </Card>
+        
       </Content>
     </Fragment>
   )

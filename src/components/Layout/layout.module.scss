@@ -345,7 +345,7 @@
   display: none;
   @include md {
     display: grid;
-    grid-template-rows: 13.88em 1fr 16.78em;
+    grid-template-rows: 13.88em 1fr 18.78em;
   }
 
   .logoSection {
@@ -440,6 +440,9 @@
 .logout {
   border-top: 1px solid #2443a7;
   border-radius: 0px;
+  position: absolute;
+  bottom:0;
+  left: 1em;
 }
 .modal {
   font-size: 1.4rem;
