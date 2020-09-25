@@ -345,7 +345,7 @@
   display: none;
   @include md {
     display: grid;
-    grid-template-rows: 13.88em 1fr 2.78em;
+    grid-template-rows: 13.88em 1fr 16.78em;
   }
 
   .logoSection {
@@ -393,6 +393,18 @@
       border-radius: 5px;
       padding: 0.4em 0.6em;
       background: transparentize($color: $kudi-green, $amount: 0.8);
+      span {
+        margin-left: 0;
+      }
+    }
+    
+    &FundButton {
+      margin: 0em;
+      width: max-content;
+      color: $kudi-green;
+      border-radius: 25px;
+      padding: 0.4em 0.6em;
+      background: transparentize($color: $dark-kudi-blue, $amount: 0.8);
       span {
         margin-left: 0;
       }

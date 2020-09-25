@@ -24,6 +24,7 @@ const LogoSection = ({ user, history }) => {
           <span>{formatCurrency(user.walletBalance)}</span>
         </div>
       </div>
+
       <div className={styles.logoSectionFlex}>
         <Button
           variant="flat"
