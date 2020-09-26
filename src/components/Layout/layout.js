@@ -107,7 +107,7 @@ const Layout = ({ children, auth }) => {
     <div className={styles.layout}>
       <div className={styles.sideNav}>
         <LogoSection history={history} user={user} />
-        <LoanSection history={history} user={user} />
+        {/* <LoanSection history={history} user={user} /> */}
         <div className={styles.navSection}>
           {navItems.map((item, id) =>
             item && item.userType.includes(user.type) ? (
