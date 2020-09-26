@@ -115,7 +115,6 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     const errors = isValidUpdate(edited)
     setErrors(errors)
 
-    console.log(Object.keys(errors))
     if (Object.keys(errors).length > 0) return
 
     let { ...rest } = edited

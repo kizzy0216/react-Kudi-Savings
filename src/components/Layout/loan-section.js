@@ -21,7 +21,6 @@ const LoanSection = ({ user, history }) => {
           <div className={styles.logoSectionFlex}>
             <Button
               onClick={() => {
-                console.log(JSON.stringify(user))
                 history.push({pathname:'/fund-purse'})
               }}
               className={styles.logoSectionFundButton}

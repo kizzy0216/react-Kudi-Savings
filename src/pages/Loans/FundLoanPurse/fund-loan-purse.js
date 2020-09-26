@@ -26,8 +26,6 @@ const FundLoanPurse = ({ history }) => {
 
   let id = data?.data?.data.walletId
 
-
-  console.log(id)
   const handleSubmit = async e => {
     e.preventDefault()
     setLoading(true)

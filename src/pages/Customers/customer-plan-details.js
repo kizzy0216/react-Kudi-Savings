@@ -22,7 +22,6 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
   )
 
   let plan = data?.data?.data ?? {}
-  console.log(JSON.stringify(params.planId))
 
   return (
     <Fragment>

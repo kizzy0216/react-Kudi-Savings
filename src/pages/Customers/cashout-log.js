@@ -53,9 +53,6 @@ const CashoutLog = props => {
     getPlanCashout
   )
 
-  console.log(JSON.stringify(data))
-
-  console.log(params.status)
   
 
   if (data && data.data) {
