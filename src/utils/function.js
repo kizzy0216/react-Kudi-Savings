@@ -470,7 +470,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
       status: status ? (
         <Badge
           variant={
-            status === 'APPROVED'
+            status === 'CASH_DELIVERED'
               ? 'success'
               : status === 'DECLINED'
               ? 'danger'

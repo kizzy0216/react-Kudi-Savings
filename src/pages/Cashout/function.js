@@ -61,6 +61,7 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
+
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },

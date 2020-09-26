@@ -22,9 +22,11 @@ import {
   ParamsReducer,
   DefaultParams
 } from 'utils/function'
+import { useHistory } from 'react-router-dom'
 
 const WalletHistory = ({ location }) => {
   let id = location.state
+  let history = useHistory()
   const [page, setPage] = useState(1)
   const [type, setType] = useState('')
   const [startDate, setStartDate] = useState('')
@@ -50,7 +52,6 @@ const WalletHistory = ({ location }) => {
     totalPage = Math.ceil(data.data.data.total / limit)
   }
 
-  
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -72,13 +73,16 @@ const WalletHistory = ({ location }) => {
   return (
     <Fragment>
       <Header>
-        <p> Wallet History </p>
+        <p>
+          <ChevronLeft role="button" onClick={() => history.goBack()} />
+          Wallet History
+        </p>
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             <h3>All History</h3>
-            
+
             <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker
@@ -92,22 +96,22 @@ const WalletHistory = ({ location }) => {
                 />
               </Filters>
               <ButtonGroup>
-              <Button active={type === ''} onClick={() => setType('')}>
-                All
-              </Button>
-              <Button
-                active={type === 'DEBIT'}
-                onClick={() => setType('DEBIT')}
-              >
-                Debit
-              </Button>
-              <Button
-                active={type === 'CREDIT'}
-                onClick={() => setType('CREDIT')}
-              >
-                Credit
-              </Button>
-            </ButtonGroup>
+                <Button active={type === ''} onClick={() => setType('')}>
+                  All
+                </Button>
+                <Button
+                  active={type === 'DEBIT'}
+                  onClick={() => setType('DEBIT')}
+                >
+                  Debit
+                </Button>
+                <Button
+                  active={type === 'CREDIT'}
+                  onClick={() => setType('CREDIT')}
+                >
+                  Credit
+                </Button>
+              </ButtonGroup>
               {showReset && (
                 <Close
                   className="danger"

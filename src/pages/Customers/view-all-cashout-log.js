@@ -7,6 +7,8 @@ import CashoutLog from './cashout-log'
 
 const ViewCashoutLog = props => {
   let history = useHistory()
+  let { location} = props
+  let planId = location.state
 
   return (
     <Fragment>
@@ -17,7 +19,7 @@ const ViewCashoutLog = props => {
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <CashoutLog minimized={false} />
+        <CashoutLog minimized={false} id={planId}/>
       </div>
     </Fragment>
   )
