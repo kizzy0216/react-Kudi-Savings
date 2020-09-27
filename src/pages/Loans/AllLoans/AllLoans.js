@@ -20,7 +20,6 @@ const initialTo = initialEndDate.format('YYYY-MM-DD')
 
 export default ({ history }) => {
   const { url } = useRouteMatch()
-  const [phoneNumber, setPhoneNumber] = useState('')
   const [tableStartDate, setTableStartDate] = useState(initialStartDate)
   const [tableEndDate, setTableEndDate] = useState(initialEndDate)
   const [tableFrom, setTableFrom] = useState(initialFrom)
@@ -31,7 +30,7 @@ export default ({ history }) => {
   const [page, setPage] = useState(0)
   const limit = 20
 
-  const filterParams = { phoneNumber, from: tableFrom, to: tableTo, status, page, limit }
+  const filterParams = { from: tableFrom, to: tableTo, status, page, limit }
   console.log('AllLoans Filter Params:', filterParams)
 
   const { data: res, isLoading, error, refetch } = useQuery(['AllLoans', filterParams], filterLoans);
@@ -53,11 +52,11 @@ export default ({ history }) => {
       setTableStartDate(startDate)
       setTableFrom(moment(startDate)
         .subtract(1, 'days')
-        .format('YYYY-MM-DD HH:mm:ss'))
+        .format('YYYY-MM-DD'))
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTableTo(moment(endDate).format('YYYY-MM-DD'))
     }
   }
   const onTableFocusChange = focusedInput => {
@@ -72,28 +71,6 @@ export default ({ history }) => {
             <ChevronLeft role="button" onClick={() => history.goBack()}/> Loans
           </p>
         </Header>
-        <div className="header-search">
-          <input
-            placeholder="Search by Phone Number"
-            value={phoneNumber}
-            onChange={e => setPhoneNumber(e.target.value)}
-            type="text"
-          />
-          <div className={'search-icon'}>
-            {phoneNumber.length > 1 ? (
-              <Close
-                className="danger"
-                onClick={() => {
-                  setPhoneNumber('')
-                  return setPhoneNumber('')
-                }}
-              />
-            ) : (
-              <Search/>
-            )}
-          </div>
-
-        </div>
       </div>
       <Content>
         <Card className={'Card-Table'}>
