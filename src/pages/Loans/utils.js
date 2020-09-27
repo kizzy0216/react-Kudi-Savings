@@ -134,3 +134,10 @@ export const formatTableData = (data, history, url, page, limit) => {
     })
   )
 }
+
+export const amountWithCommas = (amount) => {
+  if (typeof amount !== 'number') {
+    amount = parseInt(amount)
+  }
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
