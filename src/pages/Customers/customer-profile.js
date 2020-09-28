@@ -10,7 +10,7 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, ChevronLeft, Close, Reassign } from 'assets/svg'
+import { SettingsLink, ChevronLeft, Close, Reassign, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -18,23 +18,26 @@ import { getCustomer, getPlans } from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
+import { useRouteMatch } from 'react-router-dom'
 import EditCustomer from './edit-customer'
 import UserPlans from './userPlans'
+import CustomerInformation from './customer-information'
 import { AgentReducer, DefaultAgent } from '../Agents/agent-reducer'
 
 const CustomerProfile = ({ history, match: { params } }) => {
+  let { url } = useRouteMatch()
   const [auth] = useContext(AuthContext)
   let [showEdit, setShowEdit] = useState(false)
+  let [showInformation, setShowInformation] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
   const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
-  
+
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
     getCustomer
   )
   const userPlans = useQuery(['Plans', { id: params.id }], getPlans)
-  
 
   let customer = data?.data?.data ?? {}
 
@@ -120,6 +123,16 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
+                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                  <Button
+                    variant="flat"
+                    onClick={() => setShowInformation(true)}
+                    type="button"
+                    icon={<Eye />}
+                  >
+                    View All Information
+                  </Button>
+                </CardFooter> */}
               </Card>
               <Card>
                 <CardHeader>
@@ -152,9 +165,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span> Wallet Balance</span>
-                    <span>
-                      <b>{formatCurrency(walletBalance)}</b>{' '}
-                    </span>
+                    <span>{formatCurrency(walletBalance)}</span>
                   </div>
                 </CardBody>
               </Card>
@@ -220,8 +231,56 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div> */}
+            {/* <div className={styles.Overview}>
+              <div className={styles.OverviewRow}>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>Wallet Balance</p>
+                  </CardHeader>
+                  <p className={styles.OverviewRowCardp2}>
+                    {formatCurrency(walletBalance)}
+                  </p>
+                </Card>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>Stash Balance</p>
+                  </CardHeader>
+                  <p className={styles.OverviewRowCardp2}>
+                    {formatCurrency(25000)}
+                  </p>
+                  <p className={styles.OverviewRowCardFooterButton}>
+                    <Button
+                      variant="flat"
+                      onClick={() =>
+                        history.push({
+                          pathname: `${url}/wallet-history`,
+                          state: agent.id
+                        })
+                      }
+                      type="button"
+                      icon={<Eye />}
+                    >
+                      View Transaction History
+                    </Button>
+                  </p>
+                </Card>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>KTA Details</p>
+                  </CardHeader>
+
+                  <p className={styles.OverviewRowCardp2}>0123456789</p>
+                  <p className={styles.OverviewRowCardp1}>Providus Bank</p>
+                </Card>
+              </div>
+            </div> */}
+
             <div className={styles.Second}>
-              <UserPlans plans={userPlans} history={history}  phoneNumber={customer.phoneNumber}/>
+              <UserPlans
+                plans={userPlans}
+                history={history}
+                phoneNumber={customer.phoneNumber}
+              />
             </div>
             {customer?.previouslyChangedPhoneNumbers?.[0] && (
               <div className={styles.DivContent}>
@@ -279,6 +338,17 @@ const CustomerProfile = ({ history, match: { params } }) => {
             auth={auth}
             agent={agent}
             setAgent={setAgent}
+          />
+        </SideSheet>
+        <SideSheet
+          onCloseComplete={() => setShowInformation(false)}
+          isShown={showInformation}
+          width={600}
+        >
+          <CustomerInformation
+            setShowEdit={setShowInformation}
+            customer={customer}
+            
           />
         </SideSheet>
       </Content>

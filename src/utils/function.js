@@ -12,12 +12,12 @@ export const convertObjToArray = obj => {
 export const formatCurrency = num =>
   typeof num === 'number'
     ? `₦${num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')}`
-    : `N/A`
+    : `-`
 
 export const fecthImage = async ({ id }) =>
   await MediaService.get(`/images/${id}`)
 
-export const formatText = text => (text ? text : `N/A`)
+export const formatText = text => (text ? text : `-`)
 
 export const formatWalletData = (data, page, limit) => {
   return data.map(
@@ -27,20 +27,18 @@ export const formatWalletData = (data, page, limit) => {
     ) => ({
       sN: (page - 1) * limit + (index + 1),
       transaction_type: formatText(transaction_type),
-      sender: meta && meta.sender ? formatText(meta.sender) : 'N/A',
+      sender: meta && meta.sender ? formatText(meta.sender) : '-',
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       amount: formatCurrency(amount),
       wallet_balance: formatCurrency(wallet_balance),
       time: moment(time_updated).format('llll'),
-      source: formatText(
-        meta.source === 'contribution' ? 'collections' : meta.source
-      )
+      source: formatSource(meta)
     })
   )
 }
@@ -138,10 +136,10 @@ export const formatData = (history, url, page, limit, data) => {
       name: `${customerName}`,
       collectionDate: collectionDate
         ? moment(collectionDate).format('DD/MM/YY')
-        : 'N/A',
+        : '-',
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
-        : 'N/A',
+        : '-',
       walletBalance:
         walletBalance === '-'
           ? walletBalance
@@ -172,17 +170,17 @@ export const formatP2P = (page, limit, data) => {
       SN: (page - 1) * limit + (index + 1),
       timeUpdated: timeUpdated
         ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
-        : 'N/A',
+        : '-',
       amount: formatCurrency(amount),
       agentName: formatCurrency(agentName),
-      amountCollected: amount ? formatCurrency(amount) : 'N/A',
+      amountCollected: amount ? formatCurrency(amount) : '-',
       dsaPhone: dsaPhone ? dsaPhone : 'N?A',
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       )
     })
   )
@@ -351,8 +349,8 @@ export const formatCustomerData = (data, history, url, page, limit) => {
       sN: (page - 1) * limit + (index + 1),
       fullName: `${firstName} ${lastName}`,
       cashBalance: formatCurrency(cashBalance),
-      market: market ? market.name : 'N/A',
-      phoneNumber: phoneNumber ? phoneNumber : 'N/A',
+      market: market ? market.name : '-',
+      phoneNumber: phoneNumber ? phoneNumber : '-',
       totalSaved: formatCurrency(totalSaved),
       totalWithdrawn: formatCurrency(totalWithdrawn),
       status: status ? (
@@ -360,7 +358,7 @@ export const formatCustomerData = (data, history, url, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       action: (
         <Button
@@ -401,7 +399,7 @@ export const formatPlan = (data, history, url, page, limit) => {
           {planStatus}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       action: (
         <Button
@@ -423,16 +421,24 @@ export const formatPlan = (data, history, url, page, limit) => {
 
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
-    ({ agentName, balance, timeCreated, collectionDate, amount }, index) => ({
+    (
+      { agentName, walletBalance, timeCreated, collectionDate, amount },
+      index
+    ) => ({
       SN: (page - 1) * limit + (index + 1),
       agentName: `${agentName}`,
       collectionDate: collectionDate
         ? moment(collectionDate).format('Do MMM YY')
-        : 'N/A',
+        : '-',
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
-        : 'N/A',
-      balance: balance ? formatCurrency(balance) : '-',
+        : '-',
+      walletBalance:
+        walletBalance === '-'
+          ? '-'
+          : walletBalance === '--'
+          ? '-'
+          : formatCurrency(parseFloat(walletBalance)),
       amount: amount ? formatCurrency(amount) : '-'
     })
   )
@@ -447,10 +453,10 @@ export const formatPlanRevenueLog = (data, page, limit) => {
       sN: (page - 1) * limit + (index + 1),
       expectedDeductionDate: expectedDeductionDate
         ? moment(expectedDeductionDate).format('Do MMM YY')
-        : 'N/A',
+        : '-',
       actualDeductionDate: deductionDate
         ? moment(deductionDate).format('Do MMM YY')
-        : 'N/A',
+        : '-',
       amount: formatCurrency(revenue),
       planStatus: revenueDeducted ? (
         <Badge variant={'success'}>Success</Badge>
@@ -472,7 +478,7 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
       status: status ? (
         <Badge
           variant={
-            status === 'APPROVED'
+            status === 'CASH_DELIVERED'
               ? 'success'
               : status === 'DECLINED'
               ? 'danger'
@@ -482,29 +488,21 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       )
     })
   )
 }
 
 const formatReason = meta => {
-  if (
-    meta.source &&
-    meta.source === 'withdrawal' &&
-    meta.withdrawal_id &&
-    !meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
-  ) {
-    return formatText('cashout')
+  if (meta.source && meta.withdrawal_id && meta.source === 'withdrawal') {
+    if (!meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT'))
+      return formatText('cashout')
+
+    if (meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT'))
+      return formatText('reversal')
   } else if (meta.source && meta.source === 'commission') {
     return formatText('revenue')
-  } else if (
-    meta.source &&
-    meta.source === 'withdrawal' &&
-    meta.withdrawal_id &&
-    meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
-  ) {
-    return formatText('reversal')
   } else if (
     meta.transaction_id &&
     meta.transaction_id.includes('MARKET_MANUAL_CREDIT')
@@ -513,7 +511,27 @@ const formatReason = meta => {
   } else if (meta.deposit_id) {
     return formatText('collection')
   } else {
-    return formatText('n/a')
+    return formatText('-')
+  }
+}
+
+const formatSource = meta => {
+  if (meta.source && meta.withdrawal_id) {
+    if (
+      meta.source === 'loan_payment' &&
+      meta.withdrawal_id.includes('LOAN_DEBIT')
+    )
+      return formatText('Loan')
+
+    if (
+      meta.source === 'contribution' &&
+      !meta.withdrawal_id.includes('LOAN_DEBIT')
+    )
+      return formatText('Collections')
+  } else if (meta.deposit_id) {
+    return formatText('wallet topup')
+  } else {
+    return formatText('-')
   }
 }
 
@@ -543,7 +561,7 @@ export const formatWalletHistory = (data, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       )
     })
   )
@@ -587,7 +605,7 @@ export const PlanCollectionTableColumn = [
     render: 'AMOUNT COLLECTED'
   },
   {
-    key: 'balance',
+    key: 'walletBalance',
     render: 'BALANCE'
   },
 
@@ -645,6 +663,10 @@ export const UserPlanTableColumn = [
 ]
 
 export const PlanWalletHistoryTableColumn = [
+  {
+    key: `SN`,
+    render: 'S/N'
+  },
   {
     key: `time_updated`,
     render: 'DATE'
@@ -712,7 +734,7 @@ export const formatCashoutData = (data, history, url, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       timeCreated: moment(timeCreated).format('DD/MM/YY'),
       action: (
@@ -740,5 +762,6 @@ export const statusOptions = [
   { text: 'Declined', value: 'DECLINED' },
   { text: 'Pending', value: 'PENDING' },
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
+  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]

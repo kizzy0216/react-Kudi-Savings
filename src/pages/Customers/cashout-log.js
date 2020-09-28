@@ -10,7 +10,7 @@ import moment from 'moment'
 import { useRouteMatch, useHistory } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import Select from 'components/Select'
-import { getWithdrawals } from 'services/cashout'
+import { getPlanCashout } from 'services/plans'
 import { Filters, Content } from 'components/Layout'
 import Table from 'components/Table'
 import styles from './customers.module.scss'
@@ -26,7 +26,7 @@ import { Close, ChevronLeft, Eye } from 'assets/svg'
 
 const CashoutLog = props => {
   let { url } = useRouteMatch()
-  let { minimized } = props
+  let { minimized, id } = props
   let history = useHistory()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
@@ -42,15 +42,18 @@ const CashoutLog = props => {
     [
       'Withdrawals',
       {
+        id,
         page: params.page,
         limit,
-        phoneNumber: params.phoneNumber,
-        params: { from, to },
+        from: params.from,
+        to: params.to,
         status: params.status
       }
     ],
-    getWithdrawals
+    getPlanCashout
   )
+
+  
 
   if (data && data.data) {
     formattedData = formatCashoutLog(
@@ -61,7 +64,7 @@ const CashoutLog = props => {
       limit
     )
     totalPage = Math.ceil(data.data.data.total / limit)
-      }
+  }
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -92,7 +95,12 @@ const CashoutLog = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/customer-cashout-log`)}
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/customer-cashout-log`,
+                  state: id
+                })
+              }
             >
               View All
             </Button>

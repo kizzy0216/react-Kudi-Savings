@@ -19,6 +19,7 @@ import styles from '../Transactions/transactions.module.scss'
 import { formatWalletData } from 'utils/function'
 import AuthContext from 'context/AuthContext'
 
+
 const WalletHistory = () => {
   const [auth] = useContext(AuthContext)
   const [page, setPage] = useState(1)

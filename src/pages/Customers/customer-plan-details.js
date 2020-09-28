@@ -117,7 +117,7 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
         <PlanRevenueLog minimized id={params.planId} />
       </div>
       <div className={styles.DivContent}>
-        <CashoutLog minimized />
+        <CashoutLog minimized id={params.planId}/>
       </div>
       <div className={styles.DivContent}>
         <WalletHistory minimized id={params.planId} phone={phoneNumber} />

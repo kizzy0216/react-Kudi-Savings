@@ -35,7 +35,7 @@ const UserPlans = ({ plans, history, phoneNumber }) => {
             {planStatus}
           </Badge>
         ) : (
-          'N/A'
+          '-'
         ),
         action: (
           <Button

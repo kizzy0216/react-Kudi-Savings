@@ -50,7 +50,7 @@ const Customers = ({
         totalWithdrawn: formatCurrency(totalWithdrawn),
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
-          : 'N/A',
+          : '-',
         action: (
           <Button
             icon={<Eye />}

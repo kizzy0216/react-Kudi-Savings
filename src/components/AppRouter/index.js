@@ -37,6 +37,7 @@ const OverdueLoans = lazy(() => import('../../pages/Loans/Overdue/Overdue'))
 const AllLoans = lazy(() => import('../../pages/Loans/AllLoans/AllLoans'))
 const LoanDetail = lazy(() => import('../../pages/Loans/LoanDetails/LoanDetail'))
 const LoanRepayments = lazy(() => import('../../pages/Loans/Repayments/LoanRepayments'))
+const FundLoanPurse = lazy(() => import('pages/Loans/FundLoanPurse/fund-loan-purse'))
 
 const Settings = lazy(() =>
   import(/* webpackChunkName: "Settings" */ 'pages/Settings')
@@ -201,6 +202,7 @@ const AppRouter = () => (
         <PrivateRoute path="/loans/all" component={AllLoans}/>
         <PrivateRoute path="/loans/repayments/:id" component={LoanRepayments}/>
         <PrivateRoute path="/loans/details/:id" component={LoanDetail}/>
+        <PrivateRoute path="/fund-purse" component={FundLoanPurse}/>
         <PrivateRoute exact path="/fund-wallet" component={FundWallet}/>
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin}/>
         <PrivateRoute path="/customers" exact component={Customers} />

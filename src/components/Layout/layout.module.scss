@@ -345,7 +345,7 @@
   display: none;
   @include md {
     display: grid;
-    grid-template-rows: 13.88em 1fr 2.78em;
+    grid-template-rows: 13.88em 1fr 18.78em;
   }
 
   .logoSection {
@@ -397,6 +397,18 @@
         margin-left: 0;
       }
     }
+    
+    &FundButton {
+      margin: 0em;
+      width: max-content;
+      color: $kudi-green;
+      border-radius: 25px;
+      padding: 0.4em 0.6em;
+      background: transparentize($color: $dark-kudi-blue, $amount: 0.8);
+      span {
+        margin-left: 0;
+      }
+    }
   }
 
   .navSection {
@@ -428,6 +440,9 @@
 .logout {
   border-top: 1px solid #2443a7;
   border-radius: 0px;
+  position: absolute;
+  bottom:0;
+  left: 1em;
 }
 .modal {
   font-size: 1.4rem;

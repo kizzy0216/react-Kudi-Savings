@@ -1,9 +1,9 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,useContext } from 'react'
 import { ChevronLeft, CustomersLink } from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
 import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
-
+import AuthContext from 'context/AuthContext'
 import './loan-detail.scss'
 import Guarantors from './Guarantors'
 import PaymentOverview from './PaymentOverview'
@@ -16,6 +16,8 @@ import { amountWithCommas } from '../utils'
 
 export default ({ history, match: { params } }) => {
   let { id: loanId } = params
+  let [auth] = useContext(AuthContext)
+
   console.log('Loan Id', loanId)
   const { data: res, isLoading, error, refetch } = useQuery(['LoanDetails', { loanId }], getLoanDetails)
   let loan = res && res.data ? res.data.data : { repayment: 0, modeOfRepayment: 'WEEKLY' }
@@ -130,12 +132,16 @@ export default ({ history, match: { params } }) => {
                 {
                   ['ACTIVE', 'PAID'].includes(loanStatus) ?
                     <p><Link to={`/loans/repayments/${loanId}`} className={'btn-block'}><Button className={'btn-block'}>View
-                      Repayment History</Button></Link></p> :
+                      Repayment History</Button></Link></p> : 
+                      <>
+                      {auth.type.includes('LOAN_MANAGER') && (
                     <p><Button onClick={handleApproveClick} disabled={loanStatus === 'DECLINED'}>Approve</Button>
                       <Button className={'btn-blue'}
                               onClick={handleDeclineClick}
                               disabled={loanStatus === 'DECLINED'}>Decline</Button>
                     </p>
+                      )}
+                    </>
                 }
               </CardBody>
             </Card>
