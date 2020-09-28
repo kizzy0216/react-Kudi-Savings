@@ -567,6 +567,27 @@ export const formatWalletHistory = (data, page, limit) => {
   )
 }
 
+export const FormatStashData = (data, history, url) => {
+  return data.map(({ id, date, amount, reference, type, source, balance }) => ({
+    id: id,
+    date: moment(date).format('Do MMM, YYYY hh:mm a'),
+    amount: formatCurrency(amount),
+    reference: reference,
+    type: type,
+    source: formatText(source),
+    balance: formatCurrency(balance),
+    action: (
+      <Button
+        icon={<Eye />}
+        variant="flat"
+        onClick={() => history.push(`${url}/stash/${id}`)}
+      >
+        View
+      </Button>
+    )
+  }))
+}
+
 export const CustomerTableColumn = [
   { key: 'sN', render: 'S/N' },
   {
@@ -690,6 +711,36 @@ export const PlanWalletHistoryTableColumn = [
   {
     key: 'status',
     render: 'STATUS'
+  }
+]
+export const StashTableColumn = [
+  {
+    key: `date`,
+    render: `DATE`
+  },
+  {
+    key: `amount`,
+    render: `AMOUNT`
+  },
+  {
+    key: `reference`,
+    render: `REFERENCE`
+  },
+  {
+    key: `type`,
+    render: `TYPE`
+  },
+  {
+    key: `source`,
+    render: `SOURCE`
+  },
+  {
+    key: `balance`,
+    render: `BALANCE`
+  },
+  {
+    key: `action`,
+    render: ``
   }
 ]
 export const formatCashoutData = (data, history, url, page, limit) => {
