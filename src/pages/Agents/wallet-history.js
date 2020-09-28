@@ -45,7 +45,6 @@ const WalletHistory = ({ location }) => {
     walletHistory
   )
 
-
   if (data && data.data) {
     formattedData = formatWalletData(data.data.data.list, page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)

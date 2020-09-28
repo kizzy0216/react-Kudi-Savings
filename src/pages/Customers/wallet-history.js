@@ -48,7 +48,6 @@ const WalletHistory = props => {
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
   )
-
   if (data && data.data) {
     formattedData = formatWalletHistory(data.data.data.list, params.page, limit)
     totalPage = Math.ceil(data.data.data.total / limit)

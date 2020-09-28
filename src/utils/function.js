@@ -421,7 +421,10 @@ export const formatPlan = (data, history, url, page, limit) => {
 
 export const formatCollections = (history, url, page, limit, data) => {
   return data.map(
-    ({ agentName, walletBalance, timeCreated, collectionDate, amount }, index) => ({
+    (
+      { agentName, walletBalance, timeCreated, collectionDate, amount },
+      index
+    ) => ({
       SN: (page - 1) * limit + (index + 1),
       agentName: `${agentName}`,
       collectionDate: collectionDate
@@ -430,7 +433,12 @@ export const formatCollections = (history, url, page, limit, data) => {
       timeCreated: timeCreated
         ? moment(timeCreated).format('Do MMM, YYYY hh:mm a')
         : '-',
-      walletBalance: walletBalance === '-' ? '-' : formatCurrency(parseFloat(walletBalance)),
+      walletBalance:
+        walletBalance === '-'
+          ? '-'
+          : walletBalance === '--'
+          ? '-'
+          : formatCurrency(parseFloat(walletBalance)),
       amount: amount ? formatCurrency(amount) : '-'
     })
   )
@@ -487,22 +495,14 @@ export const formatCashoutLog = (data, history, url, page, limit) => {
 }
 
 const formatReason = meta => {
-  if (
-    meta.source &&
-    meta.source === 'withdrawal' &&
-    meta.withdrawal_id &&
-    !meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
-  ) {
-    return formatText('cashout')
+  if (meta.source && meta.withdrawal_id && meta.source === 'withdrawal') {
+    if (!meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT'))
+      return formatText('cashout')
+
+    if (meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT'))
+      return formatText('reversal')
   } else if (meta.source && meta.source === 'commission') {
     return formatText('revenue')
-  } else if (
-    meta.source &&
-    meta.source === 'withdrawal' &&
-    meta.withdrawal_id &&
-    meta.withdrawal_id.includes('MARKET_MANUAL_DEBIT')
-  ) {
-    return formatText('reversal')
   } else if (
     meta.transaction_id &&
     meta.transaction_id.includes('MARKET_MANUAL_CREDIT')
@@ -516,18 +516,18 @@ const formatReason = meta => {
 }
 
 const formatSource = meta => {
-  if (
-    meta.source &&
-    meta.source === 'loan_payment' &&
-    meta.withdrawal_id &&
-    meta.withdrawal_id.includes('LOAN_DEBIT')
-  ) {
-    return formatText('Loan')
-  } else if (meta.source && 
-    meta.source === 'contribution' &&
-    meta.withdrawal_id &&
-    !meta.withdrawal_id.includes('LOAN_DEBIT')) {
-    return formatText('Collections')
+  if (meta.source && meta.withdrawal_id) {
+    if (
+      meta.source === 'loan_payment' &&
+      meta.withdrawal_id.includes('LOAN_DEBIT')
+    )
+      return formatText('Loan')
+
+    if (
+      meta.source === 'contribution' &&
+      !meta.withdrawal_id.includes('LOAN_DEBIT')
+    )
+      return formatText('Collections')
   } else if (meta.deposit_id) {
     return formatText('wallet topup')
   } else {
@@ -663,6 +663,10 @@ export const UserPlanTableColumn = [
 ]
 
 export const PlanWalletHistoryTableColumn = [
+  {
+    key: `SN`,
+    render: 'S/N'
+  },
   {
     key: `time_updated`,
     render: 'DATE'
