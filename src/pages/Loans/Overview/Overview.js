@@ -15,6 +15,7 @@ import { getMarkets } from '../../../services/markets'
 import FundLoan from '../FundLoanPurse/fund-loan-purse'
 import { SideSheet } from 'evergreen-ui'
 import LoanDetail from '../LoanDetails/LoanDetail'
+import { formatCurrency} from 'utils/function'
 
 const initialStartDate = moment().subtract(31, 'days')
 const initialEndDate = moment().add(1, 'days')
@@ -152,15 +153,15 @@ export default ({ history}) => {
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Loan Amount Disbursed</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.amountDisbursed)}</p>
+            <p className={'p2'}>{formatCurrency(overviewData.amountDisbursed)}</p>
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Interest Earnings</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.interestEarned)}</p>
+            <p className={'p2'}>{formatCurrency(overviewData.interestEarned)}</p>
           </Card>
           <Card className={'Overview-card'}>
             <p className={'p1'}>Loan Amount Recovered</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.amountRecovered)}</p>
+            <p className={'p2'}>{formatCurrency(overviewData.amountRecovered)}</p>
           </Card>
         </div>
         <div className="second-row">

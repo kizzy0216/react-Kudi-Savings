@@ -12,7 +12,7 @@ import { useQuery } from 'react-query'
 import { approveLoan, declineLoan, fetchWalletBalance, getLoanDetails } from '../../../services/loans'
 import { fecthImage } from '../../../utils/function'
 import { ProfileLoading } from '../../../components/loading'
-import { amountWithCommas } from '../utils'
+import { formatCurrency} from 'utils/function'
 
 export default ({ history, match: { params } }) => {
   let { id: loanId } = params
@@ -115,18 +115,18 @@ export default ({ history, match: { params } }) => {
                 <p className={'add-border-bottom'}><span className="heading">Application Status</span> <Badge
                   variant={badgeType}>{loanStatus}</Badge></p>
                 <p className={'add-border-bottom'}><span className="key">Loan Amount</span> <span
-                  className="value">N{amountWithCommas(loan.amount)}</span></p>
+                  className="value">{formatCurrency(loan.amount)}</span></p>
                 <p className={'add-border-bottom'}><span className="key">Interest</span> <span
-                  className="value">N{amountWithCommas(loan.repayment - loan.amount)}</span></p>
+                  className="value">{formatCurrency(loan.repayment - loan.amount)}</span></p>
                 <p className={'add-border-bottom'}><span className="key">Repayment</span> <span
-                  className="value">N{amountWithCommas(loan.repayment)}</span></p>
+                  className="value">{formatCurrency(loan.repayment)}</span></p>
                 <p className={'add-border-bottom'}><span className="key">Tenure</span> <span
                   className="value">{tenure.durationInMonths} month(s)</span></p>
                 <p className={'add-border-bottom'}><span className="key">Repayment Plan</span> <span
                   className="value">{loan.modeOfRepayment}</span></p>
                 <p className={'add-border-bottom'}><span
                   className="key">{loan.modeOfRepayment.toLowerCase()} Amount</span> <span
-                  className="value">N{amountWithCommas(intervalAmount)}</span></p>
+                  className="value">{formatCurrency(intervalAmount)}</span></p>
                 <p className={'add-border-bottom'}><span className="key">Guarantors</span> <span
                   className="value">Verified</span></p>
                 {
