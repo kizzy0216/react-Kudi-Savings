@@ -43,12 +43,13 @@ const Collections = ({ minimized }) => {
       {
         page: params.page,
         limit,
-        params: { from, to }
+        from,
+        to
       }
     ],
     getCollections
   )
-
+console.log(JSON.stringify(data?.data?.data))
   if (data && data.data) {
     formattedData = formatData(
       history,

@@ -142,7 +142,9 @@ export const formatData = (history, url, page, limit, data) => {
         : '-',
       walletBalance:
         walletBalance === '-'
-          ? walletBalance
+          ? '-'
+          : walletBalance === '--'
+          ? '--'
           : formatCurrency(parseFloat(walletBalance)),
       totalAmountSaved: formatCurrency(totalAmountSaved),
       amountCollected: formatCurrency(amount),

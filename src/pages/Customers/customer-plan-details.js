@@ -54,7 +54,7 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>PLAN TITLE</span>
-                    <span>{plan.title} </span>
+                    <span className={styles.Capital}>{plan.title} </span>
                   </div>
 
                   <div className={styles.FirstBodyFlex}>

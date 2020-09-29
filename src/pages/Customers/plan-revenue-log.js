@@ -28,7 +28,7 @@ const PlanRevenueLog = props => {
 
   let { data, isLoading, error, refetch } = useQuery(
     ['PlanRevenueLog', { userPlanId: id, limit, 
-      params:{from, to} }], getRevenue)
+      from, to }], getRevenue)
 
   
   if (data?.data?.data) {
@@ -46,12 +46,12 @@ const PlanRevenueLog = props => {
       setFrom(
         moment(startDate)
           .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(moment(endDate).format('YYYY-MM-DD'))
     }
     setShowReset(true)
   }
