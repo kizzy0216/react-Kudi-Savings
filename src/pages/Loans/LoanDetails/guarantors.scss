@@ -11,7 +11,7 @@
     display: flex;
     justify-content: space-between;
     padding-bottom: 23px;
-    border-bottom: 1px solid #F0F4F9;
+    border-bottom: 1px solid #f0f4f9;
     .header {
       font-weight: bold;
       font-size: 13px;
@@ -28,13 +28,12 @@
     display: flex;
     justify-content: center;
     .Guarantor-1 {
-      border-right: 1px solid #F0F4F9;
+      border-right: 1px solid #f0f4f9;
       display: flex;
       padding-top: 20px;
       flex: auto;
       align-items: center;
       .Guarantor-Info-Picture {
-        
         img {
           height: 4rem;
           border-radius: 50%;
@@ -52,6 +51,7 @@
           line-height: 17px;
           letter-spacing: 0.03em;
           color: #223856;
+          text-transform: capitalize;
           margin-bottom: 0.7em;
         }
 
@@ -59,10 +59,9 @@
           font-weight: 500;
           font-size: 13px;
           line-height: 16px;
-    
-            button {
-              color: $sky-blue;
-            
+
+          button {
+            color: $sky-blue;
           }
         }
       }
@@ -73,10 +72,9 @@
       padding-left: 2em;
       padding-top: 20px;
       align-items: center;
-      flex:auto;
+      flex: auto;
 
       .Guarantor-Info-Picture {
-        
         img {
           border-radius: 50%;
           height: 4rem;
@@ -93,6 +91,7 @@
           line-height: 17px;
           letter-spacing: 0.03em;
           color: #223856;
+          text-transform: capitalize;
           margin-bottom: 0.7em;
         }
 
@@ -101,9 +100,8 @@
           font-weight: 500;
           font-size: 13px;
           line-height: 16px;
-            button {
-              color: $sky-blue;
-            
+          button {
+            color: $sky-blue;
           }
         }
       }
