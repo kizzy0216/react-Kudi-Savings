@@ -27,7 +27,7 @@ import DebitPlan from './debit-plan'
 import CreditPlan from './credit-plan'
 
 const WalletHistory = props => {
-  let { minimized, id, phone, transaction } = props
+  let { minimized, id, phone, source } = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -44,7 +44,7 @@ const WalletHistory = props => {
   let formattedData = []
   let totalPage = 0
 
-  console.log(transaction)
+  console.log(source)
   const { data, isLoading, error, refetch } = useQuery(
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
@@ -89,7 +89,7 @@ const WalletHistory = props => {
                   pathname: `${url}/customer-wallet-history`,
                   phone: phone,
                   state: id,
-                  enableTransaction: transaction
+                  source
                 })
               }
             >
@@ -98,7 +98,7 @@ const WalletHistory = props => {
           ) : (
             <div className="flex">
               <>
-                {transaction && (
+                {source === 'customer' && (
                   <>
                     <div className={styles.Credit}>
                       <Button

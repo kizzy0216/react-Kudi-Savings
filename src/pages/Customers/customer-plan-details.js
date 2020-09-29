@@ -20,8 +20,6 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
     ['Plan', { id: params.planId }],
     getPlan
   )
-  let transaction = true
-
   let plan = data?.data?.data ?? {}
 
   return (
@@ -121,7 +119,7 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
         <CashoutLog minimized id={params.planId}/>
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory transaction={true} minimized id={params.planId} phone={phoneNumber} />
+        <WalletHistory source='customer' minimized id={params.planId} phone={phoneNumber} />
       </div>
     </Fragment>
   )
