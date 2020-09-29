@@ -9,18 +9,18 @@ import { useHistory } from 'react-router-dom'
 
 export default ({ loan }) => {
   let history = useHistory()
-  const guarantor1 = loan && loan.guarantor1 ? loan.guarantor1 : {}
-  const guarantor2 = loan && loan.guarantor2 ? loan.guarantor2 : {}
+  const firstGuarantor = loan && loan.guarantor1 ? loan.guarantor1 : {}
+  const secondGuarantor = loan && loan.guarantor2 ? loan.guarantor2 : {}
 
-  const { data: guarantor1Image } = useQuery(
-    guarantor1 &&
-      guarantor1.pictureId && ['Guarantor1Image', { id: guarantor1.pictureId }],
+  const { data: firstGuarantorImage } = useQuery(
+    firstGuarantor &&
+    firstGuarantor.pictureId && ['FirstGuarantorImage', { id: firstGuarantor.pictureId }],
     fecthImage
   )
 
-  const { data: guarantor2Image } = useQuery(
-    guarantor2 &&
-      guarantor2.pictureId && ['Guarantor2Image', { id: guarantor2.pictureId }],
+  const { data: secondGuarantorImage } = useQuery(
+    secondGuarantor &&
+    secondGuarantor.pictureId && ['secondGuarantorImage', { id: secondGuarantor.pictureId }],
     fecthImage
   )
 
@@ -36,18 +36,18 @@ export default ({ loan }) => {
         <div className={'Guarantor-1'}>
           <div className="Guarantor-Info-Picture">
             <img
-              src={guarantor1Image ? guarantor1Image.data.medium : agent}
+              src={firstGuarantorImage ? firstGuarantorImage.data.medium : agent}
               alt="guarantor 1 picture"
             />
           </div>
           <div className="Info">
             <p className="name">
-              {guarantor1.firstName} {guarantor1.lastName}
+              {firstGuarantor.firstName} {firstGuarantor.lastName}
             </p>
             <p className="profile">
               <Button
                 variant="flat"
-                onClick={() => history.push(`/customers/${guarantor1.id}`)}
+                onClick={() => history.push(`/customers/${firstGuarantor.id}`)}
                 type="button"
                 icon={<UserIconLink />}
               >
@@ -59,18 +59,18 @@ export default ({ loan }) => {
         <div className="Guarantor-2">
           <div className="Guarantor-Info-Picture">
             <img
-              src={guarantor2Image ? guarantor2Image.data.medium : agent}
+              src={secondGuarantorImage ? secondGuarantorImage.data.medium : agent}
               alt="guarantor 2 picture"
             />
           </div>
           <div className="Info">
             <p className="name">
-              {guarantor2.firstName} {guarantor2.lastName}
+              {secondGuarantor.firstName} {secondGuarantor.lastName}
             </p>
             <p className="profile">
               <Button
                 variant="flat"
-                onClick={() => history.push(`/customers/${guarantor2.id}`)}
+                onClick={() => history.push(`/customers/${secondGuarantor.id}`)}
                 type="button"
                 icon={<UserIconLink />}
               >
