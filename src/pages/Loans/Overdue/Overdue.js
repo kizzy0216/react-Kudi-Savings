@@ -34,7 +34,6 @@ export default ({ history }) => {
   const limit = 20
 
   const filterParams = { from: tableFrom, to: tableTo, marketId, page, limit }
-  console.log('Overdue Filter Params:', filterParams)
   const { data: res, isLoading, error, refetch } = useQuery(['OverdueLoans', filterParams], getOverdueLoans)
   let tableData = []
   let totalTablePage = 0

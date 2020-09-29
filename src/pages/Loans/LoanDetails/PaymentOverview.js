@@ -26,8 +26,7 @@ export default ({ loan }) => {
       ? paymentsOverviewRes.data.data
       : defaultPaymentOverview
     : defaultPaymentOverview
-  console.log('Next Payment:', nextPayment)
-
+ 
   return (
     <CardBody className={'Payment-History-Card'}>
       <div className="part-1">

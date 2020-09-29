@@ -4,7 +4,7 @@ import { Button } from '@kudi-inc/dip'
 import { Wallet } from 'assets/svg'
 import AuthContext from 'context/AuthContext'
 import { formatCurrency } from 'utils/function'
-const LoanSection = ({ user, history }) => {
+const LoanSection = ({setShowFundPurse}) => {
   let [auth] = useContext(AuthContext)
 
   return (
@@ -20,13 +20,14 @@ const LoanSection = ({ user, history }) => {
           </div>
           <div className={styles.logoSectionFlex}>
             <Button
-              onClick={() => {
-                history.push({pathname:'/fund-purse'})
-              }}
+              // onClick={() => {
+              //   history.push({pathname:'/fund-purse'})
+              // }}
+              onClick={() => setShowFundPurse(true)}
               className={styles.logoSectionFundButton}
               type="button"
             >
-              Fund Loan Purse
+              Fund Loan Purse 
             </Button>
           </div>
         </div>

@@ -71,7 +71,6 @@ export default ({ history }) => {
   const limit = 10
 
   const overviewParams = { from: overviewFrom, to: overviewTo, marketId }
-  console.log('Overview Request Params:', overviewParams)
   const tableParams = {
     from: tableFrom || overviewFrom,
     to: tableTo || overviewTo,
@@ -80,8 +79,7 @@ export default ({ history }) => {
     limit,
     dashboard: true
   }
-  console.log('Table Request Params:', tableParams)
-
+ 
   const {
     data: overviewRes,
     isLoading: overviewIsLoading,
@@ -311,7 +309,6 @@ export default ({ history }) => {
             <p>
               Page {page + 1} of {totalTablePage}
             </p>
-            {console.log(tableData.length + ' ' + limit)}
             {tableData.length === limit && (
               <Button
                 variant={'flat'}

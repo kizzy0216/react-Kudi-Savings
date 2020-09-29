@@ -31,8 +31,7 @@ export default ({ history }) => {
   const limit = 20
 
   const filterParams = { from: tableFrom, to: tableTo, status, page, limit }
-  console.log('AllLoans Filter Params:', filterParams)
-
+  
   const { data: res, isLoading, error, refetch } = useQuery(['AllLoans', filterParams], filterLoans);
   let tableData = []
   let totalTablePage = 0

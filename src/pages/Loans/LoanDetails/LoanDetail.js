@@ -22,7 +22,6 @@ export default ({ history, match: { params } }) => {
   let { id: loanId } = params
   let [auth] = useContext(AuthContext)
 
-  console.log('Loan Id', loanId)
   const { data: res, isLoading, error, refetch } = useQuery(
     ['LoanDetails', { loanId }],
     getLoanDetails
@@ -65,18 +64,9 @@ export default ({ history, match: { params } }) => {
       : 'warning'
   let isWeekly = loan.modeOfRepayment === 'WEEKLY'
 
-  console.log(
-    'repayment',
-    loan.repayment,
-    'isweekly',
-    isWeekly,
-    'tenure',
-    tenure
-  )
-
+ 
   let intervalAmount = loan.repayment / (isWeekly ? tenure.weeks : tenure.days)
-  console.log('Customer Info', customer)
-
+ 
   const handleApproveClick = () => {
     approveLoan({ loanId })
       .then(res => {
