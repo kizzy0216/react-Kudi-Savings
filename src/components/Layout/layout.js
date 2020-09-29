@@ -113,6 +113,7 @@ const Layout = ({ children, auth }) => {
         <div className={styles.sideNav}>
           <LogoSection history={history} user={user} />
           <LoanSection
+          history={history}
             setShowFundPurse={setShowFundPurse}
             />
           <div className={styles.navSection}>

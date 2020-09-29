@@ -14,12 +14,16 @@ import { getCollections } from 'services/collections'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
-import {  CollectionsTableColumns, formatData, ParamsReducer, DefaultParams } from 'utils/function'
+import {
+  CollectionsTableColumns,
+  formatData,
+  ParamsReducer,
+  DefaultParams
+} from 'utils/function'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
-
-const Collections = ( {minimized} ) => {
+const Collections = ({ minimized }) => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -39,22 +43,22 @@ const Collections = ( {minimized} ) => {
       {
         page: params.page,
         limit,
-        params:{from, to},
-        }
+        params: { from, to }
+      }
     ],
     getCollections
   )
-  
-if (data && data.data) {
-  formattedData = formatData(
-    history,
-    url,
-    params.page,
-    limit,
-    data.data.data.list
-  )
-  totalPage = Math.ceil(data.data.data.total / limit)
-}
+
+  if (data && data.data) {
+    formattedData = formatData(
+      history,
+      url,
+      params.page,
+      limit,
+      data.data.data.list
+    )
+    totalPage = Math.ceil(data.data.data.total / limit)
+  }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -78,8 +82,7 @@ if (data && data.data) {
     <Content className={styles.content}>
       <Card className={styles.contentCard}>
         <CardHeader className={styles.Header}>
-          <h3>RECENT COLLECTIONS</h3>
-
+          {minimized ? <h3>RECENT COLLECTIONS</h3> : <h3>COLLECTIONS</h3>}
           {minimized ? (
             <Button
               icon={<Eye />}
