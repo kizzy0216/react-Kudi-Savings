@@ -90,7 +90,6 @@ export default ({ history }) => {
   if (overviewRes && overviewRes.data) {
     overviewData = overviewRes.data.data
   }
-
   const {
     data: tableRes,
     isLoading: tableIsLoading,
