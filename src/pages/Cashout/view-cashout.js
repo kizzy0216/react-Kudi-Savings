@@ -20,7 +20,9 @@ import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 
-const ViewCashout = ({ history, match: { params } }) => {
+const ViewCashout = ({ history, location, match: { params } }) => {
+  let transactionType = location.type
+
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
@@ -31,6 +33,7 @@ const ViewCashout = ({ history, match: { params } }) => {
     getWithdrawal
   )
 
+  console.log(JSON.stringify(data?.data?.data))
   let withdrawal = data?.data?.data || {}
 
   const { data: imageData } = useQuery(
@@ -73,7 +76,7 @@ const ViewCashout = ({ history, match: { params } }) => {
     <Fragment>
       <Header>
         <p>
-          <ChevronLeft onClick={() => history.goBack()} /> Cashout Request
+          <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
         </p>
       </Header>
       <Content className={styles.content}>
@@ -161,12 +164,20 @@ const ViewCashout = ({ history, match: { params } }) => {
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
-                    <span>Date</span>
+                    <span>Date:</span>
                     <span> {moment(withdrawal.timeCreated).format('lll')}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
-                    <span>Amount</span>
+                    <span>Amount:</span>
                     <span>{formatCurrency(withdrawal.amount)}</span>
+                  </div>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Customer:</span>
+                    <span>{`${withdrawal.user.firstName} ${withdrawal.user.lastName}`}</span>
+                  </div>
+                  <div className={styles.FirstBodyFlex}>
+                    <span>Transaction Type:</span>
+                    <span>{formatText(transactionType)}</span>
                   </div>
                 </CardBody>
                 {withdrawal &&

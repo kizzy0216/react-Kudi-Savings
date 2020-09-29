@@ -30,7 +30,7 @@ export const formatData = (data, history, url, page, limit) => {
       agentName: formatText(agentName),
       managerName: formatText(managerName),
       amount: formatCurrency(amount),
-      type: formatText(type),
+      type: type,
       planTitle: formatText(planTitle),
       status: status ? (
         <Badge
@@ -52,7 +52,7 @@ export const formatData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
+          onClick={() => history.push({pathname:`${url}/${id}`, type})}
         >
           View
         </Button>
@@ -80,12 +80,12 @@ export const TableColumns = [
     render: 'Name'
   },
   {
-    key: 'planTitle',
-    render: 'Plan'
+    key: 'type',
+    render: 'TYPE'
   },
   {
     key: 'marketName',
-    render: 'Market Name'
+    render: 'Market'
   },
   {
     key: 'agentName',
@@ -93,7 +93,7 @@ export const TableColumns = [
   },
   {
     key: 'managerName',
-    render: 'Manager Name'
+    render: 'Manager\'s Name'
   },
   { key: 'amount', render: 'Amount' },
 
