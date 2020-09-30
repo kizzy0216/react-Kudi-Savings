@@ -45,15 +45,15 @@ const CashoutLog = props => {
         id,
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to,
+        from,
+        to,
         status: params.status
       }
     ],
     getPlanCashout
   )
 
-  
+  console.log("from "+ from +" to " + to)
 
   if (data && data.data) {
     formattedData = formatCashoutLog(
@@ -72,12 +72,12 @@ const CashoutLog = props => {
       setFrom(
         moment(startDate)
           .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD+HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(moment(endDate).format('YYYY-MM-DD+HH:mm:ss'))
     }
     setShowReset(true)
   }

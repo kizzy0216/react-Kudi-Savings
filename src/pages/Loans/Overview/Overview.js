@@ -108,7 +108,7 @@ export default ({ history }) => {
     )
     totalTablePage = Math.ceil(tableRes.data.data.total / limit)
   }
-
+console.log(JSON.stringify(tableRes?.data?.data))
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)

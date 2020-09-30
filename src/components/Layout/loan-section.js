@@ -7,9 +7,13 @@ import { formatCurrency } from 'utils/function'
 import { dashboardOverview } from 'services/loans'
 import { useQuery } from 'react-query'
 import moment from 'moment'
+import { useLocation } from 'react-router-dom'
 
 const LoanSection = ({ history, setShowFundPurse }) => {
   let [auth] = useContext(AuthContext)
+  let location = useLocation()
+
+  console.log(location)
 
   const initialFrom = moment()
     .subtract(31, 'days')
@@ -25,7 +29,9 @@ const LoanSection = ({ history, setShowFundPurse }) => {
 
   return (
     <>
-      {auth.type.includes('ADMIN') && (
+      {auth.type.includes('ADMIN') && !auth.type.includes('SUPER_ADMIN') &&(
+        <>
+        {location.pathname === '/loans' &&(
         <div className={styles.logoSection}>
           <div className={styles.logoSectionFlex}>
             <Wallet />
@@ -50,6 +56,8 @@ const LoanSection = ({ history, setShowFundPurse }) => {
             </Button>
           </div>
         </div>
+        )}
+        </>
       )}
     </>
   )
