@@ -517,7 +517,7 @@ const formatReason = meta => {
   }
 }
 
-const formatSource = meta => {
+export const formatSource = meta => {
   if (meta.source && meta.withdrawal_id) {
     if (
       meta.source === 'loan_payment' &&
