@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { ChevronLeft, UserIconLink} from '../../../assets/svg'
+import { ChevronLeft, UserIconLink } from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
 import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
@@ -64,9 +64,8 @@ export default ({ history, match: { params } }) => {
       : 'warning'
   let isWeekly = loan.modeOfRepayment === 'WEEKLY'
 
- 
   let intervalAmount = loan.repayment / (isWeekly ? tenure.weeks : tenure.days)
- 
+
   const handleApproveClick = () => {
     approveLoan({ loanId })
       .then(res => {

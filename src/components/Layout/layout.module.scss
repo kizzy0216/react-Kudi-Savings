@@ -410,44 +410,63 @@
       }
     }
   }
-
-  .navSection {
-    padding-top: 1.67em;
-    margin-bottom: 2rem;
-    &Links {
-      font-size: 0.83em;
-      margin: auto auto 0.83em;
-      line-height: 120%;
-      &:nth-of-type(2) {
-        svg,
-        path {
-          fill: currentColor;
-          stroke: currentColor;
-        }
-      }
-      span {
+  .side {
+    &NavSection {
+      padding-top: 1.67em;
+      margin-bottom: 2rem;
+      &Links {
+        font-size: 0.83em;
+        margin: auto auto 0.83em;
+        line-height: 120%;
         &:nth-of-type(2) {
-          font-weight: 300;
+          svg,
+          path {
+            fill: currentColor;
+            stroke: currentColor;
+          }
+        }
+        span {
+          &:nth-of-type(2) {
+            font-weight: 300;
+          }
+        }
+
+        svg {
+          width: 1.94em;
         }
       }
+    }
 
-      svg {
-        width: 1.94em;
+    &Logout {
+      border-top: 1px solid #2443a7;
+      border-radius: 0px;
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      padding-top: 1.67em;
+      &Links {
+        font-size: 0.83em;
+        margin: auto auto 0.83em;
+        line-height: 120%;
+        &:nth-of-type(2) {
+          svg,
+          path {
+            fill: currentColor;
+            stroke: currentColor;
+          }
+        }
+        span {
+          &:nth-of-type(2) {
+            font-weight: 300;
+          }
+        }
+
+        svg {
+          width: 1.94em;
+        }
       }
     }
   }
-}
-
-.logout {
-  border-top: 1px solid #2443a7;
-  border-radius: 0px;
-  position: absolute;
-  bottom: 0;
-  left: 1rem;
-  padding-top: 1.67em;
-  font-size: 0.83em;
-  margin: auto auto 0.83em;
-  line-height: 120%;
 }
 .modal {
   font-size: 1.4rem;
