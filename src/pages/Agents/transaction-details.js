@@ -17,7 +17,6 @@ import PlanCollections from  '../Customers/plan-collections'
 const TransactionDetails = ({ location }) => {
   let history = useHistory()
   let planId = location.state
-
   let { data, isLoading, error, refetch } = useQuery(
     ['Plan', { id: planId }],
     getPlan
@@ -119,10 +118,10 @@ const TransactionDetails = ({ location }) => {
         <PlanRevenueLog minimized id={planId} />
       </div>
       <div className={styles.DivContent}>
-        <CashoutLog minimized />
+        <CashoutLog minimized id={planId}/>
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory minimized id={planId} />
+        <WalletHistory source='agent' minimized id={planId} />
       </div>
     </Fragment>
   )

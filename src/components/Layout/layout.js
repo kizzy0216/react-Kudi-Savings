@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, Fragment } from 'react'
 import { SideBarItem } from '@kudi-inc/dip'
 import cx from 'classnames'
 import PropTypes from 'prop-types'
@@ -16,13 +16,17 @@ import {
   ReferralLink,
   LoanIcon
 } from 'assets/svg'
+import { Content } from '../Layout'
 import LogoSection from './logo-section'
 import LoanSection from './loan-section'
 import styles from './layout.module.scss'
+import { Dialog, SideSheet } from 'evergreen-ui'
+import FundLoanPurse from '../../pages/Loans/FundLoanPurse/fund'
 
 const Layout = ({ children, auth }) => {
   const [user, , setLogout] = auth
   let history = useHistory()
+  let [showFundPurse, setShowFundPurse] = useState(false)
   const navItems = [
     // {
     //   title: 'Dashboard',
@@ -104,37 +108,53 @@ const Layout = ({ children, auth }) => {
     }
   ]
   return (
-    <div className={styles.layout}>
-      <div className={styles.sideNav}>
-        <LogoSection history={history} user={user} />
-        <LoanSection history={history} user={user} />
-        <div className={styles.navSection}>
-          {navItems.map((item, id) =>
-            item && item.userType.includes(user.type) ? (
-              <SideBarItem
-                key={id}
-                className={styles.navSectionLinks}
-                icon={item.icon}
-                text={item.title}
-                active={window.location.pathname.includes(item.link)}
-                onClick={() => history.push(`${item.link}`)}
-              />
-            ) : (
-              ''
-            )
-          )}
+    <>
+      <div className={styles.layout}>
+        <div className={styles.sideNav}>
+          <LogoSection history={history} user={user} />
+          <LoanSection
+          history={history}
+            setShowFundPurse={setShowFundPurse}
+            />
+          <div className={styles.navSection}>
+            {navItems.map((item, id) =>
+              item && item.userType.includes(user.type) ? (
+                <SideBarItem
+                  key={id}
+                  className={styles.navSectionLinks}
+                  icon={item.icon}
+                  text={item.title}
+                  active={window.location.pathname.includes(item.link)}
+                  onClick={() => history.push(`${item.link}`)}
+                />
+              ) : (
+                ''
+              )
+            )}
+          </div>
+          <SideBarItem
+            className={ styles.logout}
+            icon={<LogoutIcon />}
+            text={'Logout'}
+            active={window.location.pathname === '/logout'}
+            onClick={() => setLogout()}
+          />
         </div>
-        <SideBarItem
-          className={cx(styles.navSectionLinks, styles.logout)}
-          icon={<LogoutIcon />}
-          text={'Logout'}
-          active={window.location.pathname === '/logout'}
-          onClick={() => setLogout()}
-        />
-      </div>
 
-      <div className={styles.main}>{children}</div>
-    </div>
+        <div className={styles.main}>{children}</div>
+      </div>
+      <Fragment>
+        <Content className={styles.content}>
+          <SideSheet
+            onCloseComplete={() => setShowFundPurse(false)}
+            isShown={showFundPurse}
+            width={600}
+          >
+            <FundLoanPurse setShowFundPurse={setShowFundPurse} />
+          </SideSheet>
+        </Content>
+      </Fragment>
+    </>
   )
 }
 

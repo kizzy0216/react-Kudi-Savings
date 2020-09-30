@@ -1,10 +1,17 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useReducer } from 'react'
 import { Content, Filters, Header } from '../../../components/Layout'
 import { ChevronLeft, Close, Search } from '../../../assets/svg'
 import './overdue.scss'
+import { debounce } from 'lodash'
 import { formatTableData, tableColumns } from './utils'
 import moment from 'moment'
-import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  DateRangePicker
+} from '@kudi-inc/dip'
 import Select from '../../../components/Select'
 import Table from '../../../components/Table/table'
 import { useRouteMatch } from 'react-router-dom'
@@ -13,16 +20,28 @@ import { getMarkets } from '../../../services/markets'
 import { getOverdueLoans } from '../../../services/loans'
 import { TableLoading } from '../../../components/loading'
 import { initialMarkets } from '../utils'
+import { ParamsReducer, DefaultParams } from 'utils/function'
 
 export default ({ history }) => {
   const { url } = useRouteMatch()
-  const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
-  let markets = initialMarkets;
-  if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
-    let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
-    markets = [ ...initialMarkets, ...newmarkets];
+  const { data: marketRes } = useQuery(
+    ['Markets', { page: 0, limit: 100 }],
+    getMarkets
+  )
+  let markets = initialMarkets
+  if (
+    marketRes &&
+    marketRes.data &&
+    marketRes.data.data &&
+    marketRes.data.data.list
+  ) {
+    let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({
+      text: name,
+      value: id
+    }))
+    markets = [...initialMarkets, ...newmarkets]
   }
-
+  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [tableStartDate, setTableStartDate] = useState('')
   const [tableEndDate, setTableEndDate] = useState('')
   const [tableFrom, setTableFrom] = useState(null)
@@ -33,28 +52,33 @@ export default ({ history }) => {
   const [page, setPage] = useState(0)
   const limit = 20
 
-  const filterParams = { from: tableFrom, to: tableTo, marketId, page, limit }
-  console.log('Overdue Filter Params:', filterParams)
-  const { data: res, isLoading, error, refetch } = useQuery(['OverdueLoans', filterParams], getOverdueLoans)
+  const filterParams = {
+    from: tableFrom,
+    to: tableTo,
+    marketId,
+    page,
+    limit,
+    phoneNumber: params.phoneNumber
+  }
+  const { data: res, isLoading, error, refetch } = useQuery(
+    ['OverdueLoans', filterParams],
+    getOverdueLoans
+  )
   let tableData = []
   let totalTablePage = 0
   if (res && res.data) {
-    tableData = formatTableData(
-      res.data.data.list,
-      history,
-      url,
-      page,
-      limit
-    )
+    tableData = formatTableData(res.data.data.list, history, url, page, limit)
     totalTablePage = Math.ceil(res.data.data.total / limit)
   }
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate)
-        .subtract(1, 'days')
-        .format('YYYY-MM-DD HH:mm:ss'))
+      setTableFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
       setTableEndDate(endDate)
@@ -64,28 +88,41 @@ export default ({ history }) => {
   const onTableFocusChange = focusedInput => {
     setTableFocusedInput(focusedInput)
   }
-
+  const handleSearch = ({ target: { value } }) => {
+    const debounced_doSearch = debounce(
+      () => setParams({ type: 'UPDATE_PHONENUMBER', payload: value }),
+      1000
+    )
+    debounced_doSearch()
+  }
   return (
     <Fragment>
-      <div className="Header">
-        <Header>
+      
+        <Header className="Header">
           <p>
-            <ChevronLeft role="button" onClick={() => history.goBack()}/> Loans
+            <ChevronLeft role="button" onClick={() => history.goBack()} /> Loans
           </p>
+          <div className={'header-search'}>
+            <input
+              value={params.phoneNumber}
+              name="phoneNumber"
+              placeholder="Search by Phone number"
+              onChange={e => handleSearch(e)}
+            />
+          </div>
         </Header>
-      </div>
-      <Content>
+            <Content>
         <Card className={'Card-Table'}>
           <CardHeader className={'Table-Header'}>
-            <span className={'table-heading'}>Customers with Overdue Payments</span>
+            <span className={'table-heading'}>
+              Customers with Overdue Payments
+            </span>
             <div className={'flex'}>
               <div className="Select">
                 <Select
                   active={marketId}
                   options={markets}
-                  onSelect={value =>
-                    setMarketId(value)
-                  }
+                  onSelect={value => setMarketId(value)}
                 />
               </div>
               <Filters className={'Filter'}>
@@ -102,26 +139,41 @@ export default ({ history }) => {
             </div>
           </CardHeader>
           <CardBody>
-            {isLoading && <TableLoading/>}
+            {isLoading && <TableLoading />}
             {error && (
               <span>
                 Error! {error.message}
-                <button onClick={() => refetch({ disableThrow: true })}>Retry</button>
+                <button onClick={() => refetch({ disableThrow: true })}>
+                  Retry
+                </button>
               </span>
             )}
-            {res && <Table
-              column={tableColumns}
-              placeholder={'Loans'}
-              data={tableData}
-            />}
+            {res && (
+              <Table
+                column={tableColumns}
+                placeholder={'Loans'}
+                data={tableData}
+              />
+            )}
           </CardBody>
           <div className={'pagination'}>
             {page > 0 && (
-              <Button variant={'flat'} onClick={() => setPage(page - 1)} icon={<ChevronLeft/>}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page - 1)}
+                icon={<ChevronLeft />}
+              ></Button>
             )}
-            <p>Page {page + 1} of {totalTablePage}</p>
+            {page > 0 && (
+              <p>
+                Page {page + 1} of {totalTablePage}
+              </p>
+            )}
             {tableData.length === limit && (
-              <Button variant={'flat'} onClick={() => setPage(page + 1)}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page + 1)}
+              ></Button>
             )}
           </div>
         </Card>

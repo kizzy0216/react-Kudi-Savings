@@ -27,7 +27,7 @@ import DebitPlan from './debit-plan'
 import CreditPlan from './credit-plan'
 
 const WalletHistory = props => {
-  let { minimized, id, phone } = props
+  let { minimized, id, phone, source } = props
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -44,6 +44,7 @@ const WalletHistory = props => {
   let formattedData = []
   let totalPage = 0
 
+  console.log(source)
   const { data, isLoading, error, refetch } = useQuery(
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
@@ -53,8 +54,7 @@ const WalletHistory = props => {
     totalPage = Math.ceil(data.data.data.total / limit)
   }
   let finalFormattedData = formattedData.slice(0, limit)
-  
-  
+
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
@@ -88,7 +88,8 @@ const WalletHistory = props => {
                 history.push({
                   pathname: `${url}/customer-wallet-history`,
                   phone: phone,
-                  state: id
+                  state: id,
+                  source
                 })
               }
             >
@@ -96,24 +97,30 @@ const WalletHistory = props => {
             </Button>
           ) : (
             <div className="flex">
-              <div className={styles.Credit}>
-                <Button
-                  variant="flat"
-                  icon={<Reassign />}
-                  onClick={() => setShowCredit(true)}
-                >
-                  Credit Plan
-                </Button>
-              </div>
-              <div className={styles.Debit}>
-                <Button
-                  variant="flat"
-                  icon={<Reassign />}
-                  onClick={() => setShowDebit(true)}
-                >
-                  Debit Plan
-                </Button>
-              </div>
+              <>
+                {source === 'customer' && (
+                  <>
+                    <div className={styles.Credit}>
+                      <Button
+                        variant="flat"
+                        icon={<Reassign />}
+                        onClick={() => setShowCredit(true)}
+                      >
+                        Credit Plan
+                      </Button>
+                    </div>
+                    <div className={styles.Debit}>
+                      <Button
+                        variant="flat"
+                        icon={<Reassign />}
+                        onClick={() => setShowDebit(true)}
+                      >
+                        Debit Plan
+                      </Button>
+                    </div>
+                  </>
+                )}
+              </>
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}

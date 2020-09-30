@@ -2,12 +2,24 @@ import React, { Fragment, useState } from 'react'
 import { Link, useRouteMatch } from 'react-router-dom'
 import { Content, Filters, Header } from '../../../components/Layout'
 import Table from '../../../components/Table'
-import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  DateRangePicker
+} from '@kudi-inc/dip'
 import './overview.scss'
 import moment from 'moment'
 import Select from '../../../components/Select'
 import { ChevronLeft, DownloadIcon, Eye, Reassign } from '../../../assets/svg'
-import { amountWithCommas, formatTableData, initialMarkets, loanStatuses, tableColumns } from '../utils'
+import {
+  amountWithCommas,
+  formatTableData,
+  initialMarkets,
+  loanStatuses,
+  tableColumns
+} from '../utils'
 import { useQuery } from 'react-query'
 import { dashboardOverview, filterLoans } from '../../../services/loans'
 import { DashboardLoading, TableLoading } from '../../../components/loading'
@@ -15,19 +27,31 @@ import { getMarkets } from '../../../services/markets'
 import FundLoan from '../FundLoanPurse/fund-loan-purse'
 import { SideSheet } from 'evergreen-ui'
 import LoanDetail from '../LoanDetails/LoanDetail'
+import { formatCurrency } from 'utils/function'
 
 const initialStartDate = moment().subtract(31, 'days')
 const initialEndDate = moment().add(1, 'days')
 const initialFrom = initialStartDate.format('YYYY-MM-DD')
 const initialTo = initialEndDate.format('YYYY-MM-DD')
 
-export default ({ history}) => {
+export default ({ history }) => {
   let { url } = useRouteMatch()
-  const { data: marketRes } = useQuery(['Markets', { page: 0, limit: 100 }], getMarkets)
-  let markets = initialMarkets;
-  if (marketRes && marketRes.data && marketRes.data.data && marketRes.data.data.list) {
-    let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({ text: name, value: id }))
-    markets = [ ...initialMarkets, ...newmarkets];
+  const { data: marketRes } = useQuery(
+    ['Markets', { page: 0, limit: 100 }],
+    getMarkets
+  )
+  let markets = initialMarkets
+  if (
+    marketRes &&
+    marketRes.data &&
+    marketRes.data.data &&
+    marketRes.data.data.list
+  ) {
+    let newmarkets = marketRes.data.data.list.map(({ id, name }) => ({
+      text: name,
+      value: id
+    }))
+    markets = [...initialMarkets, ...newmarkets]
   }
 
   const [overviewStartDate, setOverviewStartDate] = useState(initialStartDate)
@@ -47,19 +71,31 @@ export default ({ history}) => {
   const limit = 10
 
   const overviewParams = { from: overviewFrom, to: overviewTo, marketId }
-  console.log('Overview Request Params:', overviewParams)
-  const tableParams = { from: tableFrom || overviewFrom, to: tableTo || overviewTo, status, page, limit, dashboard: true }
-  console.log('Table Request Params:', tableParams)
-
-  const { data: overviewRes, isLoading: overviewIsLoading, error: overviewError, refetch: overviewRefetch } = useQuery(
-    ['LoansOverview', overviewParams], dashboardOverview
-  )
+  const tableParams = {
+    from: tableFrom || overviewFrom,
+    to: tableTo || overviewTo,
+    status,
+    page,
+    limit,
+    dashboard: true
+  }
+ 
+  const {
+    data: overviewRes,
+    isLoading: overviewIsLoading,
+    error: overviewError,
+    refetch: overviewRefetch
+  } = useQuery(['LoansOverview', overviewParams], dashboardOverview)
   let overviewData = {}
   if (overviewRes && overviewRes.data) {
     overviewData = overviewRes.data.data
   }
-
-  const { data: tableRes, isLoading: tableIsLoading, error: tableError, refetch: tableRefetch } = useQuery(['LoansOverviewTable', tableParams], filterLoans)
+  const {
+    data: tableRes,
+    isLoading: tableIsLoading,
+    error: tableError,
+    refetch: tableRefetch
+  } = useQuery(['LoansOverviewTable', tableParams], filterLoans)
   let tableData = []
   let totalTablePage = 0
   if (tableRes && tableRes.data) {
@@ -73,11 +109,14 @@ export default ({ history}) => {
     totalTablePage = Math.ceil(tableRes.data.data.total / limit)
   }
 
-
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)
-      setOverviewFrom(moment(startDate).subtract(1, 'days').format('YYYY-MM-DD'))
+      setOverviewFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD')
+      )
     }
     if (endDate) {
       setOverviewEndDate(endDate)
@@ -91,9 +130,11 @@ export default ({ history}) => {
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate)
-        .subtract(1, 'days')
-        .format('YYYY-MM-DD'))
+      setTableFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD')
+      )
     }
     if (endDate) {
       setTableEndDate(endDate)
@@ -107,9 +148,11 @@ export default ({ history}) => {
   return (
     <Fragment>
       <div className={'Header'}>
-        <Header><p>Loans Overview</p></Header>
+        <Header>
+          <p>Loans Overview</p>
+        </Header>
         <Link to={'/loans/overdue'}>
-          <Button icon={<Reassign/>}>Overdue Loans</Button>
+          <Button icon={<Reassign />}>Overdue Loans</Button>
         </Link>
       </div>
       <div className={'Actions'}>
@@ -128,66 +171,81 @@ export default ({ history}) => {
           <Select
             active={marketId}
             options={markets}
-            onSelect={value =>
-              setMarketId(value)
-            }
+            onSelect={value => setMarketId(value)}
           />
         </div>
         <div className="Download-Report">
-          <p><DownloadIcon/> Download Report</p>
+          <p>
+            <DownloadIcon /> Download Report
+          </p>
         </div>
       </div>
-      {overviewIsLoading && <DashboardLoading/>}
+      {overviewIsLoading && <DashboardLoading />}
       {overviewError && (
         <span>
           Error!
-          <button onClick={() => overviewRefetch({ disableThrow: true })}>Retry</button>
+          <button onClick={() => overviewRefetch({ disableThrow: true })}>
+            Retry
+          </button>
         </span>
       )}
-      {overviewData && <div className={'Overview'}>
-        <div className="first-row">
-          <Card className={'Overview-card'}>
-            <p className={'p1'}>Loans Disbursed</p>
-            <p className={'p2'}>{overviewData.loansDisbursed}</p>
-          </Card>
-          <Card className={'Overview-card'}>
-            <p className={'p1'}>Loan Amount Disbursed</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.amountDisbursed)}</p>
-          </Card>
-          <Card className={'Overview-card'}>
-            <p className={'p1'}>Interest Earnings</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.interestEarned)}</p>
-          </Card>
-          <Card className={'Overview-card'}>
-            <p className={'p1'}>Loan Amount Recovered</p>
-            <p className={'p2'}>N{amountWithCommas(overviewData.amountRecovered)}</p>
-          </Card>
+      {overviewData && (
+        <div className={'Overview'}>
+          <div className="first-row">
+            <Card className={'Overview-card'}>
+              <p className={'p1'}>Loans Disbursed</p>
+              <p className={'p2'}>{overviewData.loansDisbursed}</p>
+            </Card>
+            <Card className={'Overview-card'}>
+              <p className={'p1'}>Loan Amount Disbursed</p>
+              <p className={'p2'}>
+                {formatCurrency(overviewData.amountDisbursed)}
+              </p>
+            </Card>
+            <Card className={'Overview-card'}>
+              <p className={'p1'}>Interest Earnings</p>
+              <p className={'p2'}>
+                {formatCurrency(overviewData.interestEarned)}
+              </p>
+            </Card>
+            <Card className={'Overview-card'}>
+              <p className={'p1'}>Loan Amount Recovered</p>
+              <p className={'p2'}>
+                {formatCurrency(overviewData.amountRecovered)}
+              </p>
+            </Card>
+          </div>
+          <div className="second-row">
+            <Card className={'Overview-card'}>
+              <div className={'add-border-bottom'}>
+                <span>Initial Loan Purse Amount</span> <span>Fixed Amount</span>
+              </div>
+              <div className={'add-border-bottom'}>
+                <span>Overdue Amount</span>{' '}
+                <span>{formatCurrency(overviewData.overdueAmount)}</span>
+              </div>
+              <div className={'add-border-bottom'}>
+                <span>Total Borrowers</span>{' '}
+                <span>{overviewData.borrowers}</span>
+              </div>
+            </Card>
+            <Card className={'Overview-card'}>
+              <div className={'add-border-bottom'}>
+                <span>Loans in progress</span>{' '}
+                <span>{overviewData.loansInProgress}</span>
+              </div>
+              <div className={'add-border-bottom'}>
+                <span>Completed Loans</span>{' '}
+                <span>{overviewData.completedLoans}</span>
+              </div>
+              <div className={'add-border-bottom'}>
+                <span>Declined Loans</span>{' '}
+                <span>{overviewData.declinedLoans}</span>
+              </div>
+            </Card>
+          </div>  
         </div>
-        <div className="second-row">
-          <Card className={'Overview-card'}>
-            <div className={'add-border-bottom'}>
-              <span>Initial Loan Purse Amount</span> <span>Fixed Amount</span>
-            </div>
-            <div className={'add-border-bottom'}>
-              <span>Overdue Amount</span> <span>N{amountWithCommas(overviewData.overdueAmount)}</span>
-            </div>
-            <div className={'add-border-bottom'}>
-              <span>Total Borrowers</span> <span>{overviewData.borrowers}</span>
-            </div>
-          </Card>
-          <Card className={'Overview-card'}>
-            <div className={'add-border-bottom'}>
-              <span>Loans in progress</span> <span>{overviewData.loansInProgress}</span>
-            </div>
-            <div className={'add-border-bottom'}>
-              <span>Completed Loans</span> <span>{overviewData.completedLoans}</span>
-            </div>
-            <div className={'add-border-bottom'}>
-              <span>Declined Loans</span> <span>{overviewData.declinedLoans}</span>
-            </div>
-          </Card>
-        </div>
-      </div>}
+      )}
       <Content>
         <Card className={'Card-Table'}>
           <CardHeader className={'Table-Header'}>
@@ -208,44 +266,57 @@ export default ({ history}) => {
                 <Select
                   active={status}
                   options={loanStatuses}
-                  onSelect={value =>
-                    setStatus(value)
-                  }
+                  onSelect={value => setStatus(value)}
                 />
               </div>
               <div className="Download-Report">
                 <Link to={'/loans/all'}>
-                  <p><Eye/> View All</p>
+                  <p>
+                    <Eye /> View All
+                  </p>
                 </Link>
-
               </div>
             </div>
           </CardHeader>
           <CardBody>
-            {tableIsLoading && <TableLoading/>}
+            {tableIsLoading && <TableLoading />}
             {tableError && (
               <span>
                 Error! {tableError.message}
-                <button onClick={() => tableRefetch({ disableThrow: true })}>Retry</button>
+                <button onClick={() => tableRefetch({ disableThrow: true })}>
+                  Retry
+                </button>
               </span>
             )}
-            {tableRes && <Table
-              column={tableColumns}
-              placeholder={'Loans'}
-              data={tableData}
-            />}
+            {tableRes && (
+              <Table
+                column={tableColumns}
+                placeholder={'Loans'}
+                data={tableData}
+              />
+            )}
           </CardBody>
+        {tableRes && (
           <div className={'pagination'}>
             {page > 0 && (
-              <Button variant={'flat'} onClick={() => setPage(page - 1)} icon={<ChevronLeft/>}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page - 1)}
+                icon={<ChevronLeft />}
+              ></Button>
             )}
-            <p>Page {page + 1} of {totalTablePage}</p>
+            <p>
+              Page {page + 1} of {totalTablePage}
+            </p>
             {tableData.length === limit && (
-              <Button variant={'flat'} onClick={() => setPage(page + 1)}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page + 1)}
+              ></Button>
             )}
           </div>
+        )}
         </Card>
-        
       </Content>
     </Fragment>
   )

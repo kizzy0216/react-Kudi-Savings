@@ -42,7 +42,8 @@ const Cashout = props => {
       {
         page: params.page,
         limit,
-        params: { from, to },
+        from,
+        to,
         status: params.status
       }
     ],

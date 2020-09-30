@@ -302,14 +302,12 @@
 }
 
 .Overview {
-  margin-left: 2em;
-  margin-right: 2em;
   margin-bottom: 30px;
   margin-top: 1em;
 
   &Row {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 
     &Card {
       display: flex;
@@ -391,4 +389,6 @@
   }
 }
 
-
+.Capital{
+  text-transform: capitalize;
+}

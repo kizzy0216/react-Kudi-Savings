@@ -1,6 +1,8 @@
+@import '../../../styles/variables';
+
 .Header {
   font-weight: normal;
-  height: 4.88em;
+  height: 1.88em;
   margin-bottom: 23px;
 }
 
@@ -9,21 +11,22 @@
 }
 
 .section-1 {
-  flex-basis: 65%;
+  width: 65%;
 }
 
 .section-2 {
-  flex-basis: 34%;
+  width: 35%;
+  
 }
 
 .card-1 {
   margin-bottom: 30px;
-
+  
   .first-card {
-    display: flex;
     flex-direction: column;
     padding-left: 30px;
     padding-right: 29px;
+    
 
     .Customer-Info-Header {
       display: flex;
@@ -45,9 +48,14 @@
       .view-profile {
         display: flex;
         align-items: center;
-        color: #0F8CFF;
+        color: $sky-blue;
         font-size: 13px;
         line-height: 16px;
+
+        button {
+          color: $sky-blue;
+         
+        }
 
         span {
           margin-left: 3px;
@@ -59,19 +67,20 @@
       display: flex;
       margin-top: 24px;
       height: 300px;
+      
 
       .Customer-Picture {
-        flex-basis: 49%;
+        width: 40%;
         img {
           border-radius: 50%;
-          max-height: 65%;
+          max-height: 60%;
+          
         }
       }
 
       .Customer-Info {
-        flex-basis: 49%;
-        display: flex;
         flex-direction: column;
+        width: 60%;
         p {
           display: flex;
           justify-content: space-between;
@@ -87,10 +96,11 @@
           }
           .value {
             font-style: normal;
-            font-weight: normal;
             font-size: 14px;
+            font-weight: normal;
             line-height: 17px;
             text-align: right;
+      text-transform: capitalize;
             letter-spacing: 0.03em;
           }
         }
@@ -100,12 +110,11 @@
 }
 
 .card-2 {
-
+  margin-bottom: 2rem;
 }
 
 .card-3 {
-  margin-left: 35px;
-  display: flex;
+  margin-left: 1.5rem;
   flex-direction: column;
   .add-border-bottom {
     border-bottom: 1px solid #F0F4F9;
@@ -137,6 +146,7 @@
       letter-spacing: 0.03em;
       color: #223856;
       text-transform: uppercase;
+      justify-content: space-between;
     }
     .badge {
       font-size: 13px;

@@ -74,7 +74,6 @@ const CustomerProfile = ({ history, match: { params } }) => {
 
                     <Button
                       variant="flat"
-                      onClick={() => setShowEdit(true)}
                       icon={<Reassign />}
                     >
                       My Referrals
@@ -123,7 +122,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
-                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                <CardFooter className={styles.FirstBodyFooterButton}>
                   <Button
                     variant="flat"
                     onClick={() => setShowInformation(true)}
@@ -132,7 +131,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   >
                     View All Information
                   </Button>
-                </CardFooter> */}
+                </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
@@ -251,12 +250,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
                       variant="flat"
-                      onClick={() =>
-                        history.push({
-                          pathname: `${url}/wallet-history`,
-                          state: agent.id
-                        })
-                      }
+                      onClick={() => history.push(`${url}/stash`)}
                       type="button"
                       icon={<Eye />}
                     >
@@ -348,7 +342,6 @@ const CustomerProfile = ({ history, match: { params } }) => {
           <CustomerInformation
             setShowEdit={setShowInformation}
             customer={customer}
-            
           />
         </SideSheet>
       </Content>

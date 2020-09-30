@@ -19,7 +19,6 @@ const initialTo = initialEndDate.format('YYYY-MM-DD')
 
 export default ({ history,  match: { params } }) => {
   let { id: loanId } = params
-  console.log('Loan Id', loanId)
   const { url } = useRouteMatch()
   const [tableStartDate, setTableStartDate] = useState(initialStartDate)
   const [tableEndDate, setTableEndDate] = useState(initialEndDate)
@@ -32,7 +31,6 @@ export default ({ history,  match: { params } }) => {
   const limit = 20
 
   const filterParams = { from: tableFrom, to: tableTo, type, page, limit, dashboard: true, loanId }
-  console.log('Repayment History Filters:', filterParams)
   const { data: res, isLoading, error, refetch } = useQuery(['LoanRepayments', filterParams], getRepaymentHistory)
   let tableData = []
   let totalTablePage = 0

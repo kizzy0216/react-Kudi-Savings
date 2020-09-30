@@ -20,7 +20,6 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
     ['Plan', { id: params.planId }],
     getPlan
   )
-
   let plan = data?.data?.data ?? {}
 
   return (
@@ -53,7 +52,7 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyFlex}>
                     <span>PLAN TITLE</span>
-                    <span>{plan.title} </span>
+                    <span className={styles.Capital}>{plan.title} </span>
                   </div>
 
                   <div className={styles.FirstBodyFlex}>
@@ -120,7 +119,7 @@ const CustomerPlanDetails = ({ location, history, match: { params } }) => {
         <CashoutLog minimized id={params.planId}/>
       </div>
       <div className={styles.DivContent}>
-        <WalletHistory minimized id={params.planId} phone={phoneNumber} />
+        <WalletHistory source='customer' minimized id={params.planId} phone={phoneNumber} />
       </div>
     </Fragment>
   )

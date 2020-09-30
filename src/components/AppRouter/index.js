@@ -94,6 +94,11 @@ const CustomerProfile = lazy(() =>
     /* webpackChunkName: "SingleCustomer" */ 'pages/Customers/customer-profile'
   )
 )
+const CustomerStashHistory = lazy(() =>
+  import(
+    /* webpackChunkName: "CustomerStashHistory" */ 'pages/Customers/stash-transaction'
+  )
+)
 const CustomerHistory = lazy(() =>
   import(
     /* webpackChunkName: "CustomerHistory" */ 'pages/Customers/customer-plan-details'
@@ -207,6 +212,7 @@ const AppRouter = () => (
         <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin}/>
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
+        <PrivateRoute path="/customers/:id/stash" exact component={CustomerStashHistory} />
         <PrivateRoute
           path="/customers/:id/plan/:planId"
           exact

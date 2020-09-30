@@ -5,18 +5,16 @@ import { Eye } from '../../assets/svg'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-export const initialMarkets = [
-  { text: 'All Markets', value: '' }
-]
+export const initialMarkets = [{ text: 'All Markets', value: '' }]
 
 export const loanStatuses = [
   { text: 'Filter By', value: '' },
   { text: 'Pending Approval', value: 'PENDING_APPROVAL' },
+  { text: 'Approved Pending Disbursement', value: 'PENDING_DISBURSEMENT' },
+  { text: 'Loans In Progress', value: 'ACTIVE' },
   { text: 'Declined', value: 'DECLINED' },
   { text: 'Completed', value: 'PAID' },
-  { text: 'Loans In Progress', value: 'ACTIVE' }
 ]
-
 
 export const tableColumns = [
   { key: 'id', render: 'LOAN ID' },
@@ -93,15 +91,33 @@ const sampleTableData = [
   }
 ]
 
+export const formatStatus = status => {
+  switch (status) {
+    case 'ACTIVE':
+      return 'In progress'
+    case 'DECLINED':
+      return 'Declined'
+    case 'PENDING_DISBURSEMENT':
+      return 'Pending Disbursement'
+    case 'PENDING_APPROVAL':
+      return 'Pending'
+    case 'PAID':
+      return 'Completed'
+  }
+}
+
 export const formatTableData = (data, history, url, page, limit) => {
   return data.map(
-    ({ id, name, amount, tenure, interest, repayment, timeCreated, status }, index) => ({
+    (
+      { id, name, amount, tenure, interest, repayment, timeCreated, status },
+      index
+    ) => ({
       sN: (page - 1) * limit + (index + 1),
       id,
       name: formatText(name),
       amount: formatCurrency(amount),
       tenure,
-      interest,
+      interest: interest + '%',
       repayment: formatCurrency(repayment),
       timeCreated: moment(timeCreated).format('DD/MM/YY'),
       status: status ? (
@@ -112,21 +128,22 @@ export const formatTableData = (data, history, url, page, limit) => {
               : status === 'ACTIVE'
               ? 'primary'
               : status === 'PENDING_APPROVAL'
-                ? 'warning'
-                : 'danger'
+              ? 'warning'
+              : status === 'PENDING_DISBURSEMENT'
+              ? 'warning'
+              : status === 'DECLINED'
+              ? 'danger'
+              : 'warning'
           }
         >
-          {status}
+          {formatStatus(status)}
         </Badge>
       ) : (
         'N/A'
       ),
       action: (
         <Link to={`/loans/details/${id}`}>
-          <Button
-            icon={<Eye/>}
-            variant="flat"
-          >
+          <Button icon={<Eye />} variant="flat">
             View
           </Button>
         </Link>
@@ -135,9 +152,9 @@ export const formatTableData = (data, history, url, page, limit) => {
   )
 }
 
-export const amountWithCommas = (amount) => {
+export const amountWithCommas = amount => {
   if (typeof amount !== 'number') {
     amount = parseInt(amount)
   }
-  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }

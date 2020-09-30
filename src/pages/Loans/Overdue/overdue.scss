@@ -1,9 +1,10 @@
 .Header {
   display: flex;
   justify-content: space-between;
+  
   align-items: center;
   font-weight: normal;
-  height: 4.88em;
+  height: 2.88em;
   margin-bottom: 23px;
 
   .header-search {
@@ -16,12 +17,12 @@
       box-sizing: border-box;
       font-weight: 100;
       padding: 10px 30px 9px 15px;
-      border-right: white;
+      border-right:1px solid #D2DDEB;
       border-left: 1px solid #D2DDEB;
       border-top: 1px solid #D2DDEB;
       border-bottom: 1px solid #D2DDEB;
       font-size: 12px;
-      width: 15em;
+      width: 17em;
     }
 
     .search-icon {
