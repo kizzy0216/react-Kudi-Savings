@@ -16,10 +16,9 @@ const LoanSection = ({ history, setShowFundPurse }) => {
   console.log(location)
 
   const initialFrom = moment()
-    .subtract(31, 'days')
+    .subtract(29, 'days')
     .format('YYYY-MM-DD')
   const initialTo = moment()
-    .add(1, 'days')
     .format('YYYY-MM-DD')
 
   const params = { from: initialFrom, to: initialTo }
