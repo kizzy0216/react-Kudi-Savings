@@ -29,8 +29,8 @@ import { SideSheet } from 'evergreen-ui'
 import LoanDetail from '../LoanDetails/LoanDetail'
 import { formatCurrency } from 'utils/function'
 
-const initialStartDate = moment().subtract(31, 'days')
-const initialEndDate = moment().add(1, 'days')
+const initialStartDate = moment().subtract(29, 'days')
+const initialEndDate = moment()
 const initialFrom = initialStartDate.format('YYYY-MM-DD')
 const initialTo = initialEndDate.format('YYYY-MM-DD')
 
