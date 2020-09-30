@@ -12,13 +12,14 @@ import {
   Input
 } from '@kudi-inc/dip'
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
-import { Close, ChevronLeft, Eye } from 'assets/svg'
+import { Close, ChevronLeft, Eye, Reassign, UpdateLink, SettingsLink } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
+import TransferLog from './transfer-log'
 
 const ViewCashout = ({ history, location, match: { params } }) => {
   let transactionType = location.type
@@ -28,6 +29,8 @@ const ViewCashout = ({ history, location, match: { params } }) => {
   let [type, setType] = useState('')
   let [reason, setReason] = useState({ reason: '' })
   let [showKyc, setShowKyc] = useState(false)
+  let [showEdit, setShowEdit] = useState(false)
+  let [showTransferLog, setShowTransferLog] = useState(false)
   const { data, isLoading, error, refetch } = useQuery(
     ['Withdrawal', { id: params.id }],
     getWithdrawal
@@ -74,10 +77,22 @@ const ViewCashout = ({ history, location, match: { params } }) => {
 
   return (
     <Fragment>
-      <Header>
+      <Header className={styles.Header}>
         <p>
           <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
         </p>
+
+        {['CASH_DELIVERED', 'PENDING_DISBURSEMENT'].includes(
+          withdrawal.status
+        ) && (
+          <Button
+            variant="flat"
+            onClick={() => setShowTransferLog(true)}
+            icon={<Reassign />}
+          >
+            View Transfer log
+          </Button>
+        )}
       </Header>
       <Content className={styles.content}>
         {isLoading && <ProfileLoading />}
@@ -97,6 +112,14 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> USER INFORMATION </h3>
                   </div>
+
+                  <Button
+                      variant="flat"
+                      onClick={() => setShowEdit(true)}
+                      icon={<SettingsLink />}
+                    >
+                      Edit Profile
+                    </Button>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyGrid}>
@@ -152,9 +175,21 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                       className={styles.FirstHeaderBadge}
                       variant={
                         withdrawal.status === 'APPROVED'
+                          ? 'primary'
+                          : withdrawal.status === 'PENDING_DISBURSEMENT'
+                          ? 'warning'
+                          : withdrawal.status === 'CASH_DELIVERED'
                           ? 'success'
                           : withdrawal.status === 'DECLINED'
                           ? 'danger'
+                          : withdrawal.status === 'PENDING'
+                          ? 'warning'
+                          : withdrawal.status === 'PENDING_IMAGE_VALIDATION'
+                          ? 'warning'
+                          : withdrawal.status === 'PENDING_VALIDATION'
+                          ? 'warning'
+                          : withdrawal.status === 'VOUCHER_REDEEMED'
+                          ? 'primary'
                           : 'warning'
                       }
                     >
@@ -206,19 +241,26 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                       </Button>
                     </CardFooter>
                   )}
-                {withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
-                    <div className={styles.Kyc}>
-                      <Button
-                        type="button"
-                        variant="flat"
-                        icon={<Eye />}
-                        onClick={() => setShowKyc(true)}
-                      >
-                        View KYC
-                      </Button>
-                    </div>
-                  )}
+                {withdrawal.status === 'PENDING_IMAGE_VALIDATION' ? (
+                  <div className={styles.Kyc}>
+                    <Button
+                      type="button"
+                      variant="flat"
+                      icon={<Eye />}
+                      onClick={() => setShowKyc(true)}
+                    >
+                      View KYC
+                    </Button>
+                  </div>
+                ) : withdrawal.status === 'PENDING_DISBURSEMENT' ? (
+                  <div className={styles.Kyc}>
+                    <Button type="button" variant="flat" icon={<UpdateLink />}>
+                      Update to Cash Delivered
+                    </Button>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </Card>
             </div>
             <div className={styles.Second}>
@@ -420,6 +462,17 @@ const ViewCashout = ({ history, location, match: { params } }) => {
             onCloseComplete={() => setShowKyc(false)}
           >
             <Kyc setShow={setShowKyc} withdrawal={withdrawal} />
+          </SideSheet>
+        )}
+        {showTransferLog && (
+          <SideSheet
+            isShown={showTransferLog}
+            onCloseComplete={() => setShowTransferLog(false)}
+          >
+            <TransferLog
+              setShowTransferLog={setShowTransferLog}
+              withdrawal={withdrawal}
+            />
           </SideSheet>
         )}
       </Content>

@@ -36,9 +36,21 @@ export const formatData = (data, history, url, page, limit) => {
         <Badge
           variant={
             status === 'APPROVED'
+              ? 'primary'
+              : status === 'PENDING_DISBURSEMENT'
+              ? 'warning'
+              : status === 'CASH_DELIVERED'
               ? 'success'
               : status === 'DECLINED'
               ? 'danger'
+              : status === 'PENDING'
+              ? 'warning'
+              : status === 'PENDING_IMAGE_VALIDATION'
+              ? 'warning'
+              : status === 'PENDING_VALIDATION'
+              ? 'warning'
+              : status === 'VOUCHER_REDEEMED'
+              ? 'primary'
               : 'warning'
           }
         >
@@ -52,7 +64,7 @@ export const formatData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push({pathname:`${url}/${id}`, type})}
+          onClick={() => history.push({ pathname: `${url}/${id}`, type })}
         >
           View
         </Button>
@@ -61,10 +73,10 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
-
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
+  { text: 'Approved Pending Disbursement', value: 'PENDING_DISBURSEMENT' },
   { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
   { text: 'Declined', value: 'DECLINED' },
   { text: 'Pending', value: 'PENDING' },
@@ -72,7 +84,6 @@ export const statusOptions = [
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]
-
 
 export const TableColumns = [
   {
@@ -93,7 +104,7 @@ export const TableColumns = [
   },
   {
     key: 'managerName',
-    render: 'Manager\'s Name'
+    render: "Manager's Name"
   },
   { key: 'amount', render: 'Amount' },
 

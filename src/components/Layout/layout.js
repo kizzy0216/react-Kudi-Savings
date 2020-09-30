@@ -112,10 +112,7 @@ const Layout = ({ children, auth }) => {
       <div className={styles.layout}>
         <div className={styles.sideNav}>
           <LogoSection history={history} user={user} />
-          <LoanSection
-          history={history}
-            setShowFundPurse={setShowFundPurse}
-            />
+          <LoanSection history={history} setShowFundPurse={setShowFundPurse} />
           <div className={styles.navSection}>
             {navItems.map((item, id) =>
               item && item.userType.includes(user.type) ? (
@@ -133,7 +130,7 @@ const Layout = ({ children, auth }) => {
             )}
           </div>
           <SideBarItem
-            className={ styles.logout}
+            className={styles.logout}
             icon={<LogoutIcon />}
             text={'Logout'}
             active={window.location.pathname === '/logout'}
@@ -145,13 +142,15 @@ const Layout = ({ children, auth }) => {
       </div>
       <Fragment>
         <Content className={styles.content}>
-          <SideSheet
-            onCloseComplete={() => setShowFundPurse(false)}
-            isShown={showFundPurse}
-            width={600}
-          >
-            <FundLoanPurse setShowFundPurse={setShowFundPurse} />
-          </SideSheet>
+          {showFundPurse && (
+            <SideSheet
+              onCloseComplete={() => setShowFundPurse(false)}
+              isShown={showFundPurse}
+              width={600}
+            >
+              <FundLoanPurse setShowFundPurse={setShowFundPurse} />
+            </SideSheet>
+          )}
         </Content>
       </Fragment>
     </>
