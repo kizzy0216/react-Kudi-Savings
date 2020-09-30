@@ -195,19 +195,18 @@ const ViewCashout = ({ history, match: { params } }) => {
                       </Button>
                     </CardFooter>
                   )}
-                {withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
-                    <div className={styles.Kyc}>
-                      <Button
-                        type="button"
-                        variant="flat"
-                        icon={<Eye />}
-                        onClick={() => setShowKyc(true)}
-                      >
-                        View KYC
-                      </Button>
-                    </div>
-                  )}
+                {withdrawal.status === 'PENDING_IMAGE_VALIDATION' && (
+                  <div className={styles.Kyc}>
+                    <Button
+                      type="button"
+                      variant="flat"
+                      icon={<Eye />}
+                      onClick={() => setShowKyc(true)}
+                    >
+                      View KYC
+                    </Button>
+                  </div>
+                )}
               </Card>
             </div>
             <div className={styles.Second}>

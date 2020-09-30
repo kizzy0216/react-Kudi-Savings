@@ -117,7 +117,7 @@ export const formatTableData = (data, history, url, page, limit) => {
       name: formatText(name),
       amount: formatCurrency(amount),
       tenure,
-      interest: interest + '%',
+      interest: (interest * 100) + '%',
       repayment: formatCurrency(repayment),
       timeCreated: moment(timeCreated).format('DD/MM/YY'),
       status: status ? (

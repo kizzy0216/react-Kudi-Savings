@@ -112,33 +112,32 @@ const Layout = ({ children, auth }) => {
       <div className={styles.layout}>
         <div className={styles.sideNav}>
           <LogoSection history={history} user={user} />
-          <LoanSection
-          history={history}
-            setShowFundPurse={setShowFundPurse}
+          <LoanSection history={history} setShowFundPurse={setShowFundPurse} />
+          <div className={styles.side}>
+            <div className={styles.sideNavSection}>
+              {navItems.map((item, id) =>
+                item && item.userType.includes(user.type) ? (
+                  <SideBarItem
+                    key={id}
+                    className={styles.sideNavSectionLinks}
+                    icon={item.icon}
+                    text={item.title}
+                    active={window.location.pathname.includes(item.link)}
+                    onClick={() => history.push(`${item.link}`)}
+                  />
+                ) : (
+                  ''
+                )
+              )}
+            </div>
+            <SideBarItem
+              className={styles.sideLogoutLinks}
+              icon={<LogoutIcon />}
+              text={'Logout'}
+              active={window.location.pathname === '/logout'}
+              onClick={() => setLogout()}
             />
-          <div className={styles.navSection}>
-            {navItems.map((item, id) =>
-              item && item.userType.includes(user.type) ? (
-                <SideBarItem
-                  key={id}
-                  className={styles.navSectionLinks}
-                  icon={item.icon}
-                  text={item.title}
-                  active={window.location.pathname.includes(item.link)}
-                  onClick={() => history.push(`${item.link}`)}
-                />
-              ) : (
-                ''
-              )
-            )}
           </div>
-          <SideBarItem
-            className={ styles.logout}
-            icon={<LogoutIcon />}
-            text={'Logout'}
-            active={window.location.pathname === '/logout'}
-            onClick={() => setLogout()}
-          />
         </div>
 
         <div className={styles.main}>{children}</div>
