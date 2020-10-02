@@ -50,7 +50,6 @@ export default ({ history }) => {
     if (startDate) {
       setTableStartDate(startDate)
       setTableFrom(moment(startDate)
-        .subtract(1, 'days')
         .format('YYYY-MM-DD'))
     }
     if (endDate) {
