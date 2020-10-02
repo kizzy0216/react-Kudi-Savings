@@ -114,7 +114,6 @@ console.log(JSON.stringify(tableRes?.data?.data))
       setOverviewStartDate(startDate)
       setOverviewFrom(
         moment(startDate)
-          .subtract(1, 'days')
           .format('YYYY-MM-DD')
       )
     }
@@ -132,7 +131,6 @@ console.log(JSON.stringify(tableRes?.data?.data))
       setTableStartDate(startDate)
       setTableFrom(
         moment(startDate)
-          .subtract(1, 'days')
           .format('YYYY-MM-DD')
       )
     }
