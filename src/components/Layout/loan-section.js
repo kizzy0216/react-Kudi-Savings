@@ -36,7 +36,7 @@ const LoanSection = ({ history, setShowFundPurse }) => {
             <Wallet />
             <div className={styles.logoSectionContent}>
               <p>Loan Purse Balance</p>
-              <span>{formatCurrency(purseData.loanWalletBalance || 0)}</span>
+              <span>{formatCurrency(purseData.walletBalance || 0)}</span>
             </div>
           </div>
           <div className={styles.logoSectionFlex}>

@@ -218,7 +218,7 @@ console.log(JSON.stringify(tableRes?.data?.data))
           <div className="second-row">
             <Card className={'Overview-card'}>
               <div className={'add-border-bottom'}>
-                <span>Initial Loan Purse Amount</span> <span>Fixed Amount</span>
+                <span>Initial Loan Purse Amount</span> <span>{formatCurrency(overviewData.initialLoanPurseAmount)}</span>
               </div>
               <div className={'add-border-bottom'}>
                 <span>Overdue Amount</span>{' '}
