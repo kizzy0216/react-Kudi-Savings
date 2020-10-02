@@ -41,11 +41,15 @@ export default ({ history }) => {
     }))
     markets = [...initialMarkets, ...newmarkets]
   }
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD')
+  const initialTo = initialEndDate.format('YYYY-MM-DD')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
-  const [tableStartDate, setTableStartDate] = useState('')
-  const [tableEndDate, setTableEndDate] = useState('')
-  const [tableFrom, setTableFrom] = useState(null)
-  const [tableTo, setTableTo] = useState(null)
+  const [tableStartDate, setTableStartDate] = useState(initialStartDate)
+  const [tableEndDate, setTableEndDate] = useState(initialEndDate)
+  const [tableFrom, setTableFrom] = useState(initialFrom)
+  const [tableTo, setTableTo] = useState(initialTo)
   const [marketId, setMarketId] = useState('')
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
 
@@ -76,13 +80,15 @@ export default ({ history }) => {
       setTableStartDate(startDate)
       setTableFrom(
         moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD')
       )
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTableTo(
+        moment(endDate)
+          .format('YYYY-MM-DD')
+      )
     }
   }
   const onTableFocusChange = focusedInput => {
