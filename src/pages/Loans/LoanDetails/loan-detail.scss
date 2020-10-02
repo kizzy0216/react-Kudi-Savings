@@ -11,11 +11,11 @@
 }
 
 .section-1 {
-  width: 65%;
+  width: 60%;
 }
 
 .section-2 {
-  width: 35%;
+  width: 40%;
   
 }
 
@@ -153,7 +153,8 @@
     }
     .btn-blue {
       background: white;
-      border-color: #18379A;
+      color: $danger;
+      border-color: $danger;
     }
   }
 }
@@ -162,5 +163,8 @@
   width: 100%;
 }
 
+.ApplicationFooter{
+  justify-content: space-between;
+}
 
 

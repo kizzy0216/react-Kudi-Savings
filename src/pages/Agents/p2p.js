@@ -28,10 +28,14 @@ const P2P = props => {
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD')
+  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = props.minimized ? 3 : 50
@@ -164,7 +168,9 @@ const P2P = props => {
                   {' '}
                   Page {params.page} of {totalPage}
                 </p>
-              ): <></>}
+              ) : (
+                <></>
+              )}
               {formattedData.length === limit && (
                 <Button
                   variant="flat"

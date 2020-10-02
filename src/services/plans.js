@@ -13,5 +13,5 @@ export const getPlan = async ({ id }) => await Axios.get(`/plans/${id}`)
 export const editPlan = data => Axios.put(`/plans/${data.id}`, data)
 
 //get cashout on plan
-export const getPlanCashout = async ({ id, status, limit }) =>
-  await Axios.get(`/plans/${id}/withdrawal?status=${status}&limit=${limit}`)
+export const getPlanCashout = async ({ id, status, limit,from , to }) =>
+  await Axios.get(`/plans/${id}/withdrawal?status=${status}&limit=${limit}&from=${from}&to=${to}`)

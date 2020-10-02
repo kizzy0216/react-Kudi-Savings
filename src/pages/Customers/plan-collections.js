@@ -31,10 +31,14 @@ const PlanCollections = props => {
   const [page, setPage] = useState(1)
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let limit = minimized ? 3 : 30
   let formattedData = []
@@ -43,7 +47,7 @@ const PlanCollections = props => {
   const { data, isLoading, error, refetch } = useQuery(
     id && [
       'CollectionsByPlanId',
-      { planId: id, params: { page, limit, from, to } }
+      { planId: id, from, to , params: { page, limit,} }
     ],
     getCollectionsByPlan
   )

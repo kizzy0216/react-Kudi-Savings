@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer } from 'react'
+import React, { Fragment, useReducer,useState } from 'react'
 import {
   Card,
   CardBody,
@@ -20,7 +20,17 @@ import { TableLoading } from 'components/loading'
 import { Close, ChevronLeft } from 'assets/svg'
 const Cashout = ({ history }) => {
   let { url } = useRouteMatch()
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
   let formattedData = []
   let limit = 50
   let totalData = 0
@@ -32,8 +42,8 @@ const Cashout = ({ history }) => {
         page: params.page,
         limit,
         phoneNumber: params.phoneNumber,
-        from: params.from,
-        to: params.to,
+        from,
+        to,
         status: params.status
       }
     ],
@@ -53,34 +63,24 @@ const Cashout = ({ history }) => {
   }
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(1, 'days')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
     }
+    setShowReset(true)
   }
+
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
+
   // const handleSearch = ({ target: { value } }) => {
   //   const debounced_doSearch = debounce(() => setPhoneNumber(value), 1000)
   //   debounced_doSearch()
@@ -101,9 +101,9 @@ const Cashout = ({ history }) => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
@@ -117,13 +117,15 @@ const Cashout = ({ history }) => {
                   })
                 }
               />
-              {params.showReset && (
+              {showReset && (
                 <Close
                   className="danger"
                   onClick={() => {
-                    setParams({
-                      type: 'RESET'
-                    })
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
                   }}
                 />
               )}
