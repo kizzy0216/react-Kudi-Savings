@@ -69,7 +69,6 @@ const Cashout = ({ history }) => {
           .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
-      console.log(startDate)
     }
     if (endDate) {
       setEndDate(endDate)

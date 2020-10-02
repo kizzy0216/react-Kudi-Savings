@@ -38,7 +38,7 @@ const Cashout = props => {
   const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
+  let limit = props.minimized ? 3 : 50
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
@@ -68,13 +68,19 @@ const Cashout = props => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }
