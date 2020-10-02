@@ -49,7 +49,6 @@ const PlanRevenueLog = props => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
           .format('YYYY-MM-DD')
       )
     }
