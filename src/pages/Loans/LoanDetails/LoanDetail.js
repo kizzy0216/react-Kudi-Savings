@@ -1,5 +1,5 @@
 import React, { Fragment, useContext } from 'react'
-import { ChevronLeft, UserIconLink } from '../../../assets/svg'
+import { ChevronLeft, UserIconLink, Close } from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
 import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
@@ -236,8 +236,8 @@ export default ({ history, match: { params } }) => {
                       </Link>
                     </p>
                   ) : (
-                    <>
-                      {auth.type.includes('LOAN_MANAGER') && (
+                    <div className={'ApplicationFooter'}>
+                      {auth.type.includes('LOANS_MANAGER') && (
                         <p>
                           <Button
                             onClick={handleApproveClick}
@@ -249,12 +249,13 @@ export default ({ history, match: { params } }) => {
                             className={'btn-blue'}
                             onClick={handleDeclineClick}
                             disabled={loanStatus === 'DECLINED'}
+                            icon={<Close />}
                           >
                             Decline
                           </Button>
                         </p>
                       )}
-                    </>
+                    </div>
                   )}
                 </CardBody>
               </Card>
