@@ -21,10 +21,14 @@ const WalletTopUp = props => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
-  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialStartDate = props.minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = props.minimized ? ' ' : moment()
+  const initialFrom = props.minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = props.minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD HH:mm:ss')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)

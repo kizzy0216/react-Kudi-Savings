@@ -24,17 +24,20 @@ import { Content, Filters } from 'components/Layout'
 import moment from 'moment'
 
 const PlanCollections = props => {
-  let { id } = props
+  let { id,minimized } = props
   let { url } = useRouteMatch()
   let history = useHistory()
-  let { minimized } = props
   const [page, setPage] = useState(1)
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD+HH:mm:ss')
-  const initialTo = initialEndDate.format('YYYY-MM-DD+HH:mm:ss')
+  const initialStartDate = minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = minimized ? ' ' : moment()
+  const initialFrom = minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD+HH:mm:ss')
+  const initialTo = minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD+HH:mm:ss')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
@@ -48,14 +51,12 @@ const PlanCollections = props => {
   const { data, isLoading, error, refetch } = useQuery(
     id && [
       'CollectionsByPlanId',
-      { planId: id, from, to ,dashboard, limit,page: params.page }
+      { planId: id, from, to, dashboard, limit, page: params.page }
     ],
     getCollectionsByPlan
   )
 
-
   if (data?.data?.data) {
-    
     formattedData = formatCollections(
       history,
       url,
@@ -103,12 +104,11 @@ const PlanCollections = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(
-                { pathname: `${url}/customer-plan-collection`,
-                state: id
-              }
-                )
-
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/customer-plan-collection`,
+                  state: id
+                })
               }
             >
               View All

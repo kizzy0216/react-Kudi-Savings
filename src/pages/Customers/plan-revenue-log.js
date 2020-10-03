@@ -28,16 +28,16 @@ const PlanRevenueLog = props => {
   let { url } = useRouteMatch()
   const [showReset, setShowReset] = useState(false)
   const [focusedInput, setfocusedInput] = useState(null)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD')
-  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const initialStartDate = minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = minimized ? ' ' : moment()
+  const initialFrom = minimized ? ' ' : initialStartDate.format('YYYY-MM-DD')
+  const initialTo = minimized ? ' ' : initialEndDate.format('YYYY-MM-DD')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
   const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
-  let limit = minimized ? 3 : 30
+  let limit = 20
   let formattedData = []
   let totalPage = 0
 
