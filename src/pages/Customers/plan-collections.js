@@ -33,8 +33,8 @@ const PlanCollections = props => {
   const [showReset, setShowReset] = useState(false)
   const initialStartDate = moment().subtract(29, 'days')
   const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
-  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialFrom = initialStartDate.format('YYYY-MM-DD+HH:mm:ss')
+  const initialTo = initialEndDate.format('YYYY-MM-DD+HH:mm:ss')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
@@ -43,11 +43,12 @@ const PlanCollections = props => {
   let limit = minimized ? 3 : 30
   let formattedData = []
   let totalPage = 0
+  let dashboard = true
 
   const { data, isLoading, error, refetch } = useQuery(
     id && [
       'CollectionsByPlanId',
-      { planId: id, from, to , params: { page, limit,} }
+      { planId: id, from, to ,dashboard, limit,page: params.page }
     ],
     getCollectionsByPlan
   )
@@ -73,7 +74,7 @@ const PlanCollections = props => {
       setFrom(
         moment(startDate)
           .subtract(12, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD+HH:mm:ss')
       )
     }
     if (endDate) {
@@ -83,7 +84,7 @@ const PlanCollections = props => {
           .add(11, 'hours')
           .add(59, 'minutes')
           .add(59, 'seconds')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD+HH:mm:ss')
       )
     }
     setShowReset(true)
