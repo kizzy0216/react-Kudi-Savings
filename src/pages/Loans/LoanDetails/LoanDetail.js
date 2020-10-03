@@ -240,15 +240,21 @@ export default ({ history, match: { params } }) => {
                       {auth.type.includes('LOANS_MANAGER') && (
                         <p>
                           <Button
+                            disabled={[
+                              'DECLINED',
+                              'PENDING_DISBURSEMENT'
+                            ].includes(loanStatus)}
                             onClick={handleApproveClick}
-                            disabled={loanStatus === 'DECLINED'}
                           >
                             Approve
                           </Button>
                           <Button
                             className={'btn-blue'}
+                            disabled={[
+                              'DECLINED',
+                              'PENDING_DISBURSEMENT'
+                            ].includes(loanStatus)}
                             onClick={handleDeclineClick}
-                            disabled={loanStatus === 'DECLINED'}
                             icon={<Close />}
                           >
                             Decline
