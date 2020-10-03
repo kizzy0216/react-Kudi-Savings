@@ -31,9 +31,10 @@ import { formatCurrency } from 'utils/function'
 
 const initialStartDate = moment().subtract(29, 'days')
 const initialEndDate = moment()
-const initialFrom = initialStartDate.format('YYYY-MM-DD')
-const initialTo = initialEndDate.format('YYYY-MM-DD')
-
+const initialFrom = initialStartDate.format("YYYY-MM-DD")
+const initialTo = initialEndDate.format("YYYY-MM-DD")
+const initialTableFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialTableTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 export default ({ history }) => {
   let { url } = useRouteMatch()
   const { data: marketRes } = useQuery(
@@ -63,8 +64,8 @@ export default ({ history }) => {
 
   const [tableStartDate, setTableStartDate] = useState(initialStartDate)
   const [tableEndDate, setTableEndDate] = useState(initialEndDate)
-  const [tableFrom, setTableFrom] = useState(initialFrom)
-  const [tableTo, setTableTo] = useState(initialTo)
+  const [tableFrom, setTableFrom] = useState(initialTableFrom)
+  const [tableTo, setTableTo] = useState(initialTableTo)
   const [status, setStatus] = useState('')
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
   const [page, setPage] = useState(0)
@@ -112,11 +113,11 @@ export default ({ history }) => {
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)
-      setOverviewFrom(moment(startDate).format('YYYY-MM-DD'))
+      setOverviewFrom(moment(startDate).format("YYYY-MM-DD"))
     }
     if (endDate) {
       setOverviewEndDate(endDate)
-      setOverviewTo(moment(endDate).format('YYYY-MM-DD'))
+      setOverviewTo(moment(endDate).format("YYYY-MM-DD"))
     }
   }
   const onOverviewFocusChange = focusedInput => {
@@ -126,11 +127,11 @@ export default ({ history }) => {
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate).format('YYYY-MM-DD'))
+      setTableFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format('YYYY-MM-DD'))
+      setTableTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
   }
   const onTableFocusChange = focusedInput => {
