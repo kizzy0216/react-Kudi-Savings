@@ -57,7 +57,6 @@ const CashoutLog = props => {
     getPlanCashout
   )
 
-  console.log("from "+ from +" to " + to)
 
   if (data && data.data) {
     formattedData = formatCashoutLog(
