@@ -31,10 +31,8 @@ import { formatCurrency } from 'utils/function'
 
 const initialStartDate = moment().subtract(29, 'days')
 const initialEndDate = moment()
-const initialFrom = initialStartDate.format("YYYY-MM-DD")
-const initialTo = initialEndDate.format("YYYY-MM-DD")
-const initialTableFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
-const initialTableTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 export default ({ history }) => {
   let { url } = useRouteMatch()
   const { data: marketRes } = useQuery(
@@ -64,8 +62,8 @@ export default ({ history }) => {
 
   const [tableStartDate, setTableStartDate] = useState(initialStartDate)
   const [tableEndDate, setTableEndDate] = useState(initialEndDate)
-  const [tableFrom, setTableFrom] = useState(initialTableFrom)
-  const [tableTo, setTableTo] = useState(initialTableTo)
+  const [tableFrom, setTableFrom] = useState(initialFrom)
+  const [tableTo, setTableTo] = useState(initialTo)
   const [status, setStatus] = useState('')
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
   const [page, setPage] = useState(0)
@@ -113,11 +111,11 @@ export default ({ history }) => {
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)
-      setOverviewFrom(moment(startDate).format("YYYY-MM-DD"))
+      setOverviewFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
     if (endDate) {
       setOverviewEndDate(endDate)
-      setOverviewTo(moment(endDate).format("YYYY-MM-DD"))
+      setOverviewTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
   }
   const onOverviewFocusChange = focusedInput => {

@@ -10,7 +10,7 @@ import {
 } from '@kudi-inc/dip'
 import styles from './recent-collections.module.scss'
 import Table from 'components/Table'
-import { getCollections } from 'services/collections'
+import { getAgentCollections } from 'services/collections'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
@@ -23,7 +23,7 @@ import {
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
-const Collections = ({ minimized }) => {
+const Collections = ({ id, minimized }) => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
@@ -46,16 +46,17 @@ const Collections = ({ minimized }) => {
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
-      'Collections',
+      'AgentCollections',
 
       {
+        agentId: id,
         page: params.page,
         limit,
         from,
         to
       }
     ],
-    getCollections
+    getAgentCollections
   )
   if (data && data.data) {
     formattedData = formatData(

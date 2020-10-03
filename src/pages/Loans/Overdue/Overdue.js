@@ -43,8 +43,8 @@ export default ({ history }) => {
   }
   const initialStartDate = moment().subtract(29, 'days')
   const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD')
-  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const initialFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+  const initialTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [tableStartDate, setTableStartDate] = useState(initialStartDate)
   const [tableEndDate, setTableEndDate] = useState(initialEndDate)
@@ -80,14 +80,14 @@ export default ({ history }) => {
       setTableStartDate(startDate)
       setTableFrom(
         moment(startDate)
-          .format('YYYY-MM-DD')
+          .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
       )
     }
     if (endDate) {
       setTableEndDate(endDate)
       setTableTo(
         moment(endDate)
-          .format('YYYY-MM-DD')
+          .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
       )
     }
   }

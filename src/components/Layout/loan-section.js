@@ -17,8 +17,8 @@ const LoanSection = ({ history, setShowFundPurse }) => {
 
   const initialFrom = moment()
     .subtract(29, 'days')
-    .format('YYYY-MM-DD')
-  const initialTo = moment().format('YYYY-MM-DD')
+    .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+  const initialTo = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 
   const params = { from: initialFrom, to: initialTo }
   const { data } = useQuery(['LoanPurseBalance', params], dashboardOverview)
