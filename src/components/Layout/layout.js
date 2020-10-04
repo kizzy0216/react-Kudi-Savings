@@ -88,18 +88,18 @@ const Layout = ({ children, auth }) => {
       icon: <CashoutLink />,
       userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
-    {
-      title: 'Referrals',
-      link: '/referrals',
-      icon: <ReferralLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
-    },
-    {
-      title: 'Loans',
-      link: '/loans',
-      icon: <LoanIcon />,
-      userType: ['ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
-    },
+    // {
+    //   title: 'Referrals',
+    //   link: '/referrals',
+    //   icon: <ReferralLink />,
+    //   userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
+    // },
+    // {
+    //   title: 'Loans',
+    //   link: '/loans',
+    //   icon: <LoanIcon />,
+    //   userType: ['ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
+    // },
     {
       title: 'Settings',
       link: '/settings',
@@ -112,7 +112,7 @@ const Layout = ({ children, auth }) => {
       <div className={styles.layout}>
         <div className={styles.sideNav}>
           <LogoSection history={history} user={user} />
-          <LoanSection history={history} setShowFundPurse={setShowFundPurse} />
+          {/* <LoanSection history={history} setShowFundPurse={setShowFundPurse} /> */}
           <div className={styles.side}>
             <div className={styles.sideNavSection}>
               {navItems.map((item, id) =>
@@ -142,7 +142,7 @@ const Layout = ({ children, auth }) => {
 
         <div className={styles.main}>{children}</div>
       </div>
-      <Fragment>
+      {/* <Fragment>
         <Content className={styles.content}>
           <SideSheet
             onCloseComplete={() => setShowFundPurse(false)}
@@ -152,7 +152,7 @@ const Layout = ({ children, auth }) => {
             <FundLoanPurse setShowFundPurse={setShowFundPurse} />
           </SideSheet>
         </Content>
-      </Fragment>
+      </Fragment> */}
     </>
   )
 }

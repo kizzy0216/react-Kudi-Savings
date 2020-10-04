@@ -330,6 +330,26 @@ const AppRouter = () => (
           exact
           component={CustomerWalletHistory}
         />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections/customer-plan/customer-plan-collection"
+          exact
+          component={CustomerPlanCollection}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections/customer-plan/customer-cashout-log"
+          exact
+          component={CustomerCashoutLog}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections/customer-plan/view-all-plan-revenue-log"
+          exact
+          component={CustomerRevenuePlanLog}
+        />
+        <PrivateRoute
+          path="/agents/:id/view-all-collections/customer-plan/customer-wallet-history"
+          exact
+          component={CustomerWalletHistory}
+        />
         <PrivateRoute path="/settings" exact component={Settings} />
         <PrivateRoute path="/referrals" exact component={Referrals} />
         <PrivateRoute path="/transactions" exact component={Transactions} />
