@@ -13,18 +13,17 @@ const LoanSection = ({ history, setShowFundPurse }) => {
   let [auth] = useContext(AuthContext)
   let location = useLocation()
 
-  console.log(location)
-
-  const initialFrom = moment()
-    .subtract(29, 'days')
-    .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
-  const initialTo = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ")
-
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = ''
+  const initialTo = ''
   const params = { from: initialFrom, to: initialTo }
-  const { data } = useQuery(['LoanPurseBalance', params], dashboardOverview)
+  const { data, loading, refetch } = useQuery(
+    ['LoanPurseBalance', params],
+    dashboardOverview
+  )
 
   let purseData = data?.data?.data ?? {}
-
   return (
     <>
       {['ADMIN', 'LOANS_MANAGER'].includes(auth.type) &&
@@ -34,6 +33,7 @@ const LoanSection = ({ history, setShowFundPurse }) => {
               <div className={styles.logoSection}>
                 <div className={styles.logoSectionFlex}>
                   <Wallet />
+
                   <div className={styles.logoSectionContent}>
                     <p>Loan Purse Balance</p>
                     <span>{formatCurrency(purseData.walletBalance || 0)}</span>
