@@ -21,8 +21,8 @@ import { TableLoading } from '../../../components/loading'
 
 const initialStartDate = moment().subtract(31, 'days')
 const initialEndDate = moment().add(1, 'days')
-const initialFrom = initialStartDate.format('YYYY-MM-DD')
-const initialTo = initialEndDate.format('YYYY-MM-DD')
+const initialFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 
 export default ({ history }) => {
   const { url } = useRouteMatch()
@@ -52,11 +52,11 @@ export default ({ history }) => {
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate).format('YYYY-MM-DD'))
+      setTableFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format('YYYY-MM-DD'))
+      setTableTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
   }
   const onTableFocusChange = focusedInput => {

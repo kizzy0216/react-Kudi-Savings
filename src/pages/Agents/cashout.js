@@ -103,7 +103,12 @@ const Cashout = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-cashout-logs`)}
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/view-all-cashout-logs`,
+                  id: props.id
+                })
+              }
             >
               View All
             </Button>

@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 
 const Cashout = (props, { match: params }) => {
   let history = useHistory()
+  let agentId = props.location.id
   return (
     <Fragment>
       <Header>
@@ -16,7 +17,7 @@ const Cashout = (props, { match: params }) => {
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <CashoutLog minimized={false} />
+        <CashoutLog minimized={false} id={agentId}/>
       </div>
     </Fragment>
   )
