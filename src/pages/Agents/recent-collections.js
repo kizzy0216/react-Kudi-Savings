@@ -102,7 +102,9 @@ const Collections = ({ id, minimized }) => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-collections`)}
+              onClick={() =>
+                history.push({ pathname: `${url}/view-all-collections`, id })
+              }
             >
               View All
             </Button>
