@@ -32,10 +32,14 @@ const WalletHistory = props => {
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
-  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialStartDate = minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = minimized ? ' ' : moment()
+  const initialFrom = minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD HH:mm:ss')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
@@ -48,7 +52,6 @@ const WalletHistory = props => {
   let formattedData = []
   let totalPage = 0
 
-  console.log(source)
   const { data, isLoading, error, refetch } = useQuery(
     ['history', { id: id, limit, params: { type, from, to } }],
     getHistoryByPlan
@@ -64,13 +67,19 @@ const WalletHistory = props => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }

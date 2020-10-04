@@ -28,10 +28,12 @@ const P2P = props => {
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD')
-  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const initialStartDate = props.minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = props.minimized ? ' ' : moment()
+  const initialFrom = props.minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD')
+  const initialTo = props.minimized ? ' ' : initialEndDate.format('YYYY-MM-DD')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
@@ -63,11 +65,7 @@ const P2P = props => {
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
-      setFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD')
-      )
+      setFrom(moment(startDate).format('YYYY-MM-DD'))
     }
     if (endDate) {
       setEndDate(endDate)

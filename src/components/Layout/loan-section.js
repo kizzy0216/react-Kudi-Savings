@@ -17,9 +17,8 @@ const LoanSection = ({ history, setShowFundPurse }) => {
 
   const initialFrom = moment()
     .subtract(29, 'days')
-    .format('YYYY-MM-DD')
-  const initialTo = moment()
-    .format('YYYY-MM-DD')
+    .format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+  const initialTo = moment().format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 
   const params = { from: initialFrom, to: initialTo }
   const { data } = useQuery(['LoanPurseBalance', params], dashboardOverview)
@@ -28,36 +27,41 @@ const LoanSection = ({ history, setShowFundPurse }) => {
 
   return (
     <>
-      {auth.type.includes('ADMIN') && !auth.type.includes('SUPER_ADMIN') &&(
-        <>
-        {location.pathname === '/loans' &&(
-        <div className={styles.logoSection}>
-          <div className={styles.logoSectionFlex}>
-            <Wallet />
-            <div className={styles.logoSectionContent}>
-              <p>Loan Purse Balance</p>
-              <span>{formatCurrency(purseData.walletBalance || 0)}</span>
-            </div>
-          </div>
-          <div className={styles.logoSectionFlex}>
-            <Button
-              // onClick={() => {
-              //   history.push({pathname:'/fund-purse'})
-              // }}
-              onClick={() => {
-                history.push('/loans')
-                setShowFundPurse(true)
-              }}
-              className={styles.logoSectionFundButton}
-              type="button"
-            >
-              Fund Loan Purse
-            </Button>
-          </div>
-        </div>
+      {['ADMIN', 'LOANS_MANAGER'].includes(auth.type) &&
+        !auth.type.includes('SUPER_ADMIN') && (
+          <>
+            {location.pathname === '/loans' && (
+              <div className={styles.logoSection}>
+                <div className={styles.logoSectionFlex}>
+                  <Wallet />
+                  <div className={styles.logoSectionContent}>
+                    <p>Loan Purse Balance</p>
+                    <span>{formatCurrency(purseData.walletBalance || 0)}</span>
+                  </div>
+                </div>
+                <>
+                  {!auth.type.includes('LOANS_MANAGER') && (
+                    <div className={styles.logoSectionFlex}>
+                      <Button
+                        // onClick={() => {
+                        //   history.push({pathname:'/fund-purse'})
+                        // }}
+                        onClick={() => {
+                          history.push('/loans')
+                          setShowFundPurse(true)
+                        }}
+                        className={styles.logoSectionFundButton}
+                        type="button"
+                      >
+                        Fund Loan Purse
+                      </Button>
+                    </div>
+                  )}
+                </>
+              </div>
+            )}
+          </>
         )}
-        </>
-      )}
     </>
   )
 }

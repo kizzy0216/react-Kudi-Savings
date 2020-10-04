@@ -4,7 +4,13 @@ import { formatTableData, loanStatuses, tableColumns } from '../utils'
 import moment from 'moment'
 import { Content, Filters, Header } from '../../../components/Layout'
 import { ChevronLeft, Close, Search } from '../../../assets/svg'
-import { Button, Card, CardBody, CardHeader, DateRangePicker } from '@kudi-inc/dip'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  DateRangePicker
+} from '@kudi-inc/dip'
 import Select from '../../../components/Select'
 import Table from '../../../components/Table/table'
 
@@ -31,27 +37,22 @@ export default ({ history }) => {
   const limit = 20
 
   const filterParams = { from: tableFrom, to: tableTo, status, page, limit }
-  
-  const { data: res, isLoading, error, refetch } = useQuery(['AllLoans', filterParams], filterLoans);
+
+  const { data: res, isLoading, error, refetch } = useQuery(
+    ['AllLoans', filterParams],
+    filterLoans
+  )
   let tableData = []
   let totalTablePage = 0
   if (res && res.data) {
-    tableData = formatTableData(
-      res.data.data.list,
-      history,
-      url,
-      page,
-      limit
-    )
-    totalTablePage = Math.ceil(res.data.data.total/limit);
+    tableData = formatTableData(res.data.data.list, history, url, page, limit)
+    totalTablePage = Math.ceil(res.data.data.total / limit)
   }
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate)
-        .subtract(1, 'days')
-        .format('YYYY-MM-DD'))
+      setTableFrom(moment(startDate).format('YYYY-MM-DD'))
     }
     if (endDate) {
       setTableEndDate(endDate)
@@ -67,7 +68,7 @@ export default ({ history }) => {
       <div className="Header">
         <Header>
           <p>
-            <ChevronLeft role="button" onClick={() => history.goBack()}/> Loans
+            <ChevronLeft role="button" onClick={() => history.goBack()} /> Loans
           </p>
         </Header>
       </div>
@@ -91,34 +92,45 @@ export default ({ history }) => {
                 <Select
                   active={status}
                   options={loanStatuses}
-                  onSelect={value =>
-                    setStatus(value)
-                  }
+                  onSelect={value => setStatus(value)}
                 />
               </div>
             </div>
           </CardHeader>
           <CardBody>
-            {isLoading && <TableLoading/>}
+            {isLoading && <TableLoading />}
             {error && (
               <span>
                 Error! {error.message}
-                <button onClick={() => refetch({ disableThrow: true })}>Retry</button>
+                <button onClick={() => refetch({ disableThrow: true })}>
+                  Retry
+                </button>
               </span>
             )}
-            {res && <Table
-              column={tableColumns}
-              placeholder={'Loans'}
-              data={tableData}
-            />}
+            {res && (
+              <Table
+                column={tableColumns}
+                placeholder={'Loans'}
+                data={tableData}
+              />
+            )}
           </CardBody>
           <div className={'pagination'}>
             {page > 0 && (
-              <Button variant={'flat'} onClick={() => setPage(page - 1)} icon={<ChevronLeft/>}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page - 1)}
+                icon={<ChevronLeft />}
+              ></Button>
             )}
-            <p>Page {page + 1} of {totalTablePage}</p>
+            <p>
+              Page {page + 1} of {totalTablePage}
+            </p>
             {tableData.length === limit && (
-              <Button variant={'flat'} onClick={() => setPage(page + 1)}></Button>
+              <Button
+                variant={'flat'}
+                onClick={() => setPage(page + 1)}
+              ></Button>
             )}
           </div>
         </Card>

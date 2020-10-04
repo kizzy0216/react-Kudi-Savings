@@ -28,17 +28,21 @@ const Cashout = props => {
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const initialStartDate = moment().subtract(29, 'days')
-  const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
-  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialStartDate = props.minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = props.minimized ? ' ' : moment()
+  const initialFrom = props.minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = props.minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD HH:mm:ss')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
   const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
-  let limit = props.minimized ? 5 : 50
+  let limit = props.minimized ? 3 : 50
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
@@ -48,6 +52,7 @@ const Cashout = props => {
         limit,
         from,
         to,
+        agentId: props.id,
         status: params.status
       }
     ],
@@ -68,13 +73,19 @@ const Cashout = props => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }
