@@ -9,5 +9,11 @@ export const FundPurse = async (amount, debitWalletId) =>
     `/admin-wallets/credit?amount=${amount}&debitWalletId=${debitWalletId}&type=LOAN`
   )
 
+export const getPurseDetails = async ({ params }) =>
+  await Axios.get(`/admin-wallets/details?type=LOAN`, clean({ params }))
+
+export const getWallets = async ({ params }) =>
+  await Axios.get(`/admin-wallets?type=LOAN`, clean({ params }))
+
 export const getWalletIdForLoan = async () =>
   await Axios.get(`/admin-wallets?type=LOAN`)
