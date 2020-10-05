@@ -113,7 +113,7 @@ const WalletHistory = props => {
               <>
                 {source === 'customer' && (
                   <>
-                    {/* <div className={styles.Credit}>
+                    <div className={styles.Credit}>
                       <Button
                         variant="flat"
                         icon={<Reassign />}
@@ -130,7 +130,7 @@ const WalletHistory = props => {
                       >
                         Debit Plan
                       </Button>
-                    </div> */}
+                    </div>
                   </>
                 )}
               </>
@@ -232,7 +232,7 @@ const WalletHistory = props => {
             </div>
           ))}
       </Card>
-      {/* <SideSheet
+      <SideSheet
         onCloseComplete={() => setShowDebit(false)}
         isShown={showDebit}
         width={800}
@@ -245,7 +245,7 @@ const WalletHistory = props => {
         width={800}
       >
         <CreditPlan setShowCredit={setShowCredit} id={id} phoneNumber={phone} />
-      </SideSheet> */}
+      </SideSheet>
     </Content>
   )
 }
