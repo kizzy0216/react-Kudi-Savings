@@ -3,7 +3,12 @@
 .Header {
   font-weight: normal;
   height: 1.88em;
+  width: 100%;
+  justify-content: space-between;
   margin-bottom: 23px;
+  button {
+    color: $sky-blue;
+  }
 }
 
 .Content {
@@ -16,17 +21,15 @@
 
 .section-2 {
   width: 40%;
-  
 }
 
 .card-1 {
   margin-bottom: 30px;
-  
+
   .first-card {
     flex-direction: column;
     padding-left: 30px;
     padding-right: 29px;
-    
 
     .Customer-Info-Header {
       display: flex;
@@ -34,8 +37,7 @@
       align-items: center;
       padding-bottom: 24px;
       padding-top: 24px;
-      border-bottom: 1px solid #F0F4F9;
-
+      border-bottom: 1px solid #f0f4f9;
 
       .heading {
         font-weight: 500;
@@ -54,7 +56,6 @@
 
         button {
           color: $sky-blue;
-         
         }
 
         span {
@@ -67,14 +68,12 @@
       display: flex;
       margin-top: 24px;
       height: 300px;
-      
 
       .Customer-Picture {
         width: 40%;
         img {
           border-radius: 50%;
           max-height: 60%;
-          
         }
       }
 
@@ -92,7 +91,7 @@
             font-size: 14px;
             line-height: 17px;
             letter-spacing: 0.03em;
-            color: #748CAD;
+            color: #748cad;
           }
           .value {
             font-style: normal;
@@ -100,7 +99,7 @@
             font-weight: normal;
             line-height: 17px;
             text-align: right;
-      text-transform: capitalize;
+            text-transform: capitalize;
             letter-spacing: 0.03em;
           }
         }
@@ -117,7 +116,7 @@
   margin-left: 1.5rem;
   flex-direction: column;
   .add-border-bottom {
-    border-bottom: 1px solid #F0F4F9;
+    border-bottom: 1px solid #f0f4f9;
   }
   p {
     display: flex;
@@ -130,7 +129,7 @@
       font-size: 14px;
       line-height: 17px;
       letter-spacing: 0.03em;
-      color: #748CAD;
+      color: #748cad;
     }
     .value {
       font-weight: normal;
@@ -163,8 +162,53 @@
   width: 100%;
 }
 
-.ApplicationFooter{
+.ApplicationFooter {
   justify-content: space-between;
 }
 
+.disbursement{
+  background: #f8fbff;
+  display: flex;
+  justify-content: space-between;
+}
+
+.disbursementAction {
+  background: #f8fbff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $sky-blue;
+  height: 2.5em;
+  border-top: 1px solid #f0f4f9;
+  margin-top: 1em;
+  font-weight: 500;
+  button {
+    color: inherit;
+  }
+  svg {
+    path {
+      fill: $sky-blue;
+    }
+  }
+}
+
+.declineAction{
+  background: #f8fbff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $danger;
+  height: 2.5em;
+  border-top: 1px solid #f0f4f9;
+  margin-top: 1em;
+  font-weight: 500;
+  button {
+    color: inherit;
+  }
+  svg {
+    path {
+      fill: $danger;
+    }
+  }
+}
 

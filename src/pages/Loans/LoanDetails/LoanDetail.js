@@ -1,14 +1,24 @@
-import React, { Fragment, useContext } from 'react'
-import { ChevronLeft, UserIconLink, Close } from '../../../assets/svg'
+import React, { Fragment, useContext, useState } from 'react'
+import {
+  ChevronLeft,
+  UserIconLink,
+  Close,
+  Reassign,
+  UpdateLink
+} from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
 import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
 import AuthContext from 'context/AuthContext'
 import './loan-detail.scss'
+import styles from './loan-detail.scss'
 import Guarantors from './Guarantors'
 import PaymentOverview from './PaymentOverview'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import { toaster, SideSheet } from 'evergreen-ui'
+import TransferLog from './transfer-log'
+
 import {
   approveLoan,
   declineLoan,
@@ -21,6 +31,7 @@ import { fecthImage, formatCurrency } from 'utils/function'
 export default ({ history, match: { params } }) => {
   let { id: loanId } = params
   let [auth] = useContext(AuthContext)
+  let [showTransferLog, setShowTransferLog] = useState(false)
 
   const { data: res, isLoading, error, refetch } = useQuery(
     ['LoanDetails', { loanId }],
@@ -92,11 +103,21 @@ export default ({ history, match: { params } }) => {
   return (
     <Fragment>
       <div className="Header">
-        <Header>
+        <Header className={styles.Header}>
           <p>
             <ChevronLeft role="button" onClick={() => history.goBack()} />{' '}
             Customer Loan Request
           </p>
+
+          {['ACTIVE', 'PENDING_DISBURSEMENT', 'PAID'].includes(loanStatus) && (
+            <Button
+              variant="flat"
+              onClick={() => setShowTransferLog(true)}
+              icon={<Reassign />}
+            >
+              View Transfer log
+            </Button>
+          )}
         </Header>
       </div>
       <Content className={'Content'}>
@@ -238,28 +259,47 @@ export default ({ history, match: { params } }) => {
                   ) : (
                     <div className={'ApplicationFooter'}>
                       {auth.type.includes('LOANS_MANAGER') && (
-                        <p>
-                          <Button
-                            disabled={[
-                              'DECLINED',
-                              'PENDING_DISBURSEMENT'
-                            ].includes(loanStatus)}
-                            onClick={handleApproveClick}
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            className={'btn-blue'}
-                            disabled={[
-                              'DECLINED',
-                              'PENDING_DISBURSEMENT'
-                            ].includes(loanStatus)}
-                            onClick={handleDeclineClick}
-                            icon={<Close />}
-                          >
-                            Decline
-                          </Button>
-                        </p>
+                        <>
+                          {loanStatus === 'PENDING_DISBURSEMENT' ? (
+                            <div className={"disbursement"}>
+                            <div className={"disbursementAction"}>
+                              <Button
+                                type="button"
+                                variant="flat"
+                                icon={<UpdateLink />}
+                              >
+                                Update to in Progress
+                              </Button>
+                            </div>
+                            <div className={"declineAction"}>
+                            <Button
+                              type="button"
+                              variant="flat"
+                              icon={<Close />}
+                            >
+                              Decline
+                            </Button>
+                          </div>
+                          </div>
+                          ) : (
+                            <p>
+                              <Button
+                                disabled={loanStatus === 'DECLINED'}
+                                onClick={handleApproveClick}
+                              >
+                                Approve
+                              </Button>
+                              <Button
+                                className={'btn-blue'}
+                                disabled={loanStatus === 'DECLINED'}
+                                onClick={handleDeclineClick}
+                                icon={<Close />}
+                              >
+                                Decline
+                              </Button>
+                            </p>
+                          )}
+                        </>
                       )}
                     </div>
                   )}
@@ -267,6 +307,14 @@ export default ({ history, match: { params } }) => {
               </Card>
             </div>
           </Fragment>
+        )}
+        {showTransferLog && (
+          <SideSheet
+            isShown={showTransferLog}
+            onCloseComplete={() => setShowTransferLog(false)}
+          >
+            <TransferLog setShowTransferLog={setShowTransferLog} loan={loan} />
+          </SideSheet>
         )}
       </Content>
     </Fragment>
