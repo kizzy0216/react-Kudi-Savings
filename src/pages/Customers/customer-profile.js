@@ -71,13 +71,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
-
+{/* 
                     <Button
                       variant="flat"
                       icon={<Reassign />}
                     >
                       My Referrals
-                    </Button>
+                    </Button> */}
 
                     <Button
                       variant="flat"
