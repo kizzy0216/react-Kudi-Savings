@@ -5,7 +5,7 @@ import { Content } from 'components/Layout'
 import { toaster } from 'evergreen-ui'
 import cx from 'classnames'
 import styles from './fund-loan.module.scss'
-import { FundPurse, getWalletIdForLoan } from 'services/admin'
+import { FundPurse } from 'services/admin'
 import AuthContext from 'context/AuthContext'
 
 const Fund = ({ setShowFundPurse }) => {
@@ -14,9 +14,7 @@ const Fund = ({ setShowFundPurse }) => {
   const [amount, setAmount] = useState(0)
   const [successful, setIsSuccessful] = useState(false)
 
-  const { data } = useQuery(['getWallet', {}], getWalletIdForLoan)
-
-  let id = data?.data?.data.walletId
+  const id = auth.walletId
 
   const handleSubmit = async e => {
     e.preventDefault()
