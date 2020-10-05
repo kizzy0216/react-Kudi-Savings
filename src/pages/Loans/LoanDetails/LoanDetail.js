@@ -18,7 +18,7 @@ import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { toaster, SideSheet } from 'evergreen-ui'
 import TransferLog from './transfer-log'
-
+import { ProfileLoading } from 'components/loading'
 import {
   approveLoan,
   declineLoan,
@@ -61,6 +61,7 @@ export default ({ history, match: { params } }) => {
       : 0
     : 0
   let loanStatus = loan.status
+
   let badgeType =
     loanStatus === 'PAID'
       ? 'success'
@@ -102,10 +103,9 @@ export default ({ history, match: { params } }) => {
 
   return (
     <Fragment>
-      <div className="Header">
-        <Header className={styles.Header}>
+        <Header className={'Header'}>
           <p>
-            <ChevronLeft role="button" onClick={() => history.goBack()} />{' '}
+            <ChevronLeft role="button" onClick={() => history.goBack()} />
             Customer Loan Request
           </p>
 
@@ -119,8 +119,9 @@ export default ({ history, match: { params } }) => {
             </Button>
           )}
         </Header>
-      </div>
-      <Content className={'Content'}>
+
+      <Content className={styles.content}>
+      {isLoading && <ProfileLoading />}
         {error && (
           <span>
             Error!
@@ -129,8 +130,8 @@ export default ({ history, match: { params } }) => {
             </button>
           </span>
         )}
-        {loan && (
-          <Fragment>
+        {res && res.data && (
+          <div className={'Content'}>
             <div className={'section-1'}>
               <Card className={'card-1'}>
                 <CardBody className={'first-card'}>
@@ -261,26 +262,27 @@ export default ({ history, match: { params } }) => {
                       {auth.type.includes('LOANS_MANAGER') && (
                         <>
                           {loanStatus === 'PENDING_DISBURSEMENT' ? (
-                            <div className={"disbursement"}>
-                            <div className={"disbursementAction"}>
-                              <Button
-                                type="button"
-                                variant="flat"
-                                icon={<UpdateLink />}
-                              >
-                                Update to in Progress
-                              </Button>
+                            <div className={'disbursement'}>
+                              <div className={'disbursementAction'}>
+                                <Button
+                                  type="button"
+                                  variant="flat"
+                                  icon={<UpdateLink />}
+                                >
+                                  Update to in Progress
+                                </Button>
+                              </div>
+                              <div className={'declineAction'}>
+                                <Button
+                                  type="button"
+                                  variant="flat"
+                                  onClick={handleDeclineClick}
+                                  icon={<Close />}
+                                >
+                                  Decline
+                                </Button>
+                              </div>
                             </div>
-                            <div className={"declineAction"}>
-                            <Button
-                              type="button"
-                              variant="flat"
-                              icon={<Close />}
-                            >
-                              Decline
-                            </Button>
-                          </div>
-                          </div>
                           ) : (
                             <p>
                               <Button
@@ -306,7 +308,7 @@ export default ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div>
-          </Fragment>
+            </div>
         )}
         {showTransferLog && (
           <SideSheet

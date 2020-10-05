@@ -112,7 +112,6 @@ const ViewCashout = ({ history,location, match: { params } }) => {
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> USER INFORMATION </h3>
-                  </div>
 
                   <Button
                       variant="flat"
@@ -121,6 +120,8 @@ const ViewCashout = ({ history,location, match: { params } }) => {
                     >
                       Edit Profile
                     </Button>
+                  </div>
+
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyGrid}>

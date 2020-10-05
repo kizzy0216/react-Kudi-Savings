@@ -23,6 +23,7 @@
       text-transform: uppercase;
     }
     button {
+      color: $sky-blue;
       font-size: 0.93em;
       &:nth-of-type(2) {
         color: $danger;
