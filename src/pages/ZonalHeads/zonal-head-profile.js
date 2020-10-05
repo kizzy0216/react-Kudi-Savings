@@ -37,6 +37,7 @@ const ViewCashout = ({ history, match: { params, url } }) => {
   )
 
   let zonalHead = data && data.data ? data.data.data : {}
+  
   return (
     <Fragment>
       <Header>

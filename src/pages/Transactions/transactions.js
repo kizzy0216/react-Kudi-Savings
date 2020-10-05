@@ -1,4 +1,4 @@
-import React, { Fragment, useReducer } from 'react'
+import React, { Fragment, useReducer, useState } from 'react'
 import { debounce } from 'lodash'
 import moment from 'moment'
 import { useQuery } from 'react-query'
@@ -24,7 +24,17 @@ import { ParamsReducer, DefaultParams } from 'utils/function'
 
 const Transactions = ({ history }) => {
   let { url } = useRouteMatch()
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [showReset, setShowReset] = useState(false)
   let limit = 50
   let totalData = 0
   let totalPage = 0
@@ -36,8 +46,8 @@ const Transactions = ({ history }) => {
       {
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to,
+        from,
+        to,
         phoneNumber: params.phoneNumber
       }
     ],
@@ -58,34 +68,28 @@ const Transactions = ({ history }) => {
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          startDate: startDate,
-          from: moment(startDate)
-            .subtract(1, 'days')
-            .format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setStartDate(startDate)
+      setFrom(
+        moment(startDate)
+          .subtract(12, 'hours')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     if (endDate) {
-      setParams({
-        type: 'UPDATE_DATE',
-        payload: {
-          endDate: endDate,
-          to: moment(endDate).format('YYYY-MM-DD HH:mm:ss'),
-          showReset: true
-        }
-      })
+      setEndDate(endDate)
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
+    setShowReset(true)
   }
 
   const onFocusChange = focusedInput => {
-    setParams({
-      type: 'UPDATE_FOCUSEDINPUT',
-      payload: focusedInput
-    })
+    setfocusedInput(focusedInput)
   }
 
   const handleDownload = async e => {
@@ -130,7 +134,7 @@ const Transactions = ({ history }) => {
                 placeholder="Search by number"
                 onChange={e => handleSearch(e)}
               /> */}
-              <div className={[styles.marginSearch,"header-search"].join("")}>
+              <div className={[styles.marginSearch, 'header-search'].join('')}>
                 <input
                   value={params.phoneNumber}
                   name="phoneNumber"
@@ -153,9 +157,9 @@ const Transactions = ({ history }) => {
                   onDatesChange={onDatesChange}
                   onFocusChange={onFocusChange}
                   displayFormat="DD/MM/YYYY"
-                  focusedInput={params.focusedInput}
-                  startDate={params.startDate}
-                  endDate={params.endDate}
+                  focusedInput={focusedInput}
+                  startDate={startDate}
+                  endDate={endDate}
                   isOutsideRange={() => false}
                 />
               </Filters>
@@ -170,16 +174,18 @@ const Transactions = ({ history }) => {
                   Download Result (Page {params.page})
                 </Button>
               )}
-              {params.showReset && (
+              {showReset && (
                 <Button
                   type="button"
                   variant="flat"
                   className={styles.danger}
-                  onClick={() =>
-                    setParams({
-                      type: 'RESET'
-                    })
-                  }
+                  onClick={() => {
+                    setFrom('')
+                    setTo('')
+                    setStartDate('')
+                    setEndDate('')
+                    return setShowReset(false)
+                  }}
                   icon={<Close />}
                 >
                   Clear

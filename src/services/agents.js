@@ -11,6 +11,9 @@ export const getAgents = async ({ page, limit }) =>
 
 export const getAgent = async ({ id }) => await Axios.get(`/agents/${id}`)
 
+export const getAgentActivity = async ({ params }) => await Axios.get(`/agents/activity`, clean({ params }))
+
+
 export const getUsers = async ({ id, ...params }) =>
   await Axios.get(`/users/${id}/downline`, clean({ params }))
 

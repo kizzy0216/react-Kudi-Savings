@@ -24,7 +24,7 @@ const SingleMarket = ({ history, match: { params } }) => {
       <Header>
         <p>
           <ChevronLeft role="button" onClick={() => history.goBack()} />
-          Market
+          Market  
         </p>
       </Header>
       <Content className={styles.content}>

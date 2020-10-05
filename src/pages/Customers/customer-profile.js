@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useContext } from 'react'
+import React, { Fragment, useState, useContext, useReducer } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, SideSheet } from 'evergreen-ui'
@@ -10,7 +10,7 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, ChevronLeft, Close } from 'assets/svg'
+import { SettingsLink, ChevronLeft, Close, Reassign, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './customer-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -18,34 +18,34 @@ import { getCustomer, getPlans } from 'services/customers'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import AuthContext from 'context/AuthContext'
+import { useRouteMatch } from 'react-router-dom'
 import EditCustomer from './edit-customer'
 import UserPlans from './userPlans'
+import CustomerInformation from './customer-information'
+import { AgentReducer, DefaultAgent } from '../Agents/agent-reducer'
 
 const CustomerProfile = ({ history, match: { params } }) => {
+  let { url } = useRouteMatch()
   const [auth] = useContext(AuthContext)
   let [showEdit, setShowEdit] = useState(false)
+  let [showInformation, setShowInformation] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
+  const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
+
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
     getCustomer
   )
   const userPlans = useQuery(['Plans', { id: params.id }], getPlans)
 
-  let customer = data && data.data ? data.data.data : {}
+  let customer = data?.data?.data ?? {}
 
   const { data: imageData } = useQuery(
     data && customer.pictureId && ['Image', { id: customer.pictureId }],
     fecthImage
   )
-  if (
-    userPlans &&
-    userPlans.data &&
-    userPlans.data.data &&
-    userPlans.data.data.data.walletBalance
-  ) {
-    walletBalance = userPlans.data.data.data.walletBalance
-  }
+  walletBalance = userPlans?.data?.data?.data?.walletBalance
   return (
     <Fragment>
       <Header>
@@ -71,6 +71,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
+{/* 
+                    <Button
+                      variant="flat"
+                      icon={<Reassign />}
+                    >
+                      My Referrals
+                    </Button> */}
 
                     <Button
                       variant="flat"
@@ -86,7 +93,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <div className={styles.FirstBodyGridProfile}>
                       <img
                         className={styles.FirstBodyGridProfileImg}
-                        src={imageData ? imageData.data.medium : AgentImg}
+                        src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
                     </div>
@@ -94,15 +101,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
                         <span>
-                          {`${
-                            customer && customer.lastName
-                              ? customer.lastName
-                              : ''
-                          } ${
-                            customer && customer.firstName
-                              ? customer.firstName
-                              : ''
-                          }`}
+                          {`${customer?.lastName ?? ''} ${customer?.firstName ??
+                            ''}`}
                         </span>
                       </div>
                       <div className={styles.FirstBodyGridContent}>
@@ -122,18 +122,30 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
+                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                  <Button
+                    variant="flat"
+                    onClick={() => setShowInformation(true)}
+                    type="button"
+                    icon={<Eye />}
+                  >
+                    View All Information
+                  </Button>
+                </CardFooter> */}
               </Card>
               <Card>
                 <CardHeader>
                   <div className={styles.FirstHeader}>
                     <h3> SAVINGS PLAN</h3>
 
-                  {customer && customer.status && <Badge
-                      className={styles.FirstHeaderBadge}
-                      variant="success"
-                    >
-                      {customer.status}
-                    </Badge>} 
+                    {customer?.status && (
+                      <Badge
+                        className={styles.FirstHeaderBadge}
+                        variant="success"
+                      >
+                        {customer.status}
+                      </Badge>
+                    )}
                   </div>
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
@@ -151,8 +163,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
-                  <span> Wallet Balance</span>
-                  <span><b>{formatCurrency(walletBalance)}</b> </span>
+                    <span> Wallet Balance</span>
+                    <span>{formatCurrency(walletBalance)}</span>
                   </div>
                 </CardBody>
               </Card>
@@ -166,7 +178,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   </CardBody>
                 </div>
               </Card> */}
-              {/* <Card>
+            {/* <Card>
                 <div className={styles.Withdrawal}>
                   <div className={styles.WithdrawalContent}>
                     <CardBody className={styles.WithdrawalContentBody}>
@@ -187,7 +199,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </div>
               </Card> */}
 
-              {/* <Card>
+            {/* <Card>
                 <CardHeader className={styles.FirstHeader}>
                   <h3>DSA</h3>
                   <Button variant="flat" icon={<SettingsLink />}>
@@ -199,20 +211,18 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span>Full Name: </span>
                     <span>
                       {`${
-                        customer && customer.agent
-                          ? customer.agent.lastName
-                          : ''
+                        customer?.agent
+                          ?? ''
                       } ${
-                        customer && customer.agent
-                          ? customer.agent.firstName
-                          : 'N/A'
+                       customer?.agent
+                          ?? 'N/A'
                       }`}
                     </span>
                   </div>
                   <div className={styles.FirstBodyFlex}>
                     <span>Email: </span>
                     <span>
-                      {customer && customer.agent
+                      {customer?.agent
                         ? customer.agent.email
                         : 'N/A'}
                     </span>
@@ -220,28 +230,69 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div> */}
+            {/* <div className={styles.Overview}>
+              <div className={styles.OverviewRow}>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>Wallet Balance</p>
+                  </CardHeader>
+                  <p className={styles.OverviewRowCardp2}>
+                    {formatCurrency(walletBalance)}
+                  </p>
+                </Card>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>Stash Balance</p>
+                  </CardHeader>
+                  <p className={styles.OverviewRowCardp2}>
+                    {formatCurrency(25000)}
+                  </p>
+                  <p className={styles.OverviewRowCardFooterButton}>
+                    <Button
+                      variant="flat"
+                      onClick={() => history.push(`${url}/stash`)}
+                      type="button"
+                      icon={<Eye />}
+                    >
+                      View Transaction History
+                    </Button>
+                  </p>
+                </Card>
+                <Card className={styles.OverviewRowCard}>
+                  <CardHeader className={styles.OverviewRowCardHeader}>
+                    <p>KTA Details</p>
+                  </CardHeader>
+
+                  <p className={styles.OverviewRowCardp2}>0123456789</p>
+                  <p className={styles.OverviewRowCardp1}>Providus Bank</p>
+                </Card>
+              </div>
+            </div> */}
+
             <div className={styles.Second}>
-              <UserPlans plans={userPlans} history={history} />
+              <UserPlans
+                plans={userPlans}
+                history={history}
+                phoneNumber={customer.phoneNumber}
+              />
             </div>
-            {customer &&
-              customer.previouslyChangedPhoneNumbers &&
-              customer.previouslyChangedPhoneNumbers.length > 0 && (
-                <div className={styles.Third}>
-                  <Card>
-                    <CardHeader>
-                      <div className={styles.FirstHeader}>
-                        <h3> Wallet Number History</h3>
-                      </div>
-                    </CardHeader>
-                    <CardBody>
-                      <div className={styles.FirstBodyGridContent}>
-                        <span>Previous Wallet Number</span>
-                        <span>{customer.previouslyChangedPhoneNumbers}</span>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </div>
-              )}
+            {customer?.previouslyChangedPhoneNumbers?.[0] && (
+              <div className={styles.DivContent}>
+                <Card>
+                  <CardHeader>
+                    <div className={styles.FirstHeader}>
+                      <h3> Wallet Number History</h3>
+                    </div>
+                  </CardHeader>
+                  <CardBody>
+                    <div className={styles.FirstBodyGridContent}>
+                      <span>Previous Wallet Number</span>
+                      <span>{customer.previouslyChangedPhoneNumbers}</span>
+                    </div>
+                  </CardBody>
+                </Card>
+              </div>
+            )}
           </div>
         )}
 
@@ -279,6 +330,18 @@ const CustomerProfile = ({ history, match: { params } }) => {
             customer={customer}
             refetch={refetch}
             auth={auth}
+            agent={agent}
+            setAgent={setAgent}
+          />
+        </SideSheet>
+        <SideSheet
+          onCloseComplete={() => setShowInformation(false)}
+          isShown={showInformation}
+          width={600}
+        >
+          <CustomerInformation
+            setShowEdit={setShowInformation}
+            customer={customer}
           />
         </SideSheet>
       </Content>

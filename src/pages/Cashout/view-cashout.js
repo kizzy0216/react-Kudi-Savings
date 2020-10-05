@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, toaster, SideSheet } from 'evergreen-ui'
@@ -14,6 +14,7 @@ import {
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
 import { Close, ChevronLeft, Eye } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
+import AuthContext from 'context/AuthContext'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
@@ -21,6 +22,7 @@ import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 
 const ViewCashout = ({ history, match: { params } }) => {
+  let [auth] = useContext(AuthContext)
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
@@ -169,6 +171,8 @@ const ViewCashout = ({ history, match: { params } }) => {
                     <span>{formatCurrency(withdrawal.amount)}</span>
                   </div>
                 </CardBody>
+                {!auth.type.includes('LOANS_MANAGER') &&<>
+                
                 {withdrawal &&
                   withdrawal.status !== 'APPROVED' &&
                   withdrawal.status !== 'DECLINED' && (
@@ -195,19 +199,19 @@ const ViewCashout = ({ history, match: { params } }) => {
                       </Button>
                     </CardFooter>
                   )}
-                {withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
-                    <div className={styles.Kyc}>
-                      <Button
-                        type="button"
-                        variant="flat"
-                        icon={<Eye />}
-                        onClick={() => setShowKyc(true)}
-                      >
-                        View KYC
-                      </Button>
-                    </div>
-                  )}
+                  </>}
+                {withdrawal.status === 'PENDING_IMAGE_VALIDATION' && (
+                  <div className={styles.Kyc}>
+                    <Button
+                      type="button"
+                      variant="flat"
+                      icon={<Eye />}
+                      onClick={() => setShowKyc(true)}
+                    >
+                      View KYC
+                    </Button>
+                  </div>
+                )}
               </Card>
             </div>
             <div className={styles.Second}>

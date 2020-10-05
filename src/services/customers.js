@@ -16,3 +16,6 @@ export const getPlans = ({ id }) => Axios.get(`/plans/${id}/user`)
 
 export const getHistoryByPlan = ({ id, params }) =>
   Axios.get(`plans/${id}/wallets`, clean({ params }))
+
+  export const getRevenue = async params => 
+    await Axios.get(`/revenues`, clean({params}))

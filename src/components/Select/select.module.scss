@@ -1,7 +1,7 @@
  @import '../../styles/variables.scss';
  @import '../../styles/breakpoint.scss';
 .Select {
-  height: 100%;
+  //height: 100%;
   width: 100%;
   background: $light-grey;
   display: flex;
@@ -35,7 +35,7 @@
       font-size: 0.72em;
       justify-content: space-between;
       align-items: center;
- 
+
     }
     svg {
       width: 0.83em;
@@ -58,6 +58,7 @@
       height: 3.36em;
       justify-content: center;
       align-items: center;
+      text-align: center;
       display: flex;
       text-transform: capitalize;
       border: 1px solid #f2f2f2;

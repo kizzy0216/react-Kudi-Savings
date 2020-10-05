@@ -26,6 +26,13 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
   const [errors, setErrors] = useState({})
   const [imgProgress, setImgProcess] = useState(0)
   const [idProgress, setIdProcess] = useState(0)
+  let markets = []
+  if (auth && auth.markets) {
+    markets = auth.markets.map(({ name, id }) => ({
+      text: name,
+      value: id
+    }))
+  }
   let { data: avatar } = useQuery(
     edited && edited.pictureId && ['Image', { id: edited.pictureId }],
     fecthImage
@@ -95,6 +102,10 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     e.preventDefault()
     setLoading(true)
 
+    // if(!edited.marketName){
+    //   edited.marketName = edited.market.name
+    // }
+
     if (uploadedId && uploadedId.data) {
       edited.identificationCardImageId = uploadedId.data.id
     }
@@ -104,17 +115,16 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
     const errors = isValidUpdate(edited)
     setErrors(errors)
 
-    if (Object.keys(errors).length > 0) {
-      setLoading(false)
-      return
-    }
+    if (Object.keys(errors).length > 0) return
 
-    let { market, ...rest } = edited
+    let { ...rest } = edited
 
     try {
       await updateCustomer(rest)
       setLoading(false)
-      toaster.success('Edit customer details successful. Updates will reflect soon')
+      toaster.success(
+        'Edit customer details successful. Updates will reflect soon'
+      )
       refetch({ disableThrow: true })
       setShowEdit(false)
     } catch (e) {
@@ -262,6 +272,7 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               error={errors.address}
               status={errors.address && 'error'}
             />
+
             <Select
               onSelect={state =>
                 setEdited({
@@ -287,6 +298,23 @@ const EditCustomer = ({ setShowEdit, refetch, customer, auth }) => {
               error={errors.lga}
               status={errors.lga && 'error'}
             />
+
+            {/* <Select
+              onSelect={marketName =>
+                setEdited({
+                  ...edited,
+                  marketName
+                })
+              }
+              name="market"
+              value={edited?.market?.name}
+              required
+              label="Market"
+              options={markets}
+              autoComplete="markets"
+              error={errors.marketName}
+              status={errors.marketName && 'error'}
+            /> */}
           </div>
           <Button type="submit" loading={loading}>
             Submit

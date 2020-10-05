@@ -1,0 +1,23 @@
+.FundLoan{
+    font-size: 1rem;
+    &Form {
+      width: 20em;
+      & > div {
+        margin-bottom: 1.67em;
+      }
+  
+      &Submit {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 4.33em;
+      }
+    }
+    &Header {
+      font-size: 0.83em;
+      height: 4em;
+      display: flex;
+      align-items: center;
+      font-weight: normal;
+      text-transform: uppercase;
+    }
+}

@@ -24,9 +24,7 @@
     }
     button {
       font-size: 0.93em;
-      &:nth-of-type(2) {
-        color: $danger;
-      }
+      color: $sky-blue;
     }
     &Badge {
       font-size: 0.93em;
@@ -65,6 +63,13 @@
         }
       }
     }
+    &FooterButton {
+      background: #f8fbff;
+      button {
+        color: $sky-blue;
+        margin: auto;
+      }
+    }
     &Flex {
       display: flex;
       justify-content: space-between;
@@ -97,8 +102,7 @@
   margin: 1.67em 0;
   @include md {
     display: grid;
-    grid-template-columns: 100%
-
+    grid-template-columns: 100%;
   }
   &Header {
     h3 {
@@ -290,7 +294,101 @@
     }
   }
 }
-.Third{
+
+.DivContent {
+  font-size: 1rem;
   display: block;
-  
+  margin: 1.67em 1em;
+}
+
+.Overview {
+  margin-bottom: 30px;
+  margin-top: 1em;
+
+  &Row {
+    display: flex;
+    justify-content: space-between;
+
+    &Card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex-wrap: wrap;
+      text-align: center;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      flex-basis: 28%;
+      height: 170px;
+      padding-top: 20px;
+      &Header {
+        p {
+          font-size: 12px;
+          line-height: 114%;
+          margin-bottom: 0.714em;
+          color: $grey;
+        }
+      }
+
+      &p1 {
+        
+        font-size: 16px;
+        line-height: 15px;
+        font-size: 13px;
+      }
+
+      &p2 {
+        font-size: 23px;
+        font-weight: 500;
+        margin-top: 1rem;
+        line-height: 27px;
+      }
+      &FooterButton {
+        margin-top: 0.7em;
+        button {
+          color: $sky-blue;
+          margin: auto;
+        }
+      }
+    }
+  }
+}
+
+.Details {
+  flex-direction: row;
+  display: block;
+  flex: 1;
+  align-content: center;
+  &Body {
+    padding: 1.55em;
+    border: 1px solid $light-grey;
+    border-radius: 0.3rem;
+    margin-top: 1em;
+    margin-left: 1em;
+    width: 90%;
+
+    &Flex {
+      display: flex;
+      justify-content: space-between;
+      font-weight: normal;
+      span {
+        color: $grey;
+        padding: 1.37em 0;
+        font-size: 0.9em;
+        &:nth-of-type(2) {
+          color: $text-darker;
+          text-align: right;
+        }
+      }
+    }
+  }
+  &Footer {
+    button {
+      color: $sky-blue;
+      margin: auto;
+    }
+  }
+}
+
+.Capital{
+  text-transform: capitalize;
 }

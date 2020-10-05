@@ -9,7 +9,14 @@ import {
   Badge,
   CardFooter
 } from '@kudi-inc/dip'
-import { SettingsLink, Bin, Eye, ChevronLeft, Close } from 'assets/svg'
+import {
+  SettingsLink,
+  Bin,
+  Eye,
+  ChevronLeft,
+  Close,
+  Reassign
+} from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import styles from './agent-profile.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
@@ -17,29 +24,37 @@ import { getAgent, getUsers, getUsersOnboarded } from 'services/agents'
 import { ProfileLoading } from 'components/loading'
 import { formatCurrency, fecthImage } from 'utils/function'
 import FundWallet from './fund-wallet'
+import DebitWallet from './debit-wallet'
 import UpdateStatus from './update-status'
 import CustomersByMarkets from './customers-by-markets'
 import CustomersOnboarded from './customers-by-onboarding'
 import AuthContext from 'context/AuthContext'
+import Collections from './recent-collections'
+import WalletTopUp from './wallet-topUp'
+import Cashout from './cashout'
+import Transaction from './p2p'
 
 const SingleAgent = ({ history, match: { params, url } }) => {
   const [current, setCurrent] = useState('default')
   const [auth] = useContext(AuthContext)
   const [fundAmount, setFundAmount] = useState(0)
   let [page, setPage] = useState(1)
-  let [pg, setPg] = useState(1)
   // let [show, setShow] = useState(false)
   let [showStatus, setShowStatus] = useState(false)
   let [isShown, setIsShown] = useState(false)
   let [showDialog, setShowDialog] = useState(false)
+  let [showDebitWallet, setShowDebitWallet] = useState(false)
+  let [deductAmount, setDeductionAmount] = useState(0)
   let limit = 50
+  let isActive = true
   let [phoneNumber, setPhoneNumber] = useState('')
   let [mobile, setMobile] = useState('')
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleAgent', { id: params.id }],
     getAgent
   )
-  let agent = data && data.data ? data.data.data : {}
+
+  let agent = data?.data?.data ?? {}
 
   const { data: imageData } = useQuery(
     data && ['Image', { id: agent.imageId }],
@@ -49,6 +64,34 @@ const SingleAgent = ({ history, match: { params, url } }) => {
     data && ['Customers', { id: agent.id, page, limit, phoneNumber }],
     getUsers
   )
+
+  let customersLimit = agent.totalCustomers
+  const { data: isActiveUsers } = useQuery(
+    [
+      'Customers',
+      { id: agent.id, isActive, page, limit: customersLimit, phoneNumber }
+    ],
+    getUsers
+  )
+
+  let isActiveCount = isActiveUsers?.data?.data.list.length ?? '0'
+
+  const { data: isInActiveUsers } = useQuery(
+    data && [
+      'Customers',
+      {
+        id: agent.id,
+        isActive: !isActive,
+        page,
+        limit: customersLimit,
+        phoneNumber
+      }
+    ],
+    getUsers
+  )
+
+  let isInActiveCount = isInActiveUsers?.data?.data.list.length ?? '0'
+
   const usersOnboarded = useQuery(
     data && ['onboarded', { id: agent.id, page, limit, phoneNumber: mobile }],
     getUsersOnboarded
@@ -66,6 +109,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               <ChevronLeft role="button" onClick={() => history.goBack()} />
               Agent Profile
             </p>
+            {/* <Button type="button" icon={<Reassign />}>
+              View New Referrals
+            </Button> */}
           </Header>
           <Content className={styles.content}>
             {isLoading && <ProfileLoading />}
@@ -98,7 +144,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           onClick={() => setShowStatus(true)}
                           icon={<Bin />}
                         >
-                          Update Status
+                          {agent.status !== 'ACTIVE'
+                            ? 'Update Status'
+                            : 'Suspend Account'}
                         </Button>
                       </div>
                     </CardHeader>
@@ -107,7 +155,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                         <div className={styles.FirstBodyGridProfile}>
                           <img
                             className={styles.FirstBodyGridProfileImg}
-                            src={imageData ? imageData.data.medium : AgentImg}
+                            src={imageData?.data?.medium || AgentImg}
                             alt="agent"
                           />
                         </div>
@@ -115,11 +163,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                           <div className={styles.FirstBodyGridContent}>
                             <span>Name</span>
                             <span>
-                              {`${
-                                agent && agent.lastName ? agent.lastName : ''
-                              } ${
-                                agent && agent.firstName ? agent.firstName : ''
-                              }`}
+                              {`${agent?.lastName ?? ''} ${agent?.firstName ??
+                                ''}`}
                             </span>
                           </div>
                           <div className={styles.FirstBodyGridContent}>
@@ -144,11 +189,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                       </div> */}
                           <div className={styles.FirstBodyGridContent}>
                             <span>Assigned Market: </span>
-                            <span>
-                              {agent && agent.assignedMarket
-                                ? agent.assignedMarket.name
-                                : 'N/A'}
-                            </span>
+                            <span>{agent?.assignedMarket?.name ?? 'N/A'}</span>
                           </div>
                         </div>
                       </div>
@@ -161,8 +202,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
 
                         <Badge
                           className={styles.FirstHeaderBadge}
-                          variant={agent.status === 'ACTIVE' ? 'success' : 'danger'}
-                        
+                          variant={
+                            agent.status === 'ACTIVE' ? 'success' : 'danger'
+                          }
                         >
                           {agent.status}
                         </Badge>
@@ -172,11 +214,11 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                     <CardBody className={styles.FirstBody}>
                       <div className={styles.FirstBodyFlex}>
                         <span>Active Customers: </span>
-                        <span> N/A</span>
+                        <span>{isActiveCount}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Inactive Customers </span>
-                        <span>N/A</span>
+                        <span>{isInActiveCount}</span>
                       </div>
                       <div className={styles.FirstBodyFlex}>
                         <span> Total Customers </span>
@@ -204,25 +246,45 @@ const SingleAgent = ({ history, match: { params, url } }) => {
                   </div>
                 </div>
                 <div className={styles.Second}>
-                  <Card>
+                  <Card className={styles.Card}>
+                    <div className={styles.WalletHeader}>
+                      <h3>Wallet Balance</h3>
+                    </div>
                     <div className={styles.Wallet}>
                       <CardBody className={styles.WalletContent}>
-                        <p>Wallet Balance</p>
                         <h2>
                           {Number(fundAmount) > 0
                             ? formatCurrency(Number(fundAmount))
                             : formatCurrency(agent.cashBalance)}
                         </h2>
+                      </CardBody>
+                    </div>
+                    {/* <div className={styles.WalletFooter}> */}
+                      <CardFooter className={styles.FirstBodyFooterButton}>
                         <Button
                           variant="flat"
-                          onClick={() => history.push(`${url}/wallet-history`)}
+                          onClick={() =>
+                            history.push({
+                              pathname: `${url}/wallet-history`,
+                              state: agent.id
+                            })
+                          }
                           type="button"
                           icon={<Eye />}
                         >
                           View History
                         </Button>
-                      </CardBody>
-                    </div>
+                        {/* <div className={styles.WalletFooterDebit}>
+                          <Button
+                            variant="flat"
+                            icon={<Reassign />}
+                            onClick={() => setShowDebitWallet(true)}
+                          >
+                            Debit Wallet
+                          </Button>
+                        </div> */}
+                      </CardFooter>
+                    {/* </div> */}
                   </Card>
                   <Card>
                     <div className={styles.Withdrawal}>
@@ -305,6 +367,18 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             </SideSheet>
 
             <SideSheet
+              onCloseComplete={() => setShowDebitWallet(false)}
+              isShown={showDebitWallet}
+            >
+              <DebitWallet
+                setShowDebitWallet={setShowDebitWallet}
+                zonalHead={agent}
+                refetch={refetch}
+                setDeductionAmount={setDeductionAmount}
+              />
+            </SideSheet>
+
+            <SideSheet
               onCloseComplete={() => setShowStatus(false)}
               isShown={showStatus}
             >
@@ -340,6 +414,18 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               </Dialog>
             )}
           </Content>
+          <div className={styles.DivContent}>
+            <Collections minimized id={agent.id}/>
+          </div>
+          <div className={styles.DivContent}>
+            <Transaction minimized id={agent.id} />
+          </div>
+          <div className={styles.DivContent}>
+            <WalletTopUp minimized id={agent.id} />
+          </div>
+          <div className={styles.DivContent}>
+            <Cashout minimized id={agent.id}/>
+          </div>
         </Fragment>
       )}
       {current === 'Markets' && (
@@ -360,8 +446,8 @@ const SingleAgent = ({ history, match: { params, url } }) => {
           history={history}
           usersOnboarded={usersOnboarded}
           limit={limit}
-          page={pg}
-          setPage={setPg}
+          page={page}
+          setPage={setPage}
           phoneNumber={mobile}
           setPhoneNumber={setMobile}
           agent={agent}

@@ -2,7 +2,7 @@ export const Headers = [
   {
     key: 'name',
     render: 'Market Name',
-    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
   },
 
   // {
@@ -10,24 +10,32 @@ export const Headers = [
   //   render: 'Population',
   //   access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
   // },
-  { key: 'city', render: 'City', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
+  {
+    key: 'city',
+    render: 'City',
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
+  },
 
   {
     key: 'lga',
     render: 'LGA',
-    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
   },
-  { key: 'state', render: 'State', access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN'] },
+  {
+    key: 'state',
+    render: 'State',
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
+  },
   {
     key: 'totalRevenue',
     render: 'Total Revenue',
-    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
   },
 
   {
     key: 'timeCreated',
     render: 'Time Created',
-    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN']
+    access: ['ZONAL', 'ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
   },
   {
     key: 'action',

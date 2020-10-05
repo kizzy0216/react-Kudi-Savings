@@ -1,0 +1,110 @@
+@import '../../../styles/variables.scss';
+
+.second-card {
+  display: flex;
+  flex-direction: column;
+  padding-top: 24px;
+  padding-left: 30px;
+  padding-right: 29px;
+
+  .Guarantor-Info-Header {
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 23px;
+    border-bottom: 1px solid #f0f4f9;
+    .header {
+      font-weight: bold;
+      font-size: 13px;
+      line-height: 16px;
+      text-transform: uppercase;
+      color: #223856;
+    }
+    .badge {
+      font-size: 13px;
+    }
+  }
+
+  .Guarantor-Info {
+    display: flex;
+    justify-content: center;
+    .Guarantor-1 {
+      border-right: 1px solid #f0f4f9;
+      display: flex;
+      padding-top: 20px;
+      flex: auto;
+      align-items: center;
+      .Guarantor-Info-Picture {
+        img {
+          height: 4rem;
+          border-radius: 50%;
+        }
+      }
+
+      .Info {
+        display: flex;
+        flex-direction: column;
+        padding-left: 7%;
+
+        .name {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: 0.03em;
+          color: #223856;
+          text-transform: capitalize;
+          margin-bottom: 0.7em;
+        }
+
+        .profile {
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+
+          button {
+            color: $sky-blue;
+          }
+        }
+      }
+    }
+
+    .Guarantor-2 {
+      display: flex;
+      padding-left: 2em;
+      padding-top: 20px;
+      align-items: center;
+      flex: auto;
+
+      .Guarantor-Info-Picture {
+        img {
+          border-radius: 50%;
+          height: 4rem;
+        }
+      }
+
+      .Info {
+        display: flex;
+        flex-direction: column;
+        padding-left: 7%;
+        .name {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 17px;
+          letter-spacing: 0.03em;
+          color: #223856;
+          text-transform: capitalize;
+          margin-bottom: 0.7em;
+        }
+
+        .profile {
+          letter-spacing: 0.03em;
+          font-weight: 500;
+          font-size: 13px;
+          line-height: 16px;
+          button {
+            color: $sky-blue;
+          }
+        }
+      }
+    }
+  }
+}

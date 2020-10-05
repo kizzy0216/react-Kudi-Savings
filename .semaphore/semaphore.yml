@@ -51,6 +51,27 @@ blocks:
         commands:
           - bash ~/.scripts/push-image.sh
 
+  - name: Scan
+    task:
+      secrets:
+        - name: gke-staging
+        - name: ssh-key
+        - name: vulnerability-analysis
+      prologue:
+        commands:
+          - export PATH=$HOME/.local/bin:$PATH
+          - chmod 600 ~/.ssh/id
+          - chmod 600 ~/.ssh/id.pub
+          - ssh-add ~/.ssh/id
+          - bash ~/.scripts/init-gke.sh
+          - sem-version python 3.7
+          - pip3 install google-cloud-containeranalysis==2.0.0
+          - checkout
+      jobs:
+      - name: Everything
+        commands:
+          - bash ~/.scripts/scan.sh
+
 promotions:
   - name: Deploy PR Environment
     pipeline_file: deploy-pr.yml

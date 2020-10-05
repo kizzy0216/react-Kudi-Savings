@@ -27,5 +27,10 @@ export const isValidUpdate = values => {
   if (!values.address) {
     errors.address = 'Address is required'
   }
+  // if (!values.marketName) {
+  //   errors.marketName = 'Market name is required'
+  // }
+  /************customer's plan********************/
+  
   return errors
 }

@@ -50,7 +50,7 @@ const Customers = ({
         totalWithdrawn: formatCurrency(totalWithdrawn),
         timeCreated: timeCreated
           ? moment(timeCreated).format('Do MMM, YYYY')
-          : 'N/A',
+          : '-',
         action: (
           <Button
             icon={<Eye />}
@@ -68,7 +68,10 @@ const Customers = ({
     <Fragment>
       <Header>
         <p>
-          <ChevronLeft role="button" onClick={() => setCurrent('default')} />
+          <ChevronLeft role="button" onClick={() => {
+            setCurrent('default')
+            setPhoneNumber('')
+            return setNumber('')}} />
           Agent: {agent && agent.firstName && agent.firstName}{' '}
           {agent && agent.lastName && agent.lastName}
         </p>

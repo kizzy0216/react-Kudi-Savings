@@ -25,9 +25,9 @@ const Plans = () => {
   let formattedData = []
   if (data && data.data) {
     formattedData = data.data.data.plans.map((plan, index) => ({
-      title: plan.title ? plan.title : 'N/A',
-      range: `${plan.low ? formatCurrency(plan.low) : 'N/A'} - ${
-        plan.high ? formatCurrency(plan.high) : 'N/A'
+      title: plan.title ? plan.title : '-',
+      range: `${plan.low ? formatCurrency(plan.low) : '-'} - ${
+        plan.high ? formatCurrency(plan.high) : '-'
       }`,
       action: (
         <Button

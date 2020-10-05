@@ -17,7 +17,8 @@ export const formatData = (data, history, url, page, limit) => {
         amount,
         id,
         timeCreated,
-        planTitle
+        planTitle,
+        type
       },
       index
     ) => ({
@@ -29,6 +30,7 @@ export const formatData = (data, history, url, page, limit) => {
       agentName: formatText(agentName),
       managerName: formatText(managerName),
       amount: formatCurrency(amount),
+      type: formatText(type),
       planTitle: formatText(planTitle),
       status: status ? (
         <Badge
@@ -43,7 +45,7 @@ export const formatData = (data, history, url, page, limit) => {
           {status}
         </Badge>
       ) : (
-        'N/A'
+        '-'
       ),
       timeCreated: moment(timeCreated).format('DD/MM/YY'),
       action: (
@@ -59,15 +61,19 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
+
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
   { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
   { text: 'Declined', value: 'DECLINED' },
   { text: 'Pending', value: 'PENDING' },
+  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]
+
+
 export const TableColumns = [
   {
     key: 'name',

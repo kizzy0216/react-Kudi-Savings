@@ -1,73 +1,81 @@
 import React, { useState } from 'react'
 import { useRouteMatch } from 'react-router-dom'
 import Table from 'components/Table'
-import { CardBody, Card } from '@kudi-inc/dip'
+import { CardBody, Card, Button, Badge } from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
-import { formatPlan } from './function'
+import { UserPlanTableColumn, formatCurrency, formatText } from 'utils/function'
 import styles from './customers.module.scss'
-const UserPlans = ({ plans, history }) => {
+import { Eye } from 'assets/svg'
+
+const UserPlans = ({ plans, history, phoneNumber }) => {
   let { url } = useRouteMatch()
-  const [page, setPage] = useState(1)
-  let limit = 30
   let formattedData = []
   let { data, isLoading, error, refetch } = plans
   if (data && data.data && data.data.data) {
-    formattedData = formatPlan(
-      data.data.data.plans.list,
-      history,
-      url,
-      page,
-      limit
+    formattedData = data.data.data.plans.list.map(
+      ({
+        collectionCount,
+        duration,
+        dailyAmount,
+        amountSaved,
+        planStatus,
+        plan,
+        id,
+        title,
+        ...rest
+      }) => ({
+        ...rest,
+        plan: `${title}(${plan.title})`,
+        collectionCount: formatText(collectionCount),
+        duration: `${formatText(duration)} days`,
+        amountSaved: formatCurrency(amountSaved),
+        dailyAmount: formatCurrency(dailyAmount),
+        planStatus: planStatus ? (
+          <Badge variant={planStatus === 'ACTIVE' ? 'success' : 'danger'}>
+            {planStatus}
+          </Badge>
+        ) : (
+          '-'
+        ),
+        action: (
+          <Button
+            icon={<Eye />}
+            variant="flat"
+            onClick={() =>
+              history.push({
+                pathname: `${url}/plan/${id}`,
+                state: phoneNumber
+              })
+            }
+          >
+            View
+          </Button>
+        )
+      })
     )
   }
   return (
     <Card>
-    <CardBody className={styles.Customers}>
-      <div className={styles.CustomersHeader}>
-        {isLoading && <TableLoading />}
-        {error && (
-          <span>
-            Error!
-            <button onClick={() => refetch({ disableThrow: true })}>
-              Retry
-            </button>
-          </span>
-        )}
-        {data && data.data && (
-          <Table
-            placeholder="User Plan"
-            column={[
-              {
-                key: `plan`,
-                render: 'Plan'
-              },
-              {
-                key: 'collectionCount',
-                render: 'Collection Count'
-              },
-              {
-                key: 'duration',
-                render: 'Duration'
-              },
-              { key: 'dailyAmount', render: 'Daily Amount' },
-
-              { key: 'amountSaved', render: 'Amount Saved' },
-
-              {
-                key: 'planStatus',
-                render: 'Plan Status'
-              },
-
-              {
-                key: 'action',
-                render: 'VIEW HISTORY'
-              }
-            ]}
-            data={formattedData}
-          />
-        )}
-      </div>
-    </CardBody>
+      <CardBody className={styles.Customers}>
+        <div className={styles.CustomersHeader}>
+          {isLoading && <TableLoading />}
+          {error && (
+            <span>
+              Error!
+              <button onClick={() => refetch({ disableThrow: true })}>
+                Retry
+              </button>
+            </span>
+          )}
+          {data && data.data && (
+            <Table
+              placeholder="User Plan"
+              column={UserPlanTableColumn}
+              data={formattedData}
+            />
+          )}
+        </div>
+      </CardBody>
     </Card>
   )
 }
