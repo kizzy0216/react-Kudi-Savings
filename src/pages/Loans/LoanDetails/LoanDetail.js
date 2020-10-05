@@ -103,25 +103,25 @@ export default ({ history, match: { params } }) => {
 
   return (
     <Fragment>
-        <Header className={'Header'}>
-          <p>
-            <ChevronLeft role="button" onClick={() => history.goBack()} />
-            Customer Loan Request
-          </p>
+      <Header className={'Header'}>
+        <p>
+          <ChevronLeft role="button" onClick={() => history.goBack()} />
+          Customer Loan Request
+        </p>
 
-          {['ACTIVE', 'PENDING_DISBURSEMENT', 'PAID'].includes(loanStatus) && (
-            <Button
-              variant="flat"
-              onClick={() => setShowTransferLog(true)}
-              icon={<Reassign />}
-            >
-              View Transfer log
-            </Button>
-          )}
-        </Header>
+        {['ACTIVE', 'PENDING_DISBURSEMENT', 'PAID'].includes(loanStatus) && (
+          <Button
+            variant="flat"
+            onClick={() => setShowTransferLog(true)}
+            icon={<Reassign />}
+          >
+            View Transfer log
+          </Button>
+        )}
+      </Header>
 
       <Content className={styles.content}>
-      {isLoading && <ProfileLoading />}
+        {isLoading && <ProfileLoading />}
         {error && (
           <span>
             Error!
@@ -308,7 +308,7 @@ export default ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div>
-            </div>
+          </div>
         )}
         {showTransferLog && (
           <SideSheet
