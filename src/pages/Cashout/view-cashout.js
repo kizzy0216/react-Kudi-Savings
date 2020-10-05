@@ -12,7 +12,14 @@ import {
   Input
 } from '@kudi-inc/dip'
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
-import { Close, ChevronLeft, Eye, Reassign, UpdateLink, SettingsLink } from 'assets/svg'
+import {
+  Close,
+  ChevronLeft,
+  Eye,
+  Reassign,
+  UpdateLink,
+  SettingsLink
+} from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import AuthContext from 'context/AuthContext'
 import styles from './view-cashout.module.scss'
@@ -22,7 +29,7 @@ import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 import TransferLog from './transfer-log'
 
-const ViewCashout = ({ history,location, match: { params } }) => {
+const ViewCashout = ({ history, location, match: { params } }) => {
   let transactionType = location.type
   let [auth] = useContext(AuthContext)
   let [isShown, setIsShown] = useState(false)
@@ -73,6 +80,12 @@ const ViewCashout = ({ history,location, match: { params } }) => {
       title: 'Decline Request',
       content: 'Decline the withdrawal request.',
       submit: () => handleWithdrawal('DECLINED')
+    },
+    cash_delivered: {
+      title: 'Update to Cash Delivered',
+      content: `Update status of ${withdrawal && formatCurrency(withdrawal.amount)} to cash delivered`,
+      submit: () => handleWithdrawal('CASH_DELIVERED')
+
     }
   }
 
@@ -113,7 +126,7 @@ const ViewCashout = ({ history,location, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> USER INFORMATION </h3>
 
-                  <Button
+                    <Button
                       variant="flat"
                       onClick={() => setShowEdit(true)}
                       icon={<SettingsLink />}
@@ -121,7 +134,6 @@ const ViewCashout = ({ history,location, match: { params } }) => {
                       Edit Profile
                     </Button>
                   </div>
-
                 </CardHeader>
                 <CardBody className={styles.FirstBody}>
                   <div className={styles.FirstBodyGrid}>
@@ -217,55 +229,64 @@ const ViewCashout = ({ history,location, match: { params } }) => {
                     <span>{formatText(transactionType)}</span>
                   </div>
                 </CardBody>
-                {!auth.type.includes('LOANS_MANAGER') &&<>
-                
-                {withdrawal &&
-                  withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
-                    <CardFooter className={styles.FirstFooter}>
-                      <Button
-                        onClick={() => {
-                          setType('approve')
-                          return setIsShown(true)
-                        }}
-                        type="button"
-                      >
-                        Approve
-                      </Button>
-                      <Button
-                        variant="flat"
-                        onClick={() => {
-                          setType('decline')
-                          return setIsShown(true)
-                        }}
-                        type="button"
-                        icon={<Close />}
-                      >
-                        Decline
-                      </Button>
-                    </CardFooter>
-                  )}
-                {withdrawal.status === 'PENDING_IMAGE_VALIDATION' ? (
-                  <div className={styles.Kyc}>
-                    <Button
-                      type="button"
-                      variant="flat"
-                      icon={<Eye />}
-                      onClick={() => setShowKyc(true)}
-                    >
-                      View KYC
-                    </Button>
-                  </div>
-                ) : withdrawal.status === 'PENDING_DISBURSEMENT' ? (
-                  <div className={styles.Kyc}>
-                    <Button type="button" variant="flat" icon={<UpdateLink />}>
-                      Update to Cash Delivered
-                    </Button>
-                  </div>
-                ) : (
-                  <></>
+                {!auth.type.includes('LOANS_MANAGER') && (
+                  <>
+                    {withdrawal &&
+                      withdrawal.status !== 'APPROVED' &&
+                      withdrawal.status !== 'DECLINED' && (
+                        <CardFooter className={styles.FirstFooter}>
+                          <Button
+                            onClick={() => {
+                              setType('approve')
+                              return setIsShown(true)
+                            }}
+                            type="button"
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            variant="flat"
+                            onClick={() => {
+                              setType('decline')
+                              return setIsShown(true)
+                            }}
+                            type="button"
+                            icon={<Close />}
+                          >
+                            Decline
+                          </Button>
+                        </CardFooter>
+                      )}
+                    {withdrawal.status === 'PENDING_IMAGE_VALIDATION' ? (
+                      <div className={styles.Kyc}>
+                        <Button
+                          type="button"
+                          variant="flat"
+                          icon={<Eye />}
+                          onClick={() => setShowKyc(true)}
+                        >
+                          View KYC
+                        </Button>
+                      </div>
+                    ) : withdrawal.status === 'PENDING_DISBURSEMENT' ? (
+                      <div className={styles.Kyc}>
+                        <Button
+                          type="button"
+                          variant="flat"
+                          onClick={() => {
+                            setType('cash_delivered')
+                            return setIsShown(true)
+                          }}
+                          icon={<UpdateLink />}
+                        >
+                          Update to Cash Delivered
+                        </Button>
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </>
                 )}
-                </>}
               </Card>
             </div>
             <div className={styles.Second}>
