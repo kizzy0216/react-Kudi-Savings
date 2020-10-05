@@ -345,12 +345,15 @@
   display: none;
   @include md {
     display: grid;
-    grid-template-rows: 13.88em 1fr 18.78em;
+    grid-template-rows: 15.88em 1fr 22.78em;
   }
 
   .logoSection {
     background-color: $dark-kudi-blue;
     font-size: 1rem;
+    &:nth-of-type(2) {
+      border-top: 1px solid #2443A7;
+    }
 
     &Header {
       padding: 1.6em 0;
@@ -361,7 +364,7 @@
       display: grid;
       align-items: center;
       grid-template-columns: 2.5em 1fr;
-      padding: 0 0 1em 2.7em;
+      padding: 0.5em 0 1em 2.7em;
       svg {
         width: 1.94em;
         margin-right: 0.55em;
@@ -399,7 +402,7 @@
     }
 
     &FundButton {
-      margin: 0em;
+      margin-right: 1em;
       width: max-content;
       color: $kudi-green;
       border-radius: 25px;
@@ -410,44 +413,63 @@
       }
     }
   }
-
-  .navSection {
-    padding-top: 1.67em;
-    margin-bottom: 2rem;
-    &Links {
-      font-size: 0.83em;
-      margin: auto auto 0.83em;
-      line-height: 120%;
-      &:nth-of-type(2) {
-        svg,
-        path {
-          fill: currentColor;
-          stroke: currentColor;
-        }
-      }
-      span {
+  .side {
+    &NavSection {
+      padding-top: 1.67em;
+      margin-bottom: 2rem;
+      &Links {
+        font-size: 0.83em;
+        margin: auto auto 0.83em;
+        line-height: 120%;
         &:nth-of-type(2) {
-          font-weight: 300;
+          svg,
+          path {
+            fill: currentColor;
+            stroke: currentColor;
+          }
+        }
+        span {
+          &:nth-of-type(2) {
+            font-weight: 300;
+          }
+        }
+
+        svg {
+          width: 1.94em;
         }
       }
+    }
 
-      svg {
-        width: 1.94em;
+    &Logout {
+      border-top: 1px solid #2443a7;
+      border-radius: 0px;
+      position: absolute;
+      bottom: 0;
+      left: 1rem;
+      padding-top: 1.67em;
+      &Links {
+        font-size: 0.83em;
+        margin: auto auto 0.83em;
+        line-height: 120%;
+        &:nth-of-type(2) {
+          svg,
+          path {
+            fill: currentColor;
+            stroke: currentColor;
+          }
+        }
+        span {
+          &:nth-of-type(2) {
+            font-weight: 300;
+          }
+        }
+
+        svg {
+          width: 1.94em;
+        }
       }
     }
   }
-}
-
-.logout {
-  border-top: 1px solid #2443a7;
-  border-radius: 0px;
-  position: absolute;
-  bottom: 0;
-  left: 1rem;
-  padding-top: 1.67em;
-  font-size: 0.83em;
-  margin: auto auto 0.83em;
-  line-height: 120%;
 }
 .modal {
   font-size: 1.4rem;

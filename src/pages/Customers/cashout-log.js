@@ -30,10 +30,18 @@ const CashoutLog = props => {
   let history = useHistory()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const initialStartDate = minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = minimized ? ' ' : moment()
+  const initialFrom = minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD+HH:mm:ss')
+  const initialTo = minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD+HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = minimized ? 3 : 50
@@ -45,15 +53,13 @@ const CashoutLog = props => {
         id,
         page: params.page,
         limit,
-        from: params.from,
-        to: params.to,
+        from,
+        to,
         status: params.status
       }
     ],
     getPlanCashout
   )
-
-  
 
   if (data && data.data) {
     formattedData = formatCashoutLog(
@@ -71,13 +77,19 @@ const CashoutLog = props => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }

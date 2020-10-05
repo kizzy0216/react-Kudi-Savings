@@ -29,10 +29,14 @@ const WalletHistory = ({ location }) => {
   let history = useHistory()
   const [page, setPage] = useState(1)
   const [type, setType] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [showReset, setShowReset] = useState(false)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   const [focusedInput, setfocusedInput] = useState(null)
@@ -55,13 +59,19 @@ const WalletHistory = ({ location }) => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }

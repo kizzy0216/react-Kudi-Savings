@@ -44,31 +44,31 @@ const Layout = ({ children, auth }) => {
       title: 'Markets',
       link: '/markets',
       icon: <MarketsLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Agents',
       link: '/agents',
       icon: <AgentsLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Zonal Heads',
       link: '/zonal-heads',
       icon: <AgentsLink />,
-      userType: ['ADMIN', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Transactions',
       link: '/transactions',
       icon: <TransactionsLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Customers',
       link: '/customers',
       icon: <CustomersLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     // {
     //   title: 'Customer Insights',
@@ -86,25 +86,25 @@ const Layout = ({ children, auth }) => {
       title: 'Cashout',
       link: '/cashout',
       icon: <CashoutLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Referrals',
       link: '/referrals',
       icon: <ReferralLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Loans',
       link: '/loans',
       icon: <LoanIcon />,
-      userType: ['ADMIN', 'SUPER_ADMIN, LOAN_MANAGER']
+      userType: ['ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
     {
       title: 'Settings',
       link: '/settings',
       icon: <SettingsLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN, LOAN_MANAGER']
+      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     }
   ]
   return (
@@ -113,29 +113,31 @@ const Layout = ({ children, auth }) => {
         <div className={styles.sideNav}>
           <LogoSection history={history} user={user} />
           <LoanSection history={history} setShowFundPurse={setShowFundPurse} />
-          <div className={styles.navSection}>
-            {navItems.map((item, id) =>
-              item && item.userType.includes(user.type) ? (
-                <SideBarItem
-                  key={id}
-                  className={styles.navSectionLinks}
-                  icon={item.icon}
-                  text={item.title}
-                  active={window.location.pathname.includes(item.link)}
-                  onClick={() => history.push(`${item.link}`)}
-                />
-              ) : (
-                ''
-              )
-            )}
+          <div className={styles.side}>
+            <div className={styles.sideNavSection}>
+              {navItems.map((item, id) =>
+                item && item.userType.includes(user.type) ? (
+                  <SideBarItem
+                    key={id}
+                    className={styles.sideNavSectionLinks}
+                    icon={item.icon}
+                    text={item.title}
+                    active={window.location.pathname.includes(item.link)}
+                    onClick={() => history.push(`${item.link}`)}
+                  />
+                ) : (
+                  ''
+                )
+              )}
+            </div>
+            <SideBarItem
+              className={styles.sideLogoutLinks}
+              icon={<LogoutIcon />}
+              text={'Logout'}
+              active={window.location.pathname === '/logout'}
+              onClick={() => setLogout()}
+            />
           </div>
-          <SideBarItem
-            className={styles.logout}
-            icon={<LogoutIcon />}
-            text={'Logout'}
-            active={window.location.pathname === '/logout'}
-            onClick={() => setLogout()}
-          />
         </div>
 
         <div className={styles.main}>{children}</div>

@@ -230,7 +230,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div> */}
-            {/* <div className={styles.Overview}>
+            <div className={styles.Overview}>
               <div className={styles.OverviewRow}>
                 <Card className={styles.OverviewRowCard}>
                   <CardHeader className={styles.OverviewRowCardHeader}>
@@ -267,7 +267,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardp1}>Providus Bank</p>
                 </Card>
               </div>
-            </div> */}
+            </div>
 
             <div className={styles.Second}>
               <UserPlans

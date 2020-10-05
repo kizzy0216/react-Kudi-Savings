@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, toaster, SideSheet } from 'evergreen-ui'
@@ -14,6 +14,7 @@ import {
 import { getWithdrawal, processWithdrawal } from 'services/cashout'
 import { Close, ChevronLeft, Eye, Reassign, UpdateLink, SettingsLink } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
+import AuthContext from 'context/AuthContext'
 import styles from './view-cashout.module.scss'
 import AgentImg from 'assets/svg/profile-pic.svg'
 import { ProfileLoading } from 'components/loading'
@@ -21,9 +22,9 @@ import { formatCurrency, formatText, fecthImage } from 'utils/function'
 import Kyc from './kyc'
 import TransferLog from './transfer-log'
 
-const ViewCashout = ({ history, location, match: { params } }) => {
+const ViewCashout = ({ history,location, match: { params } }) => {
   let transactionType = location.type
-
+  let [auth] = useContext(AuthContext)
   let [isShown, setIsShown] = useState(false)
   let [loading, setLoading] = useState(false)
   let [type, setType] = useState('')
@@ -215,6 +216,8 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                     <span>{formatText(transactionType)}</span>
                   </div>
                 </CardBody>
+                {!auth.type.includes('LOANS_MANAGER') &&<>
+                
                 {withdrawal &&
                   withdrawal.status !== 'APPROVED' &&
                   withdrawal.status !== 'DECLINED' && (
@@ -261,6 +264,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                 ) : (
                   <></>
                 )}
+                </>}
               </Card>
             </div>
             <div className={styles.Second}>

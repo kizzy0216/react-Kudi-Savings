@@ -7,17 +7,17 @@ import { formatCurrency } from 'utils/function'
 import { dashboardOverview } from 'services/loans'
 import { useQuery } from 'react-query'
 import moment from 'moment'
+import { useLocation } from 'react-router-dom'
 
 const LoanSection = ({ history, setShowFundPurse }) => {
   let [auth] = useContext(AuthContext)
+  let location = useLocation()
 
-  const initialFrom = moment()
-    .subtract(31, 'days')
-    .format('YYYY-MM-DD')
-  const initialTo = moment()
-    .add(1, 'days')
-    .format('YYYY-MM-DD')
-
+  
+const initialStartDate = moment().subtract(29, 'days')
+const initialEndDate = moment()
+const initialFrom = ''
+const initialTo = ''
   const params = { from: initialFrom, to: initialTo }
   const { data } = useQuery(['LoanPurseBalance', params], dashboardOverview)
 
@@ -25,32 +25,41 @@ const LoanSection = ({ history, setShowFundPurse }) => {
 
   return (
     <>
-      {auth.type.includes('ADMIN') && (
-        <div className={styles.logoSection}>
-          <div className={styles.logoSectionFlex}>
-            <Wallet />
-            <div className={styles.logoSectionContent}>
-              <p>Loan Purse Balance</p>
-              <span>{formatCurrency(purseData.loanWalletBalance || 0)}</span>
-            </div>
-          </div>
-          <div className={styles.logoSectionFlex}>
-            <Button
-              // onClick={() => {
-              //   history.push({pathname:'/fund-purse'})
-              // }}
-              onClick={() => {
-                history.push('/loans')
-                setShowFundPurse(true)
-              }}
-              className={styles.logoSectionFundButton}
-              type="button"
-            >
-              Fund Loan Purse
-            </Button>
-          </div>
-        </div>
-      )}
+      {['ADMIN', 'LOANS_MANAGER'].includes(auth.type) &&
+        !auth.type.includes('SUPER_ADMIN') && (
+          <>
+            {location.pathname === '/loans' && (
+              <div className={styles.logoSection}>
+                <div className={styles.logoSectionFlex}>
+                  <Wallet />
+                  <div className={styles.logoSectionContent}>
+                    <p>Loan Purse Balance</p>
+                    <span>{formatCurrency(purseData.walletBalance || 0)}</span>
+                  </div>
+                </div>
+                <>
+                  {!auth.type.includes('LOANS_MANAGER') && (
+                    <div className={styles.logoSectionFlex}>
+                      <Button
+                        // onClick={() => {
+                        //   history.push({pathname:'/fund-purse'})
+                        // }}
+                        onClick={() => {
+                          history.push('/loans')
+                          setShowFundPurse(true)
+                        }}
+                        className={styles.logoSectionFundButton}
+                        type="button"
+                      >
+                        Fund Loan Purse
+                      </Button>
+                    </div>
+                  )}
+                </>
+              </div>
+            )}
+          </>
+        )}
     </>
   )
 }

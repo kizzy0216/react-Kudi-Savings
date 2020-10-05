@@ -10,7 +10,7 @@ import {
 } from '@kudi-inc/dip'
 import styles from './recent-collections.module.scss'
 import Table from 'components/Table'
-import { getCollections } from 'services/collections'
+import { getAgentCollections } from 'services/collections'
 import { useRouteMatch } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { TableLoading } from 'components/loading'
@@ -23,31 +23,40 @@ import {
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useHistory } from 'react-router-dom'
 
-const Collections = ({ minimized }) => {
+const Collections = ({ id, minimized }) => {
   let history = useHistory()
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [startDate, setStartDate] = useState('')
+  const initialStartDate = minimized ? ' ' : moment().subtract(29, 'days')
+  const initialEndDate = minimized ? ' ' : moment()
+  const initialFrom = minimized
+    ? ' '
+    : initialStartDate.format('YYYY-MM-DD HH:mm:ss')
+  const initialTo = minimized
+    ? ' '
+    : initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
   let formattedData = []
   let limit = minimized ? 3 : 50
   let totalPage = 0
   const { data, isLoading, error, refetch } = useQuery(
     [
-      'Collections',
+      'AgentCollections',
 
       {
+        agentId: id,
         page: params.page,
         limit,
         from,
         to
       }
     ],
-    getCollections
+    getAgentCollections
   )
   if (data && data.data) {
     formattedData = formatData(
@@ -64,13 +73,19 @@ const Collections = ({ minimized }) => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(1, 'days')
+          .subtract(12, 'hours')
           .format('YYYY-MM-DD HH:mm:ss')
       )
     }
     if (endDate) {
       setEndDate(endDate)
-      setTo(moment(endDate).format('YYYY-MM-DD HH:mm:ss'))
+      setTo(
+        moment(endDate)
+          .add(11, 'hours')
+          .add(59, 'minutes')
+          .add(59, 'seconds')
+          .format('YYYY-MM-DD HH:mm:ss')
+      )
     }
     setShowReset(true)
   }
@@ -87,7 +102,9 @@ const Collections = ({ minimized }) => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push(`${url}/view-all-collections`)}
+              onClick={() =>
+                history.push({ pathname: `${url}/view-all-collections`, id })
+              }
             >
               View All
             </Button>

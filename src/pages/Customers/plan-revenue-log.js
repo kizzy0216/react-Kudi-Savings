@@ -1,12 +1,23 @@
 import React, { useReducer, useState } from 'react'
 import Table from 'components/Table'
-import { CardBody, Card, CardHeader, Button, DateRangePicker } from '@kudi-inc/dip'
+import {
+  CardBody,
+  Card,
+  CardHeader,
+  Button,
+  DateRangePicker
+} from '@kudi-inc/dip'
 import { TableLoading } from 'components/loading'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import styles from './customers.module.scss'
 import { ChevronLeft, Eye, Close } from 'assets/svg'
 import { useQuery } from 'react-query'
-import { ParamsReducer, DefaultParams, formatPlanRevenueLog, PlanRevenueLogTableColumn } from 'utils/function'
+import {
+  ParamsReducer,
+  DefaultParams,
+  formatPlanRevenueLog,
+  PlanRevenueLogTableColumn
+} from 'utils/function'
 import { Content, Filters } from 'components/Layout'
 import { getRevenue } from 'services/customers'
 import moment from 'moment'
@@ -22,15 +33,15 @@ const PlanRevenueLog = props => {
   const [endDate, setEndDate] = useState('')
   const [startDate, setStartDate] = useState('')
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
-  let limit = minimized ? 3 : 30
+  let limit = 20
   let formattedData = []
   let totalPage = 0
 
   let { data, isLoading, error, refetch } = useQuery(
-    ['PlanRevenueLog', { userPlanId: id, limit, 
-      from, to }], getRevenue)
+    ['PlanRevenueLog', { userPlanId: id, limit, from, to }],
+    getRevenue
+  )
 
-  
   if (data?.data?.data) {
     formattedData = formatPlanRevenueLog(
       data.data.data.list,
@@ -43,11 +54,7 @@ const PlanRevenueLog = props => {
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
-      setFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD')
-      )
+      setFrom(moment(startDate).format('YYYY-MM-DD'))
     }
     if (endDate) {
       setEndDate(endDate)
@@ -69,10 +76,12 @@ const PlanRevenueLog = props => {
             <Button
               icon={<Eye />}
               variant="flat"
-              onClick={() => history.push({
-                pathname:`${url}/view-all-plan-revenue-log`,
-                state: id
-                })}
+              onClick={() =>
+                history.push({
+                  pathname: `${url}/view-all-plan-revenue-log`,
+                  state: id
+                })
+              }
             >
               View All
             </Button>

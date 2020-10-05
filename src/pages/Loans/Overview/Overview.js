@@ -29,11 +29,10 @@ import { SideSheet } from 'evergreen-ui'
 import LoanDetail from '../LoanDetails/LoanDetail'
 import { formatCurrency } from 'utils/function'
 
-const initialStartDate = moment().subtract(31, 'days')
-const initialEndDate = moment().add(1, 'days')
-const initialFrom = initialStartDate.format('YYYY-MM-DD')
-const initialTo = initialEndDate.format('YYYY-MM-DD')
-
+const initialStartDate = moment().subtract(29, 'days')
+const initialEndDate = moment()
+const initialFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
 export default ({ history }) => {
   let { url } = useRouteMatch()
   const { data: marketRes } = useQuery(
@@ -79,7 +78,7 @@ export default ({ history }) => {
     limit,
     dashboard: true
   }
- 
+
   const {
     data: overviewRes,
     isLoading: overviewIsLoading,
@@ -108,19 +107,15 @@ export default ({ history }) => {
     )
     totalTablePage = Math.ceil(tableRes.data.data.total / limit)
   }
-
+  
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)
-      setOverviewFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD')
-      )
+      setOverviewFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
     if (endDate) {
       setOverviewEndDate(endDate)
-      setOverviewTo(moment(endDate).format('YYYY-MM-DD'))
+      setOverviewTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
   }
   const onOverviewFocusChange = focusedInput => {
@@ -130,15 +125,11 @@ export default ({ history }) => {
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(
-        moment(startDate)
-          .subtract(1, 'days')
-          .format('YYYY-MM-DD')
-      )
+      setTableFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format('YYYY-MM-DD'))
+      setTableTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
     }
   }
   const onTableFocusChange = focusedInput => {
@@ -218,7 +209,10 @@ export default ({ history }) => {
           <div className="second-row">
             <Card className={'Overview-card'}>
               <div className={'add-border-bottom'}>
-                <span>Initial Loan Purse Amount</span> <span>Fixed Amount</span>
+                <span>Initial Loan Purse Amount</span>{' '}
+                <span>
+                  {formatCurrency(overviewData.initialLoanPurseAmount)}
+                </span>
               </div>
               <div className={'add-border-bottom'}>
                 <span>Overdue Amount</span>{' '}
@@ -243,7 +237,7 @@ export default ({ history }) => {
                 <span>{overviewData.declinedLoans}</span>
               </div>
             </Card>
-          </div>  
+          </div>
         </div>
       )}
       <Content>
@@ -296,26 +290,26 @@ export default ({ history }) => {
               />
             )}
           </CardBody>
-        {tableRes && (
-          <div className={'pagination'}>
-            {page > 0 && (
-              <Button
-                variant={'flat'}
-                onClick={() => setPage(page - 1)}
-                icon={<ChevronLeft />}
-              ></Button>
-            )}
-            <p>
-              Page {page + 1} of {totalTablePage}
-            </p>
-            {tableData.length === limit && (
-              <Button
-                variant={'flat'}
-                onClick={() => setPage(page + 1)}
-              ></Button>
-            )}
-          </div>
-        )}
+          {tableRes && (
+            <div className={'pagination'}>
+              {page > 0 && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page + 1} of {totalTablePage}
+              </p>
+              {tableData.length === limit && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              )}
+            </div>
+          )}
         </Card>
       </Content>
     </Fragment>
