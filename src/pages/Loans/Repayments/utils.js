@@ -8,51 +8,6 @@ export const tableColumns = [
   { key: 'totalAmountPaid', render: 'BALANCE' }
 ]
 
-const tableData = [
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'CASH',
-    balance: 100000
-  },
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'TRANSFER',
-    balance: 100000
-  },
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'CASH',
-    balance: 100000
-  },
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'TRANSFER',
-    balance: 100000
-  },
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'CASH',
-    balance: 100000
-  },
-  {
-    repaymentDate: new Date(),
-    timeCreated: new Date(),
-    amountPaid: 1000,
-    modeOfPayment: 'TRANSFER',
-    balance: 100000
-  }
-]
-
 export const formatTableData = (data, history, url, page, limit) => {
   return data.map(
     ({ timeCreated, amountPaid, repaymentType, totalAmountPaid }, index) => ({
