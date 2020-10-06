@@ -16,7 +16,7 @@ import {
 } from '@kudi-inc/dip'
 import Table from '../../../components/Table/table'
 import { useQuery } from 'react-query'
-import { getRepaymentHistory } from '../../../services/loans'
+import { getRepayment } from '../../../services/loans'
 import { TableLoading } from '../../../components/loading'
 
 const initialStartDate = moment().subtract(31, 'days')
@@ -35,7 +35,7 @@ export default ({ history, match: { params } }) => {
   const [tableFocusedInput, setTableFocusedInput] = useState(null)
 
   const [page, setPage] = useState(0)
-  const limit = 20
+  const limit = 50
 
   const filterParams = {
     from: tableFrom,
@@ -48,7 +48,7 @@ export default ({ history, match: { params } }) => {
   }
   const { data: res, isLoading, error, refetch } = useQuery(
     ['LoanRepayments', filterParams],
-    getRepaymentHistory
+    getRepayment
   )
   let tableData = []
   let totalTablePage = 0
@@ -56,6 +56,7 @@ export default ({ history, match: { params } }) => {
     tableData = formatTableData(res.data.data.list, history, url, page, limit)
     totalTablePage = Math.ceil(res.data.data.total / limit)
   }
+  let formatData = tableData.filter(data => data.repaymentType !== 'UNKNOWN')
 
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -130,7 +131,7 @@ export default ({ history, match: { params } }) => {
               <Table
                 column={tableColumns}
                 placeholder={'Loan Repayments'}
-                data={tableData}
+                data={formatData}
               />
             )}
           </CardBody>
