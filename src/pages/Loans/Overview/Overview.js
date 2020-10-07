@@ -21,18 +21,22 @@ import {
   tableColumns
 } from '../utils'
 import { useQuery } from 'react-query'
-import { dashboardOverview, filterLoans } from '../../../services/loans'
+import {
+  dashboardOverview,
+  filterLoans,
+  getLoanDetails
+} from '../../../services/loans'
 import { DashboardLoading, TableLoading } from '../../../components/loading'
 import { getMarkets } from '../../../services/markets'
 import FundLoan from '../FundLoanPurse/fund-loan-purse'
 import { SideSheet } from 'evergreen-ui'
 import LoanDetail from '../LoanDetails/LoanDetail'
 import { formatCurrency } from 'utils/function'
-
+import { getPurseDetails } from 'services/admin'
 const initialStartDate = moment().subtract(29, 'days')
 const initialEndDate = moment()
-const initialFrom = initialStartDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
-const initialTo = initialEndDate.format("YYYY-MM-DDTHH:mm:ss.SSSZ")
+const initialFrom = initialStartDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+const initialTo = initialEndDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
 export default ({ history }) => {
   let { url } = useRouteMatch()
   const { data: marketRes } = useQuery(
@@ -107,15 +111,20 @@ export default ({ history }) => {
     )
     totalTablePage = Math.ceil(tableRes.data.data.total / limit)
   }
-  
+
+  const { data: walletData } = useQuery(
+    ['LoanWalletDetails', {}],
+    getPurseDetails
+  )
+
   const onOverviewDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setOverviewStartDate(startDate)
-      setOverviewFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
+      setOverviewFrom(moment(startDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ'))
     }
     if (endDate) {
       setOverviewEndDate(endDate)
-      setOverviewTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
+      setOverviewTo(moment(endDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ'))
     }
   }
   const onOverviewFocusChange = focusedInput => {
@@ -125,11 +134,11 @@ export default ({ history }) => {
   const onTableDateChange = ({ startDate, endDate }) => {
     if (startDate) {
       setTableStartDate(startDate)
-      setTableFrom(moment(startDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
+      setTableFrom(moment(startDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ'))
     }
     if (endDate) {
       setTableEndDate(endDate)
-      setTableTo(moment(endDate).format("YYYY-MM-DDTHH:mm:ss.SSSZ"))
+      setTableTo(moment(endDate).format('YYYY-MM-DDTHH:mm:ss.SSSZ'))
     }
   }
   const onTableFocusChange = focusedInput => {
@@ -210,9 +219,7 @@ export default ({ history }) => {
             <Card className={'Overview-card'}>
               <div className={'add-border-bottom'}>
                 <span>Initial Loan Purse Amount</span>{' '}
-                <span>
-                  {formatCurrency(overviewData.initialLoanPurseAmount)}
-                </span>
+                <span>{formatCurrency(walletData?.data?.data.amount)}</span>
               </div>
               <div className={'add-border-bottom'}>
                 <span>Overdue Amount</span>{' '}
