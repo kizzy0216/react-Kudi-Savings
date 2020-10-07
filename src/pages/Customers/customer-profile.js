@@ -245,7 +245,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>Stash Balance</p>
                   </CardHeader>
                   <p className={styles.OverviewRowCardp2}>
-                    {formatCurrency(25000)}
+                    {formatCurrency(customer.stashBalance)}
                   </p>
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
@@ -263,8 +263,8 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>KTA Details</p>
                   </CardHeader>
 
-                  <p className={styles.OverviewRowCardp2}>0123456789</p>
-                  <p className={styles.OverviewRowCardp1}>Providus Bank</p>
+                  <p className={styles.OverviewRowCardp2}>{customer.stashAccountNumber}</p>
+                  <p className={styles.OverviewRowCardp1}>{customer.stashBankName}</p>
                 </Card>
               </div>
             </div>
