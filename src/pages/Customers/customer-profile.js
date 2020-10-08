@@ -122,7 +122,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
-                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                <CardFooter className={styles.FirstBodyFooterButton}>
                   <Button
                     variant="flat"
                     onClick={() => setShowInformation(true)}
@@ -131,7 +131,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   >
                     View All Information
                   </Button>
-                </CardFooter> */}
+                </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
