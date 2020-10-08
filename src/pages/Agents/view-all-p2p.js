@@ -6,7 +6,7 @@ import P2PLog from './p2p'
 import { useHistory } from 'react-router-dom'
 
 const P2P = ({ location }) => {
-  let p2pId = location.state
+  let dsaPhone = location.state
   let history = useHistory()
   return (
     <Fragment>
@@ -17,7 +17,7 @@ const P2P = ({ location }) => {
         </p>
       </Header>
       <div className={styles.DivContent}>
-        <P2PLog minimized={false} id={p2pId} />
+        <P2PLog minimized={false} phone={dsaPhone} />
       </div>
     </Fragment>
   )
