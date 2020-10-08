@@ -88,12 +88,12 @@ const Layout = ({ children, auth }) => {
       icon: <CashoutLink />,
       userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
-    {
-      title: 'Referrals',
-      link: '/referrals',
-      icon: <ReferralLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
-    },
+    // {
+    //   title: 'Referrals',
+    //   link: '/referrals',
+    //   icon: <ReferralLink />,
+    //   userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
+    // },
     {
       title: 'Loans',
       link: '/loans',
