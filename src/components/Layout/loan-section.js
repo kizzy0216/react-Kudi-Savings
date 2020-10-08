@@ -4,7 +4,7 @@ import { Button } from '@kudi-inc/dip'
 import { Wallet } from 'assets/svg'
 import AuthContext from 'context/AuthContext'
 import { formatCurrency } from 'utils/function'
-import { dashboardOverview } from 'services/loans'
+import { getWallets} from 'services/admin'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
@@ -13,13 +13,8 @@ const LoanSection = ({ history, setShowFundPurse }) => {
   let [auth] = useContext(AuthContext)
   let location = useLocation()
 
-  
-const initialStartDate = moment().subtract(29, 'days')
-const initialEndDate = moment()
-const initialFrom = ''
-const initialTo = ''
-  const params = { from: initialFrom, to: initialTo }
-  const { data } = useQuery(['LoanPurseBalance', params], dashboardOverview)
+  const { data} = useQuery(['LoanPurseBalance', {}], getWallets)
+
 
   let purseData = data?.data?.data ?? {}
 
@@ -34,7 +29,7 @@ const initialTo = ''
                   <Wallet />
                   <div className={styles.logoSectionContent}>
                     <p>Loan Purse Balance</p>
-                    <span>{formatCurrency(purseData.walletBalance || 0)}</span>
+                    <span>{formatCurrency(purseData.fundingBalance || 0)}</span>
                   </div>
                 </div>
                 <>
