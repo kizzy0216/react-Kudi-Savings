@@ -39,6 +39,8 @@ const P2P = props => {
   const [endDate, setEndDate] = useState(initialEndDate)
   const [startDate, setStartDate] = useState(initialStartDate)
   const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
+  const [page, setPage] = useState(0)
+  
   let formattedData = []
   let limit = props.minimized ? 3 : 50
   let totalPage = 0
@@ -47,8 +49,8 @@ const P2P = props => {
       'P2P',
 
       {
-        agentId: props.id,
-        page: params.page,
+        dsaPhone : props.phone,
+        page,
         limit,
         from,
         to
@@ -90,7 +92,7 @@ const P2P = props => {
               onClick={() =>
                 history.push({
                   pathname: `${url}/view-all-p2p`,
-                  state: props.id
+                  state: props.phone
                 })
               }
             >
@@ -149,14 +151,11 @@ const P2P = props => {
             <></>
           ) : (
             <div className="pagination">
-              {params.page > 1 && (
+              {page > 0 && (
                 <Button
                   variant="flat"
                   onClick={() =>
-                    setParams({
-                      type: 'UPDATE_PAGE',
-                      payload: params.page - 1
-                    })
+                    setPage(page - 1)
                   }
                   icon={<ChevronLeft />}
                 ></Button>
@@ -164,7 +163,7 @@ const P2P = props => {
               {totalPage ? (
                 <p>
                   {' '}
-                  Page {params.page} of {totalPage}
+                  Page {page + 1} of {totalPage}
                 </p>
               ) : (
                 <></>
@@ -173,10 +172,7 @@ const P2P = props => {
                 <Button
                   variant="flat"
                   onClick={() =>
-                    setParams({
-                      type: 'UPDATE_PAGE',
-                      payload: params.page + 1
-                    })
+                    setPage(page + 1)
                   }
                 ></Button>
               )}
