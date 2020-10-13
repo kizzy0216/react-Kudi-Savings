@@ -82,9 +82,9 @@ const ViewCashout = ({ history, location, match: { params } }) => {
     },
     cash_delivered: {
       title: 'Update to Cash Delivered',
-      content: `Update status of ${withdrawal && formatCurrency(withdrawal.amount)} to cash delivered`,
+      content: `Update status of ${withdrawal &&
+        formatCurrency(withdrawal.amount)} to cash delivered`,
       submit: () => handleWithdrawal('CASH_DELIVERED')
-
     }
   }
 
@@ -95,7 +95,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
           <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
         </p>
 
-        {['CASH_DELIVERED', 'PENDING_DISBURSEMENT'].includes(
+        {['CASH_DELIVERED', 'PENDING_TRANSFER_DISBURSEMENT'].includes(
           withdrawal.status
         ) && (
           <Button
@@ -189,7 +189,8 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                       variant={
                         withdrawal.status === 'APPROVED'
                           ? 'primary'
-                          : withdrawal.status === 'PENDING_DISBURSEMENT'
+                          : withdrawal.status ===
+                            'PENDING_TRANSFER_DISBURSEMENT'
                           ? 'warning'
                           : withdrawal.status === 'CASH_DELIVERED'
                           ? 'success'
@@ -202,6 +203,8 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                           : withdrawal.status === 'PENDING_VALIDATION'
                           ? 'warning'
                           : withdrawal.status === 'VOUCHER_REDEEMED'
+                          ? 'primary'
+                          : withdrawal.status === 'REDEEMED'
                           ? 'primary'
                           : 'warning'
                       }
@@ -232,7 +235,8 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                   <>
                     {withdrawal &&
                       withdrawal.status !== 'APPROVED' &&
-                      withdrawal.status !== 'DECLINED' && (
+                      withdrawal.status !== 'DECLINED' &&
+                      withdrawal.status !== 'CASH_DELIVERED' && (
                         <CardFooter className={styles.FirstFooter}>
                           <Button
                             onClick={() => {
@@ -267,20 +271,36 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                           View KYC
                         </Button>
                       </div>
-                    ) : withdrawal.status === 'PENDING_DISBURSEMENT' ? (
-                      <div className={styles.Kyc}>
-                        <Button
-                          type="button"
-                          variant="flat"
-                          onClick={() => {
-                            setType('cash_delivered')
-                            return setIsShown(true)
-                          }}
-                          icon={<UpdateLink />}
-                        >
-                          Update to Cash Delivered
-                        </Button>
-                      </div>
+                    ) : withdrawal.status ===
+                      'PENDING_TRANSFER_DISBURSEMENT' ? (
+                      <CardFooter className={styles.disbursement}>
+                        <div className={styles.disbursementActivate}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={() => {
+                              setType('cash_delivered')
+                              return setIsShown(true)
+                            }}
+                            icon={<UpdateLink />}
+                          >
+                            Update to Cash Delivered
+                          </Button>
+                        </div>
+                        <div className={styles.disbursementDecline}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={() => {
+                              setType('decline')
+                              return setIsShown(true)
+                            }}
+                            icon={<Close />}
+                          >
+                            Decline
+                          </Button>
+                        </div>
+                      </CardFooter>
                     ) : (
                       <></>
                     )}

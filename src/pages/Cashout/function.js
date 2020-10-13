@@ -76,14 +76,14 @@ export const formatData = (data, history, url, page, limit) => {
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
-  { text: 'Approved Pending Disbursement', value: 'PENDING_DISBURSEMENT' },
+  { text: 'Approved Pending Disbursement', value: 'PENDING_TRANSFER_DISBURSEMENT' },
+  { text: 'Pending', value: 'PENDING' },
+  { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
+  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
+  { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' },
+  {text: 'Redeemed', value: 'REDEEMED'},
   { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
   { text: 'Declined', value: 'DECLINED' },
-  { text: 'Pending', value: 'PENDING' },
-  {text: "Failed", vaule: 'FAILED'},
-  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
-  { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
-  { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]
 
 export const TableColumns = [

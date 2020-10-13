@@ -40,10 +40,11 @@
       grid-template-columns: 1fr 1fr;
       &Profile {
         width: 12.92em;
-
+        height: 12.92em;
         img {
           border-radius: 50%;
           width: 12.92em;
+          height: 12.92em;
         }
       }
       &Content {
@@ -124,6 +125,51 @@
       }
     }
   }
+
+ 
+}
+
+.disbursement{
+  background: #f8fbff;
+  display: flex;
+  height: 2.5em;
+  border-top: 1px solid #f0f4f9;
+  margin-top: 1em;
+  font-weight: 500;
+  justify-content: space-around;
+
+
+&Activate {
+  background: #f8fbff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $sky-blue;
+  button {
+    color: inherit;
+  }
+  svg {
+    path {
+      fill: $sky-blue;
+    }
+  }
+}
+
+&Decline{
+  background: #f8fbff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $danger;;
+  button {
+    color: inherit;
+  }
+  svg {
+    path {
+      fill: $danger;
+    }
+  }
+}
 }
 
 .Second {
