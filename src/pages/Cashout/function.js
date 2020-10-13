@@ -80,6 +80,7 @@ export const statusOptions = [
   { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
   { text: 'Declined', value: 'DECLINED' },
   { text: 'Pending', value: 'PENDING' },
+  {text: "Failed", vaule: 'FAILED'},
   { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }

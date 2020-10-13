@@ -21,6 +21,7 @@ import TransferLog from './transfer-log'
 import { ProfileLoading } from 'components/loading'
 import {
   approveLoan,
+  activateLoan,
   declineLoan,
   fetchWalletBalance,
   getLoanDetails
@@ -81,7 +82,7 @@ export default ({ history, match: { params } }) => {
   const handleApproveClick = () => {
     approveLoan({ loanId })
       .then(res => {
-        res.data.status ? alert('Loan Approved') : alert('Error Approving')
+        res.data.status ? toaster.success('Loan Approved') : toaster.danger('Error Approving')
       })
       .catch(console.error)
   }
@@ -89,9 +90,20 @@ export default ({ history, match: { params } }) => {
   const handleDeclineClick = () => {
     declineLoan({ loanId })
       .then(res => {
-        res.data.status ? alert('Loan Declined') : alert('Error Declining')
+        res.data.status ? toaster.success('Loan Declined') : toaster.danger('Error Declining')
       })
-      .catch(console.error)
+      .catch(console.error) 
+  }
+
+  const handleActivation = () => {
+    activateLoan({ loanId })
+    .then(() => {
+      toaster.success('Loan In Progress')
+    })
+    .catch(data => {
+      if(data?.data?.message) return toaster.danger(data?.data?.message)
+      toaster.danger('Error updating to In Progress')
+    })
   }
 
   const tenureDuration =
@@ -267,6 +279,7 @@ export default ({ history, match: { params } }) => {
                                 <Button
                                   type="button"
                                   variant="flat"
+                                  onClick={handleActivation}
                                   icon={<UpdateLink />}
                                 >
                                   Update to in Progress
