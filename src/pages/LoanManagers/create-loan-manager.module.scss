@@ -57,14 +57,14 @@
       }
     }
 
-    &Submit {
-      width: 15em;
-      display: flex;
-      justify-content: space-between;
-    }
   }
   &Body {
     padding: 1.67em;
+  }
+  &Submit {
+    width: 15em;
+    display: flex;
+    justify-content: space-between;
   }
   &Two {
     display: grid;

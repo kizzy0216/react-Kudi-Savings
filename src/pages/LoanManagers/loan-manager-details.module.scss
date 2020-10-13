@@ -18,7 +18,10 @@
 .Details {
   font-size: 1rem;
   display: block;
-
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 4rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   &Header {
     display: flex;
     justify-content: space-between;
@@ -37,7 +40,7 @@
     &Grid {
       display: grid;
       grid-template-columns: auto 1fr;
-      grid-column-gap: 4em;
+      grid-column-gap: 1em;
       &Profile {
         width: 10.92em;
         height: 10.92em;

@@ -242,7 +242,9 @@ const LoanManager = ({ history }) => {
                     </div>
                   </div>
                 </div>
-                <div className={styles.CreateLMFormSubmit}>
+                <div>
+                </div>
+                <div className={styles.CreateLMSubmit}>
                   <Button
                     type="submit"
                     className={styles.CreateLMButton}
