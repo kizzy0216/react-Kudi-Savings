@@ -168,15 +168,14 @@ export const formatData = (history, url, page, limit, data) => {
 
 export const formatP2P = (page, limit, data) => {
   return data.map(
-    ({ timeUpdated, amount, agentName, dsaPhone, status }, index) => ({
+    ({ timeUpdated, amount, meta, status }, index) => ({
       SN: (page - 1) * limit + (index + 1),
       timeUpdated: timeUpdated
         ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
         : '-',
       amount: formatCurrency(amount),
-      agentName: formatCurrency(agentName),
+      agentName: meta?.sender_name || '-',
       amountCollected: amount ? formatCurrency(amount) : '-',
-      dsaPhone: dsaPhone ? dsaPhone : 'N?A',
       status: status ? (
         <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
           {status}
@@ -200,10 +199,6 @@ export const P2PTableColumns = [
   {
     key: 'agentName',
     render: 'KUDI AGENT'
-  },
-  {
-    key: 'dsaphone',
-    render: 'PHONE NUMBER'
   },
   {
     key: 'status',
