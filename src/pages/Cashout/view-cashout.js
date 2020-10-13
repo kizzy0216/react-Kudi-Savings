@@ -175,7 +175,8 @@ const ViewCashout = ({ history, match: { params } }) => {
                 
                 {withdrawal &&
                   withdrawal.status !== 'APPROVED' &&
-                  withdrawal.status !== 'DECLINED' && (
+                  withdrawal.status !== 'DECLINED' && 
+                  withdrawal.status !== 'CASH_DELIVERED' &&(
                     <CardFooter className={styles.FirstFooter}>
                       <Button
                         onClick={() => {
