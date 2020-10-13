@@ -44,7 +44,6 @@ const ViewCashout = ({ history, location, match: { params } }) => {
     getWithdrawal
   )
 
-  console.log(JSON.stringify(data?.data?.data))
   let withdrawal = data?.data?.data || {}
 
   const { data: imageData } = useQuery(
