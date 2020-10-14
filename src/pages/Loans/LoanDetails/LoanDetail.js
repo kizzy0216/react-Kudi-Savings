@@ -306,7 +306,7 @@ export default ({ history, match: { params } }) => {
                             onClick={handleActivation}
                             icon={<UpdateLink />}
                           >
-                            Update to in Progress
+                            Update to In-Progress
                           </Button>
                         </div>
                         <div className={'declineAction'}>
