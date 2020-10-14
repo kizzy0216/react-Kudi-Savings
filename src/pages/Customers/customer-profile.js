@@ -122,7 +122,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
-                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                <CardFooter className={styles.FirstBodyFooterButton}>
                   <Button
                     variant="flat"
                     onClick={() => setShowInformation(true)}
@@ -131,7 +131,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   >
                     View All Information
                   </Button>
-                </CardFooter> */}
+                </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
@@ -162,10 +162,10 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span> Total Withdrawn</span>
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
-                  <div className={styles.FirstBodyFlex}>
+                  {/* <div className={styles.FirstBodyFlex}>
                     <span> Wallet Balance</span>
                     <span>{formatCurrency(walletBalance)}</span>
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </div>
@@ -230,7 +230,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div> */}
-            {/* <div className={styles.Overview}>
+            <div className={styles.Overview}>
               <div className={styles.OverviewRow}>
                 <Card className={styles.OverviewRowCard}>
                   <CardHeader className={styles.OverviewRowCardHeader}>
@@ -267,7 +267,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardp1}>Providus Bank</p>
                 </Card>
               </div>
-            </div> */}
+            </div>
 
             <div className={styles.Second}>
               <UserPlans
