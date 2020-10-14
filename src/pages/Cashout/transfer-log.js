@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useQuery } from 'react-query'
-import { Card,CardHeader, CardBody, CardFooter, Button } from '@kudi-inc/dip'
+import { Card, CardHeader, CardBody, CardFooter, Button } from '@kudi-inc/dip'
 import styles from '../Customers/customer-profile.module.scss'
 import moment from 'moment'
 import { formatCurrency } from 'utils/function'
@@ -9,7 +9,9 @@ const TransferLog = ({ setShowTransferLog, withdrawal }) => {
   return (
     <Card>
       <CardHeader>
-        <h2>TransferLog</h2>
+        <b>
+          <h3>Transfer Log</h3>
+        </b>
       </CardHeader>
       <CardBody className={styles.Details}>
         <div className={styles.DetailsBody}>

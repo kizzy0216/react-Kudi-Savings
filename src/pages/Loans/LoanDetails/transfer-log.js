@@ -9,7 +9,9 @@ const TransferLog = ({ setShowTransferLog, loan }) => {
   return (
     <Card>
       <CardHeader>
-        <h2>TransferLog</h2>
+        <b>
+          <h3>Transfer Log</h3>
+        </b>
       </CardHeader>
       <CardBody className={styles.Details}>
         <div className={styles.DetailsBody}>

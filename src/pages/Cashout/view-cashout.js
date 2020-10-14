@@ -90,7 +90,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
 
   return (
     <Fragment>
-      <Header className={styles.Header}>
+      <Header className={styles.FirstHeader}>
         <p>
           <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
         </p>
