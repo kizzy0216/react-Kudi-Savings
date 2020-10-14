@@ -162,10 +162,10 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span> Total Withdrawn</span>
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
-                  <div className={styles.FirstBodyFlex}>
+                  {/* <div className={styles.FirstBodyFlex}>
                     <span> Wallet Balance</span>
                     <span>{formatCurrency(walletBalance)}</span>
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </div>

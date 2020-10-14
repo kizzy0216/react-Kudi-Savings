@@ -418,7 +418,7 @@ const SingleAgent = ({ history, match: { params, url } }) => {
             <Collections minimized id={agent.id}/>
           </div>
           <div className={styles.DivContent}>
-            <Transaction minimized id={agent.id} />
+            <Transaction minimized phone={agent.phoneNumber}/>
           </div>
           <div className={styles.DivContent}>
             <WalletTopUp minimized id={agent.id} />
