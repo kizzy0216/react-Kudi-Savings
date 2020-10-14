@@ -8,7 +8,7 @@ import {
 } from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
-import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
+import { Badge, Button, Card, CardBody, CardFooter } from '@kudi-inc/dip'
 import AuthContext from 'context/AuthContext'
 import './loan-detail.scss'
 import styles from './loan-detail.scss'
@@ -82,7 +82,9 @@ export default ({ history, match: { params } }) => {
   const handleApproveClick = () => {
     approveLoan({ loanId })
       .then(res => {
-        res.data.status ? toaster.success('Loan Approved') : toaster.danger('Error Approving')
+        res.data.status
+          ? toaster.success('Loan Approved')
+          : toaster.danger('Error Approving')
       })
       .catch(console.error)
   }
@@ -90,20 +92,22 @@ export default ({ history, match: { params } }) => {
   const handleDeclineClick = () => {
     declineLoan({ loanId })
       .then(res => {
-        res.data.status ? toaster.success('Loan Declined') : toaster.danger('Error Declining')
+        res.data.status
+          ? toaster.success('Loan Declined')
+          : toaster.danger('Error Declining')
       })
-      .catch(console.error) 
+      .catch(console.error)
   }
 
   const handleActivation = () => {
     activateLoan({ loanId })
-    .then(() => {
-      toaster.success('Loan In Progress')
-    })
-    .catch(data => {
-      if(data?.data?.message) return toaster.danger(data?.data?.message)
-      toaster.danger('Error updating to In Progress')
-    })
+      .then(() => {
+        toaster.success('Loan In Progress')
+      })
+      .catch(data => {
+        if (data?.data?.message) return toaster.danger(data?.data?.message)
+        toaster.danger('Error updating to In Progress')
+      })
   }
 
   const tenureDuration =
@@ -258,7 +262,7 @@ export default ({ history, match: { params } }) => {
                     <span className="key">Guarantors</span>{' '}
                     <span className="value">Verified</span>
                   </p>
-                  {['ACTIVE', 'PAID'].includes(loanStatus) ? (
+                  {['ACTIVE', 'PAID'].includes(loanStatus) && (
                     <p>
                       <Link
                         to={`/loans/repayments/${loanId}`}
@@ -269,56 +273,56 @@ export default ({ history, match: { params } }) => {
                         </Button>
                       </Link>
                     </p>
-                  ) : (
-                    <div className={'ApplicationFooter'}>
-                      {auth.type.includes('LOANS_MANAGER') && (
-                        <>
-                          {loanStatus === 'PENDING_DISBURSEMENT' ? (
-                            <div className={'disbursement'}>
-                              <div className={'disbursementAction'}>
-                                <Button
-                                  type="button"
-                                  variant="flat"
-                                  onClick={handleActivation}
-                                  icon={<UpdateLink />}
-                                >
-                                  Update to in Progress
-                                </Button>
-                              </div>
-                              <div className={'declineAction'}>
-                                <Button
-                                  type="button"
-                                  variant="flat"
-                                  onClick={handleDeclineClick}
-                                  icon={<Close />}
-                                >
-                                  Decline
-                                </Button>
-                              </div>
-                            </div>
-                          ) : (
-                            <p>
-                              <Button
-                                disabled={loanStatus === 'DECLINED'}
-                                onClick={handleApproveClick}
-                              >
-                                Approve
-                              </Button>
-                              <Button
-                                className={'btn-blue'}
-                                disabled={loanStatus === 'DECLINED'}
-                                onClick={handleDeclineClick}
-                                icon={<Close />}
-                              >
-                                Decline
-                              </Button>
-                            </p>
-                          )}
-                        </>
-                      )}
-                    </div>
                   )}
+                  <div className={'ApplicationFooter'}>
+                    {auth.type.includes('LOANS_MANAGER') && loanStatus.includes('PENDING_APPROVAL') && (
+                      <>
+                        <p>
+                          <Button
+                            onClick={handleApproveClick}
+                          >
+                            Approve
+                          </Button>
+                          <Button
+                            className={'btn-blue'}
+                            onClick={handleDeclineClick}
+                            icon={<Close />}
+                          >
+                            Decline
+                          </Button>
+                        </p>
+                      </>
+                    )}
+                  </div>
                 </CardBody>
+                {auth.type.includes('LOANS_MANAGER') && (
+                  <>
+                    {loanStatus === 'PENDING_DISBURSEMENT' && (
+                      <div className={'disbursement'}>
+                        <div className={'disbursementAction'}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={handleActivation}
+                            icon={<UpdateLink />}
+                          >
+                            Update to in Progress
+                          </Button>
+                        </div>
+                        <div className={'declineAction'}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={handleDeclineClick}
+                            icon={<Close />}
+                          >
+                            Decline
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </Card>
             </div>
           </div>

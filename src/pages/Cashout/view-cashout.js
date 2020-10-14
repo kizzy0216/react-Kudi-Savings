@@ -233,10 +233,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                 </CardBody>
                 {!auth.type.includes('LOANS_MANAGER') && (
                   <>
-                    {withdrawal &&
-                      withdrawal.status !== 'APPROVED' &&
-                      withdrawal.status !== 'DECLINED' &&
-                      withdrawal.status !== 'CASH_DELIVERED' && (
+                    {['PENDING', 'PENDING_IMAGE_VALIDATION', 'PENDING_VALIDATION'].includes(withdrawal.status) && (
                         <CardFooter className={styles.FirstFooter}>
                           <Button
                             onClick={() => {

@@ -169,7 +169,11 @@
 .disbursement{
   background: #f8fbff;
   display: flex;
-  justify-content: space-between;
+  height: 2.5em;
+  border-top: 1px solid #f0f4f9;
+  margin-top: 1em;
+  width: 100%;
+  justify-content: space-around;
 }
 
 .disbursementAction {
@@ -178,9 +182,6 @@
   justify-content: center;
   align-items: center;
   color: $sky-blue;
-  height: 2.5em;
-  border-top: 1px solid #f0f4f9;
-  margin-top: 1em;
   font-weight: 500;
   button {
     color: inherit;
@@ -198,9 +199,6 @@
   justify-content: center;
   align-items: center;
   color: $danger;
-  height: 2.5em;
-  border-top: 1px solid #f0f4f9;
-  margin-top: 1em;
   font-weight: 500;
   button {
     color: inherit;
