@@ -95,7 +95,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
           <ChevronLeft onClick={() => history.goBack()} /> Cash Out Request
         </p>
 
-        {['CASH_DELIVERED', 'PENDING_TRANSFER_DISBURSEMENT'].includes(
+        {['CASH_DELIVERED', 'APPROVED_PENDING_DISBURSEMENT'].includes(
           withdrawal.status
         ) && (
           <Button
@@ -190,7 +190,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                         withdrawal.status === 'APPROVED'
                           ? 'primary'
                           : withdrawal.status ===
-                            'PENDING_TRANSFER_DISBURSEMENT'
+                            'APPROVED_PENDING_DISBURSEMENT'
                           ? 'warning'
                           : withdrawal.status === 'CASH_DELIVERED'
                           ? 'success'
@@ -272,7 +272,7 @@ const ViewCashout = ({ history, location, match: { params } }) => {
                         </Button>
                       </div>
                     ) : withdrawal.status ===
-                      'PENDING_TRANSFER_DISBURSEMENT' ? (
+                      'APPROVED_PENDING_DISBURSEMENT' ? (
                       <CardFooter className={styles.disbursement}>
                         <div className={styles.disbursementActivate}>
                           <Button

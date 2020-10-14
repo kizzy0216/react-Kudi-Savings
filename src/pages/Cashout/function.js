@@ -37,7 +37,7 @@ export const formatData = (data, history, url, page, limit) => {
           variant={
             status === 'APPROVED'
               ? 'primary'
-              : status === 'PENDING_DISBURSEMENT'
+              : status === 'APPROVED_PENDING_DISBURSEMENT'
               ? 'warning'
               : status === 'CASH_DELIVERED'
               ? 'success'
@@ -76,7 +76,7 @@ export const formatData = (data, history, url, page, limit) => {
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
-  { text: 'Approved Pending Disbursement', value: 'PENDING_TRANSFER_DISBURSEMENT' },
+  { text: 'Approved Pending Disbursement', value: 'APPROVED_PENDING_DISBURSEMENT' },
   { text: 'Pending', value: 'PENDING' },
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
