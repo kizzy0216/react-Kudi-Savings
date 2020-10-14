@@ -250,7 +250,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
                       variant="flat"
-                      onClick={() => history.push(`${url}/stash`)}
+                      // onClick={() => history.push(`${url}/stash`)}
                       type="button"
                       icon={<Eye />}
                     >
