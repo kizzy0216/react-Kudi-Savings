@@ -144,13 +144,15 @@ const Layout = ({ children, auth }) => {
       </div>
       <Fragment>
         <Content className={styles.content}>
-          <SideSheet
-            onCloseComplete={() => setShowFundPurse(false)}
-            isShown={showFundPurse}
-            width={600}
-          >
-            <FundLoanPurse setShowFundPurse={setShowFundPurse} />
-          </SideSheet>
+          {showFundPurse && (
+            <SideSheet
+              onCloseComplete={() => setShowFundPurse(false)}
+              isShown={showFundPurse}
+              width={600}
+            >
+              <FundLoanPurse setShowFundPurse={setShowFundPurse} />
+            </SideSheet>
+          )}
         </Content>
       </Fragment>
     </>

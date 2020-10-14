@@ -441,13 +441,13 @@
     }
 
     &Logout {
-      border-top: 1px solid #2443a7;
       border-radius: 0px;
       position: absolute;
       bottom: 0;
       left: 1rem;
       padding-top: 1.67em;
       &Links {
+        border-top: 1px solid #2443a7;
         font-size: 0.83em;
         margin: auto auto 0.83em;
         line-height: 120%;
