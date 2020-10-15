@@ -855,6 +855,10 @@ export const LoanManagerTable=[
     render: `PHONE NUMBER`
   },
   {
+    key: `email`,
+    render: `EMAIL`
+  },
+  {
     key: `timeCreated`,
     render: `DATE CREATED`
   },
