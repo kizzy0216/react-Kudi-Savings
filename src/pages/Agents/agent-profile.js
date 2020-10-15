@@ -109,9 +109,9 @@ const SingleAgent = ({ history, match: { params, url } }) => {
               <ChevronLeft role="button" onClick={() => history.goBack()} />
               Agent Profile
             </p>
-            {/* <Button type="button" icon={<Reassign />}>
+            <Button type="button" icon={<Reassign />}>
               View New Referrals
-            </Button> */}
+            </Button>
           </Header>
           <Content className={styles.content}>
             {isLoading && <ProfileLoading />}

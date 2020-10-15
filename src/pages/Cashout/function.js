@@ -30,15 +30,27 @@ export const formatData = (data, history, url, page, limit) => {
       agentName: formatText(agentName),
       managerName: formatText(managerName),
       amount: formatCurrency(amount),
-      type: formatText(type),
+      type: type,
       planTitle: formatText(planTitle),
       status: status ? (
         <Badge
           variant={
             status === 'APPROVED'
+              ? 'primary'
+              : status === 'APPROVED_PENDING_DISBURSEMENT'
+              ? 'warning'
+              : status === 'CASH_DELIVERED'
               ? 'success'
               : status === 'DECLINED'
               ? 'danger'
+              : status === 'PENDING'
+              ? 'warning'
+              : status === 'PENDING_IMAGE_VALIDATION'
+              ? 'warning'
+              : status === 'PENDING_VALIDATION'
+              ? 'warning'
+              : status === 'VOUCHER_REDEEMED'
+              ? 'primary'
               : 'warning'
           }
         >
@@ -52,7 +64,7 @@ export const formatData = (data, history, url, page, limit) => {
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={() => history.push(`${url}/${id}`)}
+          onClick={() => history.push({ pathname: `${url}/${id}`, type })}
         >
           View
         </Button>
@@ -61,18 +73,18 @@ export const formatData = (data, history, url, page, limit) => {
   )
 }
 
-
 export const statusOptions = [
   { text: 'Select Status', value: '' },
   { text: 'Approved', value: 'APPROVED' },
+  { text: 'Approved Pending Disbursement', value: 'APPROVED_PENDING_DISBURSEMENT' },
+  { text: 'Pending', value: 'PENDING' },
+  { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
+  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
+  { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' },
+  {text: 'Redeemed', value: 'REDEEMED'},
   { text: 'Cash Delivered', value: 'CASH_DELIVERED' },
   { text: 'Declined', value: 'DECLINED' },
-  { text: 'Pending', value: 'PENDING' },
-  { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
-  { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
-  { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
 ]
-
 
 export const TableColumns = [
   {
@@ -80,12 +92,12 @@ export const TableColumns = [
     render: 'Name'
   },
   {
-    key: 'planTitle',
-    render: 'Plan'
+    key: 'type',
+    render: 'TYPE'
   },
   {
     key: 'marketName',
-    render: 'Market Name'
+    render: 'Market'
   },
   {
     key: 'agentName',
@@ -93,7 +105,7 @@ export const TableColumns = [
   },
   {
     key: 'managerName',
-    render: 'Manager Name'
+    render: "Manager's Name"
   },
   { key: 'amount', render: 'Amount' },
 
