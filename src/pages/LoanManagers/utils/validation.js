@@ -24,14 +24,17 @@ export const LoanManagerValidation = values => {
     if (!values.state) {
       errors.state = 'State is required'
     }
+    if (!values.address) {
+      errors.address = 'Address is required'
+    }
     if (!values.password) {
-      errors.marketIds = 'Password is required'
+      errors.password = 'Password is required'
     }
     if (!values.password && values.password.length < 8) {
-        errors.marketIds = 'Password should contain at least 8 characters'
+        errors.password = 'Password should contain at least 8 characters'
       }
-      if (!values.imageId) {
-         errors.imageId = 'Profile picture is required'
+      if (!values.pictureId) {
+         errors.pictureId = 'Profile picture is required'
          }
   
     return errors

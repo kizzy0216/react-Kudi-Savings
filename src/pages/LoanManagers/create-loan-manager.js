@@ -33,7 +33,8 @@ const LoanManager = ({ history }) => {
     gender: 'MALE',
     state: '',
     phoneNumber: '',
-    imageId: ''
+    address: '',
+    pictureId: ''
   })
 
   const uploadProgress = {
@@ -69,13 +70,14 @@ const LoanManager = ({ history }) => {
     e.preventDefault()
 
     if (uploadedImage && uploadedImage.data) {
-      loanManager.imageId = uploadedImage.data.id
+      loanManager.pictureId = uploadedImage.data.id
     }
 
     const errors = LoanManagerValidation({ ...loanManager })
 
     setErrors(errors)
     if (Object.keys(errors).length > 0) return
+    console.log(Object.keys(errors).length)
     setLoading(true)
     await CreateLoanManager({ ...loanManager })
       .then(() => {
@@ -137,8 +139,8 @@ const LoanManager = ({ history }) => {
                             ? 99
                             : imgProgress
                         }%`
-                      ) : errors && errors.imageId ? (
-                        <span className="danger">{errors.imageId}</span>
+                      ) : errors && errors.pictureId ? (
+                        <span className="danger">{errors.pictureId}</span>
                       ) : (
                         'Change Picture'
                       )}
@@ -197,18 +199,18 @@ const LoanManager = ({ history }) => {
                     status={errors.phoneNumber && 'error'}
                     error={errors.phoneNumber}
                   />
-                  <Select
-                    onSelect={state =>
-                      setLoanManager({ ...loanManager, state })
-                    }
-                    name="state"
-                    value={loanManager.state}
-                    label="Select State"
-                    options={states}
-                    autoComplete="state"
-                    error={errors.state}
-                    status={errors.state && 'error'}
+
+                  <Input
+                    name="address"
+                    type="text"
+                    onChange={e => handleLoanManager(e)}
+                    value={loanManager.address}
+                    label="Address"
+                    autoComplete="address"
+                    error={errors.address}
+                    status={errors.address && 'error'}
                   />
+
                   <div className={styles.CreateLMTwo}>
                     <div className={styles.CreateLMTwoCheck}>
                       <p>Male</p>
@@ -241,9 +243,20 @@ const LoanManager = ({ history }) => {
                       </div>
                     </div>
                   </div>
+                  <Select
+                    onSelect={state =>
+                      setLoanManager({ ...loanManager, state })
+                    }
+                    name="state"
+                    value={loanManager.state}
+                    label="Select State"
+                    options={states}
+                    autoComplete="state"
+                    error={errors.state}
+                    status={errors.state && 'error'}
+                  />
                 </div>
-                <div>
-                </div>
+                <div></div>
                 <div className={styles.CreateLMSubmit}>
                   <Button
                     type="submit"
