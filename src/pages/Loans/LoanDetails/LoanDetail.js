@@ -148,6 +148,7 @@ export default ({ history, match: { params } }) => {
         )}
         {res && res.data && (
           <div className={'Content'}>
+            <div className={'ContentFirst'}>
             <div className={'section-1'}>
               <Card className={'card-1'}>
                 <CardBody className={'first-card'}>
@@ -208,14 +209,6 @@ export default ({ history, match: { params } }) => {
                   </div>
                 </CardBody>
               </Card>
-              <Card className={'card-2'}>
-                {loan.disbursementStatus &&
-                loan.disbursementStatus === 'SUCCESS' ? (
-                  <PaymentOverview loan={loan} />
-                ) : (
-                  <Guarantors loan={loan} />
-                )}
-              </Card>
             </div>
             <div className="section-2">
               <Card className={'card-3'}>
@@ -275,24 +268,23 @@ export default ({ history, match: { params } }) => {
                     </p>
                   )}
                   <div className={'ApplicationFooter'}>
-                    {auth.type.includes('LOANS_MANAGER') && loanStatus.includes('PENDING_APPROVAL') && (
-                      <>
-                        <p>
-                          <Button
-                            onClick={handleApproveClick}
-                          >
-                            Approve
-                          </Button>
-                          <Button
-                            className={'btn-blue'}
-                            onClick={handleDeclineClick}
-                            icon={<Close />}
-                          >
-                            Decline
-                          </Button>
-                        </p>
-                      </>
-                    )}
+                    {auth.type.includes('LOANS_MANAGER') &&
+                      loanStatus.includes('PENDING_APPROVAL') && (
+                        <>
+                          <p>
+                            <Button onClick={handleApproveClick}>
+                              Approve
+                            </Button>
+                            <Button
+                              className={'btn-blue'}
+                              onClick={handleDeclineClick}
+                              icon={<Close />}
+                            >
+                              Decline
+                            </Button>
+                          </p>
+                        </>
+                      )}
                   </div>
                 </CardBody>
                 {auth.type.includes('LOANS_MANAGER') && (
@@ -325,7 +317,20 @@ export default ({ history, match: { params } }) => {
                 )}
               </Card>
             </div>
+            </div>
+            <>
+          {loan.disbursementStatus &&
+                  loan.disbursementStatus === 'SUCCESS' && (
+              <Card className={'card-2'}>
+                    <PaymentOverview loan={loan} />  
+              </Card>
+              )}
+              <Card className={'card-2'}>
+                <Guarantors loan={loan} />
+              </Card>
+          </>
           </div>
+          
         )}
         {showTransferLog && (
           <SideSheet

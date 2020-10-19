@@ -12,11 +12,15 @@
 }
 
 .Content {
-  display: flex;
+  display: grid;
+  &First{
+    display: flex;
+    margin-bottom: 2rem;
+  }
 }
 
 .section-1 {
-  width: 60%;
+  width: 60%; 
 }
 
 .section-2 {
@@ -25,11 +29,12 @@
 
 .card-1 {
   margin-bottom: 30px;
-
+height: 100%;
   .first-card {
     flex-direction: column;
     padding-left: 30px;
     padding-right: 29px;
+    
 
     .Customer-Info-Header {
       display: flex;
