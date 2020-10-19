@@ -149,188 +149,191 @@ export default ({ history, match: { params } }) => {
         {res && res.data && (
           <div className={'Content'}>
             <div className={'ContentFirst'}>
-            <div className={'section-1'}>
-              <Card className={'card-1'}>
-                <CardBody className={'first-card'}>
-                  <div className="Customer-Info-Header">
-                    <span className={'heading'}>Customer Information</span>
-                    <p className={'view-profile'}>
-                      <Button
-                        variant="flat"
-                        onClick={() =>
-                          history.push(`/customers/${customer.id}`)
-                        }
-                        type="button"
-                        icon={<UserIconLink />}
-                      >
-                        View Profile
-                      </Button>
-                    </p>
-                  </div>
-                  <div className="second-section">
-                    <div className="Customer-Picture">
-                      <img
-                        src={imageData ? imageData.data.medium : agentImage}
-                        alt="customer picture"
-                      />
-                    </div>
-                    <div className="Customer-Info">
-                      <p>
-                        <span className={'key'}>Name:</span>{' '}
-                        <span className={'value'}>
-                          {customer.firstName} {customer.lastName}
-                        </span>
-                      </p>
-                      <p>
-                        <span className={'key'}>Phone Number:</span>{' '}
-                        <span className={'value'}>{customer.phoneNumber}</span>
-                      </p>
-                      <p>
-                        <span className={'key'}>Gender:</span>{' '}
-                        <span className={'value'}>{customer.gender}</span>
-                      </p>
-                      <p>
-                        <span className={'key'}>Address:</span>{' '}
-                        <span className={'value'}>{customer.address}</span>
-                      </p>
-                      <p>
-                        <span className={'key'}>Assigned Market:</span>{' '}
-                        <span className={'value'}>{market.name}</span>
-                      </p>
-                      <p>
-                        <span className={'key'}>DSA Phone Number:</span>{' '}
-                        <span className={'value'}>{agent.phoneNumber}</span>
-                      </p>
-                      <p>
-                        <span className={'key'}>Wallet Balance:</span>{' '}
-                        <span className={'value'}>{walletBalance}</span>
-                      </p>
-                    </div>
-                  </div>
-                </CardBody>
-              </Card>
-            </div>
-            <div className="section-2">
-              <Card className={'card-3'}>
-                <CardBody>
-                  <p className={'add-border-bottom'}>
-                    <span className="heading">Application Status</span>{' '}
-                    <Badge variant={badgeType}>
-                      {formatStatus(loanStatus)}
-                    </Badge>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Loan Amount</span>{' '}
-                    <span className="value">{formatCurrency(loan.amount)}</span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Interest</span>{' '}
-                    <span className="value">
-                      {formatCurrency(loan.repayment - loan.amount)}
-                    </span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Repayment</span>{' '}
-                    <span className="value">
-                      {formatCurrency(loan.repayment)}
-                    </span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Tenure</span>{' '}
-                    <span className="value">{tenureDuration}</span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Repayment Plan</span>{' '}
-                    <span className="value">{loan.modeOfRepayment}</span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">
-                      {loan.modeOfRepayment.toLowerCase()} Amount
-                    </span>{' '}
-                    <span className="value">
-                      {formatCurrency(intervalAmount)}
-                    </span>
-                  </p>
-                  <p className={'add-border-bottom'}>
-                    <span className="key">Guarantors</span>{' '}
-                    <span className="value">Verified</span>
-                  </p>
-                  {['ACTIVE', 'PAID'].includes(loanStatus) && (
-                    <p>
-                      <Link
-                        to={`/loans/repayments/${loanId}`}
-                        className={'btn-block'}
-                      >
-                        <Button className={'btn-block'}>
-                          View Repayment History
+              <div className={'section-1'}>
+                <Card className={'card-1'}>
+                  <CardBody className={'first-card'}>
+                    <div className="Customer-Info-Header">
+                      <span className={'heading'}>Customer Information</span>
+                      <p className={'view-profile'}>
+                        <Button
+                          variant="flat"
+                          onClick={() =>
+                            history.push(`/customers/${customer.id}`)
+                          }
+                          type="button"
+                          icon={<UserIconLink />}
+                        >
+                          View Profile
                         </Button>
-                      </Link>
+                      </p>
+                    </div>
+                    <div className="second-section">
+                      <div className="Customer-Picture">
+                        <img
+                          src={imageData ? imageData.data.medium : agentImage}
+                          alt="customer picture"
+                        />
+                      </div>
+                      <div className="Customer-Info">
+                        <p>
+                          <span className={'key'}>Name:</span>{' '}
+                          <span className={'value'}>
+                            {customer.firstName} {customer.lastName}
+                          </span>
+                        </p>
+                        <p>
+                          <span className={'key'}>Phone Number:</span>{' '}
+                          <span className={'value'}>
+                            {customer.phoneNumber}
+                          </span>
+                        </p>
+                        <p>
+                          <span className={'key'}>Gender:</span>{' '}
+                          <span className={'value'}>{customer.gender}</span>
+                        </p>
+                        <p>
+                          <span className={'key'}>Address:</span>{' '}
+                          <span className={'value'}>{customer.address}</span>
+                        </p>
+                        <p>
+                          <span className={'key'}>Assigned Market:</span>{' '}
+                          <span className={'value'}>{market.name}</span>
+                        </p>
+                        <p>
+                          <span className={'key'}>DSA Phone Number:</span>{' '}
+                          <span className={'value'}>{agent.phoneNumber}</span>
+                        </p>
+                        <p>
+                          <span className={'key'}>Wallet Balance:</span>{' '}
+                          <span className={'value'}>{walletBalance}</span>
+                        </p>
+                      </div>
+                    </div>
+                  </CardBody>
+                </Card>
+              </div>
+              <div className="section-2">
+                <Card className={'card-3'}>
+                  <CardBody>
+                    <p className={'add-border-bottom'}>
+                      <span className="heading">Application Status</span>{' '}
+                      <Badge variant={badgeType}>
+                        {formatStatus(loanStatus)}
+                      </Badge>
                     </p>
-                  )}
-                  <div className={'ApplicationFooter'}>
-                    {auth.type.includes('LOANS_MANAGER') &&
-                      loanStatus.includes('PENDING_APPROVAL') && (
-                        <>
-                          <p>
-                            <Button onClick={handleApproveClick}>
-                              Approve
-                            </Button>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Loan Amount</span>{' '}
+                      <span className="value">
+                        {formatCurrency(loan.amount)}
+                      </span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Interest</span>{' '}
+                      <span className="value">
+                        {formatCurrency(loan.repayment - loan.amount)}
+                      </span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Repayment</span>{' '}
+                      <span className="value">
+                        {formatCurrency(loan.repayment)}
+                      </span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Tenure</span>{' '}
+                      <span className="value">{tenureDuration}</span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Repayment Plan</span>{' '}
+                      <span className="value">{loan.modeOfRepayment}</span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">
+                        {loan.modeOfRepayment.toLowerCase()} Amount
+                      </span>{' '}
+                      <span className="value">
+                        {formatCurrency(intervalAmount)}
+                      </span>
+                    </p>
+                    <p className={'add-border-bottom'}>
+                      <span className="key">Guarantors</span>{' '}
+                      <span className="value">Verified</span>
+                    </p>
+                    {['ACTIVE', 'PAID'].includes(loanStatus) && (
+                      <p>
+                        <Link
+                          to={`/loans/repayments/${loanId}`}
+                          className={'btn-block'}
+                        >
+                          <Button className={'btn-block'}>
+                            View Repayment History
+                          </Button>
+                        </Link>
+                      </p>
+                    )}
+                    <div className={'ApplicationFooter'}>
+                      {auth.type.includes('LOANS_MANAGER') &&
+                        loanStatus.includes('PENDING_APPROVAL') && (
+                          <>
+                            <p>
+                              <Button onClick={handleApproveClick}>
+                                Approve
+                              </Button>
+                              <Button
+                                className={'btn-blue'}
+                                onClick={handleDeclineClick}
+                                icon={<Close />}
+                              >
+                                Decline
+                              </Button>
+                            </p>
+                          </>
+                        )}
+                    </div>
+                  </CardBody>
+                  {auth.type.includes('LOANS_MANAGER') && (
+                    <>
+                      {loanStatus === 'PENDING_DISBURSEMENT' && (
+                        <div className={'disbursement'}>
+                          <div className={'disbursementAction'}>
                             <Button
-                              className={'btn-blue'}
+                              type="button"
+                              variant="flat"
+                              onClick={handleActivation}
+                              icon={<UpdateLink />}
+                            >
+                              Update to In-Progress
+                            </Button>
+                          </div>
+                          <div className={'declineAction'}>
+                            <Button
+                              type="button"
+                              variant="flat"
                               onClick={handleDeclineClick}
                               icon={<Close />}
                             >
                               Decline
                             </Button>
-                          </p>
-                        </>
+                          </div>
+                        </div>
                       )}
-                  </div>
-                </CardBody>
-                {auth.type.includes('LOANS_MANAGER') && (
-                  <>
-                    {loanStatus === 'PENDING_DISBURSEMENT' && (
-                      <div className={'disbursement'}>
-                        <div className={'disbursementAction'}>
-                          <Button
-                            type="button"
-                            variant="flat"
-                            onClick={handleActivation}
-                            icon={<UpdateLink />}
-                          >
-                            Update to In-Progress
-                          </Button>
-                        </div>
-                        <div className={'declineAction'}>
-                          <Button
-                            type="button"
-                            variant="flat"
-                            onClick={handleDeclineClick}
-                            icon={<Close />}
-                          >
-                            Decline
-                          </Button>
-                        </div>
-                      </div>
-                    )}
-                  </>
-                )}
-              </Card>
-            </div>
+                    </>
+                  )}
+                </Card>
+              </div>
             </div>
             <>
-          {loan.disbursementStatus &&
-                  loan.disbursementStatus === 'SUCCESS' && (
-              <Card className={'card-2'}>
-                    <PaymentOverview loan={loan} />  
-              </Card>
-              )}
+              {loan.disbursementStatus &&
+                loan.disbursementStatus === 'SUCCESS' && (
+                  <Card className={'card-2'}>
+                    <PaymentOverview loan={loan} />
+                  </Card>
+                )}
               <Card className={'card-2'}>
                 <Guarantors loan={loan} />
               </Card>
-          </>
+            </>
           </div>
-          
         )}
         {showTransferLog && (
           <SideSheet
