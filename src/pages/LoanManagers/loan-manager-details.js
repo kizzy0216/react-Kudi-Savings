@@ -64,15 +64,15 @@ const LoanManagerDetails = ({ id }) => {
                   </div>
                   <div className={styles.DetailsBodyGridContent}>
                     <span> Phone Number </span>
-                    <span>{agent.phoneNumber}</span>
+                    <span>{agent.phoneNumber || '-'}</span>
                   </div>
                   <div className={styles.DetailsBodyGridContent}>
                     <span> Gender </span>
-                    <span>{agent.gender}</span>
+                    <span>{agent.gender || '-'}</span>
                   </div>
                   <div className={styles.DetailsBodyGridContent}>
                     <span> Address </span>
-                    <span>{agent.address}</span>
+                    <span>{agent.address || '-'}</span>
                   </div>
                 </div>
               </div>

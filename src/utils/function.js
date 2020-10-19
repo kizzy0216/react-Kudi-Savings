@@ -823,7 +823,7 @@ export const statusOptions = [
 export const formatLoanManager = (data, setViewLoanManager, setManagerId) => {
   return data.map(({firstName, lastName, phoneNumber, email, timeCreated, status, id})  => ({
       fullName: `${firstName} ${lastName}`,
-      phoneNumber: phoneNumber,
+      phoneNumber: phoneNumber ? phoneNumber : '-',
       email: email,
       timeCreated:timeCreated && moment(timeCreated).format('Do MMMM YYYY'),
       status: status ? (
