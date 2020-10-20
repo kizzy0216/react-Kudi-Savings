@@ -72,10 +72,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
 
-                    <Button
-                      variant="flat"
-                      icon={<Reassign />}
-                    >
+                    <Button variant="flat" icon={<Reassign />}>
                       My Referrals
                     </Button>
 
@@ -250,7 +247,12 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
                       variant="flat"
-                      // onClick={() => history.push(`${url}/stash`)}
+                      onClick={() =>
+                        history.push({
+                          pathname: `${url}/stash`,
+                          stashId: customer.stashId
+                        })
+                      }
                       type="button"
                       icon={<Eye />}
                     >
@@ -263,8 +265,12 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>KTA Details</p>
                   </CardHeader>
 
-                  <p className={styles.OverviewRowCardp2}>{customer.stashAccountNumber}</p>
-                  <p className={styles.OverviewRowCardp1}>{customer.stashBankName}</p>
+                  <p className={styles.OverviewRowCardp2}>
+                    {customer.stashAccountNumber}
+                  </p>
+                  <p className={styles.OverviewRowCardp1}>
+                    {customer.stashBankName}
+                  </p>
                 </Card>
               </div>
             </div>

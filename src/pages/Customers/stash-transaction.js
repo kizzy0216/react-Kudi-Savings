@@ -6,7 +6,6 @@ import {
   CardBody,
   CardHeader,
   Button,
-  ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
 import Select from 'components/Select'
@@ -17,29 +16,44 @@ import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
 import {
   FormatStashData,
-  ParamsReducer,
-  DefaultParams,
-  StashTableColumn
+  StashTableColumn,
+  stashSourceOptions
 } from 'utils/function'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import SampleData from './utils/sample-stash-data'
+import { getStashTransactions } from 'services/stash'
 
-const StashHistory = () => {
+const StashHistory = ({ location }) => {
+  let stashId = location.stashId
   let history = useHistory()
   let { url } = useRouteMatch()
-  const [page, setPage] = useState(1)
-  const [type, setType] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [showReset, setShowReset] = useState(false)
-  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
-  const [focusedInput, setfocusedInput] = useState(null)
-  let limit = 50
-  let formattedData = []
 
-  formattedData = FormatStashData(SampleData, history, url)
+  const [page, setPage] = useState(0)
+  const [type, setType] = useState('')
+  const initialStartDate = moment().subtract(29, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DD')
+  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
+  const [showReset, setShowReset] = useState(false)
+  const [focusedInput, setfocusedInput] = useState(null)
+
+  let limit = 20
+  let formattedData = []
+  let totalPage = 0
+
+  const { data, isLoading, error, refetch } = useQuery([
+    'StashTransactions',
+    { to, from, limit, page, type, stashId }
+  ],
+  getStashTransactions)
+
+  if (data?.data?.data) {
+    formattedData = FormatStashData(data.data.data.list, history, url)
+    totalPage = Math.ceil(data.data.data.total / limit)
+  }
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
@@ -47,7 +61,7 @@ const StashHistory = () => {
       setFrom(
         moment(startDate)
           .subtract(12, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD')
       )
     }
     if (endDate) {
@@ -57,11 +71,12 @@ const StashHistory = () => {
           .add(11, 'hours')
           .add(59, 'minutes')
           .add(59, 'seconds')
-          .format('YYYY-MM-DD HH:mm:ss')
+          .format('YYYY-MM-DD')
       )
     }
     setShowReset(true)
   }
+  
   const onFocusChange = focusedInput => {
     setfocusedInput(focusedInput)
   }
@@ -91,23 +106,11 @@ const StashHistory = () => {
                   isOutsideRange={() => false}
                 />
               </Filters>
-              <ButtonGroup>
-                <Button active={type === ''} onClick={() => setType('')}>
-                  All
-                </Button>
-                <Button
-                  active={type === 'DEBIT'}
-                  onClick={() => setType('DEBIT')}
-                >
-                  Debit
-                </Button>
-                <Button
-                  active={type === 'CREDIT'}
-                  onClick={() => setType('CREDIT')}
-                >
-                  Credit
-                </Button>
-              </ButtonGroup>
+              <Select
+                  active={type}
+                  options={stashSourceOptions}
+                  onSelect={value => setType(value)}
+                />
               {showReset && (
                 <Close
                   className="danger"
@@ -123,12 +126,43 @@ const StashHistory = () => {
             </div>
           </CardHeader>
           <CardBody className={styles.Transactions}>
-            <Table
-              column={StashTableColumn}
-              placeholder="stash transactions"
-              data={formattedData}
-            />  
+            {isLoading && <TableLoading />}
+            {error && (
+              <span>
+                Error!
+                <button onClick={() => refetch({ disableThrow: true })}>
+                  Retry
+                </button>
+              </span>
+            )}
+            {data && (
+              <Table
+                column={StashTableColumn}
+                placeholder="stash transactions"
+                data={formattedData}
+              />
+            )}
           </CardBody>
+          {data && (
+            <div className={'pagination'}>
+              {page > 0 && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page + 1} of {totalPage}
+              </p>
+              {formattedData.length === limit && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              )}
+            </div>
+          )}
         </Card>
       </Content>
     </Fragment>

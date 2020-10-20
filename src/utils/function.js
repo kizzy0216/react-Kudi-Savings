@@ -52,6 +52,16 @@ export const sourceOptions = [
   { text: 'Contribution', value: 'CONTRIBUTION' }
 ]
 
+export const stashSourceOptions = [
+  {text:'All Sources', value:''},
+  {text:'STASH-TOP UP', value:'STASH_TOPUP'},
+  {text:'PLAN-TOP UP', value:'PLAN_TOPUP'},
+  {text:'PLAN COLLECTION', value:'PLAN_COLLECTION'},
+  {text:'CASHOUT', value:'CASHOUT'},
+  {text:'CHARGES', value:'CHARGES'},
+  {text:'REFERRALS', value:'REFERRALS'},
+  {text:'LOAN REPAYMENT', value:'LOAN_REPAYMENT'},
+]
 export const DefaultParams = {
   page: 1,
   startDate: '',
@@ -565,13 +575,13 @@ export const formatWalletHistory = (data, page, limit) => {
 }
 
 export const FormatStashData = (data, history, url) => {
-  return data.map(({ id, date, amount, reference, type, source, balance }) => ({
+  return data.map(({ id, timeCreated, amount, reference, transactionType, type, balance }) => ({
     id: id,
-    date: moment(date).format('Do MMM, YYYY hh:mm a'),
+    date:timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
     amount: formatCurrency(amount),
-    reference: reference,
-    type: type,
-    source: formatText(source),
+    reference: reference.length > 16 ? `${reference.slice(0,15)}...` : reference,
+    type: transactionType,
+    source: formatText(type),
     balance: formatCurrency(balance),
     action: (
       <Button
