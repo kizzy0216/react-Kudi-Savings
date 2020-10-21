@@ -1,4 +1,4 @@
 export default {
-  baseUrl: 'https://savings-dev.kudi.ng',
-  mediaService: 'https://staging-media-service.herokuapp.com'
+  baseUrl: process.env.REACT_APP_BASEURL,
+  mediaService: process.env.REACT_APP_MEDIA
 }
