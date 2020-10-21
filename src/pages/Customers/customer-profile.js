@@ -72,10 +72,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
 
-                    <Button
-                      variant="flat"
-                      icon={<Reassign />}
-                    >
+                    <Button variant="flat" icon={<Reassign />}>
                       My Referrals
                     </Button>
 
@@ -96,7 +93,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                         src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
+                      <div className={styles.FirstBodyGridProfileBadge}>
+                      {customer?.referred && (
+                      <Badge variant="warning">Referred</Badge>
+                    )}
                     </div>
+                    </div>
+                    
                     <div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
@@ -263,8 +266,12 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>KTA Details</p>
                   </CardHeader>
 
-                  <p className={styles.OverviewRowCardp2}>{customer.stashAccountNumber}</p>
-                  <p className={styles.OverviewRowCardp1}>{customer.stashBankName}</p>
+                  <p className={styles.OverviewRowCardp2}>
+                    {customer.stashAccountNumber}
+                  </p>
+                  <p className={styles.OverviewRowCardp1}>
+                    {customer.stashBankName}
+                  </p>
                 </Card>
               </div>
             </div>
