@@ -95,12 +95,12 @@ const Layout = ({ children, auth }) => {
       icon: <CashoutLink />,
       userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
     },
-    {
-      title: 'Referrals',
-      link: '/referrals',
-      icon: <ReferralLink />,
-      userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
-    },
+    // {
+    //   title: 'Referrals',
+    //   link: '/referrals',
+    //   icon: <ReferralLink />,
+    //   userType: ['ADMIN', 'ZONAL', 'SUPER_ADMIN', 'LOANS_MANAGER']
+    // },
     {
       title: 'Loans',
       link: '/loans',
@@ -151,13 +151,15 @@ const Layout = ({ children, auth }) => {
       </div>
       <Fragment>
         <Content className={styles.content}>
-          <SideSheet
-            onCloseComplete={() => setShowFundPurse(false)}
-            isShown={showFundPurse}
-            width={600}
-          >
-            <FundLoanPurse setShowFundPurse={setShowFundPurse} />
-          </SideSheet>
+          {showFundPurse && (
+            <SideSheet
+              onCloseComplete={() => setShowFundPurse(false)}
+              isShown={showFundPurse}
+              width={600}
+            >
+              <FundLoanPurse setShowFundPurse={setShowFundPurse} />
+            </SideSheet>
+          )}
         </Content>
       </Fragment>
     </>

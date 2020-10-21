@@ -1,16 +1,27 @@
-import React, { Fragment, useContext } from 'react'
-import { ChevronLeft, UserIconLink, Close } from '../../../assets/svg'
+import React, { Fragment, useContext, useState } from 'react'
+import {
+  ChevronLeft,
+  UserIconLink,
+  Close,
+  Reassign,
+  UpdateLink
+} from '../../../assets/svg'
 import agentImage from '../../../assets/images/agent.png'
 import { Content, Header } from '../../../components/Layout'
-import { Badge, Button, Card, CardBody } from '@kudi-inc/dip'
+import { Badge, Button, Card, CardBody, CardFooter } from '@kudi-inc/dip'
 import AuthContext from 'context/AuthContext'
 import './loan-detail.scss'
+import styles from './loan-detail.scss'
 import Guarantors from './Guarantors'
 import PaymentOverview from './PaymentOverview'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import { toaster, SideSheet } from 'evergreen-ui'
+import TransferLog from './transfer-log'
+import { ProfileLoading } from 'components/loading'
 import {
   approveLoan,
+  activateLoan,
   declineLoan,
   fetchWalletBalance,
   getLoanDetails
@@ -21,6 +32,7 @@ import { fecthImage, formatCurrency } from 'utils/function'
 export default ({ history, match: { params } }) => {
   let { id: loanId } = params
   let [auth] = useContext(AuthContext)
+  let [showTransferLog, setShowTransferLog] = useState(false)
 
   const { data: res, isLoading, error, refetch } = useQuery(
     ['LoanDetails', { loanId }],
@@ -50,6 +62,7 @@ export default ({ history, match: { params } }) => {
       : 0
     : 0
   let loanStatus = loan.status
+
   let badgeType =
     loanStatus === 'PAID'
       ? 'success'
@@ -69,7 +82,9 @@ export default ({ history, match: { params } }) => {
   const handleApproveClick = () => {
     approveLoan({ loanId })
       .then(res => {
-        res.data.status ? alert('Loan Approved') : alert('Error Approving')
+        res.data.status
+          ? toaster.success('Loan Approved')
+          : toaster.danger('Error Approving')
       })
       .catch(console.error)
   }
@@ -77,9 +92,22 @@ export default ({ history, match: { params } }) => {
   const handleDeclineClick = () => {
     declineLoan({ loanId })
       .then(res => {
-        res.data.status ? alert('Loan Declined') : alert('Error Declining')
+        res.data.status
+          ? toaster.success('Loan Declined')
+          : toaster.danger('Error Declining')
       })
       .catch(console.error)
+  }
+
+  const handleActivation = () => {
+    activateLoan({ loanId })
+      .then(() => {
+        toaster.success('Loan In Progress')
+      })
+      .catch(data => {
+        if (data?.data?.message) return toaster.danger(data?.data?.message)
+        toaster.danger('Error updating to In Progress')
+      })
   }
 
   const tenureDuration =
@@ -91,15 +119,25 @@ export default ({ history, match: { params } }) => {
 
   return (
     <Fragment>
-      <div className="Header">
-        <Header>
-          <p>
-            <ChevronLeft role="button" onClick={() => history.goBack()} />{' '}
-            Customer Loan Request
-          </p>
-        </Header>
-      </div>
-      <Content className={'Content'}>
+      <Header className={'Header'}>
+        <p>
+          <ChevronLeft role="button" onClick={() => history.goBack()} />
+          Customer Loan Request
+        </p>
+
+        {['ACTIVE', 'PENDING_DISBURSEMENT', 'PAID'].includes(loanStatus) && (
+          <Button
+            variant="flat"
+            onClick={() => setShowTransferLog(true)}
+            icon={<Reassign />}
+          >
+            View Transfer log
+          </Button>
+        )}
+      </Header>
+
+      <Content className={styles.content}>
+        {isLoading && <ProfileLoading />}
         {error && (
           <span>
             Error!
@@ -108,8 +146,8 @@ export default ({ history, match: { params } }) => {
             </button>
           </span>
         )}
-        {loan && (
-          <Fragment>
+        {res && res.data && (
+          <div className={'Content'}>
             <div className={'section-1'}>
               <Card className={'card-1'}>
                 <CardBody className={'first-card'}>
@@ -224,7 +262,7 @@ export default ({ history, match: { params } }) => {
                     <span className="key">Guarantors</span>{' '}
                     <span className="value">Verified</span>
                   </p>
-                  {['ACTIVE', 'PAID'].includes(loanStatus) ? (
+                  {['ACTIVE', 'PAID'].includes(loanStatus) && (
                     <p>
                       <Link
                         to={`/loans/repayments/${loanId}`}
@@ -235,38 +273,67 @@ export default ({ history, match: { params } }) => {
                         </Button>
                       </Link>
                     </p>
-                  ) : (
-                    <div className={'ApplicationFooter'}>
-                      {auth.type.includes('LOANS_MANAGER') && (
+                  )}
+                  <div className={'ApplicationFooter'}>
+                    {auth.type.includes('LOANS_MANAGER') && loanStatus.includes('PENDING_APPROVAL') && (
+                      <>
                         <p>
                           <Button
-                            disabled={[
-                              'DECLINED',
-                              'PENDING_DISBURSEMENT'
-                            ].includes(loanStatus)}
                             onClick={handleApproveClick}
                           >
                             Approve
                           </Button>
                           <Button
                             className={'btn-blue'}
-                            disabled={[
-                              'DECLINED',
-                              'PENDING_DISBURSEMENT'
-                            ].includes(loanStatus)}
                             onClick={handleDeclineClick}
                             icon={<Close />}
                           >
                             Decline
                           </Button>
                         </p>
-                      )}
-                    </div>
-                  )}
+                      </>
+                    )}
+                  </div>
                 </CardBody>
+                {auth.type.includes('LOANS_MANAGER') && (
+                  <>
+                    {loanStatus === 'PENDING_DISBURSEMENT' && (
+                      <div className={'disbursement'}>
+                        <div className={'disbursementAction'}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={handleActivation}
+                            icon={<UpdateLink />}
+                          >
+                            Update to In-Progress
+                          </Button>
+                        </div>
+                        <div className={'declineAction'}>
+                          <Button
+                            type="button"
+                            variant="flat"
+                            onClick={handleDeclineClick}
+                            icon={<Close />}
+                          >
+                            Decline
+                          </Button>
+                        </div>
+                      </div>
+                    )}
+                  </>
+                )}
               </Card>
             </div>
-          </Fragment>
+          </div>
+        )}
+        {showTransferLog && (
+          <SideSheet
+            isShown={showTransferLog}
+            onCloseComplete={() => setShowTransferLog(false)}
+          >
+            <TransferLog setShowTransferLog={setShowTransferLog} loan={loan} />
+          </SideSheet>
         )}
       </Content>
     </Fragment>

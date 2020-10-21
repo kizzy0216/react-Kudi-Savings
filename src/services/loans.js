@@ -20,6 +20,8 @@ export const getRepayment = async params => await Axios.get('/loans/repayments-h
 
 export const approveLoan = async params => await Axios.put('/loans/approve', null, clean({ params }))
 
+export const activateLoan = async params => await Axios.put('/loans/activate', null, clean({ params }))
+
 export const declineLoan = async params => await Axios.put('/loans/decline', null, clean({ params }))
 
 export const fetchWalletBalance = async params => await Axios.get('/collections/balance', clean({ params }))
