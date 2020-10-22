@@ -5,7 +5,7 @@ metadata:
 spec:
   image: __IMAGE__
   replicas: 1
-  containerPort: 8080
+  containerPort: 80
   domain: __DOMAIN_NAME__
   requests:
     memory: 300M
