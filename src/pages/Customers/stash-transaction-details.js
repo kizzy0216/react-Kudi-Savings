@@ -19,15 +19,15 @@ const StashDetails = ({ stashDetails }) => {
             <div className={styles.ContainerBody}>
               <div className={styles.ContainerBodyFlex}>
                 <span>Source Amount Name:</span>
-                <span>{`${stashDetails.firstName} ${stashDetails.lastName}`}</span>
+                <span>{stashDetails.sourceAccountName || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Source Bank Name:</span>
-                <span>{`${stashDetails.stashBankName}`}</span>
+                <span>{stashDetails.sourceBankName || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Source Account Number:</span>
-                <span>{`${stashDetails.stashAccountNumber}`}</span>
+                <span>{stashDetails.sourceAccountNumber || '-'}</span>
               </div>
             </div>
           </CardBody>
@@ -45,7 +45,7 @@ const StashDetails = ({ stashDetails }) => {
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Transaction Type: </span>
-                <span>{stashDetails.transactionType}</span>
+                <span>{stashDetails.transactionType || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Transaction Ref: </span>

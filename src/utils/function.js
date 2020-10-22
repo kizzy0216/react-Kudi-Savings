@@ -53,14 +53,14 @@ export const sourceOptions = [
 ]
 
 export const stashSourceOptions = [
-  {text:'All Sources', value:''},
-  {text:'STASH-TOP UP', value:'STASH_TOPUP'},
-  {text:'PLAN-TOP UP', value:'PLAN_TOPUP'},
-  {text:'PLAN COLLECTION', value:'PLAN_COLLECTION'},
-  {text:'CASHOUT', value:'CASHOUT'},
-  {text:'CHARGES', value:'CHARGES'},
-  {text:'REFERRALS', value:'REFERRALS'},
-  {text:'LOAN REPAYMENT', value:'LOAN_REPAYMENT'},
+  { text: 'All Sources', value: '' },
+  { text: 'STASH-TOP UP', value: 'STASH_TOPUP' },
+  { text: 'PLAN-TOP UP', value: 'PLAN_TOPUP' },
+  { text: 'PLAN COLLECTION', value: 'PLAN_COLLECTION' },
+  { text: 'CASHOUT', value: 'CASHOUT' },
+  { text: 'CHARGES', value: 'CHARGES' },
+  { text: 'REFERRALS', value: 'REFERRALS' },
+  { text: 'LOAN REPAYMENT', value: 'LOAN_REPAYMENT' }
 ]
 export const DefaultParams = {
   page: 1,
@@ -177,24 +177,22 @@ export const formatData = (history, url, page, limit, data) => {
 }
 
 export const formatP2P = (page, limit, data) => {
-  return data.map(
-    ({ timeUpdated, amount, meta, status }, index) => ({
-      SN: (page - 1) * limit + (index + 1),
-      timeUpdated: timeUpdated
-        ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
-        : '-',
-      amount: formatCurrency(amount),
-      agentName: meta?.sender_name || '-',
-      amountCollected: amount ? formatCurrency(amount) : '-',
-      status: status ? (
-        <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
-          {status}
-        </Badge>
-      ) : (
-        '-'
-      )
-    })
-  )
+  return data.map(({ timeUpdated, amount, meta, status }, index) => ({
+    SN: (page - 1) * limit + (index + 1),
+    timeUpdated: timeUpdated
+      ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
+      : '-',
+    amount: formatCurrency(amount),
+    agentName: meta?.sender_name || '-',
+    amountCollected: amount ? formatCurrency(amount) : '-',
+    status: status ? (
+      <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
+        {status}
+      </Badge>
+    ) : (
+      '-'
+    )
+  }))
 }
 
 export const P2PTableColumns = [
@@ -575,33 +573,50 @@ export const formatWalletHistory = (data, page, limit) => {
 }
 
 export const FormatStashData = (data, setStashDetails, setShowStashDetails) => {
-  return data.map(({ id, timeCreated, amount, reference, transactionType, type, balance }) => ({
-    id: id,
-    date:timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
-    amount: formatCurrency(amount),
-    reference: reference.length > 16 ? `${reference.slice(0,15)}...` : reference,
-    type: transactionType,
-    source: formatText(type),
-    balance: formatCurrency(balance),
-    action: (
-      <Button
-        icon={<Eye />}
-        variant="flat"
-        onClick={() => {setStashDetails(
-          {amount,
-          reference,
-          type,
-          timeCreated
-          }
-        )
-        setShowStashDetails(true)
-      }
-        }
-      >
-        View
-      </Button>
-    )
-  }))
+  return data.map(
+    ({
+      id,
+      timeCreated,
+      amount,
+      reference,
+      transactionType,
+      type,
+      balance,
+      sourceAccountName,
+      sourceAccountNumber,
+      sourceBankName
+    }) => ({
+      id: id,
+      date: timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
+      amount: formatCurrency(amount),
+      reference:
+        reference.length > 16 ? `${reference.slice(0, 15)}...` : reference,
+      type: transactionType ? transactionType : '-',
+      source: formatText(type),
+      balance: balance ? formatCurrency(balance) : '-',
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => {
+            setStashDetails({
+              sourceAccountName,
+              sourceAccountNumber,
+              sourceBankName,
+              amount,
+              reference,
+              type,
+              timeCreated,
+              transactionType
+            })
+            setShowStashDetails(true)
+          }}
+        >
+          View
+        </Button>
+      )
+    })
+  )
 }
 
 export const CustomerTableColumn = [
