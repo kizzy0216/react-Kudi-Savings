@@ -21,6 +21,8 @@ import {
 } from 'utils/function'
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { getStashTransactions } from 'services/stash'
+import { SideSheet } from 'evergreen-ui'
+import StashDetails from './stash-transaction-details'
 
 const StashHistory = ({ location }) => {
   let stashId = location.stashId
@@ -39,19 +41,25 @@ const StashHistory = ({ location }) => {
   const [startDate, setStartDate] = useState(initialStartDate)
   const [showReset, setShowReset] = useState(false)
   const [focusedInput, setfocusedInput] = useState(null)
+  const [stashDetails, setStashDetails] = useState({})
+  const [showStashDetails, setShowStashDetails] = useState(false)
+
 
   let limit = 20
   let formattedData = []
   let totalPage = 0
 
-  const { data, isLoading, error, refetch } = useQuery([
-    'StashTransactions',
-    { to, from, limit, page, type, stashId }
-  ],
-  getStashTransactions)
+  const { data, isLoading, error, refetch } = useQuery(
+    ['StashTransactions', { to, from, limit, page, type, stashId }],
+    getStashTransactions
+  )
 
   if (data?.data?.data) {
-    formattedData = FormatStashData(data.data.data.list, history, url)
+    formattedData = FormatStashData(
+      data.data.data.list,
+      setStashDetails,
+      setShowStashDetails
+    )
     totalPage = Math.ceil(data.data.data.total / limit)
   }
 
@@ -76,7 +84,7 @@ const StashHistory = ({ location }) => {
     }
     setShowReset(true)
   }
-  
+
   const onFocusChange = focusedInput => {
     setfocusedInput(focusedInput)
   }
@@ -107,10 +115,10 @@ const StashHistory = ({ location }) => {
                 />
               </Filters>
               <Select
-                  active={type}
-                  options={stashSourceOptions}
-                  onSelect={value => setType(value)}
-                />
+                active={type}
+                options={stashSourceOptions}
+                onSelect={value => setType(value)}
+              />
               {showReset && (
                 <Close
                   className="danger"
@@ -164,6 +172,16 @@ const StashHistory = ({ location }) => {
             </div>
           )}
         </Card>
+        {stashDetails && (
+        <SideSheet
+          isShown={showStashDetails}
+          width={800}
+          onCloseComplete={() => setShowStashDetails(false)}
+        >
+
+          <StashDetails stashDetails={stashDetails}/>
+        </SideSheet>
+      )}
       </Content>
     </Fragment>
   )

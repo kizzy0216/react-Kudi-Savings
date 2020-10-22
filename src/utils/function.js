@@ -574,7 +574,7 @@ export const formatWalletHistory = (data, page, limit) => {
   )
 }
 
-export const FormatStashData = (data, history, url) => {
+export const FormatStashData = (data, setStashDetails, setShowStashDetails) => {
   return data.map(({ id, timeCreated, amount, reference, transactionType, type, balance }) => ({
     id: id,
     date:timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
@@ -587,7 +587,16 @@ export const FormatStashData = (data, history, url) => {
       <Button
         icon={<Eye />}
         variant="flat"
-        onClick={() => history.push(`${url}/stash/${id}`)}
+        onClick={() => {setStashDetails(
+          {amount,
+          reference,
+          type,
+          timeCreated
+          }
+        )
+        setShowStashDetails(true)
+      }
+        }
       >
         View
       </Button>
