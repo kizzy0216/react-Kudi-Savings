@@ -22,8 +22,8 @@ const StashDetails = ({ stashDetails }) => {
                 <span>{stashDetails.sourceAccountName || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
-                <span>Source Bank Name:</span>
-                <span>{stashDetails.sourceBankName || '-'}</span>
+                <span>Source Bank Code:</span>
+                <span>{stashDetails.sourceBankCode || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Source Account Number:</span>
