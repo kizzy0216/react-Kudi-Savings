@@ -93,7 +93,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                         src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
+                      <div className={styles.FirstBodyGridProfileBadge}>
+                      {customer?.referred && (
+                      <Badge variant="warning">Referred</Badge>
+                    )}
                     </div>
+                    </div>
+                    
                     <div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
