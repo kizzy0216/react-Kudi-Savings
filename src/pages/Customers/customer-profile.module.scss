@@ -46,6 +46,11 @@
           object-position: center;
           object-fit: cover;
         }
+        &Badge{
+          display: flex;
+          justify-content: center;
+          width: 12.92em;
+        }
       }
       &Content {
         display: flex;
