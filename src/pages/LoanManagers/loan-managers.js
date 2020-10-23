@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useContext } from 'react'
 import { useQuery } from 'react-query'
 import debounce from '../../../node_modules/lodash/debounce'
 import { Card, CardBody, Button, Table, CardHeader, Badge } from '@kudi-inc/dip'
@@ -7,10 +7,13 @@ import { Header, Content } from 'components/Layout'
 import styles from '../Agents/agents.module.scss'
 import { TableLoading } from 'components/loading'
 import { Add, Search, Close, ChevronLeft } from 'assets/svg'
+import AuthContext from 'context/AuthContext'
 import LoanManagerDetails from './loan-manager-details'
 import { getLoanManagers } from 'services/loan-manager'
 import { formatLoanManager, LoanManagerTable } from 'utils/function'
 const LoanManager = ({ history }) => {
+  let [auth] = useContext(AuthContext)
+  
   const [viewLoanManager, setViewLoanManager] = useState(false)
   const [phoneNumber, setPhoneNumber] = useState('')
   const [number, setNumber] = useState('')
@@ -43,6 +46,7 @@ const LoanManager = ({ history }) => {
     <Fragment>
       <Header>
         <p> Loan Managers </p>
+        {auth.type.includes('ADMIN') && !auth.type.includes('SUPER_ADMIN') && 
         <Button
           variant="flat"
           icon={<Add />}
@@ -50,6 +54,7 @@ const LoanManager = ({ history }) => {
         >
           Add Loan Manager
         </Button>
+        }
       </Header>
       <Content>
         <Card>

@@ -89,7 +89,7 @@ const LoanManager = ({ history }) => {
         if (res) {
           return toaster.danger('Error creating Loan manager')
         }
-        toaster.danger('An error occurred, contact Admin')
+        toaster.danger('An error occurred')
       })
   }
 

@@ -20,7 +20,7 @@ const AccountSetup = ({ history }) => {
           <CardBody className={styles.AccountSetupBody}>
             <SetupSuccess />
             <h2> Account Setup Successful</h2>
-            <p>An account has being created</p>
+            <p>An account has been created</p>
             <p>An invite has been sent to your agent</p>
             <Button onClick={() => history.push(`/loan-managers`)}>
               Continue
