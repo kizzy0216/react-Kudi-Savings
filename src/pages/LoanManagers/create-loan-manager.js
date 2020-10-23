@@ -185,7 +185,6 @@ const LoanManager = ({ history }) => {
                     label="Password"
                     type="password"
                     required
-                    autoComplete="password"
                     error={errors.password}
                     status={errors.password && 'error'}
                   />
