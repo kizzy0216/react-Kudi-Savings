@@ -1,0 +1,32 @@
+@import '../../styles/variables';
+
+.Header{
+    font-weight: bold;
+    margin-left: 1.2rem;
+    margin-top: 1rem;
+}
+
+.Container {
+  margin: 2rem;
+  box-shadow: 0px 4px 10px rgba(116, 140, 173, 0.1);
+  &Header {
+    font-weight: bold;
+  }
+  &Body {
+
+    &Flex {
+      display: flex;
+      justify-content: space-between;
+      font-weight: normal;
+      span {
+        color: $grey;
+        padding: 1.37em 0;
+        font-size: 0.9em;
+        &:nth-of-type(2) {
+          color: $text-darker;
+          text-align: right;
+        }
+      }
+    }
+  }
+}
