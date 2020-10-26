@@ -26,6 +26,21 @@ const ZonalDashboard = lazy(() =>
     /* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal'
   )
 )
+const LoanManagers = lazy(() =>
+  import(
+    /* webpackChunkName: "LoanManagers" */ 'pages/LoanManagers/loan-managers'
+  )
+)
+const CreateLoanManager = lazy(() =>
+  import(
+    /* webpackChunkName: "CreateLoanManager" */ 'pages/LoanManagers/create-loan-manager'
+  )
+)
+const AccountSetup = lazy(() =>
+  import(
+    /* webpackChunkName: "AccountSetup" */ 'pages/LoanManagers/account-setup'
+  )
+)
 const Cashout = lazy(() =>
   import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
 )
@@ -190,7 +205,7 @@ const AppRouter = () => (
           exact
           component={() => <Redirect to="/markets" />}
         />
-
+        
         <PrivateRoute path="/dashboard" exact component={Dashboard} />
         <PrivateRoute
           path="/dashboard/zonal"
@@ -355,6 +370,10 @@ const AppRouter = () => (
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
         <PrivateRoute path="/customer-insights" component={CustomerInsights} />
+        <PrivateRoute path="/loan-managers" component={LoanManagers} />
+        <PrivateRoute path="/create-loan-manager" component={CreateLoanManager} />
+        <PrivateRoute path="/account-setup" component={AccountSetup} />
+        
         <PrivateRoute component={NotFound} />
         <Route
           render={() => {

@@ -1,0 +1,157 @@
+@import '../../styles/variables';
+@import '../../styles/breakpoint';
+.CreateLM{
+  font-size: 1rem;
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-transform: uppercase;
+    
+    p{
+      font-size: .76rem;
+    }
+  }
+  &Form {
+    display: grid;
+    grid-template-columns: 12em 1fr;
+    grid-gap: 1.47em;
+    &Profile {
+      &Avatar {
+        text-align: center;
+        p {
+          margin-top: 0.72em;
+          font-size: 0.72em;
+        }
+        input {
+          visibility: hidden;
+          cursor: pointer;
+        }
+
+        img[class='img-id'] {
+          border-radius: 4px;
+        }
+        img {
+          border-radius: 50%;
+          object-fit: cover;
+          object-position: center;
+          width: 7.5em;
+          height: 7.5em;
+          cursor: pointer;
+        }
+      }
+      &Info {
+        section {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          grid-gap: 1.67em;
+        }
+      }
+    }
+    &Body {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-column-gap: 3.5em;
+      & > div {
+        margin-bottom: 1.67em;
+      }
+    }
+
+  }
+  &Body {
+    padding: 1.67em;
+  }
+  &Submit {
+    width: 15em;
+    display: flex;
+    justify-content: space-between;
+  }
+  &Two {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 1.11em;
+    margin-bottom: 1.67em;
+
+    &Check {
+      border: 1px solid #d2ddeb;
+      border-radius: 3px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 0.83em;
+      height: 55px;
+
+      &box {
+        width: 30px;
+        height: 30px;
+        position: relative;
+        background: #fcfff4;
+        border-radius: 50px;
+
+        label {
+          width: 28px;
+          height: 28px;
+          position: absolute;
+          top: 3px;
+          left: 4px;
+          cursor: pointer;
+          background: $grey;
+          border-radius: 50px;
+
+          &:after {
+            content: '';
+            width: 12px;
+            height: 5px;
+            position: absolute;
+            top: 10px;
+            left: 8px;
+            border: 2px solid #fcfff4;
+            border-top: none;
+            border-right: none;
+            background: transparent;
+            opacity: 0;
+            transform: rotate(-45deg);
+          }
+          &:hover::after {
+            opacity: 0.3;
+          }
+        }
+        input[type='checkbox'] {
+          visibility: hidden;
+          &:checked + label:after {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+.AccountSetup {
+    margin: 1.67em 2.78em;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    &Body {
+      text-align: center;
+      & > svg {
+        margin-bottom: 3.88em;
+      }
+      & > h2 {
+        font-size: 1.39em;
+        margin-bottom: 1.11em;
+        line-height: 124%;
+        font-weight: normal;
+      }
+      & > p {
+        font-weight: normal;
+        color: $grey;
+        margin-bottom: 1.68em;
+      }
+      & > button {
+        background: transparent;
+        border: 1px solid $kudi-blue;
+        margin: auto;
+      }
+    }
+  }
+  

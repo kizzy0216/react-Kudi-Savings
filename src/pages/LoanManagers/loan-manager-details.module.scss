@@ -1,0 +1,84 @@
+@import '../../styles/variables';
+@import '../../styles/breakpoint';
+
+.Header {
+  font-weight: bold;
+  margin-top: 0.5rem;
+  margin-bottom: 0.7rem;
+  margin-left: 1rem;
+  text-align: start;
+  font-size: 1.2rem;
+}
+
+.CA {
+    margin-left: 1.2rem;
+    margin-right: 1.2rem;
+}
+
+.Details {
+  font-size: 1rem;
+  display: block;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 4rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  &Header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 3.33em;
+    h5 {
+      font-weight: bold;
+      line-height: 123%;
+      font-size: 0.73em;
+      text-transform: uppercase;
+    }
+  }
+
+  &Body {
+    padding: 1.55em;
+    &Grid {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      grid-column-gap: 1em;
+      &Profile {
+        width: 10.92em;
+        height: 10.92em;
+        img {
+          border-radius: 50%;
+          width: 10.92em;
+          height: 10.92em;
+          object-position: center;
+          object-fit: cover;
+        }
+      }
+      &Content {
+        display: flex;
+        justify-content: space-between;
+        font-weight: normal;
+        span {
+          color: $grey;
+          padding: 1.37em 0;
+          font-size: 0.9em;
+          &:nth-of-type(2) {
+            color: $text-darker;
+            text-align: right;
+            text-transform: capitalize;
+          }
+        }
+      }
+    }
+  }
+  &FooterButton {
+    background: #f8fbff;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    button {
+      color: $sky-blue;
+      margin: auto;
+      &:nth-of-type(2) {
+        color: $danger;
+      }
+    }
+  }
+}
