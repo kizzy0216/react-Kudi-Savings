@@ -26,10 +26,6 @@ const StashTopUpDetails = ({ stashDetails }) => {
                 <span>{stashDetails.transactionType || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
-                <span>Transaction Type: </span>
-                <span>{stashDetails.transactionType || '-'}</span>
-              </div>
-              <div className={styles.ContainerBodyFlex}>
                 <span>Amount: </span>
                 <span>{formatCurrency(stashDetails.amount)}</span>
               </div>
