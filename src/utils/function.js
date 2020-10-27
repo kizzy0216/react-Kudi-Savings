@@ -62,6 +62,25 @@ export const stashSourceOptions = [
   { text: 'REFERRALS', value: 'REFERRALS' },
   { text: 'LOAN REPAYMENT', value: 'LOAN_REPAYMENT' }
 ]
+
+export const formatStashStatus = type => {
+  switch (type) {
+    case 'STASH_TOPUP':
+      return 'STASH-TOP UP'
+    case 'PLAN_TOPUP':
+      return 'PLAN-TOP UP'
+    case 'PLAN_COLLECTION':
+      return 'PLAN COLLECTION'
+    case 'CASHOUT':
+      return 'CASHOUT'
+    case 'CHARGES':
+      return 'CHARGES'
+    case 'REFERRALS':
+      return 'REFERRALS'
+    case 'LOAN_REPAYMENT':
+      return 'LOAN REPAYMENT'
+  }
+}
 export const DefaultParams = {
   page: 1,
   startDate: '',
@@ -194,7 +213,6 @@ export const formatP2P = (page, limit, data) => {
     )
   }))
 }
-
 
 export const P2PTableColumns = [
   {
@@ -573,7 +591,12 @@ export const formatWalletHistory = (data, page, limit) => {
   )
 }
 
-export const FormatStashData = (data, setStashDetails, setShowStashDetails) => {
+export const FormatStashData = (
+  data,
+  setStashDetails,
+  setShowStashDetails,
+  setSource
+) => {
   return data.map(
     ({
       id,
@@ -611,6 +634,7 @@ export const FormatStashData = (data, setStashDetails, setShowStashDetails) => {
               transactionType
             })
             setShowStashDetails(true)
+            setSource(type)
           }}
         >
           View
@@ -850,22 +874,37 @@ export const statusOptions = [
 ]
 
 export const formatLoanManager = (data, setViewLoanManager, setManagerId) => {
-  return data.map(({firstName, lastName, phoneNumber, email, timeCreated, status, id})  => ({
+  return data.map(
+    ({ firstName, lastName, phoneNumber, email, timeCreated, status, id }) => ({
       fullName: `${firstName} ${lastName}`,
       phoneNumber: phoneNumber ? phoneNumber : '-',
       email: email,
-      timeCreated:timeCreated && moment(timeCreated).format('Do MMMM YYYY'),
+      timeCreated: timeCreated && moment(timeCreated).format('Do MMMM YYYY'),
       status: status ? (
-        <Badge variant={status === 'ACTIVE' ? 'success' : status === 'PENDING' ? 'warning' : status === 'SUSPENDED' ? 'danger' : 'warning'}>
+        <Badge
+          variant={
+            status === 'ACTIVE'
+              ? 'success'
+              : status === 'PENDING'
+              ? 'warning'
+              : status === 'SUSPENDED'
+              ? 'danger'
+              : 'warning'
+          }
+        >
           {status}
         </Badge>
-      ) : '-',
+      ) : (
+        '-'
+      ),
       action: (
         <Button
           icon={<Eye />}
           variant="flat"
-          onClick={()=> {setViewLoanManager(true)
-            setManagerId(id)}}
+          onClick={() => {
+            setViewLoanManager(true)
+            setManagerId(id)
+          }}
         >
           View
         </Button>
@@ -874,7 +913,7 @@ export const formatLoanManager = (data, setViewLoanManager, setManagerId) => {
   )
 }
 
-export const LoanManagerTable=[
+export const LoanManagerTable = [
   {
     key: `fullName`,
     render: `FULL NAME`
