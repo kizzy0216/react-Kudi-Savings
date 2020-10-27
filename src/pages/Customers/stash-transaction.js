@@ -22,7 +22,12 @@ import {
 import { useHistory, useRouteMatch } from 'react-router-dom'
 import { getStashTransactions } from 'services/stash'
 import { SideSheet } from 'evergreen-ui'
-import StashDetails from './stash-transaction-details'
+import StashTopUpDetails from './transaction-stash-top-up-details'
+import PlanTopUpDetails from './transaction-plan-top-up-details'
+import CollectionDetails from './transaction-plan-collection-details'
+import ReferralDetails from './transaction-referral-details'
+import LoanRepaymentDetails from './transaction-loan-repayment-details'
+import CashoutDetails from './transaction-cashout-details'
 
 const StashHistory = ({ location }) => {
   let stashId = location.stashId
@@ -43,7 +48,7 @@ const StashHistory = ({ location }) => {
   const [focusedInput, setfocusedInput] = useState(null)
   const [stashDetails, setStashDetails] = useState({})
   const [showStashDetails, setShowStashDetails] = useState(false)
-
+  const [source, setSource] = useState('')
 
   let limit = 20
   let formattedData = []
@@ -58,7 +63,8 @@ const StashHistory = ({ location }) => {
     formattedData = FormatStashData(
       data.data.data.list,
       setStashDetails,
-      setShowStashDetails
+      setShowStashDetails,
+      setSource
     )
     totalPage = Math.ceil(data.data.data.total / limit)
   }
@@ -172,16 +178,58 @@ const StashHistory = ({ location }) => {
             </div>
           )}
         </Card>
-        {stashDetails && (
-        <SideSheet
-          isShown={showStashDetails}
-          width={800}
-          onCloseComplete={() => setShowStashDetails(false)}
-        >
-
-          <StashDetails stashDetails={stashDetails}/>
-        </SideSheet>
-      )}
+        {stashDetails &&
+          (source === 'STASH_TOPUP' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <StashTopUpDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'PLAN_TOPUP' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <PlanTopUpDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'PLAN_COLLECTION' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <CollectionDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'REFERRALS' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <ReferralDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'LOAN_REPAYMENT' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <LoanRepaymentDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'CASHOUT' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <CashoutDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : (
+            <></>
+          ))}
       </Content>
     </Fragment>
   )

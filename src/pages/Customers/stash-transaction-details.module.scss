@@ -1,23 +1,51 @@
 @import '../../styles/variables';
 
-.Header{
-    font-weight: bold;
-    margin-left: 1.2rem;
-    margin-top: 1rem;
+.Header {
+  font-weight: bold;
+  margin-left: 1.2rem;
+  margin-top: 1rem;
 }
 
 .Container {
   margin: 2rem;
   box-shadow: 0px 4px 10px rgba(116, 140, 173, 0.1);
   &Header {
-    font-weight: bold;
+    p {
+      &:nth-of-type(1) {
+        font-weight: bold;
+      }
+      &:nth-of-type(2) {
+        color: $text-darker;
+        font-size: 0.9em;
+      }
+    }
+    display: flex;
+    justify-content: space-between;
+  }
+
+  button {
+    background: #f8fbff;
+    color: $sky-blue;
+    margin: auto;
+    svg {
+      path {
+        fill: $sky-blue;
+      }
+    }
   }
   &Body {
-
     &Flex {
       display: flex;
       justify-content: space-between;
       font-weight: normal;
+      &Reference {
+        color: $text-darker;
+        text-align: right;
+        padding: 1.37em 0;
+        font-size: 0.9em;
+        width: 20rem;
+        overflow-wrap: break-word;
+      }
       span {
         color: $grey;
         padding: 1.37em 0;

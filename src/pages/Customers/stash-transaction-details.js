@@ -49,7 +49,7 @@ const StashDetails = ({ stashDetails }) => {
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Transaction Ref: </span>
-                <span>{stashDetails.reference}</span>
+                <span className={styles.ContainerBodyFlexReference}>{stashDetails.reference}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Date/Time Created: </span>
