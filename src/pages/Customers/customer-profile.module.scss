@@ -46,7 +46,7 @@
           object-position: center;
           object-fit: cover;
         }
-        &Badge{
+        &Badge {
           display: flex;
           justify-content: center;
           width: 12.92em;
@@ -335,7 +335,6 @@
       }
 
       &p1 {
-        
         font-size: 16px;
         line-height: 15px;
         font-size: 13px;
@@ -359,6 +358,14 @@
 }
 
 .Details {
+
+  &Header{
+    font-weight: 500;
+    margin-top: 1rem;
+    font-size: 1.3em;
+    margin-left: 2rem;
+    height: 3rem;
+  }
   flex-direction: row;
   display: block;
   flex: 1;
@@ -382,6 +389,8 @@
         &:nth-of-type(2) {
           color: $text-darker;
           text-align: right;
+          width: 20rem;
+          overflow-wrap: break-word;
         }
       }
     }
@@ -394,6 +403,6 @@
   }
 }
 
-.Capital{
+.Capital {
   text-transform: capitalize;
 }
