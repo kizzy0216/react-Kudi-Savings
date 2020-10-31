@@ -28,6 +28,7 @@ import CollectionDetails from './transaction-plan-collection-details'
 import ReferralDetails from './transaction-referral-details'
 import LoanRepaymentDetails from './transaction-loan-repayment-details'
 import CashoutDetails from './transaction-cashout-details'
+import ReversalDetails from './transaction-reversal-details'
 
 const StashHistory = ({ location }) => {
   let stashId = location.stashId
@@ -226,6 +227,14 @@ const StashHistory = ({ location }) => {
               onCloseComplete={() => setShowStashDetails(false)}
             >
               <CashoutDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'REVERSAL' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <ReversalDetails stashDetails={stashDetails} />
             </SideSheet>
           ) : (
             <></>
