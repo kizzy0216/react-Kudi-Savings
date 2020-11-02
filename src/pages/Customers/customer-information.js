@@ -4,8 +4,21 @@ import styles from './customer-profile.module.scss'
 import moment from 'moment'
 import { Reassign } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
+import { resetPin } from 'services/ussd'
+import { toaster } from 'evergreen-ui'
 
 const CustomerInformation = ({ customer }) => {
+  const handleResetPin = () => {
+    resetPin(customer.phoneNumber)
+      .then(() => {
+        toaster.success('Reset Pin Successful')
+      })
+      .catch(error => {
+        if (error?.data?.message) return toaster.danger(error?.data?.message)
+        toaster.danger('Error Resetting Pin')
+      })
+  }
+
   return (
     <>
       <Header className={styles.DetailsHeader}>
@@ -26,27 +39,36 @@ const CustomerInformation = ({ customer }) => {
               <span> Phone Number </span>
               <span>{customer.phoneNumber}</span>
             </div>
-            {customer?.previouslyChangedPhoneNumbers?.[0] && 
-            <div className={styles.DetailsBodyFlex}>
-              <span>Wallet Number History</span>
-              <span>{customer.previouslyChangedPhoneNumbers}</span>
-            </div>
-            }
+            {customer?.previouslyChangedPhoneNumbers?.[0] && (
+              <div className={styles.DetailsBodyFlex}>
+                <span>Wallet Number History</span>
+                <span>{customer.previouslyChangedPhoneNumbers}</span>
+              </div>
+            )}
             <div className={styles.DetailsBodyFlex}>
               <span> Gender </span>
               <span>{customer.gender}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Date of Birth</span>
-              <span>{customer.dateOfBirth && moment(customer.dateOfBirth).format('Do MMM, YYYY') || '-'}</span>
+              <span>
+                {(customer.dob &&
+                  moment(customer.dob).format('Do MMMM, YYYY')) ||
+                  '-'}
+              </span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Next of Kin </span>
-              <span>{customer?.nextOfKin?.name || '-'}</span>
+              <span>
+                {(customer.nokFirstName &&
+                  customer.nokLastName &&
+                  `${customer?.nokFirstName} ${customer?.nokLastName}`) ||
+                  '-'}
+              </span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span>Next of Kin's Phone Number </span>
-              <span>{customer?.nextOfKin?.phoneNumber || '-'}</span>
+              <span>{customer?.nokPhoneNumber || '-'}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Business Name </span>
@@ -60,7 +82,7 @@ const CustomerInformation = ({ customer }) => {
               <span>Date Onboarded </span>
               <span>
                 {(customer.timeCreated &&
-                  moment(customer.timeCreated).format('Do MMM, YYYY')) ||
+                  moment(customer.timeCreated).format('Do MMMM, YYYY')) ||
                   '-'}
               </span>
             </div>
@@ -73,7 +95,11 @@ const CustomerInformation = ({ customer }) => {
               <span>{customer.securityAnswer || '-'}</span>
             </div>
             <CardFooter className={styles.DetailsFooter}>
-              <Button variant="flat" icon={<Reassign />}>
+              <Button
+                variant="flat"
+                onClick={handleResetPin}
+                icon={<Reassign />}
+              >
                 Reset pin
               </Button>
             </CardFooter>

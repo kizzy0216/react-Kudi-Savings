@@ -58,6 +58,7 @@ export const stashSourceOptions = [
   { text: 'PLAN-TOP UP', value: 'PLAN_TOPUP' },
   { text: 'PLAN COLLECTION', value: 'PLAN_COLLECTION' },
   { text: 'CASHOUT', value: 'CASHOUT' },
+  { text: 'REVERSAL', value: 'REVERSAL' },
   { text: 'CHARGES', value: 'CHARGES' },
   { text: 'REFERRALS', value: 'REFERRALS' },
   { text: 'LOAN REPAYMENT', value: 'LOAN_REPAYMENT' }
@@ -606,9 +607,7 @@ export const FormatStashData = (
       transactionType,
       type,
       balance,
-      sourceAccountName,
-      sourceAccountNumber,
-      sourceBankName
+      paymentDetail
     }) => ({
       id: id,
       date: timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
@@ -624,9 +623,7 @@ export const FormatStashData = (
           variant="flat"
           onClick={() => {
             setStashDetails({
-              sourceAccountName,
-              sourceAccountNumber,
-              sourceBankName,
+              paymentDetail,
               amount,
               reference,
               type,
