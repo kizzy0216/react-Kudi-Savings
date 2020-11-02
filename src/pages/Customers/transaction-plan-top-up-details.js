@@ -56,11 +56,11 @@ const PlanTopUpDetails = ({ stashDetails }) => {
             <div className={styles.ContainerBody}>
               <div className={styles.ContainerBodyFlex}>
                 <span>Plan Title: </span>
-                <span>{stashDetails?.userPlanDetails?.plan?.title || '-'}</span>
+                <span>{stashDetails?.userPlanDetails?.title || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Plan Type: </span>
-                <span>{stashDetails?.userPlanDetails?.plan?.planType || '-'}</span>
+                <span>{stashDetails?.userPlanDetails?.plan?.title || '-'}</span>
               </div>
             </div>
           </CardBody>

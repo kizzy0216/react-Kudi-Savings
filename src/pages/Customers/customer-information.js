@@ -31,7 +31,7 @@ const CustomerInformation = ({ customer }) => {
               <span>Name</span>
               <span>
                 {' '}
-                {`${customer?.lastName ?? ''} ${customer?.firstName ??
+                {`${customer?.lastName || ''} ${customer?.firstName ||
                   ''}`}{' '}
               </span>
             </div>
@@ -42,7 +42,7 @@ const CustomerInformation = ({ customer }) => {
             {customer?.previouslyChangedPhoneNumbers?.[0] && (
               <div className={styles.DetailsBodyFlex}>
                 <span>Wallet Number History</span>
-                <span>{customer.previouslyChangedPhoneNumbers}</span>
+                <span>{customer.previouslyChangedPhoneNumbers.join(", ")}</span>
               </div>
             )}
             <div className={styles.DetailsBodyFlex}>
@@ -76,7 +76,7 @@ const CustomerInformation = ({ customer }) => {
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Business Type </span>
-              <span>{customer.businessType || '-'}</span>
+              <span>{customer.businessType?.name || '-'}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span>Date Onboarded </span>
@@ -88,7 +88,7 @@ const CustomerInformation = ({ customer }) => {
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Security Question </span>
-              <span>{customer.securityQuestion || '-'}</span>
+              <span>{customer.securityQtn || '-'}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Answer </span>
