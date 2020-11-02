@@ -9,6 +9,7 @@ import { toaster } from 'evergreen-ui'
 
 const CustomerInformation = ({ customer }) => {
   const handleResetPin = () => {
+    console.log(customer.phoneNumber)
     resetPin(customer.phoneNumber)
       .then(() => {
         toaster.success('Reset Pin Successful')
