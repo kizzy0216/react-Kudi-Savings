@@ -607,7 +607,10 @@ export const FormatStashData = (
       transactionType,
       type,
       balance,
-      paymentDetail
+      paymentDetail,
+      loanDetails,
+      cashoutDetails,
+      userPlanDetails
     }) => ({
       id: id,
       date: timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
@@ -624,6 +627,9 @@ export const FormatStashData = (
           onClick={() => {
             setStashDetails({
               paymentDetail,
+              loanDetails,
+              cashoutDetails,
+              userPlanDetails,
               amount,
               reference,
               type,

@@ -54,11 +54,11 @@ const CashoutDetails = ({ stashDetails }) => {
           <div className={styles.ContainerBody}>
             <div className={styles.ContainerBodyFlex}>
               <span>Percentage Charge: </span>
-              <span>{'-'}</span>
+              <span>{`${stashDetails?.cashoutDetails?.percentageCharge}%`||'-'}</span>
             </div>
             <div className={styles.ContainerBodyFlex}>
               <span>Fee: </span>
-              <span>{'-'}</span>
+              <span>{formatCurrency(stashDetails?.cashoutDetails?.fee) || '-'}</span>
             </div>
           </div>
         </CardBody>
