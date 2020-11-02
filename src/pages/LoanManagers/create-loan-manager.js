@@ -77,7 +77,6 @@ const LoanManager = ({ history }) => {
 
     setErrors(errors)
     if (Object.keys(errors).length > 0) return
-    console.log(Object.keys(errors).length)
     setLoading(true)
     await CreateLoanManager({ ...loanManager })
       .then(() => {

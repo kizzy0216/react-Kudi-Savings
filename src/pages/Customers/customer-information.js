@@ -9,14 +9,13 @@ import { toaster } from 'evergreen-ui'
 
 const CustomerInformation = ({ customer }) => {
   const handleResetPin = () => {
-    console.log(customer.phoneNumber)
     resetPin(customer.phoneNumber)
       .then(() => {
         toaster.success('Reset Pin Successful')
       })
       .catch(error => {
         if (error?.data?.message) return toaster.danger(error?.data?.message)
-        toaster.danger('Error Reseting Pin')
+        toaster.danger('Error Resetting Pin')
       })
   }
 
@@ -54,7 +53,7 @@ const CustomerInformation = ({ customer }) => {
               <span> Date of Birth</span>
               <span>
                 {(customer.dob &&
-                  moment(customer.dob).format('Do MMM, YYYY')) ||
+                  moment(customer.dob).format('Do MMMM, YYYY')) ||
                   '-'}
               </span>
             </div>
@@ -83,7 +82,7 @@ const CustomerInformation = ({ customer }) => {
               <span>Date Onboarded </span>
               <span>
                 {(customer.timeCreated &&
-                  moment(customer.timeCreated).format('Do MMM, YYYY')) ||
+                  moment(customer.timeCreated).format('Do MMMM, YYYY')) ||
                   '-'}
               </span>
             </div>
