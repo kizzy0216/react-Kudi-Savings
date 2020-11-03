@@ -55,23 +55,28 @@ const ReferralDetails = ({ stashDetails }) => {
             <div className={styles.ContainerBody}>
               <div className={styles.ContainerBodyFlex}>
                 <span>Customer Name: </span>
-                <span>{'-'}</span>
+                <span>
+                  {`${stashDetails?.referralDetails?.firstName} ${stashDetails?.referralDetails?.lastName}` ||
+                    '-'}
+                </span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Phone Number: </span>
-                <span>{'-'}</span>
+                <span>{stashDetails?.referralDetails?.phoneNumber || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Referral Plan Name: </span>
-                <span>{'-'}</span>
+                <span>{stashDetails?.userPlanDetails?.title || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Referral Plan Type: </span>
-                <span>{'-'}</span>
+                <span>{stashDetails?.userPlanDetails?.plan?.title || '-'}</span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Market: </span>
-                <span>{'-'}</span>
+                <span>
+                  {stashDetails?.referralDetails?.market?.name || '-'}
+                </span>
               </div>
             </div>
           </CardBody>

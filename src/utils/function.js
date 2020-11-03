@@ -610,7 +610,8 @@ export const FormatStashData = (
       paymentDetail,
       loanDetails,
       cashoutDetails,
-      userPlanDetails
+      userPlanDetails,
+      referralDetails
     }) => ({
       id: id,
       date: timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
@@ -630,6 +631,7 @@ export const FormatStashData = (
               loanDetails,
               cashoutDetails,
               userPlanDetails,
+              referralDetails,
               amount,
               reference,
               type,
