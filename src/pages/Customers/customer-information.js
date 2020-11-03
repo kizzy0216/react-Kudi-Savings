@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { CardBody, CardFooter, Button } from '@kudi-inc/dip'
 import styles from './customer-profile.module.scss'
 import moment from 'moment'
@@ -6,8 +6,11 @@ import { Reassign } from 'assets/svg'
 import { Header, Content } from 'components/Layout'
 import { resetPin } from 'services/ussd'
 import { toaster } from 'evergreen-ui'
+import AuthContext from 'context/AuthContext'
 
 const CustomerInformation = ({ customer }) => {
+  let [auth] = useContext(AuthContext)
+
   const handleResetPin = () => {
     resetPin(customer.phoneNumber)
       .then(() => {
@@ -31,7 +34,7 @@ const CustomerInformation = ({ customer }) => {
               <span>Name</span>
               <span>
                 {' '}
-                {`${customer?.lastName ?? ''} ${customer?.firstName ??
+                {`${customer?.lastName || ''} ${customer?.firstName ||
                   ''}`}{' '}
               </span>
             </div>
@@ -42,7 +45,7 @@ const CustomerInformation = ({ customer }) => {
             {customer?.previouslyChangedPhoneNumbers?.[0] && (
               <div className={styles.DetailsBodyFlex}>
                 <span>Wallet Number History</span>
-                <span>{customer.previouslyChangedPhoneNumbers}</span>
+                <span>{customer.previouslyChangedPhoneNumbers.join(', ')}</span>
               </div>
             )}
             <div className={styles.DetailsBodyFlex}>
@@ -76,7 +79,7 @@ const CustomerInformation = ({ customer }) => {
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Business Type </span>
-              <span>{customer.businessType || '-'}</span>
+              <span>{customer.businessType?.name || '-'}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span>Date Onboarded </span>
@@ -88,21 +91,24 @@ const CustomerInformation = ({ customer }) => {
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Security Question </span>
-              <span>{customer.securityQuestion || '-'}</span>
+              <span>{customer.securityQtn || '-'}</span>
             </div>
             <div className={styles.DetailsBodyFlex}>
               <span> Answer </span>
               <span>{customer.securityAnswer || '-'}</span>
             </div>
-            <CardFooter className={styles.DetailsFooter}>
-              <Button
-                variant="flat"
-                onClick={handleResetPin}
-                icon={<Reassign />}
-              >
-                Reset pin
-              </Button>
-            </CardFooter>
+            {['ADMIN', 'ZONAL'].includes(auth.type) &&
+              !auth.type.includes('SUPER_ADMIN') && (
+                <CardFooter className={styles.DetailsFooter}>
+                  <Button
+                    variant="flat"
+                    onClick={handleResetPin}
+                    icon={<Reassign />}
+                  >
+                    Reset pin
+                  </Button>
+                </CardFooter>
+              )}
           </div>
         </CardBody>
       </Content>

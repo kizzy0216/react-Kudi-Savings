@@ -56,19 +56,32 @@ const LoanRepaymentDetails = ({ stashDetails }) => {
             <div className={styles.ContainerBody}>
               <div className={styles.ContainerBodyFlex}>
                 <span>Loan Amount:</span>
-                <span>{'-'}</span>
+                <span>
+                  {formatCurrency(stashDetails?.loanDetails?.amount) || '-'}
+                </span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Repayment:</span>
-                <span>{'-'}</span>
+                <span>
+                  {formatCurrency(stashDetails?.loanDetails?.repayment) || '-'}
+                </span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>Start Date of Loan:</span>
-                <span>{'-'}</span>
+                <span>
+                  {(stashDetails?.loanDetails?.startDate &&
+                    moment(stashDetails?.loanDetails?.startDate).format(
+                      'Do MMM, YYYY hh:mm a'
+                    )) ||
+                    '-'}
+                </span>
               </div>
               <div className={styles.ContainerBodyFlex}>
                 <span>End Date of Loan:</span>
-                <span>{'-'}</span>
+                <span>{(stashDetails?.loanDetails?.endDate &&
+                    moment(stashDetails?.loanDetails?.endDate).format(
+                      'Do MMM, YYYY hh:mm a'
+                    )) ||'-'}</span>
               </div>
             </div>
           </CardBody>
