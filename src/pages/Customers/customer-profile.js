@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useContext, useReducer } from 'react'
 import { useDispatch } from 'react-redux'
-import { PhoneNumber } from '../../redux'
+import { PhoneNumber, StashId } from '../../redux'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, SideSheet } from 'evergreen-ui'
@@ -257,11 +257,10 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <Button
                       variant="flat"
                       onClick={() => {
-                        dispatch(PhoneNumber(customer.phoneNumber)) 
-                        history.push({
-                          pathname: `${url}/stash`,
-                          stashId: customer.stashId
-                        })
+                        dispatch(PhoneNumber(customer.phoneNumber))
+                        dispatch(StashId(customer.stashId))
+                        
+                        history.push(`${url}/stash`)
                       }}
                       type="button"
                       icon={<Eye />}
