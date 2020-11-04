@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useReducer } from 'react'
+import React, { Fragment, useState } from 'react'
+import {useSelector} from 'react-redux'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import {
@@ -30,8 +31,8 @@ import LoanRepaymentDetails from './transaction-loan-repayment-details'
 import CashoutDetails from './transaction-cashout-details'
 import ReversalDetails from './transaction-reversal-details'
 
-const StashHistory = ({ location }) => {
-  let stashId = location.stashId
+const StashHistory = () => {
+  let stashId = useSelector(state => state.StashId.stashId)
   let history = useHistory()
   let { url } = useRouteMatch()
 
