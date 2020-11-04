@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useContext, useReducer } from 'react'
+import { useDispatch } from 'react-redux'
+import { PhoneNumber } from '../../redux'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, SideSheet } from 'evergreen-ui'
@@ -32,6 +34,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
   const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
+  const dispatch = useDispatch()
 
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
@@ -94,12 +97,12 @@ const CustomerProfile = ({ history, match: { params } }) => {
                         alt="agent"
                       />
                       <div className={styles.FirstBodyGridProfileBadge}>
-                      {customer?.referred && (
-                      <Badge variant="warning">Referred</Badge>
-                    )}
+                        {customer?.referred && (
+                          <Badge variant="warning">Referred</Badge>
+                        )}
+                      </div>
                     </div>
-                    </div>
-                    
+
                     <div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
@@ -253,12 +256,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
                       variant="flat"
-                      onClick={() =>
+                      onClick={() => {
+                        dispatch(PhoneNumber(customer.phoneNumber)) 
                         history.push({
                           pathname: `${url}/stash`,
                           stashId: customer.stashId
                         })
-                      }
+                      }}
                       type="button"
                       icon={<Eye />}
                     >

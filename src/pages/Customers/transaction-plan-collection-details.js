@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react'
+import { useSelector } from 'react-redux'
 import { Card, CardHeader, CardBody, CardFooter } from '@kudi-inc/dip'
 import styles from './stash-transaction-details.module.scss'
 import moment from 'moment'
@@ -7,8 +8,15 @@ import { Button } from '@kudi-inc/dip'
 import { formatCurrency } from 'utils/function'
 import { Header, Content } from 'components/Layout'
 import { formatStashStatus } from 'utils/function'
+import { useHistory, useRouteMatch } from 'react-router-dom'
 
 const CollectionDetails = ({ stashDetails }) => {
+  let { url } = useRouteMatch()
+  let history = useHistory()
+  const phoneNumber = useSelector(
+    state => state.CustomerPhoneNumber.phoneNumber
+  )
+
   return (
     <Fragment>
       <Header className={styles.Header}>
@@ -53,7 +61,7 @@ const CollectionDetails = ({ stashDetails }) => {
             <p>PLAN CREDITED</p>
           </CardHeader>
           <CardBody>
-          <div className={styles.ContainerBody}>
+            <div className={styles.ContainerBody}>
               <div className={styles.ContainerBodyFlex}>
                 <span>Plan Title: </span>
                 <span>{stashDetails?.userPlanDetails?.title || '-'}</span>
@@ -65,7 +73,16 @@ const CollectionDetails = ({ stashDetails }) => {
             </div>
           </CardBody>
           <CardFooter>
-            <Button icon={<Eye />} variant="flat">
+            <Button
+              onClick={() => {
+                history.push(stashDetails?.userPlanDetails?.id && {
+                  pathname: `${url}/${stashDetails?.userPlanDetails?.id}`,
+                  state: phoneNumber
+                })
+              }}
+              icon={<Eye />}
+              variant="flat"
+            >
               View Details
             </Button>
           </CardFooter>

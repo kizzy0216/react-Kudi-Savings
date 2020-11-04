@@ -7,8 +7,17 @@ import { Button } from '@kudi-inc/dip'
 import { formatCurrency } from 'utils/function'
 import { Header, Content } from 'components/Layout'
 import { formatStashStatus } from 'utils/function'
+import { useSelector } from 'react-redux'
+import { useHistory, useRouteMatch } from 'react-router-dom'
+
 
 const PlanTopUpDetails = ({ stashDetails }) => {
+  let { url } = useRouteMatch()
+  let history = useHistory()
+  const phoneNumber = useSelector(
+    state => state.CustomerPhoneNumber.phoneNumber
+  )
+
   return (
     <Fragment>
       <Header className={styles.Header}>
@@ -65,7 +74,14 @@ const PlanTopUpDetails = ({ stashDetails }) => {
             </div>
           </CardBody>
           <CardFooter>
-            <Button icon={<Eye />} variant="flat">
+            <Button 
+            onClick={() => {
+              history.push(stashDetails?.userPlanDetails?.id && { 
+                pathname: `${url}/${stashDetails?.userPlanDetails?.id}`,
+                state: phoneNumber
+              })
+            }}
+            icon={<Eye />} variant="flat">
               View Details
             </Button>
           </CardFooter>
