@@ -44,7 +44,7 @@ const UserPlans = ({ plans, history, phoneNumber }) => {
             onClick={() =>
               history.push({
                 pathname: `${url}/plan/${id}`,
-                state: phoneNumber
+                phoneNumber
               })
             }
           >

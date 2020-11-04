@@ -75,10 +75,12 @@ const CollectionDetails = ({ stashDetails }) => {
           <CardFooter>
             <Button
               onClick={() => {
-                history.push(stashDetails?.userPlanDetails?.id && {
-                  pathname: `${url}/${stashDetails?.userPlanDetails?.id}`,
-                  state: phoneNumber
-                })
+                history.push(
+                  stashDetails?.userPlanDetails?.id && {
+                    pathname: `${url}/${stashDetails?.userPlanDetails?.id}`,
+                    phoneNumber
+                  }
+                )
               }}
               icon={<Eye />}
               variant="flat"
