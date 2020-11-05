@@ -61,7 +61,7 @@ export const stashSourceOptions = [
   { text: 'REVERSAL', value: 'REVERSAL' },
   { text: 'CHARGES', value: 'CHARGES' },
   { text: 'REFERRALS', value: 'REFERRALS' },
-  { text: 'LOAN REPAYMENT', value: 'LOAN_REPAYMENT' }
+  { text: 'LOAN REPAYMENT', value: 'LOANS_REPAYMENT' }
 ]
 
 export const formatStashStatus = type => {
@@ -78,7 +78,7 @@ export const formatStashStatus = type => {
       return 'CHARGES'
     case 'REFERRALS':
       return 'REFERRALS'
-    case 'LOAN_REPAYMENT':
+    case 'LOANS_REPAYMENT':
       return 'LOAN REPAYMENT'
   }
 }
