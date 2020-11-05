@@ -75,8 +75,8 @@ export const formatStashStatus = type => {
       return 'CASHOUT'
     case 'CHARGES':
       return 'CHARGES'
-    case 'REFERRALS':
-      return 'REFERRALS'
+    case 'REFERRAL':
+      return 'REFERRAL'
     case 'LOANS_REPAYMENT':
       return 'LOAN REPAYMENT'
   }
