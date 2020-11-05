@@ -59,8 +59,8 @@ export const stashSourceOptions = [
   { text: 'PLAN COLLECTION', value: 'PLAN_COLLECTION' },
   { text: 'CASHOUT', value: 'CASHOUT' },
   { text: 'CHARGES', value: 'CHARGES' },
-  { text: 'REFERRALS', value: 'REFERRALS' },
-  { text: 'LOAN REPAYMENT', value: 'LOANS_,REPAYMENT' }
+  { text: 'REFERRALS', value: 'REFERRAL' },
+  { text: 'LOAN REPAYMENT', value: 'LOANS_REPAYMENT' }
 ]
 
 export const formatStashStatus = type => {

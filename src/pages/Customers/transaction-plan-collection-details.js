@@ -72,21 +72,22 @@ const CollectionDetails = ({ stashDetails }) => {
               </div>
             </div>
           </CardBody>
-          <CardFooter>
-            <Button
-              onClick={() => {
-                stashDetails?.userPlanDetails?.id &&
+          {stashDetails?.userPlanDetails?.id && (
+            <CardFooter>
+              <Button
+                onClick={() => {
                   history.push({
                     pathname: `${url}/${stashDetails?.userPlanDetails?.id}`,
                     phoneNumber
                   })
-              }}
-              icon={<Eye />}
-              variant="flat"
-            >
-              View Details
-            </Button>
-          </CardFooter>
+                }}
+                icon={<Eye />}
+                variant="flat"
+              >
+                View Details
+              </Button>
+            </CardFooter>
+          )}
         </Card>
       </Content>
     </Fragment>
