@@ -38,10 +38,10 @@ const StashHistory = () => {
 
   const [page, setPage] = useState(0)
   const [type, setType] = useState('')
-  const initialStartDate = moment().subtract(29, 'days')
+  const initialStartDate = moment().subtract(31, 'days')
   const initialEndDate = moment()
-  const initialFrom = initialStartDate.format('YYYY-MM-DD')
-  const initialTo = initialEndDate.format('YYYY-MM-DD')
+  const initialFrom = initialStartDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+  const initialTo = initialEndDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)
@@ -76,18 +76,15 @@ const StashHistory = () => {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(12, 'hours')
-          .format('YYYY-MM-DD')
+        .subtract(12, 'hours')
+          .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
       )
     }
     if (endDate) {
       setEndDate(endDate)
       setTo(
         moment(endDate)
-          .add(11, 'hours')
-          .add(59, 'minutes')
-          .add(59, 'seconds')
-          .format('YYYY-MM-DD')
+          .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
       )
     }
     setShowReset(true)
