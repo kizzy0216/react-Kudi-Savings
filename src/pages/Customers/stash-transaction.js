@@ -84,6 +84,7 @@ const StashHistory = () => {
       setEndDate(endDate)
       setTo(
         moment(endDate)
+        .add(12, 'hours')
           .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
       )
     }

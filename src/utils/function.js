@@ -57,6 +57,7 @@ export const stashSourceOptions = [
   { text: 'STASH-TOP UP', value: 'STASH_TOPUP' },
   { text: 'PLAN-TOP UP', value: 'PLAN_TOPUP' },
   { text: 'PLAN COLLECTION', value: 'PLAN_COLLECTION' },
+  { text: 'REVERSAL', value: 'REVERSAL' },
   { text: 'CASHOUT', value: 'CASHOUT' },
   { text: 'CHARGES', value: 'CHARGES' },
   { text: 'REFERRALS', value: 'REFERRAL' },
@@ -71,6 +72,8 @@ export const formatStashStatus = type => {
       return 'PLAN-TOP UP'
     case 'PLAN_COLLECTION':
       return 'PLAN COLLECTION'
+    case 'REVERSAL':
+      return 'REVERSAL'
     case 'CASHOUT':
       return 'CASHOUT'
     case 'CHARGES':
