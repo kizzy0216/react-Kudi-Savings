@@ -110,7 +110,7 @@ const WalletHistory = props => {
             </Button>
           ) : (
             <div className="flex">
-              <>
+              {/* <>
                 {source === 'customer' && (
                   <>
                     <div className={styles.Credit}>
@@ -133,7 +133,7 @@ const WalletHistory = props => {
                     </div>
                   </>
                 )}
-              </>
+              </> */}
               <Filters className={styles.filters}>
                 <DateRangePicker
                   onDatesChange={onDatesChange}
