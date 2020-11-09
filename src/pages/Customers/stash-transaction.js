@@ -1,4 +1,5 @@
-import React, { Fragment, useState, useReducer } from 'react'
+import React, { Fragment, useState } from 'react'
+import {useSelector} from 'react-redux'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import {
@@ -6,7 +7,6 @@ import {
   CardBody,
   CardHeader,
   Button,
-  ButtonGroup,
   DateRangePicker
 } from '@kudi-inc/dip'
 import Select from 'components/Select'
@@ -17,51 +17,80 @@ import { TableLoading } from 'components/loading'
 import styles from '../Transactions/transactions.module.scss'
 import {
   FormatStashData,
-  ParamsReducer,
-  DefaultParams,
-  StashTableColumn
+  StashTableColumn,
+  stashSourceOptions
 } from 'utils/function'
 import { useHistory, useRouteMatch } from 'react-router-dom'
-import SampleData from './utils/sample-stash-data'
+import { getStashTransactions } from 'services/stash'
+import { SideSheet } from 'evergreen-ui'
+import StashTopUpDetails from './transaction-stash-top-up-details'
+import PlanTopUpDetails from './transaction-plan-top-up-details'
+import CollectionDetails from './transaction-plan-collection-details'
+import ReferralDetails from './transaction-referral-details'
+import LoanRepaymentDetails from './transaction-loan-repayment-details'
+import CashoutDetails from './transaction-cashout-details'
+import ReversalDetails from './transaction-reversal-details'
 
 const StashHistory = () => {
+  let stashId = useSelector(state => state.StashId.stashId)
   let history = useHistory()
   let { url } = useRouteMatch()
-  const [page, setPage] = useState(1)
-  const [type, setType] = useState('')
-  const [startDate, setStartDate] = useState('')
-  const [from, setFrom] = useState('')
-  const [to, setTo] = useState('')
-  const [endDate, setEndDate] = useState('')
-  const [showReset, setShowReset] = useState(false)
-  const [params, setParams] = useReducer(ParamsReducer, DefaultParams)
-  const [focusedInput, setfocusedInput] = useState(null)
-  let limit = 50
-  let formattedData = []
 
-  formattedData = FormatStashData(SampleData, history, url)
+  const [page, setPage] = useState(0)
+  const [type, setType] = useState('')
+  const initialStartDate = moment().subtract(31, 'days')
+  const initialEndDate = moment()
+  const initialFrom = initialStartDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+  const initialTo = initialEndDate.format('YYYY-MM-DDTHH:mm:ss.SSSZ')
+  const [from, setFrom] = useState(initialFrom)
+  const [to, setTo] = useState(initialTo)
+  const [endDate, setEndDate] = useState(initialEndDate)
+  const [startDate, setStartDate] = useState(initialStartDate)
+  const [showReset, setShowReset] = useState(false)
+  const [focusedInput, setfocusedInput] = useState(null)
+  const [stashDetails, setStashDetails] = useState({})
+  const [showStashDetails, setShowStashDetails] = useState(false)
+  const [source, setSource] = useState('')
+
+  let limit = 20
+  let formattedData = []
+  let totalPage = 0
+
+  const { data, isLoading, error, refetch } = useQuery(
+    ['StashTransactions', { to, from, limit, page, type, stashId }],
+    getStashTransactions
+  )
+
+  if (data?.data?.data) {
+    formattedData = FormatStashData(
+      data.data.data.list,
+      setStashDetails,
+      setShowStashDetails,
+      setSource
+    )
+    totalPage = Math.ceil(data.data.data.total / limit)
+  }
 
   const onDatesChange = ({ startDate, endDate }) => {
     if (startDate) {
       setStartDate(startDate)
       setFrom(
         moment(startDate)
-          .subtract(12, 'hours')
-          .format('YYYY-MM-DD HH:mm:ss')
+        .subtract(12, 'hours')
+          .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
       )
     }
     if (endDate) {
       setEndDate(endDate)
       setTo(
         moment(endDate)
-          .add(11, 'hours')
-          .add(59, 'minutes')
-          .add(59, 'seconds')
-          .format('YYYY-MM-DD HH:mm:ss')
+        .add(12, 'hours')
+          .format('YYYY-MM-DDTHH:mm:ss.SSSZ')
       )
     }
     setShowReset(true)
   }
+
   const onFocusChange = focusedInput => {
     setfocusedInput(focusedInput)
   }
@@ -91,23 +120,11 @@ const StashHistory = () => {
                   isOutsideRange={() => false}
                 />
               </Filters>
-              <ButtonGroup>
-                <Button active={type === ''} onClick={() => setType('')}>
-                  All
-                </Button>
-                <Button
-                  active={type === 'DEBIT'}
-                  onClick={() => setType('DEBIT')}
-                >
-                  Debit
-                </Button>
-                <Button
-                  active={type === 'CREDIT'}
-                  onClick={() => setType('CREDIT')}
-                >
-                  Credit
-                </Button>
-              </ButtonGroup>
+              <Select
+                active={type}
+                options={stashSourceOptions}
+                onSelect={value => setType(value)}
+              />
               {showReset && (
                 <Close
                   className="danger"
@@ -123,13 +140,104 @@ const StashHistory = () => {
             </div>
           </CardHeader>
           <CardBody className={styles.Transactions}>
-            <Table
-              column={StashTableColumn}
-              placeholder="stash transactions"
-              data={formattedData}
-            />  
+            {isLoading && <TableLoading />}
+            {error && (
+              <span>
+                Error!
+                <button onClick={() => refetch({ disableThrow: true })}>
+                  Retry
+                </button>
+              </span>
+            )}
+            {data && (
+              <Table
+                column={StashTableColumn}
+                placeholder="stash transactions"
+                data={formattedData}
+              />
+            )}
           </CardBody>
+          {data && (
+            <div className={'pagination'}>
+              {page > 0 && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page - 1)}
+                  icon={<ChevronLeft />}
+                ></Button>
+              )}
+              <p>
+                Page {page + 1} of {totalPage}
+              </p>
+              {formattedData.length === limit && (
+                <Button
+                  variant={'flat'}
+                  onClick={() => setPage(page + 1)}
+                ></Button>
+              )}
+            </div>
+          )}
         </Card>
+        {stashDetails &&
+          (source === 'STASH_TOPUP' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <StashTopUpDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'PLAN_TOPUP' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <PlanTopUpDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'PLAN_COLLECTION' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <CollectionDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'REFERRALS' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <ReferralDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'LOAN_REPAYMENT' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <LoanRepaymentDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'CASHOUT' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <CashoutDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : source === 'REVERSAL' ? (
+            <SideSheet
+              isShown={showStashDetails}
+              width={600}
+              onCloseComplete={() => setShowStashDetails(false)}
+            >
+              <ReversalDetails stashDetails={stashDetails} />
+            </SideSheet>
+          ) : (
+            <></>
+          ))}
       </Content>
     </Fragment>
   )

@@ -11,6 +11,7 @@ import {
   TransactionsLink,
   LogoutIcon,
   MarketsLink,
+  LoanManager,
   CustomersLink,
   PlansLink,
   ReferralLink,
@@ -57,6 +58,12 @@ const Layout = ({ children, auth }) => {
       link: '/zonal-heads',
       icon: <AgentsLink />,
       userType: ['ADMIN', 'SUPER_ADMIN', 'LOANS_MANAGER']
+    },
+    {
+      title: 'Loan Managers',
+      link: '/loan-managers',
+      icon: <LoanManager />,
+      userType: ['ADMIN', 'SUPER_ADMIN']
     },
     {
       title: 'Transactions',
@@ -144,13 +151,15 @@ const Layout = ({ children, auth }) => {
       </div>
       <Fragment>
         <Content className={styles.content}>
-          <SideSheet
-            onCloseComplete={() => setShowFundPurse(false)}
-            isShown={showFundPurse}
-            width={600}
-          >
-            <FundLoanPurse setShowFundPurse={setShowFundPurse} />
-          </SideSheet>
+          {showFundPurse && (
+            <SideSheet
+              onCloseComplete={() => setShowFundPurse(false)}
+              isShown={showFundPurse}
+              width={600}
+            >
+              <FundLoanPurse setShowFundPurse={setShowFundPurse} />
+            </SideSheet>
+          )}
         </Content>
       </Fragment>
     </>

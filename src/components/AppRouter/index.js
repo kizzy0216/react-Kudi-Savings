@@ -26,6 +26,21 @@ const ZonalDashboard = lazy(() =>
     /* webpackChunkName: "ZonalDashboard" */ 'pages/Dashboard/dashboard-zonal'
   )
 )
+const LoanManagers = lazy(() =>
+  import(
+    /* webpackChunkName: "LoanManagers" */ 'pages/LoanManagers/loan-managers'
+  )
+)
+const CreateLoanManager = lazy(() =>
+  import(
+    /* webpackChunkName: "CreateLoanManager" */ 'pages/LoanManagers/create-loan-manager'
+  )
+)
+const AccountSetup = lazy(() =>
+  import(
+    /* webpackChunkName: "AccountSetup" */ 'pages/LoanManagers/account-setup'
+  )
+)
 const Cashout = lazy(() =>
   import(/* webpackChunkName: "Cashout" */ 'pages/Cashout')
 )
@@ -35,9 +50,15 @@ const ViewCashout = lazy(() =>
 const LoansOverview = lazy(() => import('../../pages/Loans/Overview/Overview'))
 const OverdueLoans = lazy(() => import('../../pages/Loans/Overdue/Overdue'))
 const AllLoans = lazy(() => import('../../pages/Loans/AllLoans/AllLoans'))
-const LoanDetail = lazy(() => import('../../pages/Loans/LoanDetails/LoanDetail'))
-const LoanRepayments = lazy(() => import('../../pages/Loans/Repayments/LoanRepayments'))
-const FundLoanPurse = lazy(() => import('pages/Loans/FundLoanPurse/fund-loan-purse'))
+const LoanDetail = lazy(() =>
+  import('../../pages/Loans/LoanDetails/LoanDetail')
+)
+const LoanRepayments = lazy(() =>
+  import('../../pages/Loans/Repayments/LoanRepayments')
+)
+const FundLoanPurse = lazy(() =>
+  import('pages/Loans/FundLoanPurse/fund-loan-purse')
+)
 
 const Settings = lazy(() =>
   import(/* webpackChunkName: "Settings" */ 'pages/Settings')
@@ -157,9 +178,7 @@ const WalletTopUps = lazy(() =>
   )
 )
 const P2PLog = lazy(() =>
-  import(
-    /* webpackChunkName: "P2PLog" */ 'pages/Agents/view-all-p2p'
-  )
+  import(/* webpackChunkName: "P2PLog" */ 'pages/Agents/view-all-p2p')
 )
 const CashoutLog = lazy(() =>
   import(
@@ -202,19 +221,28 @@ const AppRouter = () => (
         <PrivateRoute path="/create-market" exact component={CreateMarket} />
         <PrivateRoute path="/cashout" exact component={Cashout} />
         <PrivateRoute path="/cashout/:id" component={ViewCashout} />
-        <PrivateRoute path="/loans" exact component={LoansOverview}/>
-        <PrivateRoute path="/loans/overdue" component={OverdueLoans}/>
-        <PrivateRoute path="/loans/all" component={AllLoans}/>
-        <PrivateRoute path="/loans/repayments/:id" component={LoanRepayments}/>
-        <PrivateRoute path="/loans/details/:id" component={LoanDetail}/>
-        <PrivateRoute path="/fund-purse" component={FundLoanPurse}/>
-        <PrivateRoute exact path="/fund-wallet" component={FundWallet}/>
-        <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin}/>
+        <PrivateRoute path="/loans" exact component={LoansOverview} />
+        <PrivateRoute path="/loans/overdue" component={OverdueLoans} />
+        <PrivateRoute path="/loans/all" component={AllLoans} />
+        <PrivateRoute path="/loans/repayments/:id" component={LoanRepayments} />
+        <PrivateRoute path="/loans/details/:id" component={LoanDetail} />
+        <PrivateRoute path="/fund-purse" component={FundLoanPurse} />
+        <PrivateRoute exact path="/fund-wallet" component={FundWallet} />
+        <PrivateRoute exact path="/fund-wallet/enter-pin" component={KudiPin} />
         <PrivateRoute path="/customers" exact component={Customers} />
         <PrivateRoute path="/customers/:id" exact component={CustomerProfile} />
-        <PrivateRoute path="/customers/:id/stash" exact component={CustomerStashHistory} />
+        <PrivateRoute
+          path="/customers/:id/stash"
+          exact
+          component={CustomerStashHistory}
+        />
         <PrivateRoute
           path="/customers/:id/plan/:planId"
+          exact
+          component={CustomerHistory}
+        />
+        <PrivateRoute
+          path="/customers/:id/stash/:planId"
           exact
           component={CustomerHistory}
         />
@@ -355,6 +383,13 @@ const AppRouter = () => (
         <PrivateRoute path="/transactions" exact component={Transactions} />
         <PrivateRoute path="/transactions/:id" component={SingleTransaction} />
         <PrivateRoute path="/customer-insights" component={CustomerInsights} />
+        <PrivateRoute path="/loan-managers" component={LoanManagers} />
+        <PrivateRoute
+          path="/create-loan-manager"
+          component={CreateLoanManager}
+        />
+        <PrivateRoute path="/account-setup" component={AccountSetup} />
+
         <PrivateRoute component={NotFound} />
         <Route
           render={() => {

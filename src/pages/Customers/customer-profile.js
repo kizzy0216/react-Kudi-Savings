@@ -1,4 +1,6 @@
 import React, { Fragment, useState, useContext, useReducer } from 'react'
+import { useDispatch } from 'react-redux'
+import { PhoneNumber, StashId } from '../../redux'
 import { useQuery } from 'react-query'
 import moment from 'moment'
 import { Dialog, SideSheet } from 'evergreen-ui'
@@ -32,6 +34,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
   let [isShown, setIsShown] = useState(false)
   let walletBalance = 0
   const [agent, setAgent] = useReducer(AgentReducer, DefaultAgent)
+  const dispatch = useDispatch()
 
   const { data, isLoading, error, refetch } = useQuery(
     ['SingleCustomer', { id: params.id }],
@@ -72,10 +75,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   <div className={styles.FirstHeader}>
                     <h3> CUSTOMER INFORMATION</h3>
 {/* 
-                    <Button
-                      variant="flat"
-                      icon={<Reassign />}
-                    >
+                    <Button variant="flat" icon={<Reassign />}>
                       My Referrals
                     </Button> */}
 
@@ -96,7 +96,13 @@ const CustomerProfile = ({ history, match: { params } }) => {
                         src={imageData?.data?.medium || AgentImg}
                         alt="agent"
                       />
+                      <div className={styles.FirstBodyGridProfileBadge}>
+                        {customer?.referred && (
+                          <Badge variant="warning">Referred</Badge>
+                        )}
+                      </div>
                     </div>
+
                     <div>
                       <div className={styles.FirstBodyGridContent}>
                         <span>Name</span>
@@ -122,7 +128,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     </div>
                   </div>
                 </CardBody>
-                {/* <CardFooter className={styles.FirstBodyFooterButton}>
+                <CardFooter className={styles.FirstBodyFooterButton}>
                   <Button
                     variant="flat"
                     onClick={() => setShowInformation(true)}
@@ -131,7 +137,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                   >
                     View All Information
                   </Button>
-                </CardFooter> */}
+                </CardFooter>
               </Card>
               <Card>
                 <CardHeader>
@@ -162,10 +168,10 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <span> Total Withdrawn</span>
                     <span>{formatCurrency(customer.totalWithdrawn)}</span>
                   </div>
-                  <div className={styles.FirstBodyFlex}>
+                  {/* <div className={styles.FirstBodyFlex}>
                     <span> Wallet Balance</span>
                     <span>{formatCurrency(walletBalance)}</span>
-                  </div>
+                  </div> */}
                 </CardBody>
               </Card>
             </div>
@@ -230,7 +236,7 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 </CardBody>
               </Card>
             </div> */}
-            {/* <div className={styles.Overview}>
+            <div className={styles.Overview}>
               <div className={styles.OverviewRow}>
                 <Card className={styles.OverviewRowCard}>
                   <CardHeader className={styles.OverviewRowCardHeader}>
@@ -245,12 +251,17 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>Stash Balance</p>
                   </CardHeader>
                   <p className={styles.OverviewRowCardp2}>
-                    {formatCurrency(25000)}
+                    {formatCurrency(customer.stashBalance)}
                   </p>
                   <p className={styles.OverviewRowCardFooterButton}>
                     <Button
                       variant="flat"
-                      onClick={() => history.push(`${url}/stash`)}
+                      onClick={() => {
+                        dispatch(PhoneNumber(customer.phoneNumber))
+                        dispatch(StashId(customer.stashId))
+                        
+                        history.push(`${url}/stash`)
+                      }}
                       type="button"
                       icon={<Eye />}
                     >
@@ -263,11 +274,15 @@ const CustomerProfile = ({ history, match: { params } }) => {
                     <p>KTA Details</p>
                   </CardHeader>
 
-                  <p className={styles.OverviewRowCardp2}>0123456789</p>
-                  <p className={styles.OverviewRowCardp1}>Providus Bank</p>
+                  <p className={styles.OverviewRowCardp2}>
+                    {customer.stashAccountNumber}
+                  </p>
+                  <p className={styles.OverviewRowCardp1}>
+                    {customer.stashBankName}
+                  </p>
                 </Card>
               </div>
-            </div> */}
+            </div>
 
             <div className={styles.Second}>
               <UserPlans
@@ -276,23 +291,6 @@ const CustomerProfile = ({ history, match: { params } }) => {
                 phoneNumber={customer.phoneNumber}
               />
             </div>
-            {customer?.previouslyChangedPhoneNumbers?.[0] && (
-              <div className={styles.DivContent}>
-                <Card>
-                  <CardHeader>
-                    <div className={styles.FirstHeader}>
-                      <h3> Wallet Number History</h3>
-                    </div>
-                  </CardHeader>
-                  <CardBody>
-                    <div className={styles.FirstBodyGridContent}>
-                      <span>Previous Wallet Number</span>
-                      <span>{customer.previouslyChangedPhoneNumbers}</span>
-                    </div>
-                  </CardBody>
-                </Card>
-              </div>
-            )}
           </div>
         )}
 

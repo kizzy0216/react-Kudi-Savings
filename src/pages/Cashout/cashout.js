@@ -99,8 +99,7 @@ const Cashout = ({ history }) => {
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
-            Cashout Requests
-            {totalData ? ` - ${totalData.toLocaleString()}` : ''}
+            Cash out Requests
             <div className="flex">
               <Filters className={styles.filters}>
                 <DateRangePicker

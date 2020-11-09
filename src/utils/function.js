@@ -52,6 +52,38 @@ export const sourceOptions = [
   { text: 'Contribution', value: 'CONTRIBUTION' }
 ]
 
+export const stashSourceOptions = [
+  { text: 'All Sources', value: '' },
+  { text: 'STASH-TOP UP', value: 'STASH_TOPUP' },
+  { text: 'PLAN-TOP UP', value: 'PLAN_TOPUP' },
+  { text: 'PLAN COLLECTION', value: 'PLAN_COLLECTION' },
+  { text: 'REVERSAL', value: 'REVERSAL' },
+  { text: 'CASHOUT', value: 'CASHOUT' },
+  { text: 'CHARGES', value: 'CHARGES' },
+  { text: 'REFERRALS', value: 'REFERRAL' },
+  { text: 'LOAN REPAYMENT', value: 'LOANS_REPAYMENT' }
+]
+
+export const formatStashStatus = type => {
+  switch (type) {
+    case 'STASH_TOPUP':
+      return 'STASH-TOP UP'
+    case 'PLAN_TOPUP':
+      return 'PLAN-TOP UP'
+    case 'PLAN_COLLECTION':
+      return 'PLAN COLLECTION'
+    case 'REVERSAL':
+      return 'REVERSAL'
+    case 'CASHOUT':
+      return 'CASHOUT'
+    case 'CHARGES':
+      return 'CHARGES'
+    case 'REFERRAL':
+      return 'REFERRAL'
+    case 'LOANS_REPAYMENT':
+      return 'LOAN REPAYMENT'
+  }
+}
 export const DefaultParams = {
   page: 1,
   startDate: '',
@@ -167,24 +199,22 @@ export const formatData = (history, url, page, limit, data) => {
 }
 
 export const formatP2P = (page, limit, data) => {
-  return data.map(
-    ({ timeUpdated, amount, meta, status }, index) => ({
-      SN: (page - 1) * limit + (index + 1),
-      timeUpdated: timeUpdated
-        ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
-        : '-',
-      amount: formatCurrency(amount),
-      agentName: meta?.sender_name || '-',
-      amountCollected: amount ? formatCurrency(amount) : '-',
-      status: status ? (
-        <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
-          {status}
-        </Badge>
-      ) : (
-        '-'
-      )
-    })
-  )
+  return data.map(({ timeUpdated, amount, meta, status }, index) => ({
+    SN: (page - 1) * limit + (index + 1),
+    timeUpdated: timeUpdated
+      ? moment(timeUpdated).format('Do MMM, YYYY hh:mm a')
+      : '-',
+    amount: formatCurrency(amount),
+    agentName: meta?.sender_name || '-',
+    amountCollected: amount ? formatCurrency(amount) : '-',
+    status: status ? (
+      <Badge variant={status === 'SUCCESS' ? 'success' : 'danger'}>
+        {status}
+      </Badge>
+    ) : (
+      '-'
+    )
+  }))
 }
 
 export const P2PTableColumns = [
@@ -564,25 +594,61 @@ export const formatWalletHistory = (data, page, limit) => {
   )
 }
 
-export const FormatStashData = (data, history, url) => {
-  return data.map(({ id, date, amount, reference, type, source, balance }) => ({
-    id: id,
-    date: moment(date).format('Do MMM, YYYY hh:mm a'),
-    amount: formatCurrency(amount),
-    reference: reference,
-    type: type,
-    source: formatText(source),
-    balance: formatCurrency(balance),
-    action: (
-      <Button
-        icon={<Eye />}
-        variant="flat"
-        onClick={() => history.push(`${url}/stash/${id}`)}
-      >
-        View
-      </Button>
-    )
-  }))
+export const FormatStashData = (
+  data,
+  setStashDetails,
+  setShowStashDetails,
+  setSource
+) => {
+  return data.map(
+    ({
+      id,
+      timeCreated,
+      amount,
+      reference,
+      transactionType,
+      type,
+      balance,
+      paymentDetail,
+      loanDetails,
+      cashoutDetails,
+      userPlanDetails,
+      referralDetails
+    }) => ({
+      id: id,
+      date: timeCreated && moment(timeCreated).format('Do MMM, YYYY hh:mm a'),
+      amount: formatCurrency(amount),
+      reference:
+        reference.length > 16 ? `${reference.slice(0, 15)}...` : reference,
+      type: transactionType ? transactionType : '-',
+      source: formatText(type),
+      balance: balance ? formatCurrency(balance) : '-',
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => {
+            setStashDetails({
+              paymentDetail,
+              loanDetails,
+              cashoutDetails,
+              userPlanDetails,
+              referralDetails,
+              amount,
+              reference,
+              type,
+              timeCreated,
+              transactionType
+            })
+            setShowStashDetails(true)
+            setSource(type)
+          }}
+        >
+          View
+        </Button>
+      )
+    })
+  )
 }
 
 export const CustomerTableColumn = [
@@ -812,4 +878,71 @@ export const statusOptions = [
   { text: 'Pending Validation', value: 'PENDING_VALIDATION' },
   { text: 'Pending Image Validation', value: 'PENDING_IMAGE_VALIDATION' },
   { text: 'Voucher Redeemed', value: 'VOUCHER_REDEEMED' }
+]
+
+export const formatLoanManager = (data, setViewLoanManager, setManagerId) => {
+  return data.map(
+    ({ firstName, lastName, phoneNumber, email, timeCreated, status, id }) => ({
+      fullName: `${firstName} ${lastName}`,
+      phoneNumber: phoneNumber ? phoneNumber : '-',
+      email: email,
+      timeCreated: timeCreated && moment(timeCreated).format('Do MMMM YYYY'),
+      status: status ? (
+        <Badge
+          variant={
+            status === 'ACTIVE'
+              ? 'success'
+              : status === 'PENDING'
+              ? 'warning'
+              : status === 'SUSPENDED'
+              ? 'danger'
+              : 'warning'
+          }
+        >
+          {status}
+        </Badge>
+      ) : (
+        '-'
+      ),
+      action: (
+        <Button
+          icon={<Eye />}
+          variant="flat"
+          onClick={() => {
+            setViewLoanManager(true)
+            setManagerId(id)
+          }}
+        >
+          View
+        </Button>
+      )
+    })
+  )
+}
+
+export const LoanManagerTable = [
+  {
+    key: `fullName`,
+    render: `FULL NAME`
+  },
+  {
+    key: `phoneNumber`,
+    render: `PHONE NUMBER`
+  },
+  {
+    key: `email`,
+    render: `EMAIL`
+  },
+  {
+    key: `timeCreated`,
+    render: `DATE CREATED`
+  },
+  {
+    key: `status`,
+    render: `STATUS`
+  },
+  {
+    key: `action`,
+    render: `ACTION`
+  }
 ]
