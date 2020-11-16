@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { Filters } from 'components/Layout'
 import { Button, DateRangePicker } from '@kudi-inc/dip'
-import styles from './filter.module.scss'
+import styles from './dateFilter.module.scss'
 import { DownloadIcon } from 'assets/svg'
 import moment from 'moment'
 
-const Filter = () => {
+const DateFilter = () => {
   const [startDate, setStartDate] = useState(moment())
   const [endDate, setEndDate] = useState(moment().add(1, 'months'))
   const [focusedInput, setfocusedInput] = useState(null)
@@ -39,4 +39,4 @@ const Filter = () => {
   )
 }
 
-export default Filter
+export default DateFilter

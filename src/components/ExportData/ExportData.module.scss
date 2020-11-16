@@ -1,0 +1,44 @@
+@import '../../styles/generic.scss';
+
+.exportDataWrapper {
+  button {
+    overflow: visible;
+    width: inherit;
+    min-height: unset !important;
+    margin: inherit;
+    padding: inherit;
+    border: none;
+    background: inherit;
+    font: inherit;
+    line-height: normal;
+    color: inherit;
+    text-align: inherit;
+    -webkit-appearance: none;
+  }
+}
+
+.exportData {
+  display: flex;
+  display: -webkit-flex;
+  color: $sky-blue;
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin-right: 20px;
+  justify-content: center;
+  align-items: center;
+  line-height: 24px;
+  cursor: pointer;
+
+  svg {
+    margin-right: 0.5rem;
+    width: 0.8rem;
+    path {
+      fill: $sky-blue;
+    }
+  }
+}
+
+.filterWrapper {
+  display: flex;
+  align-items: center;
+}

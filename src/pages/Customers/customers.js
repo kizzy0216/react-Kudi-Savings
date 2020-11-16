@@ -5,11 +5,14 @@ import { Card, CardBody, Button, CardHeader } from '@kudi-inc/dip'
 import { useRouteMatch } from 'react-router-dom'
 import { Header, Content } from 'components/Layout'
 import Table from 'components/Table'
+import { AddFilter } from 'components/Filter'
 import styles from './customers.module.scss'
 import { getCustomers } from 'services/customers'
 import { Close, ChevronLeft, Search } from 'assets/svg'
 import { formatCustomerData, CustomerTableColumn } from 'utils/function'
 import { TableLoading } from 'components/loading'
+import CustomersFields from 'components/CustomFields/CustomersFields'
+import CustomersDataExport from 'components/ExportData/CustomersDataExport'
 
 const Customers = ({ history }) => {
   let { url } = useRouteMatch()
@@ -43,33 +46,43 @@ const Customers = ({ history }) => {
     <Fragment>
       <Header>
         <p> Customers </p>
+
+        <AddFilter />
       </Header>
       <Content className={styles.content}>
         <Card className={styles.contentCard}>
           <CardHeader className={styles.Header}>
             Total Customers{' '}
             {totalData ? ` - ${totalData.toLocaleString()}` : ''}
-            <div className="header-search">
-              <input
-                placeholder="Search by Phone Number"
-                value={number}
-                onChange={e => {
-                  setNumber(e.target.value)
-                  return handleSearch(e)
-                }}
-                type="text"
-              />
-              {number.length > 1 ? (
-                <Close
-                  className="danger"
-                  onClick={() => {
-                    setPhoneNumber('')
-                    return setNumber('')
+            <div className={styles.HeaderInputsWraper}>
+              <CustomersDataExport />
+              
+              <div className="header-search">
+                <input
+                  placeholder="Search by Phone Number"
+                  value={number}
+                  onChange={e => {
+                    setNumber(e.target.value)
+                    return handleSearch(e)
                   }}
+                  type="text"
                 />
-              ) : (
-                <Search />
-              )}
+                {number.length > 1 ? (
+                  <Close
+                    className="danger"
+                    onClick={() => {
+                      setPhoneNumber('')
+                      return setNumber('')
+                    }}
+                  />
+                ) : (
+                  <div className={styles.HeaderInputsWraper}>
+                    <Search />
+                  </div>
+                )}
+              </div>
+
+              <CustomersFields />
             </div>
           </CardHeader>
           <CardBody className={styles.Customers}>
@@ -84,7 +97,11 @@ const Customers = ({ history }) => {
                 </span>
               )}
               {data && (
-                <Table column={CustomerTableColumn} data={formattedData} placeholder="Customers"/>
+                <Table
+                  column={CustomerTableColumn}
+                  data={formattedData}
+                  placeholder="Customers"
+                />
               )}
             </div>
           </CardBody>

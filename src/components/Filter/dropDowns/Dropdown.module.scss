@@ -1,0 +1,179 @@
+@import '../../../styles/generic.scss';
+
+.ddWrapper {
+  position: relative;
+  font-size: 1.6rem;
+  user-select: none;
+
+  button {
+    overflow: visible;
+    width: inherit;
+    min-height: unset !important;
+    margin: inherit;
+    padding: inherit;
+    border: none;
+    background: inherit;
+    font: inherit;
+    line-height: normal;
+    color: inherit;
+    text-align: inherit;
+    -webkit-appearance: none;
+  }
+
+  ul,
+  li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+
+  * {
+    box-sizing: border-box;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .ddHeader {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    border: 1px solid $activeStateBorder;
+    border-radius: $borderRadius;
+    background-color: white;
+    min-width: 160px;
+    line-height: 24px;
+    margin-right: 20px;
+    cursor: pointer;
+
+    span {
+      margin-right: 20px;
+    }
+  }
+
+  .ddHeaderTitle {
+    margin: 2px auto;
+    color: $grey;
+    font-weight: 400;
+    font-size: 0.7rem;
+
+    svg {
+      margin-left: 10px;
+    }
+  }
+
+  .addFilter {
+    display: flex;
+    display: -webkit-flex;
+    color: $sky-blue;
+    font-weight: 500;
+    font-size: 0.8rem;
+    margin-right: 20px;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 30px;
+    cursor: pointer;
+
+    svg {
+      margin-right: 0.7rem;
+      width: 0.7rem;
+      path {
+        fill: $sky-blue;
+      }
+    }
+  }
+
+  .ddList {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    z-index: 2;
+    min-width: 160px;
+    border: 1px solid $activeStateBorder;
+    box-shadow: 0px 10px 15px rgba(171, 191, 216, 0.2);
+    border-radius: $borderRadius;
+    background: #fff;
+    font-weight: 400;
+    text-align: left;
+    -webkit-overflow-scrolling: touch;
+
+    &Multiple {
+      top: 40px;
+      left: -30px;
+    }
+
+    .ddScrollList {
+      overflow-y: scroll;
+
+      .ddListItem {
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding: 15px 15px;
+        font-size: 0.7rem;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: $grey;
+        cursor: pointer;
+
+        &:not(:last-child) {
+          border-bottom: 1px solid #f2f2f2;
+        }
+
+        &.noResult {
+          font-weight: normal;
+          cursor: default;
+
+          &:hover {
+            background-color: transparent;
+            color: $grey;
+          }
+        }
+
+        &.selected,
+        &:hover {
+          background: #f0f4f9;
+          cursor: pointer;
+        }
+
+        svg {
+          margin-right: 0.7rem;
+          width: 1rem;
+        }
+      }
+    }
+
+    .ddListSearchBar {
+      width: 100%;
+      height: 40px;
+      padding: 0 10px;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      font-size: inherit;
+
+      &::placeholder {
+        color: rgb(200, 200, 200);
+      }
+    }
+
+    &.searchable {
+      overflow-y: hidden;
+      padding: 0;
+
+      .ddScrollList {
+        max-height: calc(215px - 40px);
+        padding: 10px 0;
+      }
+    }
+  }
+}

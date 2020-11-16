@@ -1,0 +1,28 @@
+@import '../../../styles/generic.scss';
+
+.addFilter {
+  display: flex;
+  display: -webkit-flex;
+  color: $kudi-blue;
+  font-weight: 500;
+  font-size: 0.8rem;
+  margin-right: 3rem;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 30px;
+  cursor: pointer;
+
+  svg {
+    margin-right: 0.7rem;
+    width: 0.7rem;
+    path {
+      fill: $kudi-blue;
+    }
+  }
+}
+
+.filterWrapper {
+  display: flex;
+  align-items: center;
+}

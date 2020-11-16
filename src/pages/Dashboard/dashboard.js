@@ -13,7 +13,7 @@ import { Header, Content } from 'components/Layout'
 import styles from './dashboard.module.scss'
 import cx from 'classnames'
 import Chart from 'components/Chart'
-import Filter from 'components/Filter'
+import { DateFilter } from 'components/Filter'
 import { Eye, UpIcon, DownIcon } from 'assets/svg'
 
 const dataSource = [
@@ -44,7 +44,7 @@ const Dashboard = () => {
       <Header>
         <p> Dashboard </p>
       </Header>
-      <Filter />
+      <DateFilter />
       <Content className={styles.content}>
         <div className={styles.Dashboard}>
           <div className={styles.DashboardTop}>
