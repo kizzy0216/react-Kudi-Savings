@@ -8,27 +8,29 @@ class DateFilterOption extends Component {
       filters: [
         {
           id: 0,
-          title: 'This Month',
-          selected: false,
-          name: 'thisMonth'
+          title: 'Custom Date',
+          selected: false
         },
         {
           id: 1,
-          title: 'This Week',
-          selected: false,
-          name: 'thisWeek'
+          title: 'Today',
+          selected: false
         },
         {
           id: 2,
-          title: 'This Year',
-          selected: false,
-          name: 'thisYear'
+          title: 'This Week',
+          selected: false
         },
         {
           id: 3,
-          title: 'Today',
+          title: 'This Month',
+          selected: false
+        },
+        {
+          id: 4,
+          title: 'This Year',
           selected: false,
-          name: 'today'
+          name: 'thisYear'
         }
       ]
     }

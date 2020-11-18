@@ -60,6 +60,8 @@ class addFilter extends Component {
     const temp = JSON.parse(JSON.stringify(this.state.filters))
     temp[id].selected = !temp[id].selected
 
+    console.log(id)
+
     this.setState({
       filters: temp
     })
