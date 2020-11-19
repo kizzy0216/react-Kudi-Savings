@@ -18,18 +18,18 @@ class Dropdown extends Component {
     this.close = this.close.bind(this)
   }
 
-  static getDerivedStateFromProps(nextProps) {
-    const { list, title } = nextProps
+  // static getDerivedStateFromProps(nextProps) {
+  //   const { list, title } = nextProps
 
-    const selectedItem = list.filter(item => item.selected)
+  //   const selectedItem = list.filter(item => item.selected)
 
-    if (selectedItem.length) {
-      return {
-        headerTitle: selectedItem[0].title
-      }
-    }
-    return { headerTitle: title }
-  }
+  //   if (selectedItem.length) {
+  //     return {
+  //       headerTitle: selectedItem[0].title
+  //     }
+  //   }
+  //   return { headerTitle: title }
+  // }
 
   componentDidUpdate() {
     const { listOpen } = this.state
@@ -55,14 +55,14 @@ class Dropdown extends Component {
 
   selectItem(title, id, stateKey) {
     const { resetThenSet } = this.props
-
     this.setState(
       {
         headerTitle: title,
         listOpen: false
-      },
-      resetThenSet(id, stateKey)
+      }
     )
+    resetThenSet(id, stateKey);
+    
   }
 
   toggleList() {

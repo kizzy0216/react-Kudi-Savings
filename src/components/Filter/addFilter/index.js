@@ -7,6 +7,8 @@ import {
   StatusFilterOption,
   MarketFilterOption
 } from 'components/Filter'
+import { clearCustomerMarketId, clearCustomerStatus } from 'redux/customer/actions/customer-filter'
+import { connect } from "react-redux";
 
 class addFilter extends Component {
   constructor() {
@@ -61,6 +63,12 @@ class addFilter extends Component {
     temp[id].selected = !temp[id].selected
 
     console.log(id)
+    if(temp[id].selected == false){
+      if(id === 0)
+        this.props.clearCustomerStatus();
+      else if(id === 2)
+        this.props.clearCustomerMarketId();
+    }
 
     this.setState({
       filters: temp
@@ -108,4 +116,7 @@ class addFilter extends Component {
   }
 }
 
-export default addFilter
+
+export default connect(null, {
+  clearCustomerMarketId, clearCustomerStatus
+})(addFilter)

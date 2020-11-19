@@ -1,5 +1,8 @@
 import React, { Component } from 'react'
 import { Dropdown } from '../dropDowns'
+import { setCustomerStatus } from 'redux/customer/actions/customer-filter'
+import { connect } from "react-redux";
+
 
 class StatusFilterOption extends Component {
   constructor() {
@@ -69,12 +72,15 @@ class StatusFilterOption extends Component {
   }
 
   resetThenSet = id => {
+    console.log('here');
     const temp = JSON.parse(JSON.stringify(this.state.filters))
     temp.forEach(item => (item.selected = false))
     temp[id].selected = true
     this.setState({
       filters: temp
     })
+    console.log('id', id);
+    this.props.setCustomerStatus(temp[id].title)
   }
 
   render() {
@@ -88,4 +94,6 @@ class StatusFilterOption extends Component {
   }
 }
 
-export default StatusFilterOption
+export default connect(null, {
+  setCustomerStatus
+})(StatusFilterOption)

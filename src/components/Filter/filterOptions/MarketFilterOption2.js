@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { Dropdown } from '../dropDowns'
 import { useQuery } from 'react-query'
 import { getMarkets } from 'services/markets'
+import { setCustomerMarketId } from 'redux/customer/actions/customer-filter'
+import { connect } from "react-redux";
 
-export default ({ history }) => {
+const MarketFilterOption = ({ setCustomerMarketId }) => {
   useEffect(() => {
     // fetchMarkets()
     window.addEventListener('keydown', tabKeyPressed)
@@ -35,6 +37,8 @@ export default ({ history }) => {
 
     markets = newmarkets
   }
+  console.log('marketRes',marketRes)
+  console.log(markets)
 
   const tabKeyPressed = e => {
     if (e.keyCode === 9) {
@@ -51,23 +55,27 @@ export default ({ history }) => {
   }
 
   const resetThenSet = id => {
+    setCustomerMarketId(id);
+    console.log(id)
     const temp = JSON.parse(JSON.stringify(markets))
     // temp.forEach(item => (item.selected = false))
     // temp[id].selected = true
     selectedMarketId = id
 
-    const sItem = markets.find(item => item.id = id)
-    const index = markets.indexOf(sItem)
+    console.log('markets',markets)
+    // const sItem = markets.find(item => item.id = id)
+    // console.log('sItem',sItem)
+    // console.log('markets',markets)
+    // const index = markets.indexOf(sItem)
+    // console.log('markets',markets)
 
-    console.log(index)
+    // console.log(index)
 
-    sItem.selected = true
+    // sItem.selected = true
 
     // if (index !== -1) {
     //   markets[index] = sItem
     // }
-
-    console.log(markets)
   }
 
   return (
@@ -78,3 +86,7 @@ export default ({ history }) => {
     />
   )
 }
+
+export default connect(null, {
+  setCustomerMarketId
+})(MarketFilterOption)
