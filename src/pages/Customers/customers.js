@@ -20,39 +20,84 @@ import { clearCustomerData } from 'redux/customer/actions/customer-filter'
 const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter, clearCustomerData }) => {
   const [filters, setFilters] = useState([
     {
+      title: 'Status',
+      selected: false,
+      fieldName: 'status'
+    },
+    {
       title: 'Full Name',
       selected: true,
-      name: 'fullName'
+      fieldName: 'full-name'
+    },
+    {
+      title: 'KTA Details',
+      selected: false,
+      name: 'kta-details'
+    },
+    {
+      title: 'Referral Status',
+      selected: false,
+      name: 'referral-status'
+    },
+    {
+      title: "Referral's Market",
+      selected: false,
+      name: 'referral-market'
+    },
+    {
+      title: "Referral's Phone Number",
+      selected: false,
+      name: 'referral-phone'
+    },
+    {
+      title: 'Next of Kin',
+      selected: false,
+      name: 'next-of-kin'
     },
     {
       title: 'Date of Birth',
       selected: false,
-      name: 'dob'
-    },
-    {
-      title: 'Phone Number',
-      selected: true,
-      name: 'phoneNumber'
+      fieldName: 'dob'
     },
     {
       title: 'Amount Saved',
       selected: false,
-      name: 'totalSaved'
+      fieldName: 'totalSaved'
     },
     {
       title: "Amount Withdrawn",
       selected: false,
-      name: 'totalWithdrawn'
+      fieldName: 'totalWithdrawn'
     },
     {
-      title: 'Business Type',
+      title: 'Loan Status',
       selected: false,
-      name: 'businessType'
+      name: 'loan-status'
+    },
+    {
+      title: "DSA's Name",
+      selected: false,
+      name: 'dsa-name'
+    },
+    {
+      title: "DSA's Phone Number",
+      selected: false,
+      name: 'dsa-phone'
     },
     {
       title: 'Time Created',
       selected: false,
       name: 'timeCreated'
+    },
+    {
+      title: 'Market',
+      selected: false,
+      name: 'market'
+    },
+    {
+      title: 'Business Type',
+      selected: false,
+      fieldName: 'businessType'
     },
   ]);
   let { url } = useRouteMatch()
@@ -106,7 +151,7 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
   // CustomerTableColumn
   const selectedFilters = filters.filter( item => item.selected);
   const filtered_columns = selectedFilters.map( item => {
-    return {key: item.name, render: item.title}
+    return {key: item.fieldName, render: item.title}
   })
   let columns = [{ key: 'sN', render: 'S/N' }];
   columns = columns.concat(filtered_columns);

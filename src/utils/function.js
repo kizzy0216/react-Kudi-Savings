@@ -376,7 +376,7 @@ export const formatCustomerData = (data, history, url, page, limit) => {
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
-      fullName: `${firstName} ${lastName}`,
+      'full-name': `${firstName} ${lastName}`,
       dob: moment(dob).format("ll"),
       timeCreated: moment(timeCreated).format("llll"),
       cashBalance: formatCurrency(cashBalance),
@@ -399,7 +399,15 @@ export const formatCustomerData = (data, history, url, page, limit) => {
         >
           View
         </Button>
-      )
+      ),
+      'kta-details': '',
+      'referral-status': '',
+      'referral-market': '',
+      'referral-phone': '',
+      'next-of-kin': '',
+      'loan-status': '',
+      'dsa-name': '',
+      'dsa-phone': '',
     })
   )
 }
