@@ -16,6 +16,43 @@ import CustomersDataExport from 'components/ExportData/CustomersDataExport'
 import { connect } from "react-redux";
 
 const Customers = ({ history, prop_marketId, prop_status }) => {
+  const [filters, setFilters] = useState([
+    {
+      title: 'Full Name',
+      selected: true,
+      name: 'fullName'
+    },
+    {
+      title: 'Date of Birth',
+      selected: false,
+      name: 'dob'
+    },
+    {
+      title: 'Phone Number',
+      selected: true,
+      name: 'phoneNumber'
+    },
+    {
+      title: 'Amount Saved',
+      selected: false,
+      name: 'totalSaved'
+    },
+    {
+      title: "Amount Withdrawn",
+      selected: false,
+      name: 'totalWithdrawn'
+    },
+    {
+      title: 'Business Type',
+      selected: false,
+      name: 'businessType'
+    },
+    {
+      title: 'Time Created',
+      selected: false,
+      name: 'timeCreated'
+    },
+  ]);
   let { url } = useRouteMatch()
   const [page, setPage] = useState(1)
   let [number, setNumber] = useState('')
@@ -51,6 +88,21 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
     const debounced_doSearch = debounce(() => setPhoneNumber(value), 1000)
     debounced_doSearch()
   }
+
+  const toggleItem = id => {
+    const temp = JSON.parse(JSON.stringify(filters))
+    temp[id].selected = !temp[id].selected
+    setFilters(temp);
+  }
+  // CustomerTableColumn
+  const selectedFilters = filters.filter( item => item.selected);
+  const filtered_columns = selectedFilters.map( item => {
+    return {key: item.name, render: item.title}
+  })
+  let columns = [{ key: 'sN', render: 'S/N' }];
+  columns = columns.concat(filtered_columns);
+  columns.push({key: 'action',render: 'ACTION'});
+  console.log('columns', columns);
   return (
     <Fragment>
       <Header>
@@ -91,7 +143,7 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
                 )}
               </div>
 
-              <CustomersFields />
+              <CustomersFields filters={filters} toggleItem={toggleItem}/>
             </div>
           </CardHeader>
           <CardBody className={styles.Customers}>
@@ -107,7 +159,8 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
               )}
               {data && (
                 <Table
-                  column={CustomerTableColumn}
+                  column={columns}
+                  filters={filters}
                   data={formattedData}
                   placeholder="Customers"
                 />

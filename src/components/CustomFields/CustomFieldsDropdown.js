@@ -108,12 +108,12 @@ class CustomFieldsDropdown extends Component {
     }
 
     if (tempList.length) {
-      return tempList.map(item => (
+      return tempList.map((item, index) => (
         <button
           type="button"
           className={styles.ddListItem}
-          key={item.id}
-          onClick={() => toggleItem(item.id, item.key)}
+          key={index}
+          onClick={() => toggleItem(index, item.key)}
         >
           {item.selected ? <EllipseChecked /> : <DropdownEllipse />}
           {item.title}

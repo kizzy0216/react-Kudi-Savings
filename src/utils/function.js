@@ -366,15 +366,19 @@ export const formatCustomerData = (data, history, url, page, limit) => {
         lastName,
         cashBalance,
         status,
+        dob,
         phoneNumber,
         totalSaved,
         totalWithdrawn,
+        timeCreated,
         id
       },
       index
     ) => ({
       sN: (page - 1) * limit + (index + 1),
       fullName: `${firstName} ${lastName}`,
+      dob: moment(dob).format("ll"),
+      timeCreated: moment(timeCreated).format("llll"),
       cashBalance: formatCurrency(cashBalance),
       market: market ? market.name : '-',
       phoneNumber: phoneNumber ? phoneNumber : '-',
