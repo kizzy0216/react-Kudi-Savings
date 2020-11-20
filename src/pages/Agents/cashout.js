@@ -28,7 +28,7 @@ const Cashout = props => {
   let { url } = useRouteMatch()
   const [focusedInput, setfocusedInput] = useState(null)
   const [showReset, setShowReset] = useState(false)
-  const initialStartDate = props.minimized ? ' ' : moment().subtract(29, 'days')
+  const initialStartDate = props.minimized ? ' ' : moment().subtract(59, 'days')
   const initialEndDate = props.minimized ? ' ' : moment()
   const initialFrom = props.minimized
     ? ' '
@@ -36,6 +36,7 @@ const Cashout = props => {
   const initialTo = props.minimized
     ? ' '
     : initialEndDate.format('YYYY-MM-DD HH:mm:ss')
+    console.log('initialStartDate', initialStartDate);
   const [from, setFrom] = useState(initialFrom)
   const [to, setTo] = useState(initialTo)
   const [endDate, setEndDate] = useState(initialEndDate)

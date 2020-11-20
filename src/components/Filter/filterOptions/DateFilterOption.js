@@ -71,6 +71,7 @@ class DateFilterOption extends Component {
     this.setState({
       filters: temp
     })
+    this.props.setDateRange(id);
   }
 
   render() {

@@ -14,8 +14,9 @@ import { TableLoading } from 'components/loading'
 import CustomersFields from 'components/CustomFields/CustomersFields'
 import CustomersDataExport from 'components/ExportData/CustomersDataExport'
 import { connect } from "react-redux";
+import moment from 'moment'
 
-const Customers = ({ history, prop_marketId, prop_status }) => {
+const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter }) => {
   const [filters, setFilters] = useState([
     {
       title: 'Full Name',
@@ -57,21 +58,23 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
   const [page, setPage] = useState(1)
   let [number, setNumber] = useState('')
   let [phoneNumber, setPhoneNumber] = useState('')
-  // let [marketId, setMarketId] = useState(undefined)
   let limit = 50
   let totalData = 0
   let totalPage = 0
-  let marketId = undefined;
-  let status = undefined;
-  if(prop_marketId !== '')
-    marketId = prop_marketId;
-  if(prop_status !== '')
-    status = prop_status;
+  let query = {page, limit, phoneNumber};
+  if(marketId !== '')
+    query.marketId = marketId;
+  if(status !== '')
+    query.status = status;
+  if(isDateFilter){
+    query.startDate = moment(startDate).format("YYYY-MM-DD");
+    query.endDate = moment(endDate).format("YYYY-MM-DD");
+  }
+
   const { data, isLoading, error, refetch } = useQuery(
-    ['Customers', { page, limit, phoneNumber, marketId, status }],
+    ['Customers', query],
     getCustomers
   )
-  console.log('data', data);
   let formattedData = []
   if (data && data.data) {
     formattedData = formatCustomerData(
@@ -102,7 +105,6 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
   let columns = [{ key: 'sN', render: 'S/N' }];
   columns = columns.concat(filtered_columns);
   columns.push({key: 'action',render: 'ACTION'});
-  console.log('columns', columns);
   return (
     <Fragment>
       <Header>
@@ -194,7 +196,10 @@ const Customers = ({ history, prop_marketId, prop_status }) => {
 }
 
 const mapStateToProps = state => ({
-  prop_marketId: state.CustomerFilters.marketId,
-  prop_status: state.CustomerFilters.status
+  marketId: state.CustomerFilters.marketId,
+  status: state.CustomerFilters.status,
+  startDate: state.CustomerFilters.startDate,
+  endDate: state.CustomerFilters.endDate,
+  isDateFilter: state.CustomerFilters.isDateFilter,
 })
 export default connect(mapStateToProps, null)(Customers)

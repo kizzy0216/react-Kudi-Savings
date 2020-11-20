@@ -1,10 +1,11 @@
-import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS } from '../customer-action-types'
+import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS, CLEAR_CUSTOMER_DATE } from '../customer-action-types'
 
 const initialState = {
   marketId: '',
   status: '',
-  dateFrom: '',
-  dateTo: ''
+  startDate: '',
+  endDate: '',
+  isDateFilter: false
 }
 
 const CustomerFilters = (state = initialState, action) => {
@@ -21,11 +22,12 @@ const CustomerFilters = (state = initialState, action) => {
         status: action.payload
       }
     case SET_CUSTOMER_DATE:
-      const {dateFrom, dateTo} = action.payload;
+      const {startDate, endDate} = action.payload;
       return {
         ...state,
-        dateFrom: dateFrom,
-        dateTo: dateTo
+        startDate: startDate,
+        endDate: endDate,
+        isDateFilter: true
       }
     case CLEAR_CUSTOMER_MARKETID:
       return {
@@ -36,6 +38,11 @@ const CustomerFilters = (state = initialState, action) => {
       return {
         ...state,
         status: ''
+      }
+    case CLEAR_CUSTOMER_DATE:
+      return {
+        ...state,
+        isDateFilter: false
       }
     default:
       return state

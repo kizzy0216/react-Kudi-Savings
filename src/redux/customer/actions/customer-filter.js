@@ -1,4 +1,4 @@
-import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS } from '../customer-action-types'
+import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS, CLEAR_CUSTOMER_DATE } from '../customer-action-types'
 
 export const setCustomerMarketId = (marketId) => async dispatch => {
     dispatch({
@@ -14,7 +14,7 @@ export const setCustomerStatus = (status) => async dispatch => {
     });
 }
 
-export const Date = (payload) => {
+export const setCustomerDate = (payload) => {
     return{
         type: SET_CUSTOMER_DATE,
         payload: payload
@@ -31,6 +31,13 @@ export const clearCustomerMarketId = (marketId) => async dispatch => {
 export const clearCustomerStatus = (status) => async dispatch => {
     dispatch({
         type: CLEAR_CUSTOMER_STATUS,
+        payload: status
+    });
+}
+
+export const clearCustomerDate = (status) => async dispatch => {
+    dispatch({
+        type: CLEAR_CUSTOMER_DATE,
         payload: status
     });
 }
