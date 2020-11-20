@@ -1,91 +1,70 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { Dropdown } from '../dropDowns'
+import { useQuery } from 'react-query'
+import { getMarkets } from 'services/markets'
+import { setCustomerMarketId } from 'redux/customer/actions/customer-filter'
+import { connect } from "react-redux";
 
-class MarketFilterOption extends Component {
-  constructor() {
-    super()
-    this.state = {
-      filters: [
-        {
-          id: 0,
-          title: 'BALOGUN',
-          selected: false,
-          name: 'balogun'
-        },
-        {
-          id: 1,
-          title: 'SURULERE',
-          selected: false,
-          name: 'surulere'
-        },
-        {
-          id: 2,
-          title: 'SOUTH-WEST',
-          selected: false,
-          name: 'south-west'
-        },
-        {
-          id: 3,
-          title: 'SOUTH-SOUTH',
-          selected: false,
-          name: 'south-south'
-        },
-        {
-          id: 4,
-          title: 'SOUTH-EAST',
-          selected: false,
-          name: 'south-east'
-        }
-      ]
-    }
+const MarketFilterOption = ({ setCustomerMarketId }) => {
+  useEffect(() => {
+    window.addEventListener('keydown', tabKeyPressed)
+    window.addEventListener('mousedown', mouseClicked)
+  }, [])
+
+  let markets = []
+
+  const { data: marketRes } = useQuery(
+    ['Markets', { page: 0, limit: 100 }],
+    getMarkets
+  )
+
+  if (
+    marketRes &&
+    marketRes.data &&
+    marketRes.data.data &&
+    marketRes.data.data.list
+  ) {
+    let newmarkets = []
+
+    marketRes.data.data.list.map(({ id, name }) => {
+      newmarkets.push({
+        title: name,
+        id: id
+      })
+    })
+
+    markets = newmarkets
   }
+  console.log('marketRes',marketRes)
+  console.log(markets)
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.tabKeyPressed)
-    window.addEventListener('mousedown', this.mouseClicked)
-  }
-
-  tabKeyPressed = e => {
+  const tabKeyPressed = e => {
     if (e.keyCode === 9) {
       document.querySelector('body').classList.remove('noFocus')
-      window.removeEventListener('keydown', this.tabKeyPressed)
-      window.addEventListener('mousedown', this.mouseClicked)
+      window.removeEventListener('keydown', tabKeyPressed)
+      window.addEventListener('mousedown', mouseClicked)
     }
   }
 
-  mouseClicked = e => {
+  const mouseClicked = e => {
     document.querySelector('body').classList.add('noFocus')
-    window.removeEventListener('mousedown', this.mouseClicked)
-    window.addEventListener('keydown', this.tabKeyPressed)
+    window.removeEventListener('mousedown', mouseClicked)
+    window.addEventListener('keydown', tabKeyPressed)
   }
 
-  toggleItem = id => {
-    const temp = JSON.parse(JSON.stringify(this.state.filters))
-    temp[id].selected = !temp[id].selected
-
-    this.setState({
-      filters: temp
-    })
+  const resetThenSet = id => {
+    setCustomerMarketId(id);
   }
 
-  resetThenSet = id => {
-    const temp = JSON.parse(JSON.stringify(this.state.filters))
-    temp.forEach(item => (item.selected = false))
-    temp[id].selected = true
-    this.setState({
-      filters: temp
-    })
-  }
-
-  render() {
-    return (
-      <Dropdown
-        title="Market"
-        list={this.state.filters}
-        resetThenSet={this.resetThenSet}
-      />
-    )
-  }
+  return (
+    <Dropdown
+      title="Market"
+      list={markets}
+      resetThenSet={resetThenSet}
+    />
+  )
 }
 
-export default MarketFilterOption
+export default connect(null, {
+  setCustomerMarketId
+})(MarketFilterOption)

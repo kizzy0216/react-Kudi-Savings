@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useQuery } from 'react-query'
 import debounce from '../../../node_modules/lodash/debounce'
 import { Card, CardBody, Button, CardHeader } from '@kudi-inc/dip'
@@ -15,8 +15,9 @@ import CustomersFields from 'components/CustomFields/CustomersFields'
 import CustomersDataExport from 'components/ExportData/CustomersDataExport'
 import { connect } from "react-redux";
 import moment from 'moment'
+import { clearCustomerData } from 'redux/customer/actions/customer-filter'
 
-const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter }) => {
+const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter, clearCustomerData }) => {
   const [filters, setFilters] = useState([
     {
       title: 'Full Name',
@@ -58,6 +59,11 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
   const [page, setPage] = useState(1)
   let [number, setNumber] = useState('')
   let [phoneNumber, setPhoneNumber] = useState('')
+  
+  useEffect(() => {
+    console.log('here');
+    clearCustomerData();
+  }, []);
   let limit = 50
   let totalData = 0
   let totalPage = 0
@@ -202,4 +208,4 @@ const mapStateToProps = state => ({
   endDate: state.CustomerFilters.endDate,
   isDateFilter: state.CustomerFilters.isDateFilter,
 })
-export default connect(mapStateToProps, null)(Customers)
+export default connect(mapStateToProps, {clearCustomerData})(Customers)

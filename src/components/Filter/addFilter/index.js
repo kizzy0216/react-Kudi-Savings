@@ -1,7 +1,6 @@
 import React, { Component, Fragment } from 'react'
-import { Add } from '../../../assets/svg'
 import styles from './addFilter.module.scss'
-import { Dropdown, DropdownMultiple } from '../dropDowns'
+import { DropdownMultiple } from '../dropDowns'
 import {
   DateFilterOption,
   StatusFilterOption,
@@ -38,7 +37,7 @@ class addFilter extends Component {
           name: 'market'
         }
       ],
-
+      selectedDateRange: 3,
       selectedFilter: [],
       focusedInput: null
     }
@@ -69,13 +68,15 @@ class addFilter extends Component {
     if(temp[id].selected == false){
       if(id === 0)
         this.props.clearCustomerStatus();
-      if(id === 1)
+      if(id === 1){
         this.props.clearCustomerDate();
+        this.setDateRange(3);
+      }
       else if(id === 2)
         this.props.clearCustomerMarketId();
     } 
-    else if(id === 1)
-      this.setDateRange(0);
+    // else if(id === 1)
+    //   this.setDateRange(3);
 
     this.setState({
       filters: temp
@@ -98,6 +99,7 @@ class addFilter extends Component {
   }
 
   setDateRange = (id) => {
+    this.setState({selectedDateRange: id});
     let startDate, endDate = moment();
     switch(id){
       case 0:
@@ -123,20 +125,17 @@ class addFilter extends Component {
     return (
       <div className={styles.filterWrapper}>
         {this.state.filters.some(el => el.selected && el.name === 'date') && (
-          <Fragment>
-            <Filters className={styles.filters}>
-              <DateRangePicker
-                onDatesChange={this.onDatesChange.bind(this)}
-                onFocusChange={this.onFocusChange.bind(this)}
-                displayFormat="DD/MM/YYYY"
-                focusedInput={this.state.focusedInput}
-                startDate={moment(this.props.startDate)}
-                endDate={moment(this.props.endDate)}
-                isOutsideRange={() => false}
-              />
-            </Filters>
-            <DateFilterOption setDateRange={this.setDateRange.bind(this)}/>
-          </Fragment>
+          this.state.selectedDateRange === 0 ? <Filters className={styles.filters}>
+            <DateRangePicker
+              onDatesChange={this.onDatesChange.bind(this)}
+              onFocusChange={this.onFocusChange.bind(this)}
+              displayFormat="DD/MM/YYYY"
+              focusedInput={this.state.focusedInput}
+              startDate={moment(this.props.startDate)}
+              endDate={moment(this.props.endDate)}
+              isOutsideRange={() => false}
+            />
+          </Filters> : <DateFilterOption setDateRange={this.setDateRange.bind(this)}/>
         )}
 
         {this.state.filters.some(el => el.selected && el.name === 'status') && (

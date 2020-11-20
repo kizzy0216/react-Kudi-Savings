@@ -24,7 +24,7 @@ class DateFilterOption extends Component {
         {
           id: 3,
           title: 'This Month',
-          selected: false
+          selected: true
         },
         {
           id: 4,
@@ -77,7 +77,7 @@ class DateFilterOption extends Component {
   render() {
     return (
       <Dropdown
-        title="Time Created"
+        title="This Month"
         list={this.state.filters}
         resetThenSet={this.resetThenSet}
       />

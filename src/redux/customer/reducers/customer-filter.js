@@ -1,4 +1,4 @@
-import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS, CLEAR_CUSTOMER_DATE } from '../customer-action-types'
+import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS, CLEAR_CUSTOMER_DATE, CLEAR_CUSTOMER_DATA } from '../customer-action-types'
 
 const initialState = {
   marketId: '',
@@ -43,6 +43,10 @@ const CustomerFilters = (state = initialState, action) => {
       return {
         ...state,
         isDateFilter: false
+      }
+    case CLEAR_CUSTOMER_DATA:
+      return {
+        initialState
       }
     default:
       return state
