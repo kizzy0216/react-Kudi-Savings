@@ -70,7 +70,7 @@ class addFilter extends Component {
         this.props.clearCustomerStatus();
       if(id === 1){
         this.props.clearCustomerDate();
-        // this.setDateRange(3);
+        this.setDateRange(3);
       }
       else if(id === 2)
         this.props.clearCustomerMarketId();
@@ -166,7 +166,7 @@ class addFilter extends Component {
 
         <DropdownMultiple
           list={this.state.filters}
-          toggleItem={this.toggleItem}
+          toggleItem={this.toggleItem.bind(this)}
         />
       </div>
     )
