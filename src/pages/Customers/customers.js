@@ -27,12 +27,12 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
     {
       title: 'KTA Details',
       selected: true,
-      name: 'kta-details'
+      fieldName: 'kta-details'
     },
     {
       title: "customer's Phone Number",
       selected: true,
-      name: 'customer-phone'
+      fieldName: 'customer-phone'
     },
     {
       title: 'Status',
@@ -42,22 +42,22 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
     {
       title: 'Referral Status',
       selected: false,
-      name: 'referral-status'
+      fieldName: 'referral-status'
     },
     {
       title: "Referral's Market",
       selected: false,
-      name: 'referral-market'
+      fieldName: 'referral-market'
     },
     {
       title: "Referral's Phone Number",
       selected: false,
-      name: 'referral-phone'
+      fieldName: 'referral-phone'
     },
     {
       title: 'Next of Kin',
       selected: false,
-      name: 'next-of-kin'
+      fieldName: 'next-of-kin'
     },
     {
       title: 'Date of Birth',
@@ -77,27 +77,27 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
     {
       title: 'Loan Status',
       selected: false,
-      name: 'loan-status'
+      fieldName: 'loan-status'
     },
     {
       title: "DSA's Name",
       selected: false,
-      name: 'dsa-name'
+      fieldName: 'dsa-name'
     },
     {
       title: "DSA's Phone Number",
       selected: false,
-      name: 'dsa-phone'
+      fieldName: 'dsa-phone'
     },
     {
       title: 'Time Created',
       selected: false,
-      name: 'timeCreated'
+      fieldName: 'timeCreated'
     },
     {
       title: 'Market',
       selected: false,
-      name: 'market'
+      fieldName: 'market'
     },
     {
       title: 'Business Type',
