@@ -72,7 +72,6 @@ class StatusFilterOption extends Component {
   }
 
   resetThenSet = id => {
-    console.log('here');
     const temp = JSON.parse(JSON.stringify(this.state.filters))
     temp.forEach(item => (item.selected = false))
     temp[id].selected = true

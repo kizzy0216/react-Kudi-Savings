@@ -1,11 +1,12 @@
 import { SET_CUSTOMER_MARKETID, SET_CUSTOMER_STATUS, SET_CUSTOMER_DATE, CLEAR_CUSTOMER_MARKETID, CLEAR_CUSTOMER_STATUS, CLEAR_CUSTOMER_DATE, CLEAR_CUSTOMER_DATA } from '../customer-action-types'
 
+import moment from 'moment'
 const initialState = {
   marketId: '',
   status: '',
-  startDate: '',
-  endDate: '',
-  isDateFilter: false
+  startDate: moment().subtract(29, 'days'),
+  endDate: moment(),
+  isDateFilter: true
 }
 
 const CustomerFilters = (state = initialState, action) => {
@@ -46,7 +47,7 @@ const CustomerFilters = (state = initialState, action) => {
       }
     case CLEAR_CUSTOMER_DATA:
       return {
-        initialState
+        ...initialState
       }
     default:
       return state

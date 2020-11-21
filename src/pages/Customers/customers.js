@@ -20,19 +20,24 @@ import { clearCustomerData } from 'redux/customer/actions/customer-filter'
 const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter, clearCustomerData }) => {
   const [filters, setFilters] = useState([
     {
-      title: 'Status',
-      selected: false,
-      fieldName: 'status'
-    },
-    {
       title: 'Full Name',
       selected: true,
       fieldName: 'full-name'
     },
     {
       title: 'KTA Details',
-      selected: false,
+      selected: true,
       name: 'kta-details'
+    },
+    {
+      title: "customer's Phone Number",
+      selected: true,
+      name: 'customer-phone'
+    },
+    {
+      title: 'Status',
+      selected: true,
+      fieldName: 'status'
     },
     {
       title: 'Referral Status',
@@ -61,12 +66,12 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
     },
     {
       title: 'Amount Saved',
-      selected: false,
+      selected: true,
       fieldName: 'totalSaved'
     },
     {
       title: "Amount Withdrawn",
-      selected: false,
+      selected: true,
       fieldName: 'totalWithdrawn'
     },
     {
@@ -106,7 +111,6 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
   let [phoneNumber, setPhoneNumber] = useState('')
   
   useEffect(() => {
-    console.log('here');
     clearCustomerData();
   }, []);
   let limit = 50

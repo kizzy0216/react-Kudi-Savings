@@ -401,6 +401,7 @@ export const formatCustomerData = (data, history, url, page, limit) => {
         </Button>
       ),
       'kta-details': '',
+      'customer-phone': '',
       'referral-status': '',
       'referral-market': '',
       'referral-phone': '',

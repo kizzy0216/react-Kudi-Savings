@@ -27,7 +27,7 @@ class addFilter extends Component {
         {
           id: 1,
           title: 'Date',
-          selected: false,
+          selected: true,
           name: 'date'
         },
         {
@@ -70,7 +70,7 @@ class addFilter extends Component {
         this.props.clearCustomerStatus();
       if(id === 1){
         this.props.clearCustomerDate();
-        this.setDateRange(3);
+        // this.setDateRange(3);
       }
       else if(id === 2)
         this.props.clearCustomerMarketId();
