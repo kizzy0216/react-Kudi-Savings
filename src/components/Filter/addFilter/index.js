@@ -136,6 +136,7 @@ class addFilter extends Component {
               isOutsideRange={() => false}
             />
           </Filters> : <DateFilterOption setDateRange={this.setDateRange.bind(this)}/>
+          // <DateFilterOption setDateRange={this.setDateRange.bind(this)}/>
         )}
 
         {this.state.filters.some(el => el.selected && el.name === 'status') && (

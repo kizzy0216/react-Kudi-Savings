@@ -116,15 +116,17 @@ const Customers = ({ history, marketId, status, startDate, endDate, isDateFilter
   let limit = 50
   let totalData = 0
   let totalPage = 0
+
+
   let query = {page, limit, phoneNumber};
   if(marketId !== '')
     query.marketId = marketId;
   if(status !== '')
     query.status = status;
-  if(isDateFilter){
-    query.startDate = moment(startDate).format("YYYY-MM-DD");
-    query.endDate = moment(endDate).format("YYYY-MM-DD");
-  }
+  // if(isDateFilter){
+  //   query.startDate = moment(startDate).format("YYYY-MM-DD");
+  //   query.endDate = moment(endDate).format("YYYY-MM-DD");
+  // }
 
   const { data, isLoading, error, refetch } = useQuery(
     ['Customers', query],

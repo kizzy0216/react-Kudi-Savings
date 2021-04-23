@@ -53,7 +53,7 @@ class Dropdown extends Component {
     })
   }
 
-  selectItem(title, id, stateKey) {
+  selectItem(title, id) {
     const { resetThenSet } = this.props
     this.setState(
       {
@@ -61,7 +61,7 @@ class Dropdown extends Component {
         listOpen: false
       }
     )
-    resetThenSet(id, stateKey);
+    resetThenSet(id);
     
   }
 
@@ -119,7 +119,7 @@ class Dropdown extends Component {
           type="button"
           className={styles.ddListItem}
           key={item.id}
-          onClick={() => this.selectItem(item.title, item.id, item.key)}
+          onClick={() => this.selectItem(item.title, item.id)}
         >
           {item.title}
         </button>
