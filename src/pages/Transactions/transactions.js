@@ -40,7 +40,7 @@ const Transactions = ({ history }) => {
   let totalPage = 0
   let formattedData = []
 
-  const { data, isLoading, error, refetch } = useQuery(
+  const { data, isLoading, error, refetch } = useQuery( // useQuery added
     [
       'Transactions',
       {
